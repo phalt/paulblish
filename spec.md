@@ -970,7 +970,7 @@ The work is ordered so that each step produces a testable, runnable increment.
 
 This is the minimum viable tool — point it at a directory, get HTML files out.
 
-- [ ] **1.1** Scaffold the project following clientele conventions: `pyproject.toml` (hatchling backend), flat `paulblish/` package, `Makefile`, `.python-version`, `uv.lock`, `README.md`, `CHANGELOG.md`, `CONTRIBUTING.md`, `LICENSE`, `.gitignore` (without `_site/`).
+- [x] **1.1** Scaffold the project following clientele conventions: `pyproject.toml` (hatchling backend), flat `paulblish/` package, `Makefile`, `.python-version`, `uv.lock`, `README.md`, `CHANGELOG.md`, `CONTRIBUTING.md`, `LICENSE`, `.gitignore` (without `_site/`).
 - [ ] **1.2** Implement `models.py`: `Article` and `SiteConfig` dataclasses with full type hints. `Article` must include `relative_path`, `path_prefix`, and `url_path` fields for directory-preserving paths.
 - [ ] **1.3** Implement `config.py`: load and validate `site.toml` from the source directory. Exit with a clear error (code 1) if the file is missing or malformed. CLI flags override individual values.
 - [ ] **1.4** Implement `scanner.py`: recursive directory walk, frontmatter parsing with `python-frontmatter`, filtering on `publish: true`, title/slug/date resolution logic, `Home.md` detection. Must build `path_prefix` from the file's directory relative to the source root.

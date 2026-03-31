@@ -39,6 +39,12 @@ make clean          # rm -rf _site/ + __pycache__ + egg-info
 uv run pb build -s /path/to/vault -o ./_site   # build the site
 ```
 
+## Implementation Progress
+
+Current phase: **Phase 1 — Scanner + Renderer (core pipeline)**
+
+After completing each phase action, check it off in `spec.md` (change `- [ ]` to `- [x]`) and update the current phase note here if the phase changes.
+
 ## Architecture
 
 Build pipeline sequence: validate source -> validate config -> load config -> scan -> report scan -> build path map -> render -> collect assets -> copy assets -> template -> generate listings -> generate CNAME -> write -> report.
