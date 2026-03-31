@@ -1,0 +1,7 @@
+[site]
+title = "Test Blog"
+base_url = "https://example.com"
+description = "A test blog."
+author = "Test Author"
+cname = ""
+avatar = ""
