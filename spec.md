@@ -974,7 +974,7 @@ This is the minimum viable tool — point it at a directory, get HTML files out.
 
 - [x] **1.1** Scaffold the project following clientele conventions: `pyproject.toml` (hatchling backend), flat `paulblish/` package, `Makefile`, `.python-version`, `uv.lock`, `README.md`, `CHANGELOG.md`, `CONTRIBUTING.md`, `LICENSE`, `.gitignore` (without `_site/`).
 - [x] **1.2** Implement `models.py`: `Article` and `SiteConfig` dataclasses with full type hints. `Article` must include `relative_path`, `path_prefix`, and `url_path` fields for directory-preserving paths.
-- [ ] **1.3** Implement `config.py`: load and validate `site.toml` from the source directory. Exit with a clear error (code 1) if the file is missing or malformed. CLI flags override individual values.
+- [x] **1.3** Implement `config.py`: load and validate `site.toml` from the source directory. Exit with a clear error (code 1) if the file is missing or malformed. CLI flags override individual values.
 - [ ] **1.4** Implement `scanner.py`: recursive directory walk, frontmatter parsing with `python-frontmatter`, filtering on `publish: true`, title/slug/date resolution logic, `Home.md` detection. Must build `path_prefix` from the file's directory relative to the source root.
 - [ ] **1.5** Implement `renderer.py`: base `markdown-it-py` setup with Pygments code highlighting. Standard markdown only — no Obsidian plugins yet.
 - [ ] **1.6** Implement `writer.py`: create output dirs preserving the directory structure (e.g. `_site/articles/foo/index.html`), write rendered HTML with a minimal HTML wrapper (no Jinja2 templates yet).
