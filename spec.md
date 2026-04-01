@@ -1095,10 +1095,10 @@ This is the minimum viable tool — point it at a directory, get HTML files out.
 
 ### Phase 5: Remaining Obsidian Syntax
 
-- [ ] **5.1** Implement `plugins/callouts.py`: callout block parsing and HTML rendering.
-- [ ] **5.2** Implement `plugins/highlights.py`: `==text==` → `<mark>`.
-- [ ] **5.3** Add footnote support (may be available as an existing `markdown-it-py` plugin).
-- [ ] **5.4** Add Mermaid support (pass-through to `<pre class="mermaid">` + include mermaid.js in base template).
+- [x] **5.1** Implement `plugins/callouts.py`: callout block parsing and HTML rendering.
+- [x] **5.2** Implement `plugins/highlights.py`: `==text==` → `<mark>`.
+- [x] **5.3** Add footnote support (may be available as an existing `markdown-it-py` plugin).
+- [x] **5.4** Add Mermaid support (pass-through to `<pre class="mermaid">` + include mermaid.js in base template).
 
 **Milestone:** Most real-world Obsidian articles render correctly.
 

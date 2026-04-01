@@ -1,11 +1,14 @@
 from markdown_it import MarkdownIt
+from mdit_py_plugins.footnote import footnote_plugin
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import get_lexer_by_name
 from pygments.util import ClassNotFound
 
 from paulblish.models import Article
+from paulblish.plugins.callouts import callouts_plugin
 from paulblish.plugins.embeds import embeds_plugin
+from paulblish.plugins.highlights import highlights_plugin
 from paulblish.plugins.wikilinks import wikilinks_plugin
 
 _formatter = HtmlFormatter(cssclass="highlight", nowrap=False)
@@ -13,6 +16,11 @@ _formatter = HtmlFormatter(cssclass="highlight", nowrap=False)
 
 def _highlight(code: str, lang: str, _attrs: str) -> str:
     """Highlight callback for markdown-it-py fenced code blocks."""
+    if lang == "mermaid":
+        # Pass through as a bare <pre class="mermaid"> for mermaid.js to render client-side
+        from markupsafe import escape
+
+        return f'<pre class="mermaid">{escape(code)}</pre>'
     if not lang:
         return ""  # markdown-it-py falls back to default <pre><code> rendering
     try:
@@ -25,6 +33,9 @@ def _highlight(code: str, lang: str, _attrs: str) -> str:
 _md = MarkdownIt("commonmark", {"highlight": _highlight}).enable("table")
 wikilinks_plugin(_md)
 embeds_plugin(_md)
+highlights_plugin(_md)
+footnote_plugin(_md)
+callouts_plugin(_md)
 
 
 def render(article: Article, path_map: dict[str, str] | None = None, base_url: str = "") -> Article:

@@ -342,3 +342,52 @@ pre code {
 .site-footer a {
   color: var(--accent-teal);
 }
+
+/* === Callouts === */
+.callout {
+  border-left: 4px solid var(--accent-teal);
+  background: color-mix(in srgb, var(--accent-teal) 8%, var(--surface));
+  border-radius: 0 4px 4px 0;
+  margin: 1.5rem 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.callout-title {
+  padding: 0.5rem 1rem;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: color-mix(in srgb, var(--accent-teal) 15%, var(--surface));
+  color: var(--accent-teal);
+}
+
+.callout-body {
+  padding: 0.75rem 1rem;
+}
+
+.callout-body p:first-child { margin-top: 0; }
+.callout-body p:last-child  { margin-bottom: 0; }
+
+.callout-warning  { border-left-color: #f0c040; }
+.callout-warning  .callout-title { background: color-mix(in srgb, #f0c040 15%, var(--surface)); color: #f0c040; }
+
+.callout-danger,
+.callout-caution  { border-left-color: var(--accent-pink); }
+.callout-danger   .callout-title,
+.callout-caution  .callout-title { background: color-mix(in srgb, var(--accent-pink) 15%, var(--surface)); color: var(--accent-pink); }
+
+.callout-tip,
+.callout-success  { border-left-color: #6bcb77; }
+.callout-tip      .callout-title,
+.callout-success  .callout-title { background: color-mix(in srgb, #6bcb77 15%, var(--surface)); color: #6bcb77; }
+
+/* === Highlights === */
+mark {
+  background: color-mix(in srgb, #f0c040 35%, transparent);
+  color: inherit;
+  border-radius: 2px;
+  padding: 0 2px;
+}
