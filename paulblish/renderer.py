@@ -5,6 +5,7 @@ from pygments.lexers import get_lexer_by_name
 from pygments.util import ClassNotFound
 
 from paulblish.models import Article
+from paulblish.plugins.embeds import embeds_plugin
 from paulblish.plugins.wikilinks import wikilinks_plugin
 
 _formatter = HtmlFormatter(cssclass="highlight", nowrap=False)
@@ -23,6 +24,7 @@ def _highlight(code: str, lang: str, _attrs: str) -> str:
 
 _md = MarkdownIt("commonmark", {"highlight": _highlight}).enable("table")
 wikilinks_plugin(_md)
+embeds_plugin(_md)
 
 
 def render(article: Article, path_map: dict[str, str] | None = None, base_url: str = "") -> Article:

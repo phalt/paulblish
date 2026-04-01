@@ -2,6 +2,7 @@ from pathlib import Path
 
 import click
 
+from paulblish.assets import collect_assets, copy_assets
 from paulblish.config import load_config
 from paulblish.linker import build_path_map
 from paulblish.renderer import render
@@ -61,6 +62,12 @@ def build(source: str, output: str, base_url: str | None, templates: str | None)
     for article in articles:
         render(article, path_map=path_map, base_url=config.base_url)
 
+    # Collect and copy assets
+    asset_refs = collect_assets(articles, source_dir)
+    asset_warnings = copy_assets(asset_refs, output_dir)
+    for warning in asset_warnings:
+        click.echo(f"  ⚠ {warning}")
+
     # Write templated output
     written = write(articles, output_dir, site=config, templates_dir=templates_dir)
     for path in written:
@@ -71,7 +78,9 @@ def build(source: str, output: str, base_url: str | None, templates: str | None)
     if cname_path:
         click.echo(f"  → {cname_path.relative_to(output_dir.parent)}")
 
-    click.echo(f"\nDone. {len(articles)} articles, 0 warnings.")
+    num_assets = len([r for r in asset_refs if r.source_path])
+    num_warnings = len(asset_warnings)
+    click.echo(f"\nDone. {len(articles)} articles, {num_assets} assets, {num_warnings} warnings.")
 
 
 @main.command()

@@ -1058,10 +1058,10 @@ This is the minimum viable tool — point it at a directory, get HTML files out.
 
 ### Phase 4: Asset Handling
 
-- [ ] **4.1** Implement `assets.py`: scan rendered HTML for image/file references, resolve against source directory.
-- [ ] **4.2** Implement asset copying with collision-safe naming.
-- [ ] **4.3** Implement `plugins/embeds.py`: `![[image.png]]` syntax → `<img>` tag with rewritten path.
-- [ ] **4.4** Write tests for asset discovery, copying, and path rewriting.
+- [x] **4.1** Implement `assets.py`: scan rendered HTML for image/file references, resolve against source directory.
+- [x] **4.2** Implement asset copying with collision-safe naming.
+- [x] **4.3** Implement `plugins/embeds.py`: `![[image.png]]` syntax → `<img>` tag with rewritten path.
+- [x] **4.4** Write tests for asset discovery, copying, and path rewriting.
 
 **Milestone:** Images and files render correctly in the output.
 
