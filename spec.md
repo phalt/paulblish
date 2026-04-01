@@ -66,16 +66,19 @@ description: "A short summary."  # optional — used in <meta> and listing page
 ```
 
 **Resolution order for `title`:**
+
 1. Frontmatter `title`
 2. First `# H1` heading in the document body
 3. Filename (without `.md`, deslugified)
 
 **Resolution order for `slug`:**
+
 1. Frontmatter `slug`
 2. Frontmatter `permalink` (alias for slug)
 3. Skip — file is not published (no automatic derivation from filename)
 
 **Resolution order for `date`:**
+
 1. Frontmatter `date`
 2. File modification time (`mtime`)
 
@@ -187,6 +190,7 @@ path_map: dict[str, str] = {
 ```
 
 Resolution rules:
+
 1. Normalise the wikilink target: strip `.md`, lowercase, strip leading/trailing whitespace.
 2. Look up in `path_map`.
 3. If found → render as `<a href="{url_path}">display text</a>`.
@@ -581,6 +585,7 @@ Error: No site.toml found in ~/obsidian/blog
 ```
 
 **Key requirements:**
+
 - Every `.md` file found is reported as either picked up (✓) or skipped (✗ with reason).
 - Non-markdown files in the directory are listed as skipped if `--verbose` is set; otherwise they are counted but not individually listed.
 - The reason for skipping is always shown (no frontmatter, `publish` not true, not a `.md` file).
@@ -748,21 +753,21 @@ Following the clientele convention:
 .PHONY: install test lint format clean
 
 install:
-	uv sync
+ uv sync
 
 test:
-	uv run pytest
+ uv run pytest
 
 lint:
-	uv run ruff check .
+ uv run ruff check .
 
 format:
-	uv run ruff format .
+ uv run ruff format .
 
 clean:
-	rm -rf _site/
-	find . -type d -name __pycache__ -exec rm -rf {} +
-	find . -type d -name "*.egg-info" -exec rm -rf {} +
+ rm -rf _site/
+ find . -type d -name __pycache__ -exec rm -rf {} +
+ find . -type d -name "*.egg-info" -exec rm -rf {} +
 ```
 
 Note: there is no `make build` target. The `pb build` command requires a `--source` argument pointing to your Obsidian vault, which lives outside this repo. Run it directly:
@@ -871,7 +876,8 @@ The README must include the following sections:
 1. **Header** — Project name, one-line description, badges (Python version, license).
 2. **What is this?** — Brief explanation: a CLI tool that converts an Obsidian vault into a static HTML site with a cyberpunk aesthetic. The source vault lives on your machine; the generated output is committed to the repo and deployed via GitHub Pages.
 3. **Quick Start** — The full workflow from zero to deployed site:
-   ```
+
+   ```sh
    git clone https://github.com/phalt/paulblish.git
    cd paulblish
    make install
@@ -880,12 +886,15 @@ The README must include the following sections:
    git commit -m "Rebuild site"
    git push
    ```
+
 4. **Installation** — How to install for development:
+
    ```
    git clone https://github.com/phalt/paulblish.git
    cd paulblish
    make install
    ```
+
 5. **Usage** — Full CLI documentation for `pb build` and `pb clean`, with all flags documented.
 6. **Site Configuration** — Document the `site.toml` format with all fields (`title`, `base_url`, `description`, `author`, `cname`, `avatar`) and an example. Explain that this file is required and what error you'll see if it's missing. Document custom domain setup via `cname`.
 7. **Frontmatter Schema** — Document the full frontmatter contract (`publish`, `title`, `slug`, `date`, `tags`, `description`) with examples.
@@ -916,18 +925,22 @@ Paulblish is designed so anyone can fork it and run their own blog. To set up yo
    cname = ""                      # set to your custom domain, or leave empty
    avatar = ""                     # path to a square image, or leave empty
    ```
-4. Ensure your markdown files have `publish: true` in their frontmatter.
-5. Create a `Home.md` in the root of your content directory for your index page.
-6. Build the site:
+
+1. Ensure your markdown files have `publish: true` in their frontmatter.
+2. Create a `Home.md` in the root of your content directory for your index page.
+3. Build the site:
+
    ```
    uv run pb build --source /path/to/your/obsidian/dir --output ./_site
    ```
-7. Commit the `_site/` directory and push to `main`.
-8. In your GitHub repo settings, enable Pages and set it to deploy from GitHub Actions.
+
+4. Commit the `_site/` directory and push to `main`.
+5. In your GitHub repo settings, enable Pages and set it to deploy from GitHub Actions.
 
 The `pb` tool, templates, and styles are all included in the repo.
 Customise the templates in `templates/` and the CSS in `templates/static/style.css`
 to make it your own.
+
 ```
 
 ---
@@ -935,6 +948,7 @@ to make it your own.
 ## 15. Output Structure
 
 ```
+
 _site/
 ├── CNAME                           # custom domain (only if site.cname is set)
 ├── index.html                      # Home.md content or article listing fallback
@@ -959,6 +973,7 @@ _site/
 │   └── tooling/
 │       └── index.html
 └── feed.xml                        # RSS/Atom feed (P1)
+
 ```
 
 ---
