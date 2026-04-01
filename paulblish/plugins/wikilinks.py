@@ -51,9 +51,10 @@ def _wikilink_render(self, tokens, idx, options, env) -> str:
     display = alias if alias else target
 
     path_map = env.get("path_map", {})
+    base_url = env.get("base_url", "")
     normalised = _normalise(target)
     url = path_map.get(normalised)
 
     if url:
-        return f'<a href="{url}">{display}</a>'
+        return f'<a href="{base_url}{url}">{display}</a>'
     return f'<span class="wikilink-dead">{display}</span>'

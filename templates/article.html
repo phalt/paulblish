@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}{{ article.title }} — {{ site.title }}{% endblock %}
+
+{% block content %}
+<article>
+  <header class="article-meta">
+    <h1>{{ article.title }}</h1>
+    <time datetime="{{ article.date.isoformat() }}">{{ article.date.strftime('%d %B %Y') }}</time>
+    {% if article.tags %}
+    <div class="tags">
+      {% for tag in article.tags %}
+        <a href="{{ site.base_url }}/tags/{{ tag }}/" class="tag">{{ tag }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}
+    {% if article.description %}
+    <p class="description">{{ article.description }}</p>
+    {% endif %}
+  </header>
+
+  {# body_html is pre-rendered HTML from markdown-it-py — | safe is mandatory #}
+  <div class="article-body">
+    {{ article.body_html | safe }}
+  </div>
+</article>
+{% endblock %}

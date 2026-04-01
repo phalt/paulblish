@@ -6,7 +6,7 @@ from paulblish.config import load_config
 from paulblish.linker import build_path_map
 from paulblish.renderer import render
 from paulblish.scanner import scan
-from paulblish.writer import write
+from paulblish.writer import write, write_cname
 
 VERSION = "0.1.0"
 
@@ -20,10 +20,12 @@ def main():
 @click.option("--source", "-s", default=".", help="Path to the Obsidian vault directory to scan.")
 @click.option("--output", "-o", default="./_site", help="Path to write generated HTML.")
 @click.option("--base-url", default=None, help="Base URL for absolute links (overrides site.toml).")
-def build(source: str, output: str, base_url: str | None) -> None:
+@click.option("--templates", default=None, help="Path to custom Jinja2 templates directory.")
+def build(source: str, output: str, base_url: str | None, templates: str | None) -> None:
     """Build the static site from a source directory."""
     source_dir = Path(source).resolve()
     output_dir = Path(output).resolve()
+    templates_dir = Path(templates).resolve() if templates else None
 
     click.echo(f"Paulblish v{VERSION}")
     click.echo(f"Source: {source_dir}")
@@ -34,7 +36,7 @@ def build(source: str, output: str, base_url: str | None) -> None:
         raise SystemExit(1)
 
     # Load and validate config
-    _config = load_config(source_dir, base_url=base_url)  # noqa: F841 — needed for validation, used in later phases
+    config = load_config(source_dir, base_url=base_url)
     click.echo("Config: site.toml ✓")
 
     # Scan
@@ -55,16 +57,47 @@ def build(source: str, output: str, base_url: str | None) -> None:
     # Build path map for wikilink resolution
     path_map = build_path_map(articles)
 
-    # Render
+    # Render markdown to HTML
     for article in articles:
-        render(article, path_map=path_map)
+        render(article, path_map=path_map, base_url=config.base_url)
 
-    # Write
-    written = write(articles, output_dir)
+    # Write templated output
+    written = write(articles, output_dir, site=config, templates_dir=templates_dir)
     for path in written:
         click.echo(f"  → {path.relative_to(output_dir.parent)}")
 
+    # Write CNAME if configured
+    cname_path = write_cname(output_dir, config.cname)
+    if cname_path:
+        click.echo(f"  → {cname_path.relative_to(output_dir.parent)}")
+
     click.echo(f"\nDone. {len(articles)} articles, 0 warnings.")
+
+
+@main.command()
+@click.option("--output", "-o", default="./_site", help="Path to the built site directory.")
+@click.option("--port", "-p", default=8000, help="Port to serve on.")
+def serve(output: str, port: int) -> None:
+    """Serve the built site locally for preview."""
+    import functools
+    import http.server
+
+    output_dir = Path(output).resolve()
+
+    if not output_dir.is_dir():
+        click.echo(f"Error: Output directory does not exist: {output_dir}")
+        click.echo("       Run 'pb build' first.")
+        raise SystemExit(1)
+
+    click.echo(f"Serving {output_dir} at http://localhost:{port}")
+    click.echo("Press Ctrl+C to stop.\n")
+
+    handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(output_dir))
+    server = http.server.HTTPServer(("localhost", port), handler)
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        click.echo("\nStopped.")
 
 
 if __name__ == "__main__":

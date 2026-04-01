@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} — {{ site.title }}{% endblock %}
+
+{% block content %}
+<div class="listing">
+  <h1>{{ title }}</h1>
+  <ul class="article-list">
+    {% for article in articles %}
+    <li>
+      <a href="{{ site.base_url }}{{ article.url_path }}">{{ article.title }}</a>
+      <time datetime="{{ article.date.isoformat() }}">{{ article.date.strftime('%d %B %Y') }}</time>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

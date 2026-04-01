@@ -498,6 +498,40 @@ The home page template structure is:
 
 ---
 
+## 7.1 RSS/Atom Feed
+
+The build generates an RSS 2.0 feed at `output/feed.xml`, addressable at `/feed.xml` on the deployed site. The feed allows readers to subscribe to new articles via any feed reader.
+
+**Feed metadata (from `site.toml`):**
+
+| Field | Source | Example |
+|---|---|---|
+| `<title>` | `site.title` | `My Blog` |
+| `<link>` | `site.base_url` | `https://example.com` |
+| `<description>` | `site.description` | `A blog about things.` |
+| `<managingEditor>` | `site.author` | `Paul` |
+| `<lastBuildDate>` | Build time | `Tue, 15 Mar 2026 00:00:00 +0000` |
+
+**Feed items:**
+
+Each published article (excluding `Home.md`) becomes an `<item>` in the feed, sorted by date descending (newest first). Maximum 20 items in the feed to keep it lightweight.
+
+| Field | Source |
+|---|---|
+| `<title>` | `article.title` |
+| `<link>` | `site.base_url + article.url_path` |
+| `<guid>` | `site.base_url + article.url_path` (permalink) |
+| `<pubDate>` | `article.date` in RFC 822 format |
+| `<description>` | `article.description` if present, otherwise first 280 characters of `body_markdown` stripped of markup |
+
+**Implementation details:**
+
+- The feed is generated using Python's `xml.etree.ElementTree` (stdlib) — no extra dependency needed.
+- The feed URL should be discoverable via a `<link rel="alternate" type="application/rss+xml">` tag in `base.html`'s `<head>`.
+- If `site.base_url` is `/` or empty, feed item links use relative paths. Otherwise, full absolute URLs are constructed.
+
+---
+
 ## 8. CLI Interface
 
 ### 8.1 Tool Name
@@ -1010,15 +1044,15 @@ This is the minimum viable tool — point it at a directory, get HTML files out.
 
 ### Phase 3: Templates + Cyberpunk Theme
 
-- [ ] **3.1** Create default templates: `base.html` (with `{% block content %}`), `_nav.html` (site title + All Pages link), `article.html`, `home.html`, `listing.html`, `all_pages.html`. Implement the cyberpunk / brutalist theme in `style.css` using the muted CP2077-inspired palette.
-- [ ] **3.2** Implement the content injection contract in `article.html`: `{{ article.body_html | safe }}` inside `<div class="article-body">`. Document the `| safe` requirement clearly in code comments.
-- [ ] **3.3** Implement the article metadata block in `article.html`: title as `<h1>`, date, tags (as styled pills linking to tag pages), description as lead paragraph.
-- [ ] **3.4** Implement `home.html`: ASCII art "Hello" banner (`<pre class="ascii-banner" aria-hidden="true">`), optional avatar image (from `site.avatar`), then `Home.md` body content via `| safe`.
-- [ ] **3.5** Implement `_nav.html`: site title linking to `/`, "All Pages" linking to `/all/`.
-- [ ] **3.6** Implement `all_pages.html`: generate the all-pages listing grouped by `path_prefix`, with path headings.
-- [ ] **3.7** Implement `templating.py`: Jinja2 environment, render article pages (using `article.html`), render home page (using `home.html`), render all-pages page, render tag listing pages.
-- [ ] **3.8** Update `writer.py` to use templated output. Generate `CNAME` file if `site.cname` is configured.
-- [ ] **3.9** Add `--templates` and `--base-url` CLI flags.
+- [x] **3.1** Create default templates: `base.html` (with `{% block content %}`), `_nav.html` (site title + All Pages link), `article.html`, `home.html`, `listing.html`, `all_pages.html`. Implement the cyberpunk / brutalist theme in `style.css` using the muted CP2077-inspired palette.
+- [x] **3.2** Implement the content injection contract in `article.html`: `{{ article.body_html | safe }}` inside `<div class="article-body">`. Document the `| safe` requirement clearly in code comments.
+- [x] **3.3** Implement the article metadata block in `article.html`: title as `<h1>`, date, tags (as styled pills linking to tag pages), description as lead paragraph.
+- [x] **3.4** Implement `home.html`: ASCII art "Hello" banner (`<pre class="ascii-banner" aria-hidden="true">`), optional avatar image (from `site.avatar`), then `Home.md` body content via `| safe`.
+- [x] **3.5** Implement `_nav.html`: site title linking to `/`, "All Pages" linking to `/all/`.
+- [x] **3.6** Implement `all_pages.html`: generate the all-pages listing grouped by `path_prefix`, with path headings.
+- [x] **3.7** Implement `templating.py`: Jinja2 environment, render article pages (using `article.html`), render home page (using `home.html`), render all-pages page, render tag listing pages.
+- [x] **3.8** Update `writer.py` to use templated output. Generate `CNAME` file if `site.cname` is configured.
+- [x] **3.9** Add `--templates` and `--base-url` CLI flags.
 
 **Milestone:** Site has the cyberpunk aesthetic, article metadata is visible on every post, the home page shows ASCII art + avatar + content, the nav bar works, the all-pages listing works, and CNAME is generated for custom domains.
 
@@ -1045,10 +1079,18 @@ This is the minimum viable tool — point it at a directory, get HTML files out.
 - [ ] **6.1** Implement `pb clean` command.
 - [ ] **6.2** Add `--drafts` flag support.
 - [ ] **6.3** Generate tag index pages (`/tags/{tag}/index.html`).
-- [ ] **6.4** Generate RSS/Atom feed (`feed.xml`).
-- [ ] **6.5** Finalise CLI output: build stats, timing, warning summary.
-- [ ] **6.6** Write both GitHub Actions workflows (`deploy.yml` and `test.yml`).
-- [ ] **6.7** Write `README.md` with all required sections (see §14), including the "Fork Your Own Copy" guide.
-- [ ] **6.8** Write `CHANGELOG.md` and `CONTRIBUTING.md`.
+- [ ] **6.4** Finalise CLI output: build stats, timing, warning summary.
+- [ ] **6.5** Write both GitHub Actions workflows (`deploy.yml` and `test.yml`).
+- [ ] **6.6** Write `README.md` with all required sections (see §14), including the "Fork Your Own Copy" guide.
+- [ ] **6.7** Write `CHANGELOG.md` and `CONTRIBUTING.md`.
 
 **Milestone:** Production-ready. Build locally, commit, push, site deploys automatically. Anyone can fork the repo and have their own blog running in minutes.
+
+### Phase 7: RSS Feed
+
+- [ ] **7.1** Implement `feed.py`: generate RSS 2.0 XML from published articles (excluding Home), sorted by date descending, max 20 items. Use `xml.etree.ElementTree` (stdlib). Feed metadata from `SiteConfig`.
+- [ ] **7.2** Update `writer.py` to call feed generation and write `feed.xml` to the output root.
+- [ ] **7.3** Update `base.html` to include `<link rel="alternate" type="application/rss+xml">` in `<head>` for feed discovery.
+- [ ] **7.4** Write tests for: feed XML structure, item count limit, date formatting (RFC 822), Home exclusion, description fallback, feed discovery link in HTML output.
+
+**Milestone:** `/feed.xml` is generated on every build, discoverable via `<link>` tag, and contains the 20 most recent articles with correct metadata.

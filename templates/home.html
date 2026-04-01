@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}{{ site.title }}{% endblock %}
+
+{% block content %}
+<div class="home">
+  <pre class="ascii-banner" aria-hidden="true">
+ _   _      _ _
+| | | | ___| | | ___
+| |_| |/ _ \ | |/ _ \
+|  _  |  __/ | | (_) |
+|_| |_|\___|_|_|\___/
+  </pre>
+
+  {% if site.avatar %}
+  <div class="home-avatar">
+    <img src="{{ site.base_url }}/assets/{{ site.avatar }}" alt="{{ site.author }}" class="avatar" />
+  </div>
+  {% endif %}
+
+  {# body_html is pre-rendered HTML from markdown-it-py — | safe is mandatory #}
+  <div class="article-body">
+    {{ article.body_html | safe }}
+  </div>
+</div>
+{% endblock %}

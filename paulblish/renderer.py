@@ -25,8 +25,12 @@ _md = MarkdownIt("commonmark", {"highlight": _highlight}).enable("table")
 wikilinks_plugin(_md)
 
 
-def render(article: Article, path_map: dict[str, str] | None = None) -> Article:
+def render(article: Article, path_map: dict[str, str] | None = None, base_url: str = "") -> Article:
     """Render an article's body_markdown to body_html. Returns the article with body_html populated."""
-    env = {"path_map": path_map} if path_map else {}
+    env: dict = {}
+    if path_map:
+        env["path_map"] = path_map
+    if base_url:
+        env["base_url"] = base_url
     article.body_html = _md.render(article.body_markdown, env)
     return article

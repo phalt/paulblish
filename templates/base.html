@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ site.title }}{% endblock %}</title>
+  {% if article is defined and article.description %}
+  <meta name="description" content="{{ article.description }}">
+  {% endif %}
+  <link rel="stylesheet" href="{{ site.base_url }}/static/style.css">
+</head>
+<body>
+  <nav class="site-nav">
+    {% block nav %}{% include "_nav.html" %}{% endblock %}
+  </nav>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <p>{{ site.title }} — built with <a href="https://github.com/phalt/paulblish">Paulblish</a></p>
+  </footer>
+</body>
+</html>
