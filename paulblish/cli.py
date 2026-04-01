@@ -37,8 +37,8 @@ def build(source: str, output: str, base_url: str | None, templates: str | None)
         raise SystemExit(1)
 
     # Load and validate config
-    config = load_config(source_dir, base_url=base_url)
-    click.echo("Config: site.toml ✓")
+    config, config_source = load_config(source_dir, base_url=base_url)
+    click.echo(f"Config: {config_source} ✓")
 
     # Scan
     click.echo("\nScanning...\n")

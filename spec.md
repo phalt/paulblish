@@ -395,7 +395,12 @@ This structure ensures that future template changes (new nav items, footer conte
 
 ### 6.7 Site Configuration
 
-Loaded from a **required** `site.toml` file in the root of the source directory:
+Site configuration is loaded from one of two sources, tried in order:
+
+1. **`site.toml`** — a TOML file in the root of the source directory (preferred).
+2. **`Home.md` frontmatter** — YAML frontmatter fields in the `Home.md` file at the source root (fallback, useful for Obsidian where `.toml` files are inconvenient).
+
+**Method 1: `site.toml`**
 
 ```toml
 [site]
@@ -407,6 +412,26 @@ cname = ""                         # optional — custom domain, e.g. "blog.exam
 avatar = ""                        # optional — path to a square image for the home page
 ```
 
+**Method 2: `Home.md` frontmatter**
+
+```yaml
+---
+publish: true
+title: "My Blog"
+base_url: "https://username.github.io/blog"
+description: "A blog about things."
+author: "Paul"
+cname: ""          # optional
+avatar: ""         # optional
+---
+```
+
+The same required and optional fields apply regardless of source. If `site.toml` is present it takes priority and `Home.md` frontmatter is ignored for configuration purposes.
+
+**Required fields** (in either source): `title`, `base_url`, `description`, `author`.
+
+**Optional fields**: `cname` (default `""`), `avatar` (default `""`).
+
 **CNAME support:** If the `cname` field is set to a non-empty string, the build writes a `CNAME` file to the output root containing that value. This is required for GitHub Pages to serve the site on a custom domain. Example:
 
 ```toml
@@ -417,15 +442,18 @@ Produces `_site/CNAME` containing `blog.paulblish.dev`. If `cname` is empty or a
 
 **Avatar support:** If the `avatar` field is set, it should be a path (relative to the source directory) to a square image. The image is copied to `output/assets/` and rendered on the home page (see §6.9).
 
-The `site.toml` file **must** exist in the source directory. If it is missing, `pb build` exits with an error (exit code 1) and a clear message:
+If neither `site.toml` nor `Home.md` with the required fields is found, `pb build` exits with an error (exit code 1):
 
 ```
-Error: No site.toml found in /path/to/source
-       Every source directory must contain a site.toml file.
+Error: No site configuration found in /path/to/source
+       Either create a site.toml file or add site config fields to your Home.md frontmatter:
+
+         title, base_url, description, author
+
        See: https://github.com/phalt/paulblish#site-configuration
 ```
 
-CLI flags (`--base-url`) can override individual values from `site.toml`, but the file itself must be present.
+CLI flags (`--base-url`) override values from whichever source was used.
 
 ### 6.8 Navigation Bar
 
@@ -574,8 +602,8 @@ pb clean --output ./_site
 Before scanning any files, `pb build` performs the following checks. Failure at any step exits with code 1.
 
 1. **Source directory exists** — if `--source` does not point to an existing directory, exit with error.
-2. **`site.toml` exists** — if `{source}/site.toml` does not exist, exit with a clear error message explaining that the file is required and linking to documentation.
-3. **`site.toml` is valid** — if the file exists but cannot be parsed, or is missing the `[site]` table, exit with a parse error showing the file path and the problem.
+2. **Config source found** — if neither `{source}/site.toml` nor `{source}/Home.md` (case-insensitive) exists, exit with a clear error listing the required fields and linking to documentation.
+3. **Config is valid** — if the config source exists but cannot be parsed, or is missing required fields (`title`, `base_url`, `description`, `author`), exit with an error naming the source file and the missing field.
 
 ### 8.6 CLI Output
 

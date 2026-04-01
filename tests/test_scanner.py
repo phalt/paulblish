@@ -68,6 +68,17 @@ class TestSlugResolution:
         articles, _ = scan(tmp_path)
         assert articles[0].slug == "the-slug"
 
+    def test_slug_with_leading_slash_is_stripped(self, tmp_path):
+        _write_md(tmp_path / "post.md", "---\npublish: true\nslug: /articles/my-post\n---\nHello")
+        articles, _ = scan(tmp_path)
+        assert articles[0].slug == "articles/my-post"
+        assert "//" not in articles[0].url_path
+
+    def test_slug_with_trailing_slash_is_stripped(self, tmp_path):
+        _write_md(tmp_path / "post.md", "---\npublish: true\nslug: my-post/\n---\nHello")
+        articles, _ = scan(tmp_path)
+        assert articles[0].slug == "my-post"
+
     def test_missing_slug_and_permalink_skips(self, tmp_path):
         _write_md(tmp_path / "post.md", "---\npublish: true\ntitle: No Slug\n---\nHello")
         articles, skipped = scan(tmp_path)
@@ -111,6 +122,19 @@ class TestPublishFiltering:
         articles, skipped = scan(tmp_path)
         assert len(articles) == 0
         assert "publish is not true" in skipped[0].reason
+
+    def test_publish_string_false_skipped(self, tmp_path):
+        """publish: \"false\" (quoted string) must NOT be treated as published."""
+        _write_md(tmp_path / "post.md", '---\npublish: "false"\nslug: p\n---\nHello')
+        articles, skipped = scan(tmp_path)
+        assert len(articles) == 0
+        assert "publish is not true" in skipped[0].reason
+
+    def test_publish_string_true_included(self, tmp_path):
+        """publish: \"true\" (quoted string) should still be treated as published."""
+        _write_md(tmp_path / "post.md", '---\npublish: "true"\nslug: p\n---\nHello')
+        articles, _ = scan(tmp_path)
+        assert len(articles) == 1
 
     def test_no_frontmatter_skipped(self, tmp_path):
         _write_md(tmp_path / "post.md", "Just plain markdown, no frontmatter")

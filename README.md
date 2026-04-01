@@ -40,13 +40,29 @@ uv run pb build --source ~/obsidian/blog --output ./_site
 
 | Flag | Default | Description |
 |---|---|---|
-| `--source`, `-s` | `.` (cwd) | Path to the Obsidian vault directory to scan. Must contain a `site.toml`. |
+| `--source`, `-s` | `.` (cwd) | Path to the Obsidian vault directory to scan. Must contain a `site.toml` or `Home.md` with config fields. |
 | `--output`, `-o` | `./_site` | Path to write generated HTML. |
 | `--base-url` | `/` | Base URL for absolute links (overrides `site.toml`). |
 | `--templates` | bundled defaults | Path to custom Jinja2 templates directory. |
 | `--clean` | `false` | Delete output directory before building. |
 | `--drafts` | `false` | Include articles with `publish: false`. |
 | `--verbose`, `-v` | `false` | Verbose logging. |
+
+### `pb serve`
+
+Serve the built site locally for preview.
+
+```bash
+uv run pb serve --output ./_site
+uv run pb serve --output ./_site --port 9000
+```
+
+| Flag | Default | Description |
+|---|---|---|
+| `--output`, `-o` | `./_site` | Path to the built site directory to serve. |
+| `--port` | `8000` | Port to listen on. |
+
+Opens at `http://localhost:8000` (or whichever port you chose). Use `--base-url ""` when building for local preview so all links resolve correctly.
 
 ### `pb clean`
 
@@ -58,7 +74,11 @@ uv run pb clean --output ./_site
 
 ## Site Configuration
 
-Every source directory must contain a `site.toml` file:
+Site configuration can be provided in one of two ways. `site.toml` is tried first; if absent, `Home.md` frontmatter is used as a fallback (convenient for Obsidian users).
+
+### Method 1: `site.toml`
+
+Create a `site.toml` file in the root of your source directory:
 
 ```toml
 [site]
@@ -70,7 +90,34 @@ cname = ""       # optional — custom domain, e.g. "blog.example.com"
 avatar = ""      # optional — path to a square image for the home page
 ```
 
-If `site.toml` is missing, `pb build` exits with an error.
+### Method 2: `Home.md` frontmatter
+
+Add the config fields directly to your `Home.md` YAML frontmatter:
+
+```yaml
+---
+publish: true
+title: "My Blog"
+base_url: "https://username.github.io/blog"
+description: "A blog about things."
+author: "Paul"
+cname: ""        # optional
+avatar: ""       # optional
+---
+```
+
+### Required and optional fields
+
+| Field | Required | Description |
+|---|---|---|
+| `title` | yes | Site title shown in `<title>` and header |
+| `base_url` | yes | Absolute base URL (e.g. `https://user.github.io/repo`) |
+| `description` | yes | Short site description for `<meta>` |
+| `author` | yes | Author name shown in footer/meta |
+| `cname` | no | Custom domain for GitHub Pages (`CNAME` file) |
+| `avatar` | no | Path to a square image shown on the home page |
+
+If neither `site.toml` nor `Home.md` with required fields is found, `pb build` exits with an error listing what is needed.
 
 If `cname` is set, a `CNAME` file is written to the output root for GitHub Pages custom domain support.
 
@@ -131,7 +178,9 @@ Paulblish is designed so anyone can fork it and run their own blog. To set up yo
 
 1. Fork this repository (or use "Use this template" on GitHub).
 2. Clone it locally and run `make install`.
-3. Create a `site.toml` in the root of your Obsidian content directory:
+3. Configure your site — pick either approach:
+
+   **Option A — `site.toml`** (create in the root of your Obsidian directory):
 
    ```toml
    [site]
@@ -143,8 +192,20 @@ Paulblish is designed so anyone can fork it and run their own blog. To set up yo
    avatar = ""                     # path to a square image, or leave empty
    ```
 
+   **Option B — `Home.md` frontmatter** (add fields to your existing `Home.md`):
+
+   ```yaml
+   ---
+   publish: true
+   title: "My Blog"
+   base_url: "https://yourusername.github.io/yourrepo"
+   description: "A blog about things."
+   author: "Your Name"
+   ---
+   ```
+
 4. Ensure your markdown files have `publish: true` in their frontmatter.
-5. Create a `Home.md` in the root of your content directory for your index page.
+5. Create a `Home.md` in the root of your content directory for your index page (if you don't already have one).
 6. Build the site:
 
    ```sh

@@ -7,19 +7,16 @@ from paulblish.config import load_config
 FIXTURES = Path(__file__).parent / "fixtures"
 
 
-class TestLoadConfig:
+class TestLoadFromToml:
     def test_valid_config(self):
-        config = load_config(FIXTURES)
+        config, source = load_config(FIXTURES)
         assert config.title == "Test Blog"
         assert config.base_url == "https://example.com"
         assert config.description == "A test blog."
         assert config.author == "Test Author"
         assert config.cname == ""
         assert config.avatar == ""
-
-    def test_missing_file(self, tmp_path):
-        with pytest.raises(SystemExit, match="No site.toml found"):
-            load_config(tmp_path)
+        assert source == "site.toml"
 
     def test_invalid_toml(self, tmp_path):
         (tmp_path / "site.toml").write_text("this is [not valid toml{{{")
@@ -33,24 +30,23 @@ class TestLoadConfig:
 
     def test_missing_required_field(self, tmp_path):
         (tmp_path / "site.toml").write_text('[site]\ntitle = "Blog"\n')
-        with pytest.raises(SystemExit, match="missing required field"):
+        with pytest.raises(SystemExit, match="Missing required config field"):
             load_config(tmp_path)
 
     def test_cli_override(self):
-        config = load_config(FIXTURES, base_url="https://override.com")
+        config, _ = load_config(FIXTURES, base_url="https://override.com")
         assert config.base_url == "https://override.com"
-        # Other fields unchanged
         assert config.title == "Test Blog"
 
     def test_none_override_is_ignored(self):
-        config = load_config(FIXTURES, base_url=None)
+        config, _ = load_config(FIXTURES, base_url=None)
         assert config.base_url == "https://example.com"
 
     def test_optional_fields_default(self, tmp_path):
         (tmp_path / "site.toml").write_text(
             '[site]\ntitle = "T"\nbase_url = "http://x"\ndescription = "D"\nauthor = "A"\n'
         )
-        config = load_config(tmp_path)
+        config, _ = load_config(tmp_path)
         assert config.cname == ""
         assert config.avatar == ""
 
@@ -59,6 +55,103 @@ class TestLoadConfig:
             '[site]\ntitle = "T"\nbase_url = "http://x"\ndescription = "D"\nauthor = "A"\n'
             'cname = "blog.example.com"\navatar = "pic.png"\n'
         )
-        config = load_config(tmp_path)
+        config, _ = load_config(tmp_path)
         assert config.cname == "blog.example.com"
         assert config.avatar == "pic.png"
+
+
+class TestLoadFromHomeFrontmatter:
+    def _write_home(self, tmp_path: Path, extra: str = "") -> None:
+        content = (
+            "---\n"
+            "publish: true\n"
+            'title: "My Blog"\n'
+            'base_url: "https://example.com"\n'
+            'description: "A test blog."\n'
+            'author: "Test Author"\n'
+            f"{extra}"
+            "---\n\n# Welcome\n"
+        )
+        (tmp_path / "Home.md").write_text(content)
+
+    def test_loads_from_home_md_when_no_toml(self, tmp_path):
+        self._write_home(tmp_path)
+        config, source = load_config(tmp_path)
+        assert config.title == "My Blog"
+        assert source == "Home.md"
+        assert config.base_url == "https://example.com"
+        assert config.description == "A test blog."
+        assert config.author == "Test Author"
+
+    def test_home_md_case_insensitive(self, tmp_path):
+        """home.md (lowercase) is also accepted."""
+        content = (
+            "---\n"
+            "publish: true\n"
+            'title: "My Blog"\n'
+            'base_url: "https://example.com"\n'
+            'description: "A test blog."\n'
+            'author: "Test Author"\n'
+            "---\n\n# Welcome\n"
+        )
+        (tmp_path / "home.md").write_text(content)
+        config, _ = load_config(tmp_path)
+        assert config.title == "My Blog"
+
+    def test_home_md_optional_fields(self, tmp_path):
+        self._write_home(tmp_path, 'cname: "myblog.dev"\navatar: "me.png"\n')
+        config, _ = load_config(tmp_path)
+        assert config.cname == "myblog.dev"
+        assert config.avatar == "me.png"
+
+    def test_home_md_optional_fields_default(self, tmp_path):
+        self._write_home(tmp_path)
+        config, _ = load_config(tmp_path)
+        assert config.cname == ""
+        assert config.avatar == ""
+
+    def test_home_md_missing_required_field(self, tmp_path):
+        (tmp_path / "Home.md").write_text('---\npublish: true\ntitle: "My Blog"\n---\n\n# Welcome\n')
+        with pytest.raises(SystemExit, match="Missing required config field"):
+            load_config(tmp_path)
+
+    def test_home_md_error_message_names_file(self, tmp_path):
+        (tmp_path / "Home.md").write_text('---\npublish: true\ntitle: "My Blog"\n---\n\n# Welcome\n')
+        with pytest.raises(SystemExit) as exc_info:
+            load_config(tmp_path)
+        assert "Home.md" in str(exc_info.value)
+
+    def test_cli_override_with_home_md(self, tmp_path):
+        self._write_home(tmp_path)
+        config, _ = load_config(tmp_path, base_url="https://override.com")
+        assert config.base_url == "https://override.com"
+        assert config.title == "My Blog"
+
+    def test_toml_takes_priority_over_home_md(self, tmp_path):
+        """site.toml is used even when Home.md also has config fields."""
+        (tmp_path / "site.toml").write_text(
+            '[site]\ntitle = "From TOML"\nbase_url = "http://toml"\ndescription = "D"\nauthor = "A"\n'
+        )
+        self._write_home(tmp_path)  # Home.md has title "My Blog"
+        config, _ = load_config(tmp_path)
+        assert config.title == "From TOML"
+
+
+class TestNoConfigFound:
+    def test_neither_toml_nor_home_exits(self, tmp_path):
+        with pytest.raises(SystemExit, match="No site configuration found"):
+            load_config(tmp_path)
+
+    def test_error_message_shows_source_dir(self, tmp_path):
+        with pytest.raises(SystemExit) as exc_info:
+            load_config(tmp_path)
+        assert str(tmp_path) in str(exc_info.value)
+
+    def test_error_message_lists_required_fields(self, tmp_path):
+        with pytest.raises(SystemExit) as exc_info:
+            load_config(tmp_path)
+        msg = str(exc_info.value)
+        assert "title" in msg
+        assert "base_url" in msg
+        assert "description" in msg
+        assert "author" in msg

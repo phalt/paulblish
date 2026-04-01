@@ -17,13 +17,17 @@ class SkippedFile:
 
 
 def _resolve_slug(metadata: dict) -> str | None:
-    """Return slug from frontmatter, using permalink as alias. Returns None if neither exists."""
+    """Return slug from frontmatter, using permalink as alias. Returns None if neither exists.
+
+    Leading and trailing slashes are stripped so slugs like '/articles/foo' or 'articles/foo/'
+    do not produce double-slashes in URL paths or absolute filesystem paths in the writer.
+    """
     slug = metadata.get("slug")
     if slug:
-        return str(slug)
+        return str(slug).strip("/")
     permalink = metadata.get("permalink")
     if permalink:
-        return str(permalink)
+        return str(permalink).strip("/")
     return None
 
 
@@ -79,8 +83,9 @@ def scan(source_dir: Path) -> tuple[list[Article], list[SkippedFile]]:
 
         metadata = post.metadata
 
-        # Check publish flag
-        if not metadata.get("publish", False):
+        # Check publish flag — compare by value to handle both bool True and string "true"
+        publish = metadata.get("publish", False)
+        if str(publish).lower() != "true":
             skipped.append(SkippedFile(path=relative_path, reason="publish is not true"))
             continue
 
