@@ -1,6 +1,7 @@
 ---
 publish: true
 title: "Simple Article"
+slug: "simple-article"
 date: 2026-03-15
 tags: [python, testing]
 description: "A simple test article."

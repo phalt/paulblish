@@ -58,7 +58,7 @@ Files without frontmatter, or with `publish: false` / missing `publish` key, are
 ---
 publish: true                    # required — boolean, must be true
 title: "Article Title"           # optional — derived from H1 or filename if absent
-slug: "article-title"            # optional — derived from filename if absent
+slug: "article-title"            # required — permalink is accepted as an alias
 date: 2026-03-15                 # optional — used for sorting, falls back to file mtime
 tags: [python, tooling]          # optional — list of strings
 description: "A short summary."  # optional — used in <meta> and listing page
@@ -72,7 +72,8 @@ description: "A short summary."  # optional — used in <meta> and listing page
 
 **Resolution order for `slug`:**
 1. Frontmatter `slug`
-2. Filename (lowercased, spaces/special chars replaced with hyphens)
+2. Frontmatter `permalink` (alias for slug)
+3. Skip — file is not published (no automatic derivation from filename)
 
 **Resolution order for `date`:**
 1. Frontmatter `date`
@@ -102,9 +103,9 @@ Examples:
 | `articles/deep/bar.md` | `output/articles/deep/bar/index.html` | `/articles/deep/bar/` |
 | `Home.md` | `output/index.html` | `/` (special case) |
 
-The slug (from frontmatter or filename) replaces only the filename portion. The parent directory path is always preserved. This means the `Article` model needs a `path_prefix` field representing the relative directory path.
+The slug (from frontmatter `slug` or `permalink`) replaces only the filename portion. The parent directory path is always preserved. This means the `Article` model needs a `path_prefix` field representing the relative directory path.
 
-If a frontmatter `slug` is provided, it replaces the filename-derived slug but the directory prefix remains. For example, `articles/my-draft.md` with `slug: my-post` produces `/articles/my-post/`.
+The `slug` (or its alias `permalink`) replaces only the filename portion; the directory prefix is always preserved. For example, `articles/my-draft.md` with `slug: my-post` produces `/articles/my-post/`.
 
 ### 4.5 The Home File
 
@@ -975,7 +976,7 @@ This is the minimum viable tool — point it at a directory, get HTML files out.
 - [x] **1.1** Scaffold the project following clientele conventions: `pyproject.toml` (hatchling backend), flat `paulblish/` package, `Makefile`, `.python-version`, `uv.lock`, `README.md`, `CHANGELOG.md`, `CONTRIBUTING.md`, `LICENSE`, `.gitignore` (without `_site/`).
 - [x] **1.2** Implement `models.py`: `Article` and `SiteConfig` dataclasses with full type hints. `Article` must include `relative_path`, `path_prefix`, and `url_path` fields for directory-preserving paths.
 - [x] **1.3** Implement `config.py`: load and validate `site.toml` from the source directory. Exit with a clear error (code 1) if the file is missing or malformed. CLI flags override individual values.
-- [ ] **1.4** Implement `scanner.py`: recursive directory walk, frontmatter parsing with `python-frontmatter`, filtering on `publish: true`, title/slug/date resolution logic, `Home.md` detection. Must build `path_prefix` from the file's directory relative to the source root.
+- [x] **1.4** Implement `scanner.py`: recursive directory walk, frontmatter parsing with `python-frontmatter`, filtering on `publish: true`, title/slug/date resolution logic, `Home.md` detection. Must build `path_prefix` from the file's directory relative to the source root.
 - [ ] **1.5** Implement `renderer.py`: base `markdown-it-py` setup with Pygments code highlighting. Standard markdown only — no Obsidian plugins yet.
 - [ ] **1.6** Implement `writer.py`: create output dirs preserving the directory structure (e.g. `_site/articles/foo/index.html`), write rendered HTML with a minimal HTML wrapper (no Jinja2 templates yet).
 - [ ] **1.7** Implement `cli.py`: wire up `pb build` command with `--source` and `--output` using `click`. Must validate source dir and `site.toml` before scanning. Must print ✓/✗ output for every file scanned, showing picked-up files with their output path and skipped files with the skip reason.

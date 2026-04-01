@@ -1,6 +1,7 @@
 ---
 publish: true
 title: "Home"
+slug: "home"
 description: "Welcome to the test blog."
 ---
 
