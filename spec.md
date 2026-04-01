@@ -1002,9 +1002,9 @@ This is the minimum viable tool — point it at a directory, get HTML files out.
 
 ### Phase 2: Wikilinks + Linking
 
-- [ ] **2.1** Implement `linker.py`: build the path lookup table from scanned articles (note name → `url_path`).
-- [ ] **2.2** Implement `plugins/wikilinks.py`: `markdown-it-py` plugin to parse `[[wikilink]]` and `[[wikilink|alias]]` syntax, resolve via path map, handle dead links.
-- [ ] **2.3** Write tests for wikilink resolution (found, not found, aliased, self-referencing, cross-directory links).
+- [x] **2.1** Implement `linker.py`: build the path lookup table from scanned articles (note name → `url_path`).
+- [x] **2.2** Implement `plugins/wikilinks.py`: `markdown-it-py` plugin to parse `[[wikilink]]` and `[[wikilink|alias]]` syntax, resolve via path map, handle dead links.
+- [x] **2.3** Write tests for wikilink resolution (found, not found, aliased, self-referencing, cross-directory links).
 
 **Milestone:** Internal links between published articles work with correct directory-aware paths. Dead links render as styled plain text.
 

@@ -3,6 +3,7 @@ from pathlib import Path
 import click
 
 from paulblish.config import load_config
+from paulblish.linker import build_path_map
 from paulblish.renderer import render
 from paulblish.scanner import scan
 from paulblish.writer import write
@@ -51,9 +52,12 @@ def build(source: str, output: str, base_url: str | None) -> None:
 
     click.echo(f"\nBuilding {len(articles)} articles, skipped {len(skipped)} files\n")
 
+    # Build path map for wikilink resolution
+    path_map = build_path_map(articles)
+
     # Render
     for article in articles:
-        render(article)
+        render(article, path_map=path_map)
 
     # Write
     written = write(articles, output_dir)
