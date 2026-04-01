@@ -966,6 +966,8 @@ _site/
 
 The work is ordered so that each step produces a testable, runnable increment.
 
+**Rule: Every implementation step must include test coverage.** Each step either confirms existing tests cover the change and adapts them if needed, or writes new tests before the step is marked as done. Step 1.8 covers any remaining integration-level tests, but unit tests ship with each step.
+
 ### Phase 1: Scanner + Renderer (core pipeline)
 
 This is the minimum viable tool — point it at a directory, get HTML files out.

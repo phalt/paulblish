@@ -19,6 +19,8 @@ All structural decisions (layout, tooling, conventions) follow [phalt/clientele]
 
 ## Key Rules
 
+- **Every implementation change must include tests.** Before marking a phase step as done, either confirm existing test coverage is sufficient and adapt it, or write new tests. No untested code gets checked off.
+
 - `_site/` is NOT in `.gitignore` — it is committed and deployed.
 - `site.toml` is required in the source directory. Missing = exit code 1 with clear error.
 - Articles require `publish: true` in YAML frontmatter to be included.
