@@ -43,7 +43,7 @@ uv run pb build -s /path/to/vault -o ./_site   # build the site
 
 ## Implementation Progress
 
-Current phase: **Phase 1 — Scanner + Renderer (core pipeline)**
+Current phase: **Phase 2 — Wikilinks + Linking**
 
 After completing each phase action, check it off in `spec.md` (change `- [ ]` to `- [x]`) and update the current phase note here if the phase changes.
 
@@ -52,6 +52,7 @@ After completing each phase action, check it off in `spec.md` (change `- [ ]` to
 Build pipeline sequence: validate source -> validate config -> load config -> scan -> report scan -> build path map -> render -> collect assets -> copy assets -> template -> generate listings -> generate CNAME -> write -> report.
 
 Key modules:
+
 - `cli.py` — click entry point
 - `config.py` — SiteConfig loading + site.toml validation
 - `models.py` — Article and SiteConfig dataclasses
