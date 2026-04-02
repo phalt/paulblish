@@ -3,6 +3,7 @@ from pathlib import Path
 
 from paulblish.feed import generate_feed
 from paulblish.models import Article, SiteConfig
+from paulblish.sitemap import generate_sitemap
 from paulblish.templating import render_404, render_all_pages, render_article, render_tag_page
 
 DEFAULT_TEMPLATES = Path(__file__).parent.parent / "templates"
@@ -64,6 +65,9 @@ def write(
     # Write RSS feed
     written.extend(write_feed(articles, output_dir, site))
 
+    # Write sitemap
+    written.extend(write_sitemap(articles, output_dir, site))
+
     # Write robots.txt
     written.append(write_robots(output_dir, site))
 
@@ -113,6 +117,14 @@ def write_feed(articles: list[Article], output_dir: Path, site: SiteConfig) -> l
     feed_path.parent.mkdir(parents=True, exist_ok=True)
     feed_path.write_text(generate_feed(articles, site), encoding="utf-8")
     return [feed_path]
+
+
+def write_sitemap(articles: list[Article], output_dir: Path, site: SiteConfig) -> list[Path]:
+    """Generate and write sitemap.xml to the output root. Returns a list with the written path."""
+    path = output_dir / "sitemap.xml"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(generate_sitemap(articles, site), encoding="utf-8")
+    return [path]
 
 
 def write_404(output_dir: Path, site: SiteConfig, templates_dir: Path | None = None) -> Path:

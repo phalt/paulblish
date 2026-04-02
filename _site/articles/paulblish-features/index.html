@@ -3,26 +3,28 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Nintendo Hardware — Paul Writes Software</title>
+  <title>Markdown features supported by Paulblish — Paul Writes Software</title>
   
   <!-- Open Graph -->
   <meta property="og:type"        content="article">
   <meta property="og:site_name"   content="Paul Writes Software">
-  <meta property="og:title"       content="Nintendo Hardware">
+  <meta property="og:title"       content="Markdown features supported by Paulblish">
   <meta property="og:description" content="Paul Hallett is a software engineer">
-  <meta property="og:url"         content="/pokemon/pokemon/hardware/">
+  <meta property="og:url"         content="/articles/paulblish-features/">
   
   <meta property="og:image"       content="/assets/site-logo.jpeg">
   
   <!-- Twitter Card -->
   <meta name="twitter:card"        content="summary">
-  <meta name="twitter:title"       content="Nintendo Hardware">
+  <meta name="twitter:title"       content="Markdown features supported by Paulblish">
   <meta name="twitter:description" content="Paul Hallett is a software engineer">
   
   <meta name="twitter:image"       content="/assets/site-logo.jpeg">
   
   <link rel="stylesheet" href="/static/style.css">
   <link rel="alternate" type="application/rss+xml" title="Paul Writes Software" href="/feed.xml">
+  
+  <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"; mermaid.initialize({startOnLoad:true});</script>
   
 </head>
 <body>
@@ -63,13 +65,15 @@
     
 <article>
   <header class="article-meta">
-    <h1>Nintendo Hardware</h1>
-    <time datetime="2025-12-21T10:53:38.351000">21 December 2025</time>
+    <h1>Markdown features supported by Paulblish</h1>
+    <time datetime="2026-04-02T22:00:13.496083">02 April 2026</time>
     <span class="reading-time">2 min read</span>
     
     <div class="tags">
       
-        <a href="/tags/games/" class="tag">games</a>
+        <a href="/tags/hyper-personal-software/" class="tag">hyper-personal-software</a>
+      
+        <a href="/tags/paulblish/" class="tag">paulblish</a>
       
     </div>
     
@@ -78,112 +82,106 @@
 
   
   <div class="article-body">
-    <h1>Hardware</h1>
+    <p>Paulblish supports a bunch of standard html page content, as well as a few extra nifty little things that sets it apart. Please remember: this is hyper-personalised software, so I have included the things <em>I want to have in a website</em>.</p>
+<p>If you want to modify or extend Paulblish then fork it and add your own, or contribute back, I would love free new features on my website so thanks!</p>
+<h2>Text formatting</h2>
+<h1>Heading 1</h1>
+<h2>Heading 2</h2>
+<h2>Heading 3</h2>
+<h4>Heading 4</h4>
+<p>Normal text, duh</p>
+<ul>
+<li>bullet</li>
+<li>points</li>
+</ul>
+<ol>
+<li>Numbered</li>
+<li>lists</li>
+</ol>
+<p><a href="https://github.com.phalt">Links to other sites</a></p>
+<p><a href="/pokemon/pokemon/shiny-rotom/">Wiki links to other markdown files</a></p>
+<p>Here is a foot note <sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup></p>
+<hr />
+<p>Those <code>&lt;hr&gt;</code> things, see! ☝ 👇</p>
+<hr />
+<h2>More complex markdown things</h2>
+<h3>Code blocks</h3>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;python code blocks&quot;</span><span class="p">)</span>
+</pre></div>
+</code></pre>
+<h3>Mermaid.js diagrams</h3>
+<pre class="mermaid">flowchart TD
+    Start(Use Paulblish) --&gt; Stop(Embrace hyper-personal software)
+
+</pre>
+<h3>Tables</h3>
 <table>
 <thead>
 <tr>
-<th>Model</th>
-<th>Software version</th>
-<th>Memory</th>
-<th>Modded</th>
-<th>Other notes</th>
-<th>Colour</th>
+<th>Platform</th>
+<th>Table support</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Original</td>
-<td>11.17.0-50E</td>
-<td>2GB SD</td>
-<td>N/A</td>
-<td>My original console</td>
-<td>Black</td>
+<td>Others</td>
+<td>Results may vary</td>
 </tr>
 <tr>
-<td>2DS XL</td>
-<td>11.17.0-50E</td>
-<td>32GB SD</td>
-<td>✅ Luma3DS 13.2.1</td>
-<td>Purchased second hand in New Zealand. Pikachu protection case. Given to my brother Owen.</td>
-<td>Black/Blue</td>
-</tr>
-<tr>
-<td>2DS XL Pokeball</td>
-<td>11.17.0-50E</td>
-<td>None</td>
-<td>N/A</td>
-<td>Purchased second hand in New Zealand. <em>BROKEN</em> - constantly presses &quot;UP&quot; - needs circle pad / D-pad fixed</td>
-<td>Red/White</td>
-</tr>
-<tr>
-<td>New 3DS</td>
-<td>11.17.0-50E</td>
-<td>32GB SD</td>
-<td>✅ Luma3DS 13.2.1</td>
-<td>Purchased brand new in 2016. Battery replaced 10/12/2024</td>
-<td>Black/wooden mario plates</td>
-</tr>
-<tr>
-<td>New 3DS XL</td>
-<td>11.17.0-50E</td>
-<td>4GB SD</td>
-<td>N/A</td>
-<td>Purchased second hand in New Zealand. Battery replaced 10/12/2024</td>
-<td>Black</td>
+<td>Paulblish</td>
+<td>Supported ⭐</td>
 </tr>
 </tbody>
 </table>
-<h1>3DS / DS Games</h1>
-<p>Unless stated otherwise consider these to be in mint condition with the box, guide etc:</p>
+<h3>Images</h3>
+<p><img src="https://paulwrites.software/assets/site-logo.jpeg" alt="Image, duh" /></p>
+<p>(check the alt text to see it works too)</p>
+<h2>Frontmatter supported properties</h2>
+<h3>Home.md</h3>
+<pre><code class="language-yaml"><div class="highlight"><pre><span></span><span class="nt">cname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">creates a CNAME file with this content, for github pages support</span>
+<span class="nt">avatar</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">relative path to an image will show an icon on the home page</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">used in the &lt;meta name=&quot;description&quot;&gt; tag</span>
+<span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">used in the &lt;title&gt; tag</span>
+<span class="nt">bluesky</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">link to a bluesky account will create a social icon</span>
+<span class="nt">github</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">link to a github account will create a github icon</span>
+<span class="nt">email: link to an email will create a mailto</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">link</span>
+</pre></div>
+</code></pre>
+<h3>Articles</h3>
+<pre><code class="language-yaml"><div class="highlight"><pre><span></span><span class="nt">author</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Your name</span>
+<span class="nt">created</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">date (also determines the next/prev link order!)</span>
+<span class="nt">permalink</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local path (uses directories to build paths, btw)</span>
+<span class="nt">tags</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">builds static tag pages grouping related articles</span>
+<span class="nt">publish</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bool, determines if the article is generated or not</span>
+</pre></div>
+</code></pre>
+<h2>Other features</h2>
 <ul>
-<li>Bravely Default</li>
-<li>Bravely Second: End Layer</li>
-<li>Animal Crossing: New Leaf
-<ul>
-<li>Box slightly damaged</li>
+<li>An <a href="https://paulwrites.software/feed.xml">RSS feed</a> is automatically generated for you.</li>
+<li>As is a <a href="https://paulwrites.software/robots.txt">robots.txt</a> and the relevant <a href="https://paulwrites.software/sitemap.xml">site map</a>.</li>
+<li>And also a <a href="https://paulwrites.software/foo">404 page</a> which perhaps can be funnier...</li>
+<li>Various open graph and twitter tags are also generated (inspect the source of this page and look in the <code>&lt;head&gt;</code> and you'll see what I mean).</li>
 </ul>
+<h2>I missed something!</h2>
+<p>Let me know, and I'll consider it if it's something I want - just <a href="https://github.com/phalt/paulblish">drop an issue on the project</a></p>
+<hr />
+<hr class="footnotes-sep" />
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>Hello! Footnotes work! <a href="#fnref1" class="footnote-backref">↩︎</a></p>
 </li>
-<li>Pokémon Black version
-<ul>
-<li>Victini Liberty Pass coupon still inside</li>
-</ul>
-</li>
-<li>Pokémon Black Version 2</li>
-<li>Pokémon Soul Silver
-<ul>
-<li>Original cardboard box</li>
-<li>Pokéwalker intact and in great condition.</li>
-<li>Original guidebook</li>
-</ul>
-</li>
-<li>Pokémon Platinum</li>
-<li>Pokémon Y</li>
-<li>Pokémon Sun</li>
-<li>Pokémon Moon
-<ul>
-<li>Cartridge only</li>
-</ul>
-</li>
-<li>Pokémon Alpha Sapphire</li>
-<li>Pokémon Omega Ruby</li>
-<li>Fire Emblem: Awakening</li>
-<li>Professor Layton and the Azran Legacy</li>
-<li>Fantasy Life</li>
-<li>Tomodachi life</li>
-<li>Monster hunter 4 ultimate</li>
-</ul>
+</ol>
+</section>
 
   </div>
 
   <nav class="article-nav">
     <div class="article-nav-prev">
       
-      <a href="/photography/photography/polaroid/">← Older: Polaroid</a>
+      <a href="/articles/remembering-stuff/">← Older: How I remember stuff</a>
       
     </div>
     <div class="article-nav-next">
-      
-      <a href="/articles/hypermedia-in-technology/">Newer: Hypermedia isn't just for HTML →</a>
       
     </div>
   </nav>
