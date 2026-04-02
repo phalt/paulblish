@@ -1104,13 +1104,13 @@ This is the minimum viable tool — point it at a directory, get HTML files out.
 
 ### Phase 6: Polish + Deploy
 
-- [ ] **6.1** Implement `pb clean` command.
-- [ ] **6.2** Add `--drafts` flag support.
-- [ ] **6.3** Generate tag index pages (`/tags/{tag}/index.html`).
-- [ ] **6.4** Finalise CLI output: build stats, timing, warning summary.
-- [ ] **6.5** Write both GitHub Actions workflows (`deploy.yml` and `test.yml`).
-- [ ] **6.6** Write `README.md` with all required sections (see §14), including the "Fork Your Own Copy" guide.
-- [ ] **6.7** Write `CHANGELOG.md` and `CONTRIBUTING.md`.
+- [x] **6.1** Implement `pb clean` command.
+- [x] **6.2** Add `--drafts` flag support.
+- [x] **6.3** Generate tag index pages (`/tags/{tag}/index.html`).
+- [x] **6.4** Finalise CLI output: build stats, timing, warning summary.
+- [x] **6.5** Write both GitHub Actions workflows (`deploy.yml` and `test.yml`).
+- [x] **6.6** Write `README.md` with all required sections (see §14), including the "Fork Your Own Copy" guide.
+- [x] **6.7** Write `CHANGELOG.md` and `CONTRIBUTING.md`.
 
 **Milestone:** Production-ready. Build locally, commit, push, site deploys automatically. Anyone can fork the repo and have their own blog running in minutes.
 

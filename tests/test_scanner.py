@@ -11,6 +11,29 @@ def _write_md(path: Path, content: str):
     path.write_text(content)
 
 
+class TestDraftsFlag:
+    def test_drafts_includes_unpublished(self, tmp_path):
+        (tmp_path / "draft.md").write_text("---\nslug: my-draft\n---\nDraft content")
+        (tmp_path / "published.md").write_text("---\npublish: true\nslug: pub\n---\nPublished")
+        articles, skipped = scan(tmp_path, include_drafts=True)
+        slugs = {a.slug for a in articles}
+        assert "my-draft" in slugs
+        assert "pub" in slugs
+        assert not any(s.reason == "publish is not true" for s in skipped)
+
+    def test_without_drafts_excludes_unpublished(self, tmp_path):
+        (tmp_path / "draft.md").write_text("---\nslug: my-draft\n---\nDraft content")
+        articles, skipped = scan(tmp_path, include_drafts=False)
+        assert not articles
+        assert any(s.reason == "publish is not true" for s in skipped)
+
+    def test_drafts_still_requires_slug(self, tmp_path):
+        (tmp_path / "noslug.md").write_text("---\ntitle: No Slug\n---\nContent")
+        articles, skipped = scan(tmp_path, include_drafts=True)
+        assert not articles
+        assert any("slug" in s.reason for s in skipped)
+
+
 class TestScanFixtures:
     """Test scanning the existing fixtures directory."""
 

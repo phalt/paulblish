@@ -2,7 +2,7 @@ from datetime import datetime
 from pathlib import Path
 
 from paulblish.models import Article, SiteConfig
-from paulblish.writer import write, write_cname
+from paulblish.writer import write, write_cname, write_tag_pages
 
 SITE = SiteConfig(title="Test Blog", base_url="https://example.com", description="Test", author="Tester")
 
@@ -187,6 +187,45 @@ class TestCname:
         assert not (tmp_path / "CNAME").exists()
 
 
+class TestTagPages:
+    def _make_tagged(self, slug: str, tags: list[str]) -> Article:
+        a = _make_article(slug)
+        a.tags = tags
+        return a
+
+    def test_tag_pages_created(self, tmp_path):
+        articles = [self._make_tagged("post-a", ["python", "testing"]), self._make_tagged("post-b", ["python"])]
+        write_tag_pages(articles, tmp_path, site=SITE)
+        assert (tmp_path / "tags" / "python" / "index.html").exists()
+        assert (tmp_path / "tags" / "testing" / "index.html").exists()
+
+    def test_tag_page_contains_tagged_articles(self, tmp_path):
+        articles = [self._make_tagged("post-a", ["python"]), self._make_tagged("post-b", ["other"])]
+        write_tag_pages(articles, tmp_path, site=SITE)
+        content = (tmp_path / "tags" / "python" / "index.html").read_text()
+        assert "post-a" in content
+        assert "post-b" not in content
+
+    def test_tag_page_title(self, tmp_path):
+        articles = [self._make_tagged("post-a", ["python"])]
+        write_tag_pages(articles, tmp_path, site=SITE)
+        content = (tmp_path / "tags" / "python" / "index.html").read_text()
+        assert "#python" in content
+
+    def test_no_tags_writes_nothing(self, tmp_path):
+        articles = [_make_article("post-a")]
+        written = write_tag_pages(articles, tmp_path, site=SITE)
+        assert written == []
+        assert not (tmp_path / "tags").exists()
+
+    def test_write_includes_tag_pages(self, tmp_path):
+        article = _make_article("post-a")
+        article.tags = ["python"]
+        written = write([article], tmp_path, site=SITE)
+        # article + all-pages + tag page
+        assert any("tags" in str(p) for p in written)
+
+
 class TestWriteMultiple:
     def test_writes_all_articles_plus_all_pages(self, tmp_path):
         articles = [
@@ -195,6 +234,6 @@ class TestWriteMultiple:
             _make_article("post-two", path_prefix="articles"),
         ]
         written = write(articles, tmp_path, site=SITE)
-        # 3 articles + 1 all-pages listing
+        # 3 articles + 1 all-pages listing + 0 tag pages (no tags in these articles)
         assert len(written) == 4
         assert all(p.exists() for p in written)

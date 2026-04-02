@@ -2,7 +2,7 @@ import shutil
 from pathlib import Path
 
 from paulblish.models import Article, SiteConfig
-from paulblish.templating import render_all_pages, render_article
+from paulblish.templating import render_all_pages, render_article, render_tag_page
 
 DEFAULT_TEMPLATES = Path(__file__).parent.parent / "templates"
 
@@ -38,6 +38,9 @@ def write(
     all_pages_path.write_text(all_pages_html)
     written.append(all_pages_path)
 
+    # Write tag pages
+    written.extend(write_tag_pages(articles, output_dir, site, templates_dir=templates_dir))
+
     # Copy static assets from templates
     tpl_dir = templates_dir if templates_dir else DEFAULT_TEMPLATES
     static_src = tpl_dir / "static"
@@ -46,6 +49,31 @@ def write(
         if static_dst.exists():
             shutil.rmtree(static_dst)
         shutil.copytree(static_src, static_dst)
+
+    return written
+
+
+def write_tag_pages(
+    articles: list[Article],
+    output_dir: Path,
+    site: SiteConfig,
+    templates_dir: Path | None = None,
+) -> list[Path]:
+    """Write a /tags/{tag}/index.html page for each unique tag. Returns written paths."""
+    from collections import defaultdict
+
+    tag_map: dict[str, list[Article]] = defaultdict(list)
+    for article in articles:
+        for tag in article.tags:
+            tag_map[tag].append(article)
+
+    written: list[Path] = []
+    for tag, tagged_articles in sorted(tag_map.items()):
+        path = output_dir / "tags" / tag / "index.html"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        html = render_tag_page(tag, tagged_articles, site, templates_dir=templates_dir)
+        path.write_text(html)
+        written.append(path)
 
     return written
 

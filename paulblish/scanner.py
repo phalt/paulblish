@@ -60,7 +60,7 @@ def _is_home(file_path: Path, source_dir: Path) -> bool:
     return file_path.parent == source_dir and file_path.stem.lower() == "home"
 
 
-def scan(source_dir: Path) -> tuple[list[Article], list[SkippedFile]]:
+def scan(source_dir: Path, include_drafts: bool = False) -> tuple[list[Article], list[SkippedFile]]:
     """Scan source directory for publishable markdown files.
 
     Returns (articles, skipped) where articles are valid Article instances
@@ -85,7 +85,7 @@ def scan(source_dir: Path) -> tuple[list[Article], list[SkippedFile]]:
 
         # Check publish flag — compare by value to handle both bool True and string "true"
         publish = metadata.get("publish", False)
-        if str(publish).lower() != "true":
+        if not include_drafts and str(publish).lower() != "true":
             skipped.append(SkippedFile(path=relative_path, reason="publish is not true"))
             continue
 

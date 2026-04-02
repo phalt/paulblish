@@ -37,6 +37,16 @@ class TestBuildCommand:
         assert "Building" in result.output
         assert "articles" in result.output
 
+    def test_done_line_has_stats_and_timing(self, tmp_path):
+        runner = CliRunner()
+        result = runner.invoke(main, ["build", "-s", str(FIXTURES), "-o", str(tmp_path / "_site")])
+        assert "Done." in result.output
+        assert "Built" in result.output
+        assert "articles" in result.output
+        assert "assets" in result.output
+        assert "in " in result.output
+        assert "s." in result.output
+
     def test_shows_written_paths(self, tmp_path):
         runner = CliRunner()
         result = runner.invoke(main, ["build", "-s", str(FIXTURES), "-o", str(tmp_path / "_site")])
@@ -66,6 +76,52 @@ class TestBuildBaseUrlOverride:
             ["build", "-s", str(FIXTURES), "-o", str(tmp_path / "_site"), "--base-url", "https://override.com"],
         )
         assert result.exit_code == 0
+
+
+class TestCleanCommand:
+    def test_removes_output_directory(self, tmp_path):
+        runner = CliRunner()
+        output_dir = tmp_path / "_site"
+        output_dir.mkdir()
+        (output_dir / "index.html").write_text("<html/>")
+        result = runner.invoke(main, ["clean", "-o", str(output_dir)])
+        assert result.exit_code == 0
+        assert not output_dir.exists()
+        assert "Removed" in result.output
+
+    def test_no_error_when_already_absent(self, tmp_path):
+        runner = CliRunner()
+        result = runner.invoke(main, ["clean", "-o", str(tmp_path / "_site")])
+        assert result.exit_code == 0
+        assert "Nothing to clean" in result.output
+
+
+class TestDraftsFlag:
+    def test_drafts_flag_includes_unpublished(self, tmp_path):
+        source = tmp_path / "source"
+        source.mkdir()
+        (source / "site.toml").write_text(
+            '[site]\ntitle = "T"\nbase_url = "http://x"\ndescription = "D"\nauthor = "A"\n'
+        )
+        (source / "draft.md").write_text("---\nslug: my-draft\n---\nDraft content")
+
+        runner = CliRunner()
+        result = runner.invoke(main, ["build", "-s", str(source), "-o", str(tmp_path / "_site"), "--drafts"])
+        assert result.exit_code == 0
+        assert (tmp_path / "_site" / "my-draft" / "index.html").exists()
+
+    def test_without_drafts_flag_excludes_unpublished(self, tmp_path):
+        source = tmp_path / "source"
+        source.mkdir()
+        (source / "site.toml").write_text(
+            '[site]\ntitle = "T"\nbase_url = "http://x"\ndescription = "D"\nauthor = "A"\n'
+        )
+        (source / "draft.md").write_text("---\nslug: my-draft\n---\nDraft content")
+
+        runner = CliRunner()
+        result = runner.invoke(main, ["build", "-s", str(source), "-o", str(tmp_path / "_site")])
+        assert result.exit_code == 0
+        assert not (tmp_path / "_site" / "my-draft" / "index.html").exists()
 
 
 class TestBuildSkippedFiles:

@@ -22,6 +22,14 @@ def render_article(article: Article, site: SiteConfig, templates_dir: Path | Non
     return template.render(article=article, site=site)
 
 
+def render_tag_page(tag: str, articles: list[Article], site: SiteConfig, templates_dir: Path | None = None) -> str:
+    """Render a tag listing page for a single tag."""
+    env = _create_env(templates_dir)
+    template = env.get_template("listing.html")
+    sorted_articles = sorted(articles, key=lambda a: a.date, reverse=True)
+    return template.render(title=f"#{tag}", articles=sorted_articles, site=site)
+
+
 def render_all_pages(articles: list[Article], site: SiteConfig, templates_dir: Path | None = None) -> str:
     """Render the all-pages listing, grouped by path_prefix, sorted by date descending."""
     env = _create_env(templates_dir)

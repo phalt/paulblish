@@ -1,3 +1,4 @@
+import time
 from pathlib import Path
 
 import click
@@ -22,7 +23,8 @@ def main():
 @click.option("--output", "-o", default="./_site", help="Path to write generated HTML.")
 @click.option("--base-url", default=None, help="Base URL for absolute links (overrides site.toml).")
 @click.option("--templates", default=None, help="Path to custom Jinja2 templates directory.")
-def build(source: str, output: str, base_url: str | None, templates: str | None) -> None:
+@click.option("--drafts", is_flag=True, default=False, help="Include articles without publish: true.")
+def build(source: str, output: str, base_url: str | None, templates: str | None, drafts: bool) -> None:
     """Build the static site from a source directory."""
     source_dir = Path(source).resolve()
     output_dir = Path(output).resolve()
@@ -42,7 +44,7 @@ def build(source: str, output: str, base_url: str | None, templates: str | None)
 
     # Scan
     click.echo("\nScanning...\n")
-    articles, skipped = scan(source_dir)
+    articles, skipped = scan(source_dir, include_drafts=drafts)
 
     for article in articles:
         if article.is_home:
@@ -54,6 +56,8 @@ def build(source: str, output: str, base_url: str | None, templates: str | None)
         click.echo(f"  ✗ {skip.path} ({skip.reason})")
 
     click.echo(f"\nBuilding {len(articles)} articles, skipped {len(skipped)} files\n")
+
+    build_start = time.perf_counter()
 
     # Build path map for wikilink resolution
     path_map = build_path_map(articles)
@@ -78,9 +82,27 @@ def build(source: str, output: str, base_url: str | None, templates: str | None)
     if cname_path:
         click.echo(f"  → {cname_path.relative_to(output_dir.parent)}")
 
+    elapsed = time.perf_counter() - build_start
     num_assets = len([r for r in asset_refs if r.source_path])
     num_warnings = len(asset_warnings)
-    click.echo(f"\nDone. {len(articles)} articles, {num_assets} assets, {num_warnings} warnings.")
+    warning_str = f", {num_warnings} warning{'s' if num_warnings != 1 else ''}" if num_warnings else ""
+    click.echo(f"\nDone. Built {len(articles)} articles, {num_assets} assets{warning_str} in {elapsed:.2f}s.")
+
+
+@main.command()
+@click.option("--output", "-o", default="./_site", help="Path to the built site directory to remove.")
+def clean(output: str) -> None:
+    """Remove the built site directory."""
+    import shutil
+
+    output_dir = Path(output).resolve()
+
+    if not output_dir.exists():
+        click.echo(f"Nothing to clean: {output_dir} does not exist.")
+        return
+
+    shutil.rmtree(output_dir)
+    click.echo(f"Removed {output_dir}")
 
 
 @main.command()
