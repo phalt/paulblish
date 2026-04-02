@@ -1,6 +1,7 @@
 import shutil
 from pathlib import Path
 
+from paulblish.feed import generate_feed
 from paulblish.models import Article, SiteConfig
 from paulblish.templating import render_all_pages, render_article, render_tag_page
 
@@ -41,6 +42,9 @@ def write(
     # Write tag pages
     written.extend(write_tag_pages(articles, output_dir, site, templates_dir=templates_dir))
 
+    # Write RSS feed
+    written.extend(write_feed(articles, output_dir, site))
+
     # Copy static assets from templates
     tpl_dir = templates_dir if templates_dir else DEFAULT_TEMPLATES
     static_src = tpl_dir / "static"
@@ -76,6 +80,14 @@ def write_tag_pages(
         written.append(path)
 
     return written
+
+
+def write_feed(articles: list[Article], output_dir: Path, site: SiteConfig) -> list[Path]:
+    """Generate and write feed.xml to the output root. Returns a list with the written path."""
+    feed_path = output_dir / "feed.xml"
+    feed_path.parent.mkdir(parents=True, exist_ok=True)
+    feed_path.write_text(generate_feed(articles, site), encoding="utf-8")
+    return [feed_path]
 
 
 def write_cname(output_dir: Path, cname: str) -> Path | None:

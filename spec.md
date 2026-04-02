@@ -1116,9 +1116,9 @@ This is the minimum viable tool — point it at a directory, get HTML files out.
 
 ### Phase 7: RSS Feed
 
-- [ ] **7.1** Implement `feed.py`: generate RSS 2.0 XML from published articles (excluding Home), sorted by date descending, max 20 items. Use `xml.etree.ElementTree` (stdlib). Feed metadata from `SiteConfig`.
-- [ ] **7.2** Update `writer.py` to call feed generation and write `feed.xml` to the output root.
-- [ ] **7.3** Update `base.html` to include `<link rel="alternate" type="application/rss+xml">` in `<head>` for feed discovery.
-- [ ] **7.4** Write tests for: feed XML structure, item count limit, date formatting (RFC 822), Home exclusion, description fallback, feed discovery link in HTML output.
+- [x] **7.1** Implement `feed.py`: generate RSS 2.0 XML from published articles (excluding Home), sorted by date descending, max 20 items. Use `xml.etree.ElementTree` (stdlib). Feed metadata from `SiteConfig`.
+- [x] **7.2** Update `writer.py` to call feed generation and write `feed.xml` to the output root.
+- [x] **7.3** Update `base.html` to include `<link rel="alternate" type="application/rss+xml">` in `<head>` for feed discovery.
+- [x] **7.4** Write tests for: feed XML structure, item count limit, date formatting (RFC 822), Home exclusion, description fallback, feed discovery link in HTML output.
 
 **Milestone:** `/feed.xml` is generated on every build, discoverable via `<link>` tag, and contains the 20 most recent articles with correct metadata.
