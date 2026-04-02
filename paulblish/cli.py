@@ -1,3 +1,4 @@
+import contextlib
 import time
 from pathlib import Path
 
@@ -128,10 +129,8 @@ def serve(output: str, port: int) -> None:
     meta_path = output_dir / ".pb-meta.json"
     rewrite_from = ""
     if meta_path.exists():
-        try:
+        with contextlib.suppress(Exception):
             rewrite_from = json.loads(meta_path.read_text()).get("base_url", "")
-        except Exception:
-            pass
 
     if rewrite_from:
         click.echo(f"Rewriting '{rewrite_from}' → '' in HTML/XML responses for local preview.")

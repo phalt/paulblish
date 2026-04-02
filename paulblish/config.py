@@ -56,7 +56,7 @@ def _validate_and_build(site: dict, source_label: str, **overrides: str) -> Site
 
     return SiteConfig(
         title=site["title"],
-        base_url=site["base_url"],
+        base_url=str(site["base_url"]).rstrip("/"),
         description=site["description"],
         author=site["author"],
         cname=site.get("cname", ""),

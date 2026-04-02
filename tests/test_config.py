@@ -191,3 +191,26 @@ class TestNoConfigFound:
         assert "base_url" in msg
         assert "description" in msg
         assert "author" in msg
+
+
+class TestBaseUrlNormalization:
+    def test_trailing_slash_stripped(self, tmp_path):
+        (tmp_path / "site.toml").write_text(
+            '[site]\ntitle = "T"\nbase_url = "https://user.github.io/repo/"\ndescription = "D"\nauthor = "A"\n'
+        )
+        config, _ = load_config(tmp_path)
+        assert config.base_url == "https://user.github.io/repo"
+
+    def test_multiple_trailing_slashes_stripped(self, tmp_path):
+        (tmp_path / "site.toml").write_text(
+            '[site]\ntitle = "T"\nbase_url = "paulblish///"\ndescription = "D"\nauthor = "A"\n'
+        )
+        config, _ = load_config(tmp_path)
+        assert config.base_url == "paulblish"
+
+    def test_no_trailing_slash_unchanged(self, tmp_path):
+        (tmp_path / "site.toml").write_text(
+            '[site]\ntitle = "T"\nbase_url = "https://user.github.io/repo"\ndescription = "D"\nauthor = "A"\n'
+        )
+        config, _ = load_config(tmp_path)
+        assert config.base_url == "https://user.github.io/repo"
