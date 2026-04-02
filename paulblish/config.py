@@ -61,6 +61,9 @@ def _validate_and_build(site: dict, source_label: str, **overrides: str) -> Site
         author=site["author"],
         cname=site.get("cname", ""),
         avatar=site.get("avatar", ""),
+        github=site.get("github", ""),
+        bluesky=site.get("bluesky", ""),
+        email=site.get("email", ""),
     )
 
 

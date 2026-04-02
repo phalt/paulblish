@@ -379,6 +379,38 @@ pre code {
   margin-bottom: 0.4rem;
 }
 
+/* === Social icons === */
+.social-icons {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.site-nav .social-icons {
+  margin-left: auto;
+}
+
+.social-icon {
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  line-height: 1;
+}
+
+.social-icon:hover {
+  color: var(--accent-teal);
+  text-decoration: none;
+}
+
+.social-icon svg {
+  display: block;
+}
+
+.site-footer .social-icons {
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
 /* === Footer === */
 .site-footer {
   border-top: 1px solid var(--border);

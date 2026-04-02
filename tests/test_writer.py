@@ -5,6 +5,15 @@ from paulblish.models import Article, SiteConfig
 from paulblish.writer import assign_prev_next, write, write_404, write_cname, write_robots, write_tag_pages
 
 SITE = SiteConfig(title="Test Blog", base_url="https://example.com", description="Test", author="Tester")
+SITE_SOCIAL = SiteConfig(
+    title="Test Blog",
+    base_url="https://example.com",
+    description="Test",
+    author="Tester",
+    github="https://github.com/phalt",
+    bluesky="https://bsky.app/profile/paul.bsky.social",
+    email="paul@example.com",
+)
 
 
 def _make_article(slug: str, path_prefix: str = "", is_home: bool = False, title: str = "Test") -> Article:
@@ -437,3 +446,51 @@ class TestHomeLatestArticles:
         write([home, a], tmp_path, site=SITE)
         content = (tmp_path / "index.html").read_text()
         assert 'class="article-nav"' not in content
+
+
+class TestSocialIcons:
+    def test_icons_absent_when_not_configured(self, tmp_path):
+        articles = [_make_article("post")]
+        write(articles, tmp_path, site=SITE)
+        content = (tmp_path / "post" / "index.html").read_text()
+        assert "social-icons" not in content
+
+    def test_github_icon_rendered_in_nav(self, tmp_path):
+        articles = [_make_article("post")]
+        write(articles, tmp_path, site=SITE_SOCIAL)
+        content = (tmp_path / "post" / "index.html").read_text()
+        assert 'aria-label="GitHub"' in content
+        assert "https://github.com/phalt" in content
+
+    def test_bluesky_icon_rendered_in_nav(self, tmp_path):
+        articles = [_make_article("post")]
+        write(articles, tmp_path, site=SITE_SOCIAL)
+        content = (tmp_path / "post" / "index.html").read_text()
+        assert 'aria-label="Bluesky"' in content
+        assert "https://bsky.app/profile/paul.bsky.social" in content
+
+    def test_email_icon_rendered_as_mailto(self, tmp_path):
+        articles = [_make_article("post")]
+        write(articles, tmp_path, site=SITE_SOCIAL)
+        content = (tmp_path / "post" / "index.html").read_text()
+        assert 'aria-label="Email"' in content
+        assert "mailto:paul@example.com" in content
+
+    def test_icons_appear_in_footer_too(self, tmp_path):
+        articles = [_make_article("post")]
+        write(articles, tmp_path, site=SITE_SOCIAL)
+        content = (tmp_path / "post" / "index.html").read_text()
+        # social-icons div should appear twice: once in nav, once in footer
+        assert content.count("social-icons") == 2
+
+    def test_partial_config_only_renders_set_icons(self, tmp_path):
+        site = SiteConfig(
+            title="T", base_url="https://x.com", description="D", author="A",
+            github="https://github.com/phalt",
+        )
+        articles = [_make_article("post")]
+        write(articles, tmp_path, site=site)
+        content = (tmp_path / "post" / "index.html").read_text()
+        assert 'aria-label="GitHub"' in content
+        assert 'aria-label="Bluesky"' not in content
+        assert 'aria-label="Email"' not in content

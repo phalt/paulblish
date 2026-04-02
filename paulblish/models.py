@@ -33,3 +33,6 @@ class SiteConfig:
     author: str
     cname: str = ""
     avatar: str = ""
+    github: str = ""
+    bluesky: str = ""
+    email: str = ""

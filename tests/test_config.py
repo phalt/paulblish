@@ -137,6 +137,42 @@ class TestLoadFromHomeFrontmatter:
         assert config.title == "From TOML"
 
 
+class TestSocialFields:
+    def test_social_fields_default_to_empty(self, tmp_path):
+        (tmp_path / "site.toml").write_text(
+            '[site]\ntitle = "T"\nbase_url = "http://x"\ndescription = "D"\nauthor = "A"\n'
+        )
+        config, _ = load_config(tmp_path)
+        assert config.github == ""
+        assert config.bluesky == ""
+        assert config.email == ""
+
+    def test_social_fields_loaded_from_toml(self, tmp_path):
+        (tmp_path / "site.toml").write_text(
+            '[site]\ntitle = "T"\nbase_url = "http://x"\ndescription = "D"\nauthor = "A"\n'
+            'github = "https://github.com/phalt"\n'
+            'bluesky = "https://bsky.app/profile/paul.bsky.social"\n'
+            'email = "paul@example.com"\n'
+        )
+        config, _ = load_config(tmp_path)
+        assert config.github == "https://github.com/phalt"
+        assert config.bluesky == "https://bsky.app/profile/paul.bsky.social"
+        assert config.email == "paul@example.com"
+
+    def test_social_fields_loaded_from_home_md(self, tmp_path):
+        (tmp_path / "Home.md").write_text(
+            "---\n"
+            "publish: true\n"
+            'title: "T"\nbase_url: "http://x"\ndescription: "D"\nauthor: "A"\n'
+            'github: "https://github.com/phalt"\n'
+            'email: "paul@example.com"\n'
+            "---\n\n# Hi\n"
+        )
+        config, _ = load_config(tmp_path)
+        assert config.github == "https://github.com/phalt"
+        assert config.email == "paul@example.com"
+
+
 class TestNoConfigFound:
     def test_neither_toml_nor_home_exits(self, tmp_path):
         with pytest.raises(SystemExit, match="No site configuration found"):

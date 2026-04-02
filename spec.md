@@ -1139,7 +1139,7 @@ A collection of high-value improvements and two larger features (light/dark mode
 - [x] **8.6** Generate a styled `404.html` on every build.
 - [X] **8.7** Light / dark mode toggle with `localStorage` persistence and anti-FOUC inline script.
 - [ ] **8.8** Incremental builds via `--incremental` flag and `.pb-manifest.json`.
-- [ ] **8.9** Social icons in nav and footer for Bluesky, GitHub, and email.
+- [x] **8.9** Social icons in nav and footer for Bluesky, GitHub, and email.
 
 **Milestone:** All pages include social sharing meta tags, are discoverable by crawlers, have a working 404, support light/dark theming, large vaults can be rebuilt incrementally in a fraction of the full build time, and the site displays the author's social presence via icons in the nav and footer.
 
