@@ -337,6 +337,48 @@ pre code {
   margin-left: 1rem;
 }
 
+/* === Article prev/next nav === */
+.article-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 0;
+  margin-top: 2rem;
+}
+
+.article-nav-prev,
+.article-nav-next {
+  flex: 1;
+}
+
+.article-nav-next {
+  text-align: right;
+}
+
+/* === Recent posts (home page) === */
+.recent-posts {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+}
+
+.recent-posts h2 {
+  margin-top: 0;
+}
+
+.recent-posts ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.recent-posts li {
+  margin-bottom: 0.4rem;
+}
+
 /* === Footer === */
 .site-footer {
   border-top: 1px solid var(--border);

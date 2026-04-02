@@ -1131,13 +1131,13 @@ A collection of high-value improvements and two larger features (light/dark mode
 
 **Rule: Every implementation step must include test coverage.** Each step either confirms existing tests cover the change and adapts them if needed, or writes new tests before the step is marked done. Documentation must also be updated when each feature is implemented — see the detail sections below.
 
-- [ ] **8.1** Prev / Next article navigation links on every article page.
+- [x] **8.1** Prev / Next article navigation links on every article page.
 - [x] **8.2** Reading time estimate displayed in article header.
 - [x] **8.3** Open Graph and Twitter Card meta tags on every page.
-- [ ] **8.4** Generate `sitemap.xml` on every build.
+- [X] **8.4** Generate `sitemap.xml` on every build.
 - [x] **8.5** Generate `robots.txt` on every build.
 - [x] **8.6** Generate a styled `404.html` on every build.
-- [ ] **8.7** Light / dark mode toggle with `localStorage` persistence and anti-FOUC inline script.
+- [X] **8.7** Light / dark mode toggle with `localStorage` persistence and anti-FOUC inline script.
 - [ ] **8.8** Incremental builds via `--incremental` flag and `.pb-manifest.json`.
 - [ ] **8.9** Social icons in nav and footer for Bluesky, GitHub, and email.
 

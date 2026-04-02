@@ -18,6 +18,17 @@
   </div>
   {% endif %}
 
+  {% if latest_articles %}
+  <section class="recent-posts">
+    <h2>Recent Posts</h2>
+    <ul>
+      {% for a in latest_articles %}
+      <li><a href="{{ site.base_url }}{{ a.url_path }}">{{ a.title }}</a></li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
   {# body_html is pre-rendered HTML from markdown-it-py — | safe is mandatory #}
   <div class="article-body">
     {{ article.body_html | safe }}

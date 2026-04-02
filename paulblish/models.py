@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
@@ -19,6 +21,8 @@ class Article:
     is_home: bool = False
     reading_time_minutes: int = 0
     assets: list[Path] = field(default_factory=list)
+    prev_article: Article | None = field(default=None)
+    next_article: Article | None = field(default=None)
 
 
 @dataclass

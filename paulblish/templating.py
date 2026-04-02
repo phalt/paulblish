@@ -28,12 +28,18 @@ def _og_context(site: SiteConfig, article: Article | None = None) -> dict:
     }
 
 
-def render_article(article: Article, site: SiteConfig, templates_dir: Path | None = None) -> str:
+def render_article(
+    article: Article,
+    site: SiteConfig,
+    templates_dir: Path | None = None,
+    latest_articles: list[Article] | None = None,
+) -> str:
     """Render a single article page. Uses home.html for the home article, article.html otherwise."""
     env = _create_env(templates_dir)
     template_name = "home.html" if article.is_home else "article.html"
     template = env.get_template(template_name)
-    return template.render(article=article, site=site, **_og_context(site, article))
+    extra = {"latest_articles": latest_articles or []} if article.is_home else {}
+    return template.render(article=article, site=site, **_og_context(site, article), **extra)
 
 
 def render_tag_page(tag: str, articles: list[Article], site: SiteConfig, templates_dir: Path | None = None) -> str:

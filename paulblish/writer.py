@@ -17,6 +17,17 @@ def _output_path(article: Article, output_dir: Path) -> Path:
     return output_dir / article.slug / "index.html"
 
 
+def assign_prev_next(articles: list[Article]) -> None:
+    """Set prev_article / next_article on each non-home article, ordered by date then url_path."""
+    sequence = sorted(
+        [a for a in articles if not a.is_home],
+        key=lambda a: (a.date, a.url_path),
+    )
+    for i, article in enumerate(sequence):
+        article.prev_article = sequence[i - 1] if i > 0 else None
+        article.next_article = sequence[i + 1] if i < len(sequence) - 1 else None
+
+
 def write(
     articles: list[Article],
     output_dir: Path,
@@ -24,11 +35,19 @@ def write(
     templates_dir: Path | None = None,
 ) -> list[Path]:
     """Write rendered articles to the output directory. Returns list of written file paths."""
+    assign_prev_next(articles)
+    latest_articles = sorted(
+        [a for a in articles if not a.is_home],
+        key=lambda a: a.date,
+        reverse=True,
+    )[:3]
+
     written: list[Path] = []
     for article in articles:
         path = _output_path(article, output_dir)
         path.parent.mkdir(parents=True, exist_ok=True)
-        html = render_article(article, site, templates_dir=templates_dir)
+        la = latest_articles if article.is_home else None
+        html = render_article(article, site, templates_dir=templates_dir, latest_articles=la)
         path.write_text(html)
         written.append(path)
 

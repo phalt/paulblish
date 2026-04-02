@@ -2,7 +2,7 @@ from datetime import datetime
 from pathlib import Path
 
 from paulblish.models import Article, SiteConfig
-from paulblish.writer import write, write_404, write_cname, write_robots, write_tag_pages
+from paulblish.writer import assign_prev_next, write, write_404, write_cname, write_robots, write_tag_pages
 
 SITE = SiteConfig(title="Test Blog", base_url="https://example.com", description="Test", author="Tester")
 
@@ -302,3 +302,138 @@ class TestWriteMultiple:
         # 3 articles + 1 all-pages + 0 tag pages + 1 feed.xml + 1 robots.txt + 1 404.html
         assert len(written) == 7
         assert all(p.exists() for p in written)
+
+
+def _make_dated(slug: str, year: int, title: str = "") -> Article:
+    a = _make_article(slug, title=title or slug)
+    a.date = datetime(year, 1, 1)
+    return a
+
+
+class TestAssignPrevNext:
+    def test_sequence_of_three(self):
+        a1 = _make_dated("a", 2020)
+        a2 = _make_dated("b", 2021)
+        a3 = _make_dated("c", 2022)
+        assign_prev_next([a1, a2, a3])
+        assert a1.prev_article is None
+        assert a1.next_article is a2
+        assert a2.prev_article is a1
+        assert a2.next_article is a3
+        assert a3.prev_article is a2
+        assert a3.next_article is None
+
+    def test_first_has_no_prev(self):
+        a1 = _make_dated("a", 2020)
+        a2 = _make_dated("b", 2021)
+        assign_prev_next([a1, a2])
+        assert a1.prev_article is None
+
+    def test_last_has_no_next(self):
+        a1 = _make_dated("a", 2020)
+        a2 = _make_dated("b", 2021)
+        assign_prev_next([a1, a2])
+        assert a2.next_article is None
+
+    def test_single_article_has_neither(self):
+        a = _make_dated("only", 2021)
+        assign_prev_next([a])
+        assert a.prev_article is None
+        assert a.next_article is None
+
+    def test_home_excluded_from_sequence(self):
+        home = _make_article("home", is_home=True)
+        home.date = datetime(2021, 6, 1)
+        a1 = _make_dated("a", 2020)
+        a2 = _make_dated("b", 2022)
+        assign_prev_next([home, a1, a2])
+        assert home.prev_article is None
+        assert home.next_article is None
+        assert a1.next_article is a2
+        assert a2.prev_article is a1
+
+    def test_tiebreaker_by_url_path(self):
+        a = _make_article("aaa")
+        a.date = datetime(2021, 1, 1)
+        b = _make_article("bbb")
+        b.date = datetime(2021, 1, 1)
+        assign_prev_next([b, a])  # deliberately out of order
+        assert a.next_article is b
+        assert b.prev_article is a
+
+
+class TestPrevNextTemplate:
+    def test_prev_link_rendered(self, tmp_path):
+        older = _make_dated("older", 2020, title="Older Post")
+        newer = _make_dated("newer", 2021, title="Newer Post")
+        write([older, newer], tmp_path, site=SITE)
+        content = (tmp_path / "newer" / "index.html").read_text()
+        assert "← Older" in content
+        assert "Older Post" in content
+
+    def test_next_link_rendered(self, tmp_path):
+        older = _make_dated("older", 2020, title="Older Post")
+        newer = _make_dated("newer", 2021, title="Newer Post")
+        write([older, newer], tmp_path, site=SITE)
+        content = (tmp_path / "older" / "index.html").read_text()
+        assert "Newer:" in content
+        assert "Newer Post" in content
+
+    def test_no_prev_on_first_article(self, tmp_path):
+        a1 = _make_dated("first", 2020)
+        a2 = _make_dated("second", 2021)
+        write([a1, a2], tmp_path, site=SITE)
+        content = (tmp_path / "first" / "index.html").read_text()
+        assert "← Older" not in content
+
+    def test_no_next_on_last_article(self, tmp_path):
+        a1 = _make_dated("first", 2020)
+        a2 = _make_dated("second", 2021)
+        write([a1, a2], tmp_path, site=SITE)
+        content = (tmp_path / "second" / "index.html").read_text()
+        assert "Newer →" not in content
+
+    def test_article_nav_block_present(self, tmp_path):
+        a = _make_dated("solo", 2021)
+        write([a], tmp_path, site=SITE)
+        content = (tmp_path / "solo" / "index.html").read_text()
+        assert 'class="article-nav"' in content
+
+
+class TestHomeLatestArticles:
+    def test_latest_articles_shown_on_home(self, tmp_path):
+        home = _make_article("home", is_home=True)
+        a1 = _make_dated("alpha", 2023, title="Alpha Post")
+        a2 = _make_dated("beta", 2022, title="Beta Post")
+        a3 = _make_dated("gamma", 2021, title="Gamma Post")
+        write([home, a1, a2, a3], tmp_path, site=SITE)
+        content = (tmp_path / "index.html").read_text()
+        assert "recent-posts" in content
+        assert "Alpha Post" in content
+        assert "Beta Post" in content
+        assert "Gamma Post" in content
+
+    def test_home_shows_at_most_three_latest(self, tmp_path):
+        home = _make_article("home", is_home=True)
+        articles = [_make_dated(f"post-{i}", 2020 + i, title=f"Post {i}") for i in range(5)]
+        write([home] + articles, tmp_path, site=SITE)
+        content = (tmp_path / "index.html").read_text()
+        # Most recent 3 should appear; oldest 2 should not
+        assert "Post 4" in content
+        assert "Post 3" in content
+        assert "Post 2" in content
+        assert "Post 1" not in content
+        assert "Post 0" not in content
+
+    def test_home_no_recent_posts_without_articles(self, tmp_path):
+        home = _make_article("home", is_home=True)
+        write([home], tmp_path, site=SITE)
+        content = (tmp_path / "index.html").read_text()
+        assert "recent-posts" not in content
+
+    def test_home_does_not_show_article_nav(self, tmp_path):
+        home = _make_article("home", is_home=True)
+        a = _make_dated("post", 2021)
+        write([home, a], tmp_path, site=SITE)
+        content = (tmp_path / "index.html").read_text()
+        assert 'class="article-nav"' not in content

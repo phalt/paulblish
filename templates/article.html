@@ -24,5 +24,18 @@
   <div class="article-body">
     {{ article.body_html | safe }}
   </div>
+
+  <nav class="article-nav">
+    <div class="article-nav-prev">
+      {% if article.prev_article %}
+      <a href="{{ site.base_url }}{{ article.prev_article.url_path }}">← Older: {{ article.prev_article.title }}</a>
+      {% endif %}
+    </div>
+    <div class="article-nav-next">
+      {% if article.next_article %}
+      <a href="{{ site.base_url }}{{ article.next_article.url_path }}">Newer: {{ article.next_article.title }} →</a>
+      {% endif %}
+    </div>
+  </nav>
 </article>
 {% endblock %}
