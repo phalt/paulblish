@@ -34,6 +34,18 @@ class TestDraftsFlag:
         assert any("slug" in s.reason for s in skipped)
 
 
+class TestNullTagsHandling:
+    def test_explicit_null_tags_becomes_empty_list(self, tmp_path):
+        (tmp_path / "post.md").write_text("---\npublish: true\nslug: post\ntags: null\n---\nContent")
+        articles, _ = scan(tmp_path)
+        assert articles[0].tags == []
+
+    def test_missing_tags_becomes_empty_list(self, tmp_path):
+        (tmp_path / "post.md").write_text("---\npublish: true\nslug: post\n---\nContent")
+        articles, _ = scan(tmp_path)
+        assert articles[0].tags == []
+
+
 class TestScanFixtures:
     """Test scanning the existing fixtures directory."""
 

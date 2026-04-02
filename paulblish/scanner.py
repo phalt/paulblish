@@ -115,7 +115,7 @@ def scan(source_dir: Path, include_drafts: bool = False) -> tuple[list[Article],
             url_path=url_path,
             date=_resolve_date(metadata, file_path),
             body_markdown=post.content,
-            tags=metadata.get("tags", []),
+            tags=metadata.get("tags") or [],
             description=str(metadata.get("description", "")),
             is_home=is_home,
         )
