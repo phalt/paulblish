@@ -108,10 +108,13 @@ def clean(output: str) -> None:
 @main.command()
 @click.option("--output", "-o", default="./_site", help="Path to the built site directory.")
 @click.option("--port", "-p", default=8000, help="Port to serve on.")
-def serve(output: str, port: int) -> None:
+@click.option("--source", "-s", default=None, help="Source directory to read base_url from site.toml.")
+@click.option("--base-url", default=None, help="Base URL override (e.g. /paulblish) for subpath routing.")
+def serve(output: str, port: int, source: str | None, base_url: str | None) -> None:
     """Serve the built site locally for preview."""
     import functools
     import http.server
+    from urllib.parse import urlparse
 
     output_dir = Path(output).resolve()
 
@@ -120,10 +123,49 @@ def serve(output: str, port: int) -> None:
         click.echo("       Run 'pb build' first.")
         raise SystemExit(1)
 
-    click.echo(f"Serving {output_dir} at http://localhost:{port}")
+    # Determine the URL base path for subpath routing.
+    # When the site is built with a non-root base_url (e.g. "/paulblish" or
+    # "https://phalt.github.io/paulblish"), the server must strip that prefix so
+    # that requests to /paulblish/static/style.css are served from _site/static/.
+    base_path = ""
+    if base_url:
+        base_path = urlparse(base_url).path.rstrip("/")
+    elif source:
+        source_dir = Path(source).resolve()
+        try:
+            config, _ = load_config(source_dir)
+            base_path = urlparse(config.base_url).path.rstrip("/")
+        except SystemExit:
+            pass  # No config found — serve from root
+
+    serve_url = f"http://localhost:{port}{base_path}/"
+    click.echo(f"Serving {output_dir} at {serve_url}")
     click.echo("Press Ctrl+C to stop.\n")
 
-    handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(output_dir))
+    if base_path:
+        _base_path = base_path  # capture for closure
+
+        class SubpathHandler(http.server.SimpleHTTPRequestHandler):
+            """HTTP handler that strips the base path prefix before resolving files."""
+
+            def translate_path(self, path: str) -> str:
+                if path == _base_path or path.startswith(_base_path + "/"):
+                    path = path[len(_base_path):] or "/"
+                return super().translate_path(path)
+
+            def do_GET(self) -> None:
+                # Redirect bare root requests to the base path so browsers land correctly.
+                if self.path in ("/", ""):
+                    self.send_response(302)
+                    self.send_header("Location", f"{_base_path}/")
+                    self.end_headers()
+                    return
+                super().do_GET()
+
+        handler = functools.partial(SubpathHandler, directory=str(output_dir))
+    else:
+        handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(output_dir))
+
     server = http.server.HTTPServer(("localhost", port), handler)
     try:
         server.serve_forever()

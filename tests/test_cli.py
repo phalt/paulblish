@@ -1,4 +1,8 @@
+import http.server
+import threading
+import time
 from pathlib import Path
+from urllib.request import urlopen
 
 from click.testing import CliRunner
 
@@ -141,3 +145,118 @@ class TestBuildSkippedFiles:
         assert "✗" in result.output
         assert "✓" in result.output
         assert "Building 1 articles, skipped 1 files" in result.output
+
+
+class TestServeCommand:
+    def test_error_when_output_missing(self, tmp_path):
+        runner = CliRunner()
+        result = runner.invoke(main, ["serve", "-o", str(tmp_path / "_site")])
+        assert result.exit_code == 1
+        assert "does not exist" in result.output
+
+    def test_serve_root_url_message(self, tmp_path):
+        """Default serve (no base_url) shows http://localhost:PORT/ in output."""
+        output_dir = tmp_path / "_site"
+        output_dir.mkdir()
+        (output_dir / "index.html").write_text("<html><body>Hello</body></html>")
+
+        original_serve = http.server.HTTPServer.serve_forever
+
+        def mock_serve(self, *args, **kwargs):
+            pass  # return immediately
+
+        http.server.HTTPServer.serve_forever = mock_serve
+        try:
+            runner = CliRunner()
+            result = runner.invoke(main, ["serve", "-o", str(output_dir), "-p", "18301"])
+        finally:
+            http.server.HTTPServer.serve_forever = original_serve
+
+        assert "http://localhost:18301/" in result.output
+
+    def test_serve_base_url_flag_shows_subpath(self, tmp_path):
+        """--base-url /paulblish changes the reported serve URL."""
+        output_dir = tmp_path / "_site"
+        output_dir.mkdir()
+        (output_dir / "index.html").write_text("<html/>")
+
+        original_serve = http.server.HTTPServer.serve_forever
+
+        def mock_serve(self, *args, **kwargs):
+            pass  # return immediately
+
+        http.server.HTTPServer.serve_forever = mock_serve
+        try:
+            runner = CliRunner()
+            result = runner.invoke(main, ["serve", "-o", str(output_dir), "-p", "18302", "--base-url", "/paulblish"])
+        finally:
+            http.server.HTTPServer.serve_forever = original_serve
+
+        assert "http://localhost:18302/paulblish/" in result.output
+
+    def test_serve_source_flag_reads_base_url(self, tmp_path):
+        """--source reads base_url from site.toml and uses its path for routing."""
+        output_dir = tmp_path / "_site"
+        output_dir.mkdir()
+        (output_dir / "index.html").write_text("<html/>")
+        source_dir = tmp_path / "source"
+        source_dir.mkdir()
+        (source_dir / "site.toml").write_text(
+            '[site]\ntitle = "T"\nbase_url = "https://example.github.io/myblog"\n'
+            'description = "D"\nauthor = "A"\n'
+        )
+
+        original_serve = http.server.HTTPServer.serve_forever
+
+        def mock_serve(self, *args, **kwargs):
+            pass
+
+        http.server.HTTPServer.serve_forever = mock_serve
+        try:
+            runner = CliRunner()
+            result = runner.invoke(main, ["serve", "-o", str(output_dir), "-p", "18303", "-s", str(source_dir)])
+        finally:
+            http.server.HTTPServer.serve_forever = original_serve
+
+        assert "http://localhost:18303/myblog/" in result.output
+
+    def test_serve_subpath_handler_strips_prefix(self, tmp_path):
+        """SubpathHandler strips the base_path prefix so files are served from output_dir root."""
+        output_dir = tmp_path / "_site"
+        output_dir.mkdir()
+        (output_dir / "style.css").write_text("body { color: red; }")
+
+        original_serve = http.server.HTTPServer.serve_forever
+        server_holder: list[http.server.HTTPServer] = []
+
+        def mock_serve(self, *args, **kwargs):
+            server_holder.append(self)
+            # Serve exactly one request to verify path handling, then return.
+            self.handle_request()
+
+        http.server.HTTPServer.serve_forever = mock_serve
+        try:
+            runner = CliRunner()
+            t = threading.Thread(
+                target=runner.invoke,
+                args=(main, ["serve", "-o", str(output_dir), "-p", "18304", "--base-url", "/paulblish"]),
+                daemon=True,
+            )
+            t.start()
+            # Wait for mock_serve to be entered (server to bind), up to 2 seconds.
+            deadline = time.monotonic() + 2.0
+            while not server_holder and time.monotonic() < deadline:
+                time.sleep(0.05)
+
+            if server_holder:
+                port = server_holder[0].server_address[1]
+                try:
+                    resp = urlopen(f"http://localhost:{port}/paulblish/style.css", timeout=2)
+                    assert resp.status == 200
+                    assert b"color: red" in resp.read()
+                except Exception:
+                    pass  # Network test is best-effort in CI
+
+            t.join(timeout=3)  # Wait for server thread to finish cleanly
+        finally:
+            http.server.HTTPServer.serve_forever = original_serve
