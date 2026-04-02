@@ -485,7 +485,10 @@ class TestSocialIcons:
 
     def test_partial_config_only_renders_set_icons(self, tmp_path):
         site = SiteConfig(
-            title="T", base_url="https://x.com", description="D", author="A",
+            title="T",
+            base_url="https://x.com",
+            description="D",
+            author="A",
             github="https://github.com/phalt",
         )
         articles = [_make_article("post")]
