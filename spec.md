@@ -1122,3 +1122,335 @@ This is the minimum viable tool — point it at a directory, get HTML files out.
 - [x] **7.4** Write tests for: feed XML structure, item count limit, date formatting (RFC 822), Home exclusion, description fallback, feed discovery link in HTML output.
 
 **Milestone:** `/feed.xml` is generated on every build, discoverable via `<link>` tag, and contains the 20 most recent articles with correct metadata.
+
+---
+
+### Phase 8: Extra Features
+
+A collection of high-value improvements and two larger features (light/dark mode toggle and incremental builds) that round out the project from a working tool to a polished, production-quality blog platform.
+
+**Rule: Every implementation step must include test coverage.** Each step either confirms existing tests cover the change and adapts them if needed, or writes new tests before the step is marked done. Documentation must also be updated when each feature is implemented — see the detail sections below.
+
+- [ ] **8.1** Prev / Next article navigation links on every article page.
+- [ ] **8.2** Reading time estimate displayed in article header.
+- [ ] **8.3** Open Graph and Twitter Card meta tags on every page.
+- [ ] **8.4** Generate `sitemap.xml` on every build.
+- [ ] **8.5** Generate `robots.txt` on every build.
+- [ ] **8.6** Generate a styled `404.html` on every build.
+- [ ] **8.7** Light / dark mode toggle with `localStorage` persistence and anti-FOUC inline script.
+- [ ] **8.8** Incremental builds via `--incremental` flag and `.pb-manifest.json`.
+- [ ] **8.9** Social icons in nav and footer for Bluesky, GitHub, and email.
+
+**Milestone:** All pages include social sharing meta tags, are discoverable by crawlers, have a working 404, support light/dark theming, large vaults can be rebuilt incrementally in a fraction of the full build time, and the site displays the author's social presence via icons in the nav and footer.
+
+---
+
+#### 8.1 — Prev / Next Article Navigation
+
+**What:** Every article page gets navigation links to the chronologically adjacent articles (previous = older, next = newer). The Home article is excluded from the sequence.
+
+**Requirements:**
+
+- Articles are ordered by `date` ascending to form the sequence. Home article is never included.
+- The `Article` dataclass gains two optional fields: `prev_article: Article | None = None` and `next_article: Article | None = None`.
+- `writer.py` (or a dedicated step in the build pipeline) sets these fields on each article after scanning and sorting, before rendering.
+- `article.html` renders a `<nav class="article-nav">` block **below** the `.article-body` div containing:
+  - A "← Older" link on the left if `article.prev_article` exists, showing the previous article's title.
+  - A "Newer →" link on the right if `article.next_article` exists, showing the next article's title.
+  - If only one side exists, the other side renders as an empty placeholder (preserves layout).
+- Articles with identical dates retain stable ordering (sort by `url_path` as tiebreaker).
+- No new Python dependencies.
+
+**Tests:** prev/next fields set correctly on a sequence of 3+ articles; first article has no `prev`; last article has no `next`; single-article list has neither; Home excluded from sequence; template renders links with correct titles and URLs.
+
+**Documentation:** Update `README.md` — mention prev/next navigation in the "Templates" / article rendering section. Update `CHANGELOG.md`.
+
+---
+
+#### 8.2 — Reading Time Estimate
+
+**What:** Every article displays an estimated reading time ("5 min read") alongside the date in the article header.
+
+**Requirements:**
+
+- The `Article` dataclass gains a `reading_time_minutes: int` field, defaulting to `0`.
+- Calculation: count words in `body_markdown` (split on whitespace), divide by 200 (words per minute), round up to nearest whole minute. Minimum value is 1.
+- The field is populated in `scanner.py` (or `writer.py` — after rendering) before the article is passed to the template. Since `body_markdown` is available at scan time, populate it in `scanner.py`.
+- `article.html` renders the reading time in the `<header class="article-meta">` block, adjacent to the `<time>` element: `<span class="reading-time">{{ article.reading_time_minutes }} min read</span>`.
+- Home article also has the field populated but the `home.html` template does not display it (it is not an article in the traditional sense).
+- No new Python dependencies.
+
+**Tests:** word count produces correct minute values; minimum 1 minute; round-up behaviour; populated in Article after scan; template renders the span; home template does not render it.
+
+**Documentation:** Update `README.md` frontmatter schema section — note this is auto-calculated. Update `CHANGELOG.md`.
+
+---
+
+#### 8.3 — Open Graph + Twitter Card Meta Tags
+
+**What:** Every page renders a full set of Open Graph and Twitter Card `<meta>` tags so shared links look correct on social media platforms (title, description, image, URL).
+
+**Requirements:**
+
+- Tags are added to `base.html` inside `<head>`, after the existing `<meta name="description">` block.
+- The following tags are always rendered (using site-level defaults as fallbacks):
+
+  ```html
+  <!-- Open Graph -->
+  <meta property="og:type"        content="article">
+  <meta property="og:site_name"   content="{{ site.title }}">
+  <meta property="og:title"       content="{{ page_title }}">
+  <meta property="og:description" content="{{ page_description }}">
+  <meta property="og:url"         content="{{ page_url }}">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary">
+  <meta name="twitter:title"       content="{{ page_title }}">
+  <meta name="twitter:description" content="{{ page_description }}">
+  ```
+
+- Template context variables used:
+  - `page_title`: `article.title` if an article is in context, otherwise `site.title`.
+  - `page_description`: `article.description` if set and non-empty, otherwise `site.description`.
+  - `page_url`: `site.base_url + article.url_path` if an article is in context, otherwise `site.base_url`.
+- These variables must be passed from every `render_*` function in `templating.py`. All three render functions (`render_article`, `render_all_pages`, `render_tag_page`) must inject them.
+- `og:type` is always `"article"` for all pages (this is standard practice for blog content).
+- The `og:image` / `twitter:image` tag is **only** rendered if `site.avatar` is configured. When present: `<meta property="og:image" content="{{ site.base_url }}/assets/{{ site.avatar | basename }}">`.
+- No new Python dependencies.
+
+**Tests:** OG tags present in article HTML; OG tags use article title/description when available; OG tags fall back to site title/description on listing pages; page URL correct per page type; `og:image` absent when no avatar; `og:image` present and correct when avatar configured.
+
+**Documentation:** Update `README.md` Site Configuration section — document that `avatar` also doubles as the Open Graph image. Update `CHANGELOG.md`.
+
+---
+
+#### 8.4 — `sitemap.xml`
+
+**What:** A standard `sitemap.xml` is generated at `_site/sitemap.xml` on every build, listing all published article URLs. This helps search engine crawlers discover and index all pages.
+
+**Requirements:**
+
+- New function `generate_sitemap(articles, site)` in a new module `paulblish/sitemap.py`. Uses stdlib `xml.etree.ElementTree` (same pattern as `feed.py`).
+- Includes all published articles (including Home), tag pages, and the all-pages listing (`/all/`). Does **not** include `robots.txt`, `feed.xml`, `CNAME`, or static assets.
+- Each `<url>` entry contains:
+  - `<loc>`: the full absolute URL (`site.base_url + url_path`).
+  - `<lastmod>`: the article's `date` in `YYYY-MM-DD` format (ISO 8601 date only). For listing pages (`/all/`, `/tags/{tag}/`), use the date of the most recently modified article in that group. If no articles, omit `<lastmod>`.
+- XML namespace: `xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"`.
+- `writer.py` calls sitemap generation and writes the file, adding the path to the returned written list (so it appears in CLI output).
+- `robots.txt` (8.5) will reference this file — coordinate the URL format.
+
+**Tests:** sitemap contains correct `<loc>` for all articles; Home maps to `base_url/`; `<lastmod>` format is YYYY-MM-DD; tag pages and `/all/` included; empty article list produces valid (but empty) sitemap; XML namespace correct; file written to output root.
+
+**Documentation:** Update `README.md` Deployment section — mention sitemap is auto-generated. Update `CHANGELOG.md`.
+
+---
+
+#### 8.5 — `robots.txt`
+
+**What:** A standard `robots.txt` is written to `_site/robots.txt` on every build. It allows all crawlers and points them to `sitemap.xml`.
+
+**Requirements:**
+
+- Content is always the same template, with `site.base_url` interpolated for the `Sitemap:` line:
+
+  ```text
+  User-agent: *
+  Allow: /
+
+  Sitemap: {site.base_url}/sitemap.xml
+  ```
+
+- Written by a new function `write_robots(output_dir, site)` in `writer.py` (no separate module needed — it is trivial).
+- Called from `write()` and its path added to the returned written list.
+- No new Python dependencies.
+
+**Tests:** file is written; content contains `User-agent: *`; `Sitemap:` line contains the correct absolute URL.
+
+**Documentation:** Update `README.md` Deployment section alongside the sitemap note. Update `CHANGELOG.md`.
+
+---
+
+#### 8.6 — 404 Page
+
+**What:** A styled `_site/404.html` is generated on every build. GitHub Pages automatically serves this file for any URL that doesn't match a file in `_site/`.
+
+**Requirements:**
+
+- New template `templates/404.html` extending `base.html`. Content:
+  - An `<h1>` reading "404 — Not Found".
+  - A short paragraph: "The page you're looking for doesn't exist."
+  - A link back to the site home (`site.base_url`): "← Go home".
+  - The page uses the same cyberpunk aesthetic as the rest of the site (inherits from `base.html`).
+- New function `render_404(site, templates_dir)` in `templating.py`.
+- `writer.py` calls this and writes `output_dir / "404.html"`, adding it to the returned written list.
+- No new Python dependencies.
+
+**Tests:** `404.html` is written to the output root; content contains "404"; contains a link to `site.base_url`; valid HTML document.
+
+**Documentation:** Update `README.md` Deployment section — mention GitHub Pages automatically serves `404.html`. Update `CHANGELOG.md`.
+
+---
+
+#### 8.7 — Light / Dark Mode Toggle
+
+**What:** The site gains a persistent light/dark mode toggle button in the nav bar. The default is dark (current cyberpunk theme). The user's preference is remembered across page loads using `localStorage`.
+
+**Requirements:**
+
+- A CSS light theme is defined in `style.css` using a `data-theme="light"` attribute on `<html>`. The light palette should invert the key colours: light background (near-white, e.g. `#f5f5f0`), dark text (e.g. `#1a1a1f`), with the same teal/amber accent colours retained.
+- The default theme is dark. `<html>` has no `data-theme` attribute by default (dark styles are the base).
+- `_nav.html` renders a toggle button: `<button id="theme-toggle" aria-label="Toggle light/dark mode">◑</button>` (or similar accessible symbol).
+- A small inline `<script>` block in `base.html` (before `</body>`) handles:
+  1. On page load: read `localStorage.getItem('theme')` and apply `data-theme` to `<html>` if set.
+  2. On button click: toggle `data-theme` between `""` (dark) and `"light"`, persist to `localStorage`.
+- The script must be minimal vanilla JS — no framework, no external CDN. Keep it under 20 lines.
+- The script must run before first paint to avoid flash of wrong theme (FOUC). Place it as an inline `<script>` in `<head>` (not deferred).
+- No new Python dependencies.
+
+**Tests:** `_nav.html` contains a theme toggle button; `base.html` contains the anti-FOUC inline script in `<head>`; `style.css` contains `[data-theme="light"]` styles. (Full JS behaviour is not unit-testable in Python — note this explicitly in the test file.)
+
+**Documentation:** Update `README.md` — add a "Theming" section explaining the dark default and light mode toggle. Note that the light theme CSS variables can be customised in `style.css`. Update `CHANGELOG.md`.
+
+---
+
+#### 8.8 — Incremental Builds
+
+**What:** A `--incremental` flag for `pb build` that skips re-rendering articles whose source file has not been modified since the last build. Reduces build time significantly for large vaults.
+
+**Requirements:**
+
+- A build manifest file is written to `output_dir / ".pb-manifest.json"` at the end of every full or incremental build. It contains a JSON object mapping each source file's path (relative to `source_dir`) to its `mtime` (float, seconds since epoch) at the time it was last built:
+
+  ```json
+  {
+    "articles/foo.md": 1743000000.0,
+    "Home.md": 1743000001.5
+  }
+  ```
+
+- New module `paulblish/manifest.py` with:
+  - `load_manifest(output_dir) -> dict[str, float]` — reads `.pb-manifest.json`; returns `{}` if not found or invalid JSON.
+  - `save_manifest(output_dir, articles)` — writes the manifest from the current article list's source file mtimes.
+- When `--incremental` is passed:
+  1. Load the manifest from the output dir.
+  2. After scanning, split articles into two groups:
+     - **stale**: source file mtime > manifest value (or not in manifest) — must be re-rendered.
+     - **fresh**: source file mtime ≤ manifest value — skip rendering and writing; their existing output files are left untouched.
+  3. Only stale articles are rendered, templated, and written.
+  4. Asset collection and copying still runs over **all** published articles (not just stale ones), so that asset references from fresh articles are not broken.
+  5. The all-pages listing, tag pages, RSS feed, sitemap, and robots.txt are always regenerated (they reflect the full article set).
+  6. CNAME and 404 are always written (cheap operations).
+  7. After the build, save the updated manifest reflecting the current mtimes of **all** published articles.
+- CLI output: stale articles print `→ rebuilt`; fresh articles print `(unchanged)` in place of the output path.
+- `--incremental` and `--drafts` are compatible: draft articles are included in the manifest when `--drafts` is active.
+- No new Python dependencies.
+
+**Tests:** manifest load/save round-trip; fresh articles are not written when `--incremental`; stale articles (mtime changed) are re-rendered; manifest is updated after build; `--incremental` without existing manifest behaves as a full build; listing pages always regenerated; CLI output correctly distinguishes rebuilt vs unchanged.
+
+**Documentation:** Update `README.md` Usage section — document `--incremental` flag under `pb build`. Add a note on when to use it (large vaults). Update `CHANGELOG.md`.
+
+---
+
+#### 8.9 — Social Icons
+
+**What:** If any social contact fields are configured (`bluesky`, `github`, `email`), a row of icon links is rendered in both the site nav bar (right-aligned) and the site footer. Icons are inline SVGs — no external CDN, no JavaScript, no new dependencies.
+
+**Requirements:**
+
+##### Configuration fields
+
+Three new optional fields added to `SiteConfig` (all default to `""`):
+
+- `bluesky` — a Bluesky profile URI, e.g. `"https://bsky.app/profile/paulblish.bsky.social"`. Any non-empty string is treated as the link href.
+- `github` — a GitHub profile URI, e.g. `"https://github.com/phalt"`. Any non-empty string is treated as the link href.
+- `email` — an email address, e.g. `"paul@example.com"`. Rendered as a `mailto:` link.
+
+These are read from `site.toml` under `[site]` and from `Home.md` frontmatter via the existing `config.py` `get`/fallback mechanism.
+
+##### Template structure
+
+- A new partial template `_social.html` renders the icon row. It is included in both `_nav.html` and `base.html` (footer). Because the same partial appears in two layout positions it must be self-contained — no assumptions about surrounding markup.
+- The partial only renders if at least one of the three fields is non-empty. If all three are empty, it renders nothing (no empty `<div>`).
+- Output structure:
+
+  ```html
+  <div class="social-icons">
+    <!-- rendered only if site.github is set -->
+    <a href="{{ site.github }}" class="social-icon" aria-label="GitHub" rel="noopener noreferrer" target="_blank">
+      <!-- GitHub SVG icon -->
+    </a>
+    <!-- rendered only if site.bluesky is set -->
+    <a href="{{ site.bluesky }}" class="social-icon" aria-label="Bluesky" rel="noopener noreferrer" target="_blank">
+      <!-- Bluesky SVG icon -->
+    </a>
+    <!-- rendered only if site.email is set -->
+    <a href="mailto:{{ site.email }}" class="social-icon" aria-label="Email">
+      <!-- Envelope SVG icon -->
+    </a>
+  </div>
+  ```
+
+##### Icons
+
+All three icons are inline SVGs with `width="20" height="20" viewBox="0 0 24 24"` and `fill="currentColor"`. This means they inherit their colour from CSS (`color`) and integrate naturally with the theme palette. Using `currentColor` means they match link colour by default and respond to hover states with no extra CSS.
+
+- **GitHub** — the standard GitHub mark (Octocat-free mark): a simplified `<path>` of the GitHub logo silhouette. Use the official path data from the GitHub primer/octicons `mark-github.svg` (24px viewBox).
+- **Bluesky** — the Bluesky butterfly logomark SVG path (the AT Protocol / Bluesky official icon).
+- **Email** — a minimal envelope icon: a rectangle with a V-shaped flap, readable at 20px.
+
+##### Placement
+
+- `_nav.html`: The social icons `<div>` is placed **after** the existing nav links, pushed to the right end of the nav bar using `margin-left: auto` on the `.social-icons` element (or by adding `flex: 1` spacer — see CSS below).
+- `base.html` footer: The `{% include "_social.html" %}` call is added inside `.site-footer`, on a new line below the existing attribution paragraph.
+
+**CSS additions to `style.css`**
+
+```css
+/* === Social icons === */
+.social-icons {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.site-nav .social-icons {
+  margin-left: auto;
+}
+
+.social-icon {
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  line-height: 1;
+}
+
+.social-icon:hover {
+  color: var(--accent-teal);
+  text-decoration: none;
+}
+
+.social-icon svg {
+  display: block;
+}
+
+.site-footer .social-icons {
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+```
+
+**No new Python dependencies.** The SVG path data is hardcoded directly in `_social.html` as inline markup. No Python code changes are required beyond the `SiteConfig` model and `config.py` field additions.
+
+**Tests:**
+
+- `SiteConfig` accepts `bluesky`, `github`, and `email` fields; all default to `""`.
+- `config.py` reads each field from `site.toml` and from `Home.md` frontmatter; absent fields default to `""`.
+- When all three are empty, `_social.html` renders nothing (empty string / no `.social-icons` div).
+- When `site.github` is set, rendered HTML contains the GitHub icon link with correct `href` and `aria-label`.
+- When `site.bluesky` is set, rendered HTML contains the Bluesky icon link.
+- When `site.email` is set, rendered HTML contains `mailto:` link.
+- Social icons appear in the nav HTML (`_nav.html` partial output).
+- Social icons appear in the footer HTML (`base.html` output).
+- Icon links have `rel="noopener noreferrer"` and `target="_blank"` for external links (GitHub, Bluesky); email link does not have `target="_blank"`.
+
+**Documentation:** Update `README.md` Site Configuration section — add `bluesky`, `github`, `email` to the fields table with descriptions. Update the `site.toml` example block and the `Home.md` frontmatter example to show these fields. Update `CHANGELOG.md`.

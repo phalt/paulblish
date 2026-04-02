@@ -43,7 +43,7 @@ uv run pb build -s /path/to/vault -o ./_site   # build the site
 
 ## Implementation Progress
 
-Current phase: **Complete** (all phases done)
+Current phase: **Phase 8 — Extra Features**
 
 After completing each phase action, check it off in `spec.md` (change `- [ ]` to `- [x]`) and update the current phase note here if the phase changes.
 
