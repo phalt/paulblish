@@ -128,6 +128,14 @@ a:visited {
   margin-top: 0.25rem;
 }
 
+.reading-time {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  color: var(--text);
+  margin-left: 0.75rem;
+}
+
 .article-meta .description {
   margin-top: 0.75rem;
   font-style: italic;

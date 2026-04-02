@@ -2,7 +2,7 @@ from datetime import datetime
 from pathlib import Path
 
 from paulblish.models import Article, SiteConfig
-from paulblish.writer import write, write_cname, write_tag_pages
+from paulblish.writer import write, write_404, write_cname, write_robots, write_tag_pages
 
 SITE = SiteConfig(title="Test Blog", base_url="https://example.com", description="Test", author="Tester")
 
@@ -117,6 +117,22 @@ class TestTemplatedOutput:
         assert "A description" in content
 
 
+class TestReadingTimeTemplate:
+    def test_reading_time_rendered_in_article(self, tmp_path):
+        article = _make_article("post")
+        article.reading_time_minutes = 5
+        write([article], tmp_path, site=SITE)
+        content = (tmp_path / "post" / "index.html").read_text()
+        assert "5 min read" in content
+
+    def test_home_template_does_not_render_reading_time(self, tmp_path):
+        article = _make_article("home", is_home=True)
+        article.reading_time_minutes = 3
+        write([article], tmp_path, site=SITE)
+        content = (tmp_path / "index.html").read_text()
+        assert "min read" not in content
+
+
 class TestHomeOutput:
     def test_home_uses_home_template(self, tmp_path):
         articles = [_make_article("home", is_home=True)]
@@ -226,6 +242,55 @@ class TestTagPages:
         assert any("tags" in str(p) for p in written)
 
 
+class TestWrite404:
+    def test_404_written(self, tmp_path):
+        write_404(tmp_path, SITE)
+        assert (tmp_path / "404.html").exists()
+
+    def test_404_contains_heading(self, tmp_path):
+        write_404(tmp_path, SITE)
+        content = (tmp_path / "404.html").read_text()
+        assert "404" in content
+
+    def test_404_contains_home_link(self, tmp_path):
+        write_404(tmp_path, SITE)
+        content = (tmp_path / "404.html").read_text()
+        assert "https://example.com/" in content
+
+    def test_404_is_valid_html(self, tmp_path):
+        write_404(tmp_path, SITE)
+        content = (tmp_path / "404.html").read_text()
+        assert "<!DOCTYPE html>" in content
+        assert "</html>" in content
+
+    def test_write_includes_404_in_returned_paths(self, tmp_path):
+        articles = [_make_article("post")]
+        written = write(articles, tmp_path, site=SITE)
+        assert any(p.name == "404.html" for p in written)
+
+
+class TestWriteRobots:
+    def test_robots_txt_written(self, tmp_path):
+        write_robots(tmp_path, SITE)
+        assert (tmp_path / "robots.txt").exists()
+
+    def test_allows_all_crawlers(self, tmp_path):
+        write_robots(tmp_path, SITE)
+        content = (tmp_path / "robots.txt").read_text()
+        assert "User-agent: *" in content
+        assert "Allow: /" in content
+
+    def test_sitemap_url(self, tmp_path):
+        write_robots(tmp_path, SITE)
+        content = (tmp_path / "robots.txt").read_text()
+        assert "Sitemap: https://example.com/sitemap.xml" in content
+
+    def test_write_includes_robots_in_returned_paths(self, tmp_path):
+        articles = [_make_article("post")]
+        written = write(articles, tmp_path, site=SITE)
+        assert any(p.name == "robots.txt" for p in written)
+
+
 class TestWriteMultiple:
     def test_writes_all_articles_plus_all_pages(self, tmp_path):
         articles = [
@@ -234,6 +299,6 @@ class TestWriteMultiple:
             _make_article("post-two", path_prefix="articles"),
         ]
         written = write(articles, tmp_path, site=SITE)
-        # 3 articles + 1 all-pages listing + 0 tag pages (no tags) + 1 feed.xml
-        assert len(written) == 5
+        # 3 articles + 1 all-pages + 0 tag pages + 1 feed.xml + 1 robots.txt + 1 404.html
+        assert len(written) == 7
         assert all(p.exists() for p in written)

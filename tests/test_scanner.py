@@ -11,6 +11,38 @@ def _write_md(path: Path, content: str):
     path.write_text(content)
 
 
+class TestReadingTime:
+    def test_basic_calculation(self, tmp_path):
+        # 200 words → exactly 1 minute
+        words = " ".join(["word"] * 200)
+        (tmp_path / "post.md").write_text(f"---\npublish: true\nslug: post\n---\n{words}")
+        articles, _ = scan(tmp_path)
+        assert articles[0].reading_time_minutes == 1
+
+    def test_rounds_up(self, tmp_path):
+        # 201 words → 2 minutes (ceil)
+        words = " ".join(["word"] * 201)
+        (tmp_path / "post.md").write_text(f"---\npublish: true\nslug: post\n---\n{words}")
+        articles, _ = scan(tmp_path)
+        assert articles[0].reading_time_minutes == 2
+
+    def test_minimum_one_minute(self, tmp_path):
+        (tmp_path / "post.md").write_text("---\npublish: true\nslug: post\n---\nHello.")
+        articles, _ = scan(tmp_path)
+        assert articles[0].reading_time_minutes == 1
+
+    def test_empty_body_still_one_minute(self, tmp_path):
+        (tmp_path / "post.md").write_text("---\npublish: true\nslug: post\n---\n")
+        articles, _ = scan(tmp_path)
+        assert articles[0].reading_time_minutes == 1
+
+    def test_home_article_also_gets_reading_time(self, tmp_path):
+        words = " ".join(["word"] * 400)
+        (tmp_path / "Home.md").write_text(f"---\npublish: true\nslug: home\n---\n{words}")
+        articles, _ = scan(tmp_path)
+        assert articles[0].reading_time_minutes == 2
+
+
 class TestDraftsFlag:
     def test_drafts_includes_unpublished(self, tmp_path):
         (tmp_path / "draft.md").write_text("---\nslug: my-draft\n---\nDraft content")

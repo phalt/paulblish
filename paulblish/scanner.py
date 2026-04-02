@@ -1,3 +1,4 @@
+import math
 import re
 from dataclasses import dataclass
 from datetime import datetime
@@ -106,6 +107,9 @@ def scan(source_dir: Path, include_drafts: bool = False) -> tuple[list[Article],
         else:
             url_path = f"/{slug}/"
 
+        word_count = len(post.content.split())
+        reading_time = max(1, math.ceil(word_count / 200))
+
         article = Article(
             source_path=file_path,
             relative_path=relative_path,
@@ -118,6 +122,7 @@ def scan(source_dir: Path, include_drafts: bool = False) -> tuple[list[Article],
             tags=metadata.get("tags") or [],
             description=str(metadata.get("description", "")),
             is_home=is_home,
+            reading_time_minutes=reading_time,
         )
         articles.append(article)
 

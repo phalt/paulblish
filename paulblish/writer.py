@@ -3,7 +3,7 @@ from pathlib import Path
 
 from paulblish.feed import generate_feed
 from paulblish.models import Article, SiteConfig
-from paulblish.templating import render_all_pages, render_article, render_tag_page
+from paulblish.templating import render_404, render_all_pages, render_article, render_tag_page
 
 DEFAULT_TEMPLATES = Path(__file__).parent.parent / "templates"
 
@@ -44,6 +44,12 @@ def write(
 
     # Write RSS feed
     written.extend(write_feed(articles, output_dir, site))
+
+    # Write robots.txt
+    written.append(write_robots(output_dir, site))
+
+    # Write 404 page
+    written.append(write_404(output_dir, site, templates_dir=templates_dir))
 
     # Copy static assets from templates
     tpl_dir = templates_dir if templates_dir else DEFAULT_TEMPLATES
@@ -88,6 +94,23 @@ def write_feed(articles: list[Article], output_dir: Path, site: SiteConfig) -> l
     feed_path.parent.mkdir(parents=True, exist_ok=True)
     feed_path.write_text(generate_feed(articles, site), encoding="utf-8")
     return [feed_path]
+
+
+def write_404(output_dir: Path, site: SiteConfig, templates_dir: Path | None = None) -> Path:
+    """Render and write 404.html to the output root. GitHub Pages serves this automatically."""
+    path = output_dir / "404.html"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(render_404(site, templates_dir=templates_dir))
+    return path
+
+
+def write_robots(output_dir: Path, site: SiteConfig) -> Path:
+    """Write robots.txt to the output root. Allows all crawlers and links to sitemap."""
+    content = f"User-agent: *\nAllow: /\n\nSitemap: {site.base_url}/sitemap.xml\n"
+    path = output_dir / "robots.txt"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(content)
+    return path
 
 
 def write_cname(output_dir: Path, cname: str) -> Path | None:

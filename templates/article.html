@@ -7,6 +7,7 @@
   <header class="article-meta">
     <h1>{{ article.title }}</h1>
     <time datetime="{{ article.date.isoformat() }}">{{ article.date.strftime('%d %B %Y') }}</time>
+    <span class="reading-time">{{ article.reading_time_minutes }} min read</span>
     {% if article.tags %}
     <div class="tags">
       {% for tag in article.tags %}

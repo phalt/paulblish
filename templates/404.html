@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}404 — {{ site.title }}{% endblock %}
+
+{% block content %}
+<div class="not-found">
+  <h1>404 — Not Found</h1>
+  <p>The page you're looking for doesn't exist.</p>
+  <p><a href="{{ site.base_url }}/">← Go home</a></p>
+</div>
+{% endblock %}

@@ -44,8 +44,11 @@ def _content_hash(path: Path) -> str:
     return h[:8]
 
 
-def collect_assets(articles: list, source_dir: Path) -> list[AssetRef]:
-    """Scan articles for image references and resolve them against the source directory."""
+def collect_assets(articles: list, source_dir: Path, site=None) -> list[AssetRef]:
+    """Scan articles for image references and resolve them against the source directory.
+
+    If site.avatar is configured, it is also added as an asset to be copied.
+    """
     seen: dict[str, AssetRef] = {}  # original_ref -> AssetRef
 
     for article in articles:
@@ -74,6 +77,15 @@ def collect_assets(articles: list, source_dir: Path) -> list[AssetRef]:
                 source_path=source,
                 output_filename=Path(ref).name,
             )
+
+    # Add site avatar if configured
+    if site and site.avatar and site.avatar not in seen:
+        avatar_source = _find_file(site.avatar, source_dir)
+        seen[site.avatar] = AssetRef(
+            original_ref=site.avatar,
+            source_path=avatar_source,
+            output_filename=Path(site.avatar).name,
+        )
 
     # Handle filename collisions
     refs = list(seen.values())

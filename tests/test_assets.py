@@ -2,7 +2,7 @@ from datetime import datetime
 from pathlib import Path
 
 from paulblish.assets import collect_assets, copy_assets
-from paulblish.models import Article
+from paulblish.models import Article, SiteConfig
 
 
 def _make_article(body_markdown: str, slug: str = "test") -> Article:
@@ -138,3 +138,54 @@ class TestCopyAssets:
         copy_assets(refs, output_dir)
 
         assert (output_dir / "assets" / "img.png").exists()
+
+
+class TestAvatarAsset:
+    def _make_site(self, avatar: str) -> SiteConfig:
+        return SiteConfig(title="T", base_url="http://x", description="D", author="A", avatar=avatar)
+
+    def test_avatar_included_in_refs(self, tmp_path):
+        (tmp_path / "me.jpg").write_bytes(b"JPG")
+        site = self._make_site("me.jpg")
+        refs = collect_assets([], tmp_path, site=site)
+        assert any(r.original_ref == "me.jpg" for r in refs)
+
+    def test_avatar_subdirectory_path_found(self, tmp_path):
+        assets_dir = tmp_path / "assets"
+        assets_dir.mkdir()
+        (assets_dir / "logo.jpg").write_bytes(b"JPG")
+        site = self._make_site("assets/logo.jpg")
+        refs = collect_assets([], tmp_path, site=site)
+        found = next(r for r in refs if "logo.jpg" in r.original_ref)
+        assert found.source_path is not None
+
+    def test_avatar_output_filename_is_basename(self, tmp_path):
+        assets_dir = tmp_path / "assets"
+        assets_dir.mkdir()
+        (assets_dir / "logo.jpg").write_bytes(b"JPG")
+        site = self._make_site("assets/logo.jpg")
+        refs = collect_assets([], tmp_path, site=site)
+        found = next(r for r in refs if "logo.jpg" in r.original_ref)
+        assert found.output_filename == "logo.jpg"
+
+    def test_avatar_copied_to_assets_dir(self, tmp_path):
+        source_dir = tmp_path / "source"
+        source_dir.mkdir()
+        (source_dir / "me.jpg").write_bytes(b"JPG")
+        output_dir = tmp_path / "output"
+        site = self._make_site("me.jpg")
+        refs = collect_assets([], source_dir, site=site)
+        copy_assets(refs, output_dir)
+        assert (output_dir / "assets" / "me.jpg").exists()
+
+    def test_no_avatar_no_extra_ref(self, tmp_path):
+        site = self._make_site("")
+        refs = collect_assets([], tmp_path, site=site)
+        assert refs == []
+
+    def test_avatar_not_duplicated_if_also_in_article(self, tmp_path):
+        (tmp_path / "me.jpg").write_bytes(b"JPG")
+        site = self._make_site("me.jpg")
+        articles = [_make_article("![[me.jpg]]")]
+        refs = collect_assets(articles, tmp_path, site=site)
+        assert len([r for r in refs if "me.jpg" in r.original_ref]) == 1

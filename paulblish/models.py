@@ -17,6 +17,7 @@ class Article:
     description: str = ""
     body_html: str = ""
     is_home: bool = False
+    reading_time_minutes: int = 0
     assets: list[Path] = field(default_factory=list)
 
 

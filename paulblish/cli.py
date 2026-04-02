@@ -67,7 +67,7 @@ def build(source: str, output: str, base_url: str | None, templates: str | None,
         render(article, path_map=path_map, base_url=config.base_url)
 
     # Collect and copy assets
-    asset_refs = collect_assets(articles, source_dir)
+    asset_refs = collect_assets(articles, source_dir, site=config)
     asset_warnings = copy_assets(asset_refs, output_dir)
     for warning in asset_warnings:
         click.echo(f"  ⚠ {warning}")

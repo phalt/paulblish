@@ -14,7 +14,7 @@
 
   {% if site.avatar %}
   <div class="home-avatar">
-    <img src="{{ site.base_url }}/assets/{{ site.avatar }}" alt="{{ site.author }}" class="avatar" />
+    <img src="{{ site.base_url }}/assets/{{ site.avatar | basename }}" alt="{{ site.author }}" class="avatar" />
   </div>
   {% endif %}
 
