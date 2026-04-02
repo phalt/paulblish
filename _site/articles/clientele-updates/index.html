@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Clientele Updates — Paul Writes Software</title>
+  
+  <!-- Open Graph -->
+  <meta property="og:type"        content="article">
+  <meta property="og:site_name"   content="Paul Writes Software">
+  <meta property="og:title"       content="Clientele Updates">
+  <meta property="og:description" content="Paul Hallett is a software engineer">
+  <meta property="og:url"         content="paulblish//articles/clientele-updates/">
+  
+  <meta property="og:image"       content="paulblish//assets/site-logo.jpeg">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary">
+  <meta name="twitter:title"       content="Clientele Updates">
+  <meta name="twitter:description" content="Paul Hallett is a software engineer">
+  
+  <meta name="twitter:image"       content="paulblish//assets/site-logo.jpeg">
+  
+  <link rel="stylesheet" href="paulblish//static/style.css">
+  <link rel="alternate" type="application/rss+xml" title="Paul Writes Software" href="paulblish//feed.xml">
+  <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"; mermaid.initialize({startOnLoad:true});</script>
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="paulblish//" class="nav-title">Paul Writes Software</a>
+<a href="paulblish//all/">All Pages</a>
+
+<div class="social-icons">
+  
+  <a href="https://github.com/phalt" class="social-icon" aria-label="GitHub" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M10.226 17.284c-2.965-.36-5.054-2.493-5.054-5.256 0-1.123.404-2.336 1.078-3.144-.292-.741-.247-2.314.09-2.965.898-.112 2.111.36 2.83 1.01.853-.269 1.752-.404 2.853-.404 1.1 0 1.999.135 2.807.382.696-.629 1.932-1.1 2.83-.988.315.606.36 2.179.067 2.942.72.854 1.101 2 1.101 3.167 0 2.763-2.089 4.852-5.098 5.234.763.494 1.28 1.572 1.28 2.807v2.336c0 .674.561 1.056 1.235.786 4.066-1.55 7.255-5.615 7.255-10.646C23.5 6.188 18.334 1 11.978 1 5.62 1 .5 6.188.5 12.545c0 4.986 3.167 9.12 7.435 10.669.606.225 1.19-.18 1.19-.786V20.63a2.9 2.9 0 0 1-1.078.224c-1.483 0-2.359-.808-2.987-2.313-.247-.607-.517-.966-1.034-1.033-.27-.023-.359-.135-.359-.27 0-.27.45-.471.898-.471.652 0 1.213.404 1.797 1.235.45.651.921.943 1.483.943.561 0 .92-.202 1.437-.719.382-.381.674-.718.944-.943"/>
+    </svg>
+  </a>
+  
+  
+  <a href="https://bsky.app/profile/paulwrites.software" class="social-icon" aria-label="Bluesky" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M5.202 2.857C7.954 4.922 10.913 9.11 12 11.358c1.087-2.247 4.046-6.436 6.798-8.501C20.783 1.366 24 .213 24 3.883c0 .732-.42 6.156-.667 7.037-.856 3.061-3.978 3.842-6.755 3.37 4.854.826 6.089 3.562 3.422 6.299-5.065 5.196-7.28-1.304-7.847-2.97-.104-.305-.152-.448-.153-.327 0-.121-.05.022-.153.327-.568 1.666-2.782 8.166-7.847 2.97-2.667-2.737-1.432-5.473 3.422-6.3-2.777.473-5.899-.308-6.755-3.369C.42 10.04 0 4.615 0 3.883c0-3.67 3.217-2.517 5.202-1.026"/>
+    </svg>
+  </a>
+  
+  
+  <a href="mailto:case@hey.com" class="social-icon" aria-label="Email">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+    </svg>
+  </a>
+  
+</div>
+
+  </nav>
+
+  <main>
+    
+<article>
+  <header class="article-meta">
+    <h1>Clientele Updates</h1>
+    <time datetime="2026-04-02T19:59:22.286262">02 April 2026</time>
+    <span class="reading-time">3 min read</span>
+    
+    <div class="tags">
+      
+        <a href="paulblish//tags/Software/" class="tag">Software</a>
+      
+    </div>
+    
+    
+  </header>
+
+  
+  <div class="article-body">
+    <p>It's been a productive month in the Clientele project.</p>
+<p>At the time of writing we have just shipped version <a href="https://github.com/phalt/clientele/releases/tag/1.7.0">1.7.0</a> and we're preparing the <a href="https://github.com/phalt/clientele/discussions/181">1.8.0</a> release.</p>
+<h2>Numbers</h2>
+<p>I've merged 82 pull requests and seen nearly 40,000 lines of code written (mostly tests and documentation).</p>
+<h2>Features</h2>
+<p>During the last month I have shipped the following major features:</p>
+<ul>
+<li><strong>Logging support</strong></li>
+<li><strong>HTTP Backends</strong> (use any HTTP library you want!)</li>
+<li><strong>Direct Requests</strong> (if you want to make a quick request with data validation)</li>
+<li><strong>Streaming responses</strong> (for those who are integrating with SSE endpoints)</li>
+<li><strong>HTTP cache backend</strong> (we solved http caching for you)</li>
+<li><strong>Mypy plugin</strong> (to handle Clientele's injected parameters convention)</li>
+</ul>
+<p>All of this is <a href="https://docs.clientele.dev/api-overview/">documented</a> and follows the design philosophy of Clientele.</p>
+<p>And we also fixed load of little things too:</p>
+<ul>
+<li>Handling of proper discriminated union types</li>
+<li>Adding <code>pyproject.toml</code> to scaffolded clients</li>
+<li>Multiple small openapi handling bugs</li>
+<li>Major refactoring and organising of the project</li>
+<li>Fixes for data validation</li>
+<li>Many little odd bug fixes</li>
+<li>Refactoring and deleting redundant tests</li>
+</ul>
+<h2>Logo &amp; website</h2>
+<p>I settled on a logo that I like!</p>
+<p><img src="https://raw.githubusercontent.com/phalt/clientele/refs/heads/main/docs/clientele_header.png" alt="https://raw.githubusercontent.com/phalt/clientele/refs/heads/main/docs/clientele_header.png" /></p>
+<p>I also bought <a href="https://clientele.dev">clientele.dev</a> to host the project and the splash page has a very simple example of the code, because I think demonstrating with code is a great way to show how it works.</p>
+<h2>Documentation</h2>
+<p>I have spent a large part of my time writing decent documentation. It is a skill to write documentation that is clear and easy to understand, but also thorough when it needs to be.</p>
+<p>I am particularly proud of the <a href="https://docs.clientele.dev/api-examples/">examples page</a> which is just lots and lots of common things you can do with the Clientele-style formatting.</p>
+<h2>Contributors</h2>
+<p>I'm really happy to see over 120 new GitHub stars 🌟 since I first shared the new decorator concept through my original blog post.</p>
+<p>I have also been lucky to have five contributors give their time and expertise to help improve the project, contributing great features like logging and helping to design the http backend protocol.</p>
+<h2>Where next?</h2>
+<p>I think my next goal is to work towards a <code>2.0.0</code> release, which is mostly the point at which I'll drop a lot of the original boilerplate code and poorly named cli commands from before I started down the decorator path.</p>
+<p>You can read the <a href="https://github.com/phalt/clientele/discussions/174">2.0.0 deprecation notice here</a> to see what is being dropped.</p>
+<p>Don't worry though - all of the new decorator style of writing will remain stable between versions.</p>
+<h2>Talks?</h2>
+<p>I am going to give a small talk at my work about my project, and if that lands well I will refine the talk and potentially give it at a larger conference (if I can get my talk accepted).</p>
+<hr />
+<p>Thanks for reading this article, if you'd like to get in touch you can reach me through:</p>
+<ul>
+<li><a href="https://bsky.app/profile/paulwrites.software">Bluesky</a></li>
+<li><a href="mailto:case@hey.com">Email</a></li>
+<li><a href="https://github.com/phalt">GitHub</a></li>
+</ul>
+<p>Paul</p>
+
+  </div>
+
+  <nav class="article-nav">
+    <div class="article-nav-prev">
+      
+      <a href="paulblish//articles/python-api-clients/">← Older: A different way to think about Python API Clients</a>
+      
+    </div>
+    <div class="article-nav-next">
+      
+      <a href="paulblish//articles/agents-can-do-tedious-tasks/">Newer: AI Agents are great for tedious programming tasks →</a>
+      
+    </div>
+  </nav>
+</article>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>Paul Writes Software — built with <a href="https://github.com/phalt/paulblish">Paulblish</a></p>
+    
+<div class="social-icons">
+  
+  <a href="https://github.com/phalt" class="social-icon" aria-label="GitHub" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M10.226 17.284c-2.965-.36-5.054-2.493-5.054-5.256 0-1.123.404-2.336 1.078-3.144-.292-.741-.247-2.314.09-2.965.898-.112 2.111.36 2.83 1.01.853-.269 1.752-.404 2.853-.404 1.1 0 1.999.135 2.807.382.696-.629 1.932-1.1 2.83-.988.315.606.36 2.179.067 2.942.72.854 1.101 2 1.101 3.167 0 2.763-2.089 4.852-5.098 5.234.763.494 1.28 1.572 1.28 2.807v2.336c0 .674.561 1.056 1.235.786 4.066-1.55 7.255-5.615 7.255-10.646C23.5 6.188 18.334 1 11.978 1 5.62 1 .5 6.188.5 12.545c0 4.986 3.167 9.12 7.435 10.669.606.225 1.19-.18 1.19-.786V20.63a2.9 2.9 0 0 1-1.078.224c-1.483 0-2.359-.808-2.987-2.313-.247-.607-.517-.966-1.034-1.033-.27-.023-.359-.135-.359-.27 0-.27.45-.471.898-.471.652 0 1.213.404 1.797 1.235.45.651.921.943 1.483.943.561 0 .92-.202 1.437-.719.382-.381.674-.718.944-.943"/>
+    </svg>
+  </a>
+  
+  
+  <a href="https://bsky.app/profile/paulwrites.software" class="social-icon" aria-label="Bluesky" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M5.202 2.857C7.954 4.922 10.913 9.11 12 11.358c1.087-2.247 4.046-6.436 6.798-8.501C20.783 1.366 24 .213 24 3.883c0 .732-.42 6.156-.667 7.037-.856 3.061-3.978 3.842-6.755 3.37 4.854.826 6.089 3.562 3.422 6.299-5.065 5.196-7.28-1.304-7.847-2.97-.104-.305-.152-.448-.153-.327 0-.121-.05.022-.153.327-.568 1.666-2.782 8.166-7.847 2.97-2.667-2.737-1.432-5.473 3.422-6.3-2.777.473-5.899-.308-6.755-3.369C.42 10.04 0 4.615 0 3.883c0-3.67 3.217-2.517 5.202-1.026"/>
+    </svg>
+  </a>
+  
+  
+  <a href="mailto:case@hey.com" class="social-icon" aria-label="Email">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+    </svg>
+  </a>
+  
+</div>
+
+  </footer>
+</body>
+</html>

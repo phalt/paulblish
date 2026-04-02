@@ -8,7 +8,7 @@ from paulblish.config import load_config
 from paulblish.linker import build_path_map
 from paulblish.renderer import render
 from paulblish.scanner import scan
-from paulblish.writer import write, write_cname
+from paulblish.writer import write, write_build_meta, write_cname
 
 VERSION = "0.1.0"
 
@@ -82,6 +82,9 @@ def build(source: str, output: str, base_url: str | None, templates: str | None,
     if cname_path:
         click.echo(f"  → {cname_path.relative_to(output_dir.parent)}")
 
+    # Write build metadata so pb serve can rewrite base_url for local preview
+    write_build_meta(output_dir, config.base_url)
+
     elapsed = time.perf_counter() - build_start
     num_assets = len([r for r in asset_refs if r.source_path])
     num_warnings = len(asset_warnings)
@@ -112,6 +115,7 @@ def serve(output: str, port: int) -> None:
     """Serve the built site locally for preview."""
     import functools
     import http.server
+    import json
 
     output_dir = Path(output).resolve()
 
@@ -120,11 +124,47 @@ def serve(output: str, port: int) -> None:
         click.echo("       Run 'pb build' first.")
         raise SystemExit(1)
 
+    # Read base_url from build metadata so links can be rewritten for local preview
+    meta_path = output_dir / ".pb-meta.json"
+    rewrite_from = ""
+    if meta_path.exists():
+        try:
+            rewrite_from = json.loads(meta_path.read_text()).get("base_url", "")
+        except Exception:
+            pass
+
+    if rewrite_from:
+        click.echo(f"Rewriting '{rewrite_from}' → '' in HTML/XML responses for local preview.")
+
     click.echo(f"Serving {output_dir} at http://localhost:{port}")
     click.echo("Press Ctrl+C to stop.\n")
 
-    handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(output_dir))
-    server = http.server.HTTPServer(("localhost", port), handler)
+    def _make_handler():
+        class RewritingHandler(http.server.SimpleHTTPRequestHandler):
+            def do_GET(self):
+                if not rewrite_from:
+                    super().do_GET()
+                    return
+
+                fs_path = Path(self.translate_path(self.path))
+                if fs_path.is_dir():
+                    fs_path = fs_path / "index.html"
+
+                if not fs_path.is_file() or fs_path.suffix.lower() not in (".html", ".xml"):
+                    super().do_GET()
+                    return
+
+                content = fs_path.read_bytes().replace(rewrite_from.encode(), b"")
+                ctype = "text/html; charset=utf-8" if fs_path.suffix.lower() == ".html" else "application/xml"
+                self.send_response(200)
+                self.send_header("Content-Type", ctype)
+                self.send_header("Content-Length", str(len(content)))
+                self.end_headers()
+                self.wfile.write(content)
+
+        return functools.partial(RewritingHandler, directory=str(output_dir))
+
+    server = http.server.HTTPServer(("localhost", port), _make_handler())
     try:
         server.serve_forever()
     except KeyboardInterrupt:

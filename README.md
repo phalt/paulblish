@@ -200,6 +200,38 @@ There is no build step in CI. You build the site on your machine and commit the 
 
 The included `deploy.yml` workflow triggers on any push to `main` that touches `_site/**` and deploys the directory to GitHub Pages.
 
+### Base URL patterns
+
+The `base_url` in your `site.toml` controls how all internal links and asset paths are generated. The correct value depends on how your site is hosted.
+
+#### Pattern 1: GitHub Pages without a custom domain
+
+Your site lives at `https://username.github.io/reponame/`. Set `base_url` to the full path including the repo name:
+
+```toml
+base_url = "https://username.github.io/reponame"
+```
+
+#### Pattern 2: GitHub Pages with a custom domain (CNAME)
+
+When you use a CNAME, your site is served from the root of your domain. Set `base_url` to just the domain — no trailing slash, no path suffix:
+
+```toml
+base_url    = "https://blog.example.com"
+cname       = "blog.example.com"
+```
+
+#### Testing locally
+
+`pb serve` handles this automatically. On every `pb build`, a small metadata file (`.pb-meta.json`) is written to the output directory recording the `base_url` that was used. When you then run `pb serve`, the server reads that file and rewrites all occurrences of `base_url` in HTML and XML responses to an empty string before sending them to the browser. Internal paths like `/articles/foo/` are not affected.
+
+```sh
+uv run pb build --source ~/obsidian/blog --output ./_site  # build once with production base_url
+uv run pb serve                                            # works locally without any rebuild
+```
+
+The production `_site/` files themselves are never modified; rewriting happens only in-flight during serving.
+
 ### Custom Domain
 
 Set `cname` in your `site.toml`:

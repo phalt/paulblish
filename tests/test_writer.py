@@ -2,7 +2,15 @@ from datetime import datetime
 from pathlib import Path
 
 from paulblish.models import Article, SiteConfig
-from paulblish.writer import assign_prev_next, write, write_404, write_cname, write_robots, write_tag_pages
+from paulblish.writer import (
+    assign_prev_next,
+    write,
+    write_404,
+    write_build_meta,
+    write_cname,
+    write_robots,
+    write_tag_pages,
+)
 
 SITE = SiteConfig(title="Test Blog", base_url="https://example.com", description="Test", author="Tester")
 SITE_SOCIAL = SiteConfig(
@@ -497,3 +505,19 @@ class TestSocialIcons:
         assert 'aria-label="GitHub"' in content
         assert 'aria-label="Bluesky"' not in content
         assert 'aria-label="Email"' not in content
+
+
+class TestWriteBuildMeta:
+    def test_writes_meta_file(self, tmp_path):
+        import json
+
+        write_build_meta(tmp_path, "https://username.github.io/repo")
+        meta = json.loads((tmp_path / ".pb-meta.json").read_text())
+        assert meta["base_url"] == "https://username.github.io/repo"
+
+    def test_empty_base_url(self, tmp_path):
+        import json
+
+        write_build_meta(tmp_path, "")
+        meta = json.loads((tmp_path / ".pb-meta.json").read_text())
+        assert meta["base_url"] == ""

@@ -6,3 +6,4 @@ dist/
 .ruff_cache/
 *.pyc
 .DS_Store
+**/.pb-meta.json

@@ -1,5 +1,4 @@
 import math
-import re
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
@@ -7,8 +6,6 @@ from pathlib import Path
 import frontmatter
 
 from paulblish.models import Article
-
-H1_RE = re.compile(r"^#\s+(.+)$", re.MULTILINE)
 
 
 @dataclass
@@ -32,16 +29,12 @@ def _resolve_slug(metadata: dict) -> str | None:
     return None
 
 
-def _resolve_title(metadata: dict, body: str, filename: str) -> str:
-    """Resolve title: frontmatter -> first H1 -> deslugified filename."""
+def _resolve_title(metadata: dict, filename: str) -> str:
+    """Resolve title: frontmatter -> filename without extension."""
     title = metadata.get("title")
     if title:
         return str(title)
-    match = H1_RE.search(body)
-    if match:
-        return match.group(1).strip()
-    # Deslugify filename: remove .md, replace hyphens/underscores with spaces, title case
-    return filename.removesuffix(".md").replace("-", " ").replace("_", " ").title()
+    return Path(filename).stem
 
 
 def _resolve_date(metadata: dict, file_path: Path) -> datetime:
@@ -98,7 +91,8 @@ def scan(source_dir: Path, include_drafts: bool = False) -> tuple[list[Article],
 
         # Build path components
         is_home = _is_home(file_path, source_dir)
-        path_prefix = str(relative_path.parent) if str(relative_path.parent) != "." else ""
+        _parent = str(relative_path.parent)
+        path_prefix = _parent.lower() if _parent != "." else ""
 
         if is_home:
             url_path = "/"
@@ -114,7 +108,7 @@ def scan(source_dir: Path, include_drafts: bool = False) -> tuple[list[Article],
             source_path=file_path,
             relative_path=relative_path,
             path_prefix=path_prefix,
-            title=_resolve_title(metadata, post.content, file_path.name),
+            title=_resolve_title(metadata, file_path.name),
             slug=slug,
             url_path=url_path,
             date=_resolve_date(metadata, file_path),

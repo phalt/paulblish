@@ -132,6 +132,16 @@ def write_robots(output_dir: Path, site: SiteConfig) -> Path:
     return path
 
 
+def write_build_meta(output_dir: Path, base_url: str) -> Path:
+    """Write .pb-meta.json to the output dir so pb serve can rewrite base_url for local preview."""
+    import json
+
+    path = output_dir / ".pb-meta.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps({"base_url": base_url}))
+    return path
+
+
 def write_cname(output_dir: Path, cname: str) -> Path | None:
     """Write a CNAME file if cname is non-empty. Returns the path written, or None."""
     if not cname:

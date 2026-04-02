@@ -141,3 +141,25 @@ class TestBuildSkippedFiles:
         assert "✗" in result.output
         assert "✓" in result.output
         assert "Building 1 articles, skipped 1 files" in result.output
+
+
+class TestBuildWritesMeta:
+    def test_build_writes_pb_meta_json(self, tmp_path):
+        import json
+
+        runner = CliRunner()
+        output_dir = tmp_path / "_site"
+        runner.invoke(main, ["build", "-s", str(FIXTURES), "-o", str(output_dir)])
+        meta_path = output_dir / ".pb-meta.json"
+        assert meta_path.exists()
+        meta = json.loads(meta_path.read_text())
+        assert "base_url" in meta
+
+    def test_build_meta_reflects_base_url_override(self, tmp_path):
+        import json
+
+        runner = CliRunner()
+        output_dir = tmp_path / "_site"
+        runner.invoke(main, ["build", "-s", str(FIXTURES), "-o", str(output_dir), "--base-url", "https://override.com"])
+        meta = json.loads((output_dir / ".pb-meta.json").read_text())
+        assert meta["base_url"] == "https://override.com"

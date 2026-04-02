@@ -160,15 +160,15 @@ class TestTitleResolution:
         articles, _ = scan(tmp_path)
         assert articles[0].title == "FM Title"
 
-    def test_title_from_h1(self, tmp_path):
-        _write_md(tmp_path / "post.md", "---\npublish: true\nslug: p\n---\n# My Heading\n\nBody text")
-        articles, _ = scan(tmp_path)
-        assert articles[0].title == "My Heading"
-
     def test_title_from_filename(self, tmp_path):
-        _write_md(tmp_path / "my-cool-post.md", "---\npublish: true\nslug: p\n---\nNo heading here")
+        _write_md(tmp_path / "How I remember stuff.md", "---\npublish: true\nslug: p\n---\nNo heading here")
         articles, _ = scan(tmp_path)
-        assert articles[0].title == "My Cool Post"
+        assert articles[0].title == "How I remember stuff"
+
+    def test_title_from_filename_ignores_h1(self, tmp_path):
+        _write_md(tmp_path / "my-cool-post.md", "---\npublish: true\nslug: p\n---\n# Some H1\n\nBody")
+        articles, _ = scan(tmp_path)
+        assert articles[0].title == "my-cool-post"
 
 
 class TestDateResolution:
@@ -252,3 +252,17 @@ class TestHomeDetection:
         articles, _ = scan(tmp_path)
         assert articles[0].is_home is False
         assert articles[0].url_path == "/articles/home/"
+
+
+class TestPathPrefixCaseNormalization:
+    def test_uppercase_directory_lowercased(self, tmp_path):
+        _write_md(tmp_path / "Articles" / "post.md", "---\npublish: true\nslug: post\n---\nHello")
+        articles, _ = scan(tmp_path)
+        assert articles[0].path_prefix == "articles"
+        assert articles[0].url_path == "/articles/post/"
+
+    def test_mixed_case_nested_directory_lowercased(self, tmp_path):
+        _write_md(tmp_path / "My Blog" / "Posts" / "post.md", "---\npublish: true\nslug: post\n---\nHello")
+        articles, _ = scan(tmp_path)
+        assert articles[0].path_prefix == "my blog/posts"
+        assert articles[0].url_path == "/my blog/posts/post/"

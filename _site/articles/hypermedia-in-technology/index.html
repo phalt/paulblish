@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hypermedia isn't just for HTML — Paul Writes Software</title>
+  
+  <!-- Open Graph -->
+  <meta property="og:type"        content="article">
+  <meta property="og:site_name"   content="Paul Writes Software">
+  <meta property="og:title"       content="Hypermedia isn't just for HTML">
+  <meta property="og:description" content="Paul Hallett is a software engineer">
+  <meta property="og:url"         content="paulblish//articles/hypermedia-in-technology/">
+  
+  <meta property="og:image"       content="paulblish//assets/site-logo.jpeg">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary">
+  <meta name="twitter:title"       content="Hypermedia isn't just for HTML">
+  <meta name="twitter:description" content="Paul Hallett is a software engineer">
+  
+  <meta name="twitter:image"       content="paulblish//assets/site-logo.jpeg">
+  
+  <link rel="stylesheet" href="paulblish//static/style.css">
+  <link rel="alternate" type="application/rss+xml" title="Paul Writes Software" href="paulblish//feed.xml">
+  <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"; mermaid.initialize({startOnLoad:true});</script>
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="paulblish//" class="nav-title">Paul Writes Software</a>
+<a href="paulblish//all/">All Pages</a>
+
+<div class="social-icons">
+  
+  <a href="https://github.com/phalt" class="social-icon" aria-label="GitHub" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M10.226 17.284c-2.965-.36-5.054-2.493-5.054-5.256 0-1.123.404-2.336 1.078-3.144-.292-.741-.247-2.314.09-2.965.898-.112 2.111.36 2.83 1.01.853-.269 1.752-.404 2.853-.404 1.1 0 1.999.135 2.807.382.696-.629 1.932-1.1 2.83-.988.315.606.36 2.179.067 2.942.72.854 1.101 2 1.101 3.167 0 2.763-2.089 4.852-5.098 5.234.763.494 1.28 1.572 1.28 2.807v2.336c0 .674.561 1.056 1.235.786 4.066-1.55 7.255-5.615 7.255-10.646C23.5 6.188 18.334 1 11.978 1 5.62 1 .5 6.188.5 12.545c0 4.986 3.167 9.12 7.435 10.669.606.225 1.19-.18 1.19-.786V20.63a2.9 2.9 0 0 1-1.078.224c-1.483 0-2.359-.808-2.987-2.313-.247-.607-.517-.966-1.034-1.033-.27-.023-.359-.135-.359-.27 0-.27.45-.471.898-.471.652 0 1.213.404 1.797 1.235.45.651.921.943 1.483.943.561 0 .92-.202 1.437-.719.382-.381.674-.718.944-.943"/>
+    </svg>
+  </a>
+  
+  
+  <a href="https://bsky.app/profile/paulwrites.software" class="social-icon" aria-label="Bluesky" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M5.202 2.857C7.954 4.922 10.913 9.11 12 11.358c1.087-2.247 4.046-6.436 6.798-8.501C20.783 1.366 24 .213 24 3.883c0 .732-.42 6.156-.667 7.037-.856 3.061-3.978 3.842-6.755 3.37 4.854.826 6.089 3.562 3.422 6.299-5.065 5.196-7.28-1.304-7.847-2.97-.104-.305-.152-.448-.153-.327 0-.121-.05.022-.153.327-.568 1.666-2.782 8.166-7.847 2.97-2.667-2.737-1.432-5.473 3.422-6.3-2.777.473-5.899-.308-6.755-3.369C.42 10.04 0 4.615 0 3.883c0-3.67 3.217-2.517 5.202-1.026"/>
+    </svg>
+  </a>
+  
+  
+  <a href="mailto:case@hey.com" class="social-icon" aria-label="Email">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+    </svg>
+  </a>
+  
+</div>
+
+  </nav>
+
+  <main>
+    
+<article>
+  <header class="article-meta">
+    <h1>Hypermedia isn't just for HTML</h1>
+    <time datetime="2026-04-02T19:55:57.252195">02 April 2026</time>
+    <span class="reading-time">2 min read</span>
+    
+    <div class="tags">
+      
+        <a href="paulblish//tags/Software/" class="tag">Software</a>
+      
+    </div>
+    
+    
+  </header>
+
+  
+  <div class="article-body">
+    <p>The concept of <a href="https://en.wikipedia.org/wiki/Hypermedia">Hypermedia</a> is a bit fluffy. It's an abstract concept in computing and information architecture. It deals with the concept of nonlinear connections of information in a computer system. When you only talk about it abstractly, it doesn't make sense. But when I explain the concept to people using a technology that uses it, people start to understand it.</p>
+<p>HTML is actually a form of Hypermedia. It's an acronym for <em>HyperText Markup Language</em>, and the <em>text</em> part of that is a form of <em>media</em>. More concretely, the use of <code>&lt;a&gt;</code> and <code>&lt;form&gt;</code> tags in HTML documents <em>is</em> the implementation of Hypermedia.</p>
+<p>Think about it. Your web browser loads an HTML document. That document has links to other HTML documents. You can click them to load other documents, with more links. That's HyperText. That's Hypermedia.</p>
+<p>It's a cool concept, isn't it? You have all these nuggets of information linked together in a <a href="https://en.wikipedia.org/wiki/World_Wide_Web">web</a>. Maybe that concept will be popular some day.</p>
+<h1>Other uses of HyperText in technology</h1>
+<p>Despite the concept of HyperText feeling like a core component of information technology, there aren't many implementations of it that are as ubiquitous as HTML.</p>
+<p>Let's look at some other uses of it.</p>
+<h3>Markdown</h3>
+<p>Markdown supports HyperText through this syntax:</p>
+<pre><code class="language-markdown"><div class="highlight"><pre><span></span>[<span class="nt">Readable text</span>](<span class="na">url</span>)
+</pre></div>
+</code></pre>
+<p>Markdown is used in a similar way as HTML: it is transpiled either <em>to</em> HTML by a processor, or an app reads Markdown and formats the screen appropriately.</p>
+<h3>Obsidian's HyperText</h3>
+<p><a href="https://obsidian.md">Obsidian</a> has a special syntax in plain text that is an implementation of HyperText.</p>
+<pre><code class="language-obsidian">[[path/to/file|Readable text]]
+</code></pre>
+<p>This looks very similar to Markdown. Obsidian uses this to link documents together to produce knowledge maps.</p>
+<h3>Wiki's</h3>
+<p><a href="https://en.wikipedia.org/wiki/Wiki">Wikis</a>, like Wikipedia, is specifically a HyperText publication. It uses an identical syntax to Obsidan above (though it should be noted that Wikis were around before Obsidian).</p>
+<pre><code class="language-wiki">[[url/to/document|Readable text]]
+</code></pre>
+<p>It should be noted that you can do a shorthand version of this:</p>
+<pre><code class="language-wiki">[[Readable text]]
+</code></pre>
+<p>The omission of the explicit path means it will look for a path or file with the exact name in the root of of the server or directory.</p>
+<h2>Have you found any novel uses of HyperText?</h2>
+<p>I'd love to chat to you about it.</p>
+<p>Thanks for reading this article, if you'd like to get in touch you can reach me through:</p>
+<ul>
+<li><a href="https://fosstodon.org/@proteanmachine">Fosstodon</a></li>
+<li><a href="mailto:case@hey.com">Email</a></li>
+<li><a href="https://github.com/phalt">GitHub</a></li>
+</ul>
+<p>Paul</p>
+
+  </div>
+
+  <nav class="article-nav">
+    <div class="article-nav-prev">
+      
+      <a href="paulblish//pokemon/pokemon/hardware/">← Older: Nintendo Hardware</a>
+      
+    </div>
+    <div class="article-nav-next">
+      
+      <a href="paulblish//articles/lessons-from-10-hours-of-flight-training/">Newer: Lessons from 10 hours of flight training →</a>
+      
+    </div>
+  </nav>
+</article>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>Paul Writes Software — built with <a href="https://github.com/phalt/paulblish">Paulblish</a></p>
+    
+<div class="social-icons">
+  
+  <a href="https://github.com/phalt" class="social-icon" aria-label="GitHub" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M10.226 17.284c-2.965-.36-5.054-2.493-5.054-5.256 0-1.123.404-2.336 1.078-3.144-.292-.741-.247-2.314.09-2.965.898-.112 2.111.36 2.83 1.01.853-.269 1.752-.404 2.853-.404 1.1 0 1.999.135 2.807.382.696-.629 1.932-1.1 2.83-.988.315.606.36 2.179.067 2.942.72.854 1.101 2 1.101 3.167 0 2.763-2.089 4.852-5.098 5.234.763.494 1.28 1.572 1.28 2.807v2.336c0 .674.561 1.056 1.235.786 4.066-1.55 7.255-5.615 7.255-10.646C23.5 6.188 18.334 1 11.978 1 5.62 1 .5 6.188.5 12.545c0 4.986 3.167 9.12 7.435 10.669.606.225 1.19-.18 1.19-.786V20.63a2.9 2.9 0 0 1-1.078.224c-1.483 0-2.359-.808-2.987-2.313-.247-.607-.517-.966-1.034-1.033-.27-.023-.359-.135-.359-.27 0-.27.45-.471.898-.471.652 0 1.213.404 1.797 1.235.45.651.921.943 1.483.943.561 0 .92-.202 1.437-.719.382-.381.674-.718.944-.943"/>
+    </svg>
+  </a>
+  
+  
+  <a href="https://bsky.app/profile/paulwrites.software" class="social-icon" aria-label="Bluesky" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M5.202 2.857C7.954 4.922 10.913 9.11 12 11.358c1.087-2.247 4.046-6.436 6.798-8.501C20.783 1.366 24 .213 24 3.883c0 .732-.42 6.156-.667 7.037-.856 3.061-3.978 3.842-6.755 3.37 4.854.826 6.089 3.562 3.422 6.299-5.065 5.196-7.28-1.304-7.847-2.97-.104-.305-.152-.448-.153-.327 0-.121-.05.022-.153.327-.568 1.666-2.782 8.166-7.847 2.97-2.667-2.737-1.432-5.473 3.422-6.3-2.777.473-5.899-.308-6.755-3.369C.42 10.04 0 4.615 0 3.883c0-3.67 3.217-2.517 5.202-1.026"/>
+    </svg>
+  </a>
+  
+  
+  <a href="mailto:case@hey.com" class="social-icon" aria-label="Email">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+    </svg>
+  </a>
+  
+</div>
+
+  </footer>
+</body>
+</html>
