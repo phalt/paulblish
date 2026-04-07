@@ -245,7 +245,7 @@ a:visited {
   font-size: 0.85rem;
 }
 
-/* === Code === */
+/* === Inline code === */
 code {
   font-family: var(--font-heading);
   font-size: 0.9em;
@@ -253,12 +253,14 @@ code {
   padding: 0.15em 0.35em;
 }
 
+/* Plain pre/code blocks (no language specified) */
 pre {
   background: var(--surface);
   border: 1px solid var(--border);
+  border-radius: 6px;
   padding: 1em;
   overflow-x: auto;
-  margin: 1em 0;
+  margin: 1.5rem 0;
 }
 
 pre code {
@@ -266,20 +268,97 @@ pre code {
   padding: 0;
 }
 
-/* Pygments highlight wrapper */
-.highlight {
-  background: var(--surface);
+/* === Fenced code block wrapper (language-highlighted blocks) === */
+.code-block {
   border: 1px solid var(--border);
-  padding: 1em;
-  overflow-x: auto;
-  margin: 1em 0;
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 1.5rem 0;
+  background: var(--surface);
 }
 
-.highlight pre {
+.code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.35rem 0.75rem;
+  background: color-mix(in srgb, var(--surface) 50%, var(--border));
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+}
+
+.code-lang {
+  color: var(--text);
+  opacity: 0.6;
+}
+
+.code-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: #fff;
+  opacity: 0.35;
+  transition: opacity 0.15s;
+}
+
+.code-copy-btn:hover,
+.code-copy-btn.copied {
+  opacity: 0.9;
+}
+
+/* Pygments .highlight inside .code-block — wrapper handles border/bg */
+.code-block .highlight {
+  background: none;
+  border: none;
+  padding: 1em;
+  overflow-x: auto;
+  margin: 0;
+}
+
+.code-block .highlight pre {
   background: none;
   border: none;
   padding: 0;
   margin: 0;
+  border-radius: 0;
+}
+
+/* === Line numbers (Pygments linenos="table") === */
+.highlighttable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.highlighttable .linenos {
+  user-select: none;
+  padding: 1em 0.75em 1em 1em;
+  text-align: right;
+  vertical-align: top;
+  border-right: 1px solid var(--border);
+  width: 1%;
+  white-space: nowrap;
+}
+
+.highlighttable .linenos .linenodiv pre {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--text);
+  opacity: 0.35;
+}
+
+.highlighttable .code {
+  padding: 0;
+  width: 100%;
+}
+
+.highlighttable .code .highlight {
+  padding: 1em;
 }
 
 /* === Pygments token colours (CP2077-aligned) === */

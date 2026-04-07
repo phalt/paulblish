@@ -106,7 +106,7 @@
 <p>Why is this? And what do I think we need to do about it?</p>
 <h2>Python HTTP API server code feels declarative and mature</h2>
 <p>Here is a <a href="https://fastapi.tiangolo.com/">FastAPI</a> code snippet that provides a complete HTTP API server with declarative inputs and outputs:</p>
-<pre><code class="language-Python"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">FastAPI</span>
+<pre><code class="language-Python"><div class="code-block" data-lang="Python"><div class="code-header"><span class="code-lang">Python</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">FastAPI</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span>
 
 <span class="n">app</span> <span class="o">=</span> <span class="n">FastAPI</span><span class="p">()</span>
@@ -119,7 +119,7 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">get_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">User</span><span class="p">:</span>
     <span class="k">return</span> <span class="n">User</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">user_id</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Alice&quot;</span><span class="p">)</span>
 </pre></div>
-</code></pre>
+</div></code></pre>
 <p>FastAPI isn't the only mature HTTP API service in Python - we <a href="https://django-ninja.dev/">have</a> so <a href="https://www.django-rest-framework.org/">many</a> options available to us. This is brilliant: building HTTP APIs in Python is really, really mature.</p>
 <p>What's so good about FastAPI's in particular?</p>
 <p><strong>You can understand the code</strong></p>
@@ -141,14 +141,14 @@
 <p>When you compare this to the other side of the integration - the client - the developer experience is very different.</p>
 <p>The “equivalent” code for an API client is usually just the developer's or project's preferred HTTP client making requests.</p>
 <p>This example shows an <a href="https://www.python-httpx.org/">httpx</a> request to the same API server we just wrote:</p>
-<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">httpx</span>
+<pre><code class="language-python"><div class="code-block" data-lang="python"><div class="code-header"><span class="code-lang">python</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">httpx</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">get_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
     <span class="n">response</span> <span class="o">=</span> <span class="n">httpx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;https://api.example.com/users/</span><span class="si">{</span><span class="n">user_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 </pre></div>
-</code></pre>
+</div></code></pre>
 <p>The project or developer may put in more effort and wrap the HTTP response in a typed model instead of returning the JSON dictionary. Or they may maintain a list of endpoints instead of hard coding strings. Every developer and project has it's own way of dealing with integration.</p>
 <p>The same level of abstraction for HTTP API clients just doesn't exist like it does for HTTP API servers.</p>
 <p>It would be the equivalent of everyone today building API servers with <a href="https://github.com/django/asgiref">asgi</a> or Starlette directly and rolling their own ORM, routing, and views layer.</p>
@@ -156,9 +156,9 @@
 <p>Yes, we do.</p>
 <p><a href="https://www.openapis.org/">OpenAPI</a> provides an abstract representation of an API service that a client could in theory integrate comfortably with. OpenAPI's adoption on the server side is mature as it can be - all the major Python HTTP API frameworks produce compliant OpenAPI schemas for free.</p>
 <p>On the client side, nearly everything we have available for turning OpenAPI schemas into client integration is just code generators. These generated clients often generate obtuse and confusing code like this:</p>
-<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">users_api</span><span class="o">.</span><span class="n">get_user_with_http_info</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span>
+<pre><code class="language-python"><div class="code-block" data-lang="python"><div class="code-header"><span class="code-lang">python</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">users_api</span><span class="o">.</span><span class="n">get_user_with_http_info</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span>
 </pre></div>
-</code></pre>
+</div></code></pre>
 <p>It's only been in the past few years that client code generators have caught up with modern Python and offered things like strong typing, pydantic models etc. But they all still just provide boilerplate code and the raw components.</p>
 <p>There is no comfortable abstraction.</p>
 <p>My personal experience with OpenAPI code generators is so poor that I never bother. I've tried plenty and always get the same - the generated code still takes a long time to understand and integrate because of the size of it, the &quot;not quite how we write python&quot;-ness for the client project, the fact that it produces a full stack of code down to the raw http transport which the developer then has to maintain.</p>
@@ -178,13 +178,13 @@
 </blockquote>
 <h2>Clientele is a different way to think about Python API clients</h2>
 <p>Instead of writing code like this:</p>
-<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="n">httpx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://api.example.com/users/123&quot;</span><span class="p">)</span>
+<pre><code class="language-python"><div class="code-block" data-lang="python"><div class="code-header"><span class="code-lang">python</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span><span class="n">httpx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://api.example.com/users/123&quot;</span><span class="p">)</span>
 </pre></div>
-</code></pre>
+</div></code></pre>
 <p>Can we instead write code like this:</p>
-<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="n">get_user</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+<pre><code class="language-python"><div class="code-block" data-lang="python"><div class="code-header"><span class="code-lang">python</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span><span class="n">get_user</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
 </pre></div>
-</code></pre>
+</div></code></pre>
 <p>So that we can have a framework where the function declares intent, and the framework handles transport, hydration, validation etc.</p>
 <p>I think we might be able to do this elegantly with <a href="https://wiki.python.org/moin/PythonDecorators#What_is_a_Decorator">decorators</a>.</p>
 <h2>Decorators</h2>
@@ -192,7 +192,7 @@
 <p>The changes below are available on the <a href="https://github.com/phalt/clientele">main branch</a> of Clientele where I am building this exact framework and I've been able to get it working pretty reliably.
 You can see a working example client <a href="https://github.com/phalt/clientele/blob/main/server_examples/fastapi/client/client.py">here</a></p>
 <p>Here is an example of how a modern Python API client could look:</p>
-<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">clientele</span>
+<pre><code class="language-python"><div class="code-block" data-lang="python"><div class="code-header"><span class="code-lang">python</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">clientele</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">server_examples.fastapi.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">server_examples.fastapi.client.schemas</span><span class="w"> </span><span class="kn">import</span> <span class="n">CreateUserRequest</span><span class="p">,</span> <span class="n">HTTPValidationError</span><span class="p">,</span> <span class="n">UserResponse</span>
 
@@ -211,7 +211,7 @@ You can see a working example client <a href="https://github.com/phalt/clientele
 <span class="k">def</span><span class="w"> </span><span class="nf">create_user</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">CreateUserRequest</span><span class="p">,</span> <span class="n">result</span><span class="p">:</span> <span class="n">CreateUserUnion</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CreateUserUnion</span><span class="p">:</span>
     <span class="k">return</span> <span class="n">result</span>
 </pre></div>
-</code></pre>
+</div></code></pre>
 <p>This should feel instantly familiar to anyone using an HTTP API framework like FastAPI, Django-Ninja or even Flask, and that is intentional because it is a model that Python developers are familiar with, and it works.</p>
 <p>The key idea is that functions are used declaratively to support explicit typing and IDE support. The signature of the function is the contract, even though the function doesn't actually do work except provide clearly typed inputs and outputs.</p>
 <p>The key focus with this framework is that the decorator manages everything else needed for an HTTP API client:</p>
@@ -277,6 +277,20 @@ You can see a working example client <a href="https://github.com/phalt/clientele
     </div>
   </nav>
 </article>
+
+<script>
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('.code-copy-btn');
+    if (!btn) return;
+    var block = btn.closest('.code-block');
+    var pre = block.querySelector('td.code pre') || block.querySelector('pre');
+    navigator.clipboard.writeText(pre.textContent).then(function() {
+      btn.classList.add('copied');
+      setTimeout(function() { btn.classList.remove('copied'); }, 2000);
+    });
+  });
+</script>
+
 
   </main>
 

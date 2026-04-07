@@ -122,9 +122,9 @@
 <hr />
 <h2>More complex markdown things</h2>
 <h3>Code blocks</h3>
-<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;python code blocks&quot;</span><span class="p">)</span>
-</pre></div>
-</code></pre>
+<pre><code class="language-python"><div class="code-block" data-lang="python"><div class="code-header"><span class="code-lang">file.py</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;python code blocks&quot;</span><span class="p">)</span>
+</pre></div></td></tr></table></div>
+</div></code></pre>
 <h3>Mermaid.js diagrams</h3>
 <pre class="mermaid">flowchart TD
     Start(Use hyper-personal software) --&gt; Stop(Enjoy writing software again!)
@@ -169,7 +169,7 @@
 <p>(check the alt text to see it works too)</p>
 <h2>Frontmatter supported properties</h2>
 <h3>Home.md</h3>
-<pre><code class="language-yaml"><div class="highlight"><pre><span></span><span class="nt">cname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">creates a CNAME file with this content, for github pages support</span>
+<pre><code class="language-yaml"><div class="code-block" data-lang="yaml"><div class="code-header"><span class="code-lang">yaml</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span><span class="nt">cname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">creates a CNAME file with this content, for github pages support</span>
 <span class="nt">avatar</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">relative path to an image will show an icon on the home page</span>
 <span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">used in the &lt;meta name=&quot;description&quot;&gt; tag</span>
 <span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">used in the &lt;title&gt; tag</span>
@@ -177,15 +177,15 @@
 <span class="nt">github</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">link to a github account will create a github icon</span>
 <span class="nt">email: link to an email will create a mailto</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">link</span>
 </pre></div>
-</code></pre>
+</div></code></pre>
 <h3>Articles</h3>
-<pre><code class="language-yaml"><div class="highlight"><pre><span></span><span class="nt">author</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Your name</span>
+<pre><code class="language-yaml"><div class="code-block" data-lang="yaml"><div class="code-header"><span class="code-lang">yaml</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span><span class="nt">author</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Your name</span>
 <span class="nt">created</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">date (also determines the next/prev link order!)</span>
 <span class="nt">permalink</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local path (uses directories to build paths, btw)</span>
 <span class="nt">tags</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">builds static tag pages grouping related articles</span>
 <span class="nt">publish</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bool, determines if the article is generated or not</span>
 </pre></div>
-</code></pre>
+</div></code></pre>
 <h2>Other features</h2>
 <ul>
 <li>An <a href="https://paulwrites.software/feed.xml">RSS feed</a> is automatically generated for you.</li>
@@ -218,6 +218,20 @@
     </div>
   </nav>
 </article>
+
+<script>
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('.code-copy-btn');
+    if (!btn) return;
+    var block = btn.closest('.code-block');
+    var pre = block.querySelector('td.code pre') || block.querySelector('pre');
+    navigator.clipboard.writeText(pre.textContent).then(function() {
+      btn.classList.add('copied');
+      setTimeout(function() { btn.classList.remove('copied'); }, 2000);
+    });
+  });
+</script>
+
 
   </main>
 

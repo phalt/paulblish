@@ -1,3 +1,5 @@
+import re
+
 from markdown_it import MarkdownIt
 from mdit_py_plugins.footnote import footnote_plugin
 from pygments import highlight
@@ -12,6 +14,30 @@ from paulblish.plugins.highlights import highlights_plugin
 from paulblish.plugins.wikilinks import wikilinks_plugin
 
 _formatter = HtmlFormatter(cssclass="highlight", nowrap=False)
+_formatter_linenos = HtmlFormatter(cssclass="highlight", nowrap=False, linenos="table")
+
+_COPY_ICON = (
+    '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+    'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+    '<rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>'
+    '<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>'
+    "</svg>"
+)
+
+
+def _parse_title(attrs: str) -> str | None:
+    """Extract title="..." or title='...' from a fenced code info string."""
+    m = re.search(r'title=["\']([^"\']+)["\']', attrs)
+    return m.group(1) if m else None
+
+
+def _code_header(label: str) -> str:
+    return (
+        '<div class="code-header">'
+        f'<span class="code-lang">{label}</span>'
+        f'<button class="code-copy-btn" aria-label="Copy code">{_COPY_ICON}</button>'
+        "</div>"
+    )
 
 
 def _highlight(code: str, lang: str, _attrs: str) -> str:
@@ -27,7 +53,14 @@ def _highlight(code: str, lang: str, _attrs: str) -> str:
         lexer = get_lexer_by_name(lang)
     except ClassNotFound:
         return ""  # unknown language, fall back to default rendering
-    return highlight(code, lexer, _formatter)
+
+    attrs = _attrs or ""
+    use_linenos = "linenos" in attrs
+    title = _parse_title(attrs)
+    label = title if title else lang
+    formatter = _formatter_linenos if use_linenos else _formatter
+    highlighted = highlight(code, lexer, formatter)
+    return f'<div class="code-block" data-lang="{lang}">{_code_header(label)}{highlighted}</div>'
 
 
 _md = MarkdownIt("commonmark", {"highlight": _highlight}).enable("table")

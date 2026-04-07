@@ -54,4 +54,18 @@
     </div>
   </nav>
 </article>
+{% if 'code-copy-btn' in article.body_html %}
+<script>
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('.code-copy-btn');
+    if (!btn) return;
+    var block = btn.closest('.code-block');
+    var pre = block.querySelector('td.code pre') || block.querySelector('pre');
+    navigator.clipboard.writeText(pre.textContent).then(function() {
+      btn.classList.add('copied');
+      setTimeout(function() { btn.classList.remove('copied'); }, 2000);
+    });
+  });
+</script>
+{% endif %}
 {% endblock %}
