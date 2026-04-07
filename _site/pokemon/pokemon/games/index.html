@@ -63,7 +63,23 @@
     
 <article>
   <header class="article-meta">
-    <h1>Pokemon Games</h1>
+    <h1>
+      Pokemon Games
+      <button class="copy-url-btn" data-url="/pokemon/pokemon/games/" title="Copy URL to article" aria-label="Copy URL to article">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+        </svg>
+      </button>
+    </h1>
+    <script>
+      document.querySelector('.copy-url-btn').addEventListener('click', function() {
+        navigator.clipboard.writeText(this.dataset.url).then(() => {
+          this.classList.add('copied');
+          setTimeout(() => this.classList.remove('copied'), 2000);
+        });
+      });
+    </script>
     <time datetime="2024-12-15T00:00:00">15 December 2024</time>
     <span class="reading-time">8 min read</span>
     
@@ -614,6 +630,11 @@ He was caught in the Kalos region on 11/06/2018.</p>
   
 </div>
 
+    <p class="footer-links">
+      <a href="/feed.xml">RSS</a>
+      <span aria-hidden="true">·</span>
+      <a href="/sitemap.xml">Sitemap</a>
+    </p>
   </footer>
 </body>
 </html>

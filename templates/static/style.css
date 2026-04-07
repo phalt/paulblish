@@ -118,6 +118,28 @@ a:visited {
 
 .article-meta h1 {
   margin-top: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.copy-url-btn {
+  display: inline-flex;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: #fff;
+  opacity: 0.35;
+  transition: opacity 0.15s;
+  flex-shrink: 0;
+}
+
+.copy-url-btn:hover,
+.copy-url-btn.copied {
+  opacity: 0.9;
 }
 
 .article-meta time {
@@ -423,6 +445,13 @@ pre code {
 
 .site-footer a {
   color: var(--accent-teal);
+}
+
+.footer-links {
+  margin-top: 0.4rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 /* === Callouts === */
