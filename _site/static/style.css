@@ -466,6 +466,42 @@ pre code {
 .callout-tip      .callout-title,
 .callout-success  .callout-title { background: color-mix(in srgb, #6bcb77 15%, var(--surface)); color: #6bcb77; }
 
+/* === Collapsible callouts === */
+.callout-collapsible details {
+  /* reset browser default padding/margin on details */
+  margin: 0;
+}
+
+.callout-collapsible summary.callout-title {
+  cursor: pointer;
+  user-select: none;
+  list-style: none;          /* Firefox */
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+}
+
+/* Remove the default disclosure triangle in all browsers */
+.callout-collapsible summary.callout-title::-webkit-details-marker { display: none; }
+.callout-collapsible summary.callout-title::marker               { display: none; }
+
+/* Chevron icon — rotates when open */
+.callout-fold {
+  display: inline-block;
+  width: 0.6em;
+  height: 0.6em;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);   /* points right (collapsed) */
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+  margin-top: 1px;             /* optical alignment */
+}
+
+.callout-collapsible details[open] .callout-fold {
+  transform: rotate(45deg);   /* points down (expanded) */
+}
+
 /* === Highlights === */
 mark {
   background: color-mix(in srgb, #f0c040 35%, transparent);

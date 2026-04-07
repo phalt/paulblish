@@ -3,7 +3,7 @@ import re
 from markdown_it import MarkdownIt
 from markdown_it.token import Token
 
-_CALLOUT_RE = re.compile(r"^\[!(\w+)\](.*)$", re.IGNORECASE)
+_CALLOUT_RE = re.compile(r"^\[!(\w+)\]([+-]?)(.*)$", re.IGNORECASE)
 
 # Supported callout types and their display labels
 _CALLOUT_LABELS = {
@@ -25,10 +25,12 @@ _CALLOUT_LABELS = {
 }
 
 
-def _find_callout_info(tokens: list[Token], bq_open_idx: int) -> tuple[str, str] | None:
+def _find_callout_info(tokens: list[Token], bq_open_idx: int) -> tuple[str, str, str] | None:
     """
     Given a blockquote_open token index, look at the first inline child to check
-    if it starts with [!TYPE]. Returns (type, label) or None.
+    if it starts with [!TYPE]. Returns (type, label, fold) or None.
+
+    fold is '+' (collapsible, starts open), '-' (collapsible, starts closed), or '' (static).
     """
     for i in range(bq_open_idx + 1, len(tokens)):
         t = tokens[i]
@@ -40,8 +42,10 @@ def _find_callout_info(tokens: list[Token], bq_open_idx: int) -> tuple[str, str]
                 m = _CALLOUT_RE.match(first.content.strip())
                 if m:
                     callout_type = m.group(1).lower()
-                    label = _CALLOUT_LABELS.get(callout_type, callout_type.title())
-                    return callout_type, label
+                    fold = m.group(2)  # '+', '-', or ''
+                    custom_title = m.group(3).strip()
+                    label = custom_title if custom_title else _CALLOUT_LABELS.get(callout_type, callout_type.title())
+                    return callout_type, label, fold
     return None
 
 
@@ -72,8 +76,19 @@ def _render_blockquote_open(self, tokens: list[Token], idx: int, options, env) -
     info = _find_callout_info(tokens, idx)
     if info is None:
         return "<blockquote>\n"
-    callout_type, label = info
+    callout_type, label, fold = info
     _strip_callout_marker(tokens, idx)
+    collapsible = fold in ("+", "-")
+    tokens[idx].meta = {"is_callout": True, "collapsible": collapsible}
+
+    if collapsible:
+        open_attr = " open" if fold == "+" else ""
+        return (
+            f'<div class="callout callout-{callout_type} callout-collapsible" data-callout="{callout_type}">\n'
+            f"<details{open_attr}>\n"
+            f'<summary class="callout-title"><span class="callout-fold"></span>{label}</summary>\n'
+            f'<div class="callout-body">\n'
+        )
     return (
         f'<div class="callout callout-{callout_type}" data-callout="{callout_type}">\n'
         f'<div class="callout-title">{label}</div>\n'
@@ -90,7 +105,9 @@ def _render_blockquote_close(self, tokens: list[Token], idx: int, options, env) 
             depth += 1
         elif t.type == "blockquote_open":
             if depth == 0:
-                if _find_callout_info(tokens, i) is not None:
+                if t.meta and t.meta.get("is_callout"):
+                    if t.meta.get("collapsible"):
+                        return "</div>\n</details>\n</div>\n"
                     return "</div>\n</div>\n"
                 break
             depth -= 1

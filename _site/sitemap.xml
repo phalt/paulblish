@@ -2,35 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>/articles/python-api-clients/</loc>
-    <lastmod>2026-04-02</lastmod>
-  </url>
-  <url>
-    <loc>/articles/agents-can-do-tedious-tasks/</loc>
-    <lastmod>2026-04-02</lastmod>
+    <lastmod>2026-01-01</lastmod>
   </url>
   <url>
     <loc>/articles/clientele-updates/</loc>
-    <lastmod>2026-04-02</lastmod>
+    <lastmod>2026-01-19</lastmod>
   </url>
   <url>
     <loc>/articles/remembering-stuff/</loc>
-    <lastmod>2026-04-02</lastmod>
+    <lastmod>2023-10-25</lastmod>
   </url>
   <url>
     <loc>/articles/hypermedia-in-technology/</loc>
-    <lastmod>2026-04-02</lastmod>
+    <lastmod>2023-10-25</lastmod>
   </url>
   <url>
     <loc>/articles/lessons-from-10-hours-of-flight-training/</loc>
-    <lastmod>2026-04-02</lastmod>
+    <lastmod>2023-10-30</lastmod>
   </url>
   <url>
     <loc>/articles/life-moves-pretty-fast/</loc>
-    <lastmod>2026-04-02</lastmod>
+    <lastmod>2023-11-10</lastmod>
   </url>
   <url>
     <loc>/articles/toy-cameras/</loc>
-    <lastmod>2026-04-02</lastmod>
+    <lastmod>2025-04-07</lastmod>
   </url>
   <url>
     <loc>/articles/paulblish-features/</loc>
@@ -38,27 +34,27 @@
   </url>
   <url>
     <loc>/articles/lack-of-attention/</loc>
-    <lastmod>2026-04-02</lastmod>
+    <lastmod>2025-04-02</lastmod>
   </url>
   <url>
     <loc>/articles/software-eng-ai-age/</loc>
-    <lastmod>2026-04-02</lastmod>
+    <lastmod>2025-12-12</lastmod>
   </url>
   <url>
     <loc>/</loc>
-    <lastmod>2026-04-02</lastmod>
+    <lastmod>2023-10-24</lastmod>
   </url>
   <url>
-    <loc>/photography/photography/colour/</loc>
-    <lastmod>2025-12-17</lastmod>
+    <loc>/photography/colour/</loc>
+    <lastmod>2025-05-02</lastmod>
   </url>
   <url>
-    <loc>/photography/photography/polaroid/</loc>
-    <lastmod>2025-12-17</lastmod>
+    <loc>/photography/polaroid/</loc>
+    <lastmod>2025-05-20</lastmod>
   </url>
   <url>
-    <loc>/photography/photography/toy-cameras/</loc>
-    <lastmod>2025-12-17</lastmod>
+    <loc>/photography/toy-cameras/</loc>
+    <lastmod>2025-04-07</lastmod>
   </url>
   <url>
     <loc>/pokemon/pokemon/transfer/</loc>
@@ -66,11 +62,11 @@
   </url>
   <url>
     <loc>/pokemon/pokemon/hardware/</loc>
-    <lastmod>2025-12-21</lastmod>
+    <lastmod>2024-12-15</lastmod>
   </url>
   <url>
     <loc>/pokemon/pokemon/games/</loc>
-    <lastmod>2025-09-10</lastmod>
+    <lastmod>2024-12-15</lastmod>
   </url>
   <url>
     <loc>/pokemon/pokemon/shiny-rotom/</loc>
@@ -82,23 +78,23 @@
   </url>
   <url>
     <loc>/tags/Flying/</loc>
-    <lastmod>2026-04-02</lastmod>
+    <lastmod>2023-10-30</lastmod>
   </url>
   <url>
     <loc>/tags/Photography/</loc>
-    <lastmod>2026-04-02</lastmod>
+    <lastmod>2025-04-02</lastmod>
   </url>
   <url>
     <loc>/tags/Productivity/</loc>
-    <lastmod>2026-04-02</lastmod>
+    <lastmod>2023-10-25</lastmod>
   </url>
   <url>
     <loc>/tags/Software/</loc>
-    <lastmod>2026-04-02</lastmod>
+    <lastmod>2026-01-19</lastmod>
   </url>
   <url>
     <loc>/tags/games/</loc>
-    <lastmod>2025-12-21</lastmod>
+    <lastmod>2024-12-20</lastmod>
   </url>
   <url>
     <loc>/tags/hyper-personal-software/</loc>
@@ -106,7 +102,7 @@
   </url>
   <url>
     <loc>/tags/life/</loc>
-    <lastmod>2026-04-02</lastmod>
+    <lastmod>2023-11-10</lastmod>
   </url>
   <url>
     <loc>/tags/paulblish/</loc>
@@ -114,6 +110,6 @@
   </url>
   <url>
     <loc>/tags/photography/</loc>
-    <lastmod>2026-04-02</lastmod>
+    <lastmod>2025-05-20</lastmod>
   </url>
 </urlset>

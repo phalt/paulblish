@@ -6,7 +6,7 @@
 <div class="listing">
   <h1>All Pages</h1>
   {% for group, articles in groups.items() %}
-  <h2>{{ group if group else "/" }}</h2>
+  <h2>{{ group.title() if group else "/" }}</h2>
   <ul class="article-list">
     {% for article in articles %}
     <li>

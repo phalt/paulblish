@@ -17,15 +17,16 @@ class SkippedFile:
 def _resolve_slug(metadata: dict) -> str | None:
     """Return slug from frontmatter, using permalink as alias. Returns None if neither exists.
 
-    Leading and trailing slashes are stripped so slugs like '/articles/foo' or 'articles/foo/'
-    do not produce double-slashes in URL paths or absolute filesystem paths in the writer.
+    Leading and trailing slashes are stripped and the result is lowercased so that
+    output paths are consistent across case-sensitive (Linux) and case-insensitive
+    (macOS) filesystems.
     """
     slug = metadata.get("slug")
     if slug:
-        return str(slug).strip("/")
+        return str(slug).strip("/").lower()
     permalink = metadata.get("permalink")
     if permalink:
-        return str(permalink).strip("/")
+        return str(permalink).strip("/").lower()
     return None
 
 
@@ -38,8 +39,8 @@ def _resolve_title(metadata: dict, filename: str) -> str:
 
 
 def _resolve_date(metadata: dict, file_path: Path) -> datetime:
-    """Resolve date: frontmatter -> file mtime."""
-    date = metadata.get("date")
+    """Resolve date: frontmatter created -> date -> file mtime."""
+    date = metadata.get("created") or metadata.get("date")
     if date is not None:
         if isinstance(date, datetime):
             return date

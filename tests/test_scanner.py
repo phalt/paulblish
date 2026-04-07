@@ -135,6 +135,17 @@ class TestSlugResolution:
         articles, _ = scan(tmp_path)
         assert articles[0].slug == "the-slug"
 
+    def test_slug_is_lowercased(self, tmp_path):
+        """Slugs must be lowercased for cross-platform filesystem compatibility (macOS)."""
+        _write_md(tmp_path / "post.md", "---\npublish: true\nslug: My-Post\n---\nHello")
+        articles, _ = scan(tmp_path)
+        assert articles[0].slug == "my-post"
+
+    def test_permalink_is_lowercased(self, tmp_path):
+        _write_md(tmp_path / "post.md", "---\npublish: true\npermalink: My-Link\n---\nHello")
+        articles, _ = scan(tmp_path)
+        assert articles[0].slug == "my-link"
+
     def test_slug_with_leading_slash_is_stripped(self, tmp_path):
         _write_md(tmp_path / "post.md", "---\npublish: true\nslug: /articles/my-post\n---\nHello")
         articles, _ = scan(tmp_path)
@@ -176,6 +187,16 @@ class TestDateResolution:
         _write_md(tmp_path / "post.md", "---\npublish: true\nslug: p\ndate: 2026-03-15\n---\nHello")
         articles, _ = scan(tmp_path)
         assert articles[0].date == datetime(2026, 3, 15)
+
+    def test_created_from_frontmatter(self, tmp_path):
+        _write_md(tmp_path / "post.md", "---\npublish: true\nslug: p\ncreated: 2026-01-10\n---\nHello")
+        articles, _ = scan(tmp_path)
+        assert articles[0].date == datetime(2026, 1, 10)
+
+    def test_created_takes_precedence_over_date(self, tmp_path):
+        _write_md(tmp_path / "post.md", "---\npublish: true\nslug: p\ncreated: 2026-01-10\ndate: 2026-06-01\n---\nHello")
+        articles, _ = scan(tmp_path)
+        assert articles[0].date == datetime(2026, 1, 10)
 
     def test_date_from_mtime(self, tmp_path):
         _write_md(tmp_path / "post.md", "---\npublish: true\nslug: p\n---\nHello")

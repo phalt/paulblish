@@ -196,7 +196,7 @@ class TestAllPagesOutput:
         write(articles, tmp_path, site=SITE)
         content = (tmp_path / "all" / "index.html").read_text()
         assert "/" in content
-        assert "articles" in content
+        assert "Articles" in content  # title-cased group heading
         assert "Root Post" in content
         assert "Nested Post" in content
 
