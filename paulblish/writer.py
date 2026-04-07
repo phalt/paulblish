@@ -9,7 +9,7 @@ from paulblish.templating import render_404, render_all_pages, render_article, r
 DEFAULT_TEMPLATES = Path(__file__).parent.parent / "templates"
 
 
-def _output_path(article: Article, output_dir: Path) -> Path:
+def output_path(article: Article, output_dir: Path) -> Path:
     """Compute the output file path for an article."""
     if article.is_home:
         return output_dir / "index.html"
@@ -34,8 +34,14 @@ def write(
     output_dir: Path,
     site: SiteConfig,
     templates_dir: Path | None = None,
+    articles_to_write: list[Article] | None = None,
 ) -> list[Path]:
-    """Write rendered articles to the output directory. Returns list of written file paths."""
+    """Write rendered articles to the output directory. Returns list of written file paths.
+
+    If *articles_to_write* is provided (incremental builds), only those articles have
+    their individual HTML written.  All articles are still used for shared pages
+    (listings, feeds, sitemaps).  Prev/next assignment always uses the full list.
+    """
     assign_prev_next(articles)
     latest_articles = sorted(
         [a for a in articles if not a.is_home],
@@ -43,9 +49,11 @@ def write(
         reverse=True,
     )[:3]
 
+    subset = articles if articles_to_write is None else articles_to_write
+
     written: list[Path] = []
-    for article in articles:
-        path = _output_path(article, output_dir)
+    for article in subset:
+        path = output_path(article, output_dir)
         path.parent.mkdir(parents=True, exist_ok=True)
         la = latest_articles if article.is_home else None
         html = render_article(article, site, templates_dir=templates_dir, latest_articles=la)

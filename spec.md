@@ -1138,7 +1138,7 @@ A collection of high-value improvements and two larger features (light/dark mode
 - [x] **8.5** Generate `robots.txt` on every build.
 - [x] **8.6** Generate a styled `404.html` on every build.
 - [X] **8.7** Light / dark mode toggle with `localStorage` persistence and anti-FOUC inline script.
-- [ ] **8.8** Incremental builds via `--incremental` flag and `.pb-manifest.json`.
+- [x] **8.8** Incremental builds via `--incremental` flag and `.pb-manifest.json`.
 - [x] **8.9** Social icons in nav and footer for Bluesky, GitHub, and email.
 
 **Milestone:** All pages include social sharing meta tags, are discoverable by crawlers, have a working 404, support light/dark theming, large vaults can be rebuilt incrementally in a fraction of the full build time, and the site displays the author's social presence via icons in the nav and footer.
@@ -1333,14 +1333,16 @@ A collection of high-value improvements and two larger features (light/dark mode
   - `save_manifest(output_dir, articles)` — writes the manifest from the current article list's source file mtimes.
 - When `--incremental` is passed:
   1. Load the manifest from the output dir.
-  2. After scanning, split articles into two groups:
+  2. After scanning, split articles into three groups:
      - **stale**: source file mtime > manifest value (or not in manifest) — must be re-rendered.
      - **fresh**: source file mtime ≤ manifest value — skip rendering and writing; their existing output files are left untouched.
+     - **absent**: source file no longer available, but file path is in manifest; these need to be deleted.
   3. Only stale articles are rendered, templated, and written.
   4. Asset collection and copying still runs over **all** published articles (not just stale ones), so that asset references from fresh articles are not broken.
   5. The all-pages listing, tag pages, RSS feed, sitemap, and robots.txt are always regenerated (they reflect the full article set).
   6. CNAME and 404 are always written (cheap operations).
-  7. After the build, save the updated manifest reflecting the current mtimes of **all** published articles.
+  7. **REMOVE UNPUBLISHED FILES**: source files that are no longer present in the directory should have their static page removed, and the manifest updated to remove them as well.
+  8. After the build, save the updated manifest reflecting the current mtimes of **all** published articles.
 - CLI output: stale articles print `→ rebuilt`; fresh articles print `(unchanged)` in place of the output path.
 - `--incremental` and `--drafts` are compatible: draft articles are included in the manifest when `--drafts` is active.
 - No new Python dependencies.

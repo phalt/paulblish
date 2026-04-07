@@ -50,6 +50,7 @@ uv run pb build --source ~/obsidian/blog --output ./_site
 | `--base-url` | _(from site.toml)_ | Base URL for absolute links (overrides `site.toml`). |
 | `--templates` | _(bundled defaults)_ | Path to a custom Jinja2 templates directory. |
 | `--drafts` | `false` | Include articles without `publish: true`. |
+| `--incremental` | `false` | Only rebuild articles whose source file has changed since the last build. See [Incremental Builds](#incremental-builds). |
 
 ### `pb clean`
 
@@ -241,6 +242,24 @@ cname = "blog.example.com"
 ```
 
 This writes a `CNAME` file to `_site/CNAME` on every build. GitHub Pages reads the CNAME from the published directory root — no manual setup needed beyond pointing your DNS.
+
+## Incremental Builds
+
+For large vaults, re-rendering every article on each build can be slow. Pass `--incremental` to skip articles whose source file has not been modified since the last build:
+
+```sh
+uv run pb build --source ~/obsidian/blog --output ./_site --incremental
+```
+
+How it works:
+
+- At the end of every build (full or incremental) a manifest file `.pb-manifest.json` is written to the output directory. It records each article's source path and its modification time.
+- On the next `--incremental` build, articles whose source `mtime` matches the manifest are skipped — their existing HTML files are left untouched.
+- Articles that have been modified (or are new) are fully re-rendered.
+- Source files that have been **deleted** since the last build have their output HTML removed automatically.
+- Shared pages (all-articles listing, tag pages, RSS feed, `sitemap.xml`, `robots.txt`, `404.html`) are always regenerated — they reflect the full article set.
+
+`--incremental` is compatible with `--drafts`. Draft articles are tracked in the manifest when `--drafts` is active.
 
 ## Development
 

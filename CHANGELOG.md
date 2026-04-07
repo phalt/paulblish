@@ -30,3 +30,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - `site.toml` configuration with `title`, `base_url`, `description`, `author`, `cname`, `avatar`.
 - GitHub Actions workflows: `deploy.yml` (push-to-Pages) and `test.yml` (lint + test on PRs).
 - Default cyberpunk templates and `style.css`.
+- `--incremental` flag for `pb build` — skips re-rendering articles unchanged since the last build; deleted source files have their output HTML removed automatically; a `.pb-manifest.json` manifest is written to the output directory on every build.

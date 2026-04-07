@@ -7,6 +7,7 @@ import click
 from paulblish.assets import collect_assets, copy_assets
 from paulblish.config import load_config
 from paulblish.linker import build_path_map
+from paulblish.manifest import load_manifest, load_manifest_excerpts, load_manifest_outputs, save_manifest
 from paulblish.renderer import render
 from paulblish.scanner import scan
 from paulblish.writer import write, write_build_meta, write_cname
@@ -25,7 +26,8 @@ def main():
 @click.option("--base-url", default=None, help="Base URL for absolute links (overrides site.toml).")
 @click.option("--templates", default=None, help="Path to custom Jinja2 templates directory.")
 @click.option("--drafts", is_flag=True, default=False, help="Include articles without publish: true.")
-def build(source: str, output: str, base_url: str | None, templates: str | None, drafts: bool) -> None:
+@click.option("--incremental", is_flag=True, default=False, help="Skip articles unchanged since last build.")
+def build(source: str, output: str, base_url: str | None, templates: str | None, drafts: bool, incremental: bool) -> None:
     """Build the static site from a source directory."""
     source_dir = Path(source).resolve()
     output_dir = Path(output).resolve()
@@ -43,38 +45,84 @@ def build(source: str, output: str, base_url: str | None, templates: str | None,
     config, config_source = load_config(source_dir, base_url=base_url)
     click.echo(f"Config: {config_source} ✓")
 
+    # Load manifest for incremental builds (empty dicts if doing a full build)
+    manifest: dict[str, float] = load_manifest(output_dir) if incremental else {}
+    manifest_outputs: dict[str, str] = load_manifest_outputs(output_dir) if incremental else {}
+    manifest_excerpts: dict[str, str] = load_manifest_excerpts(output_dir) if incremental else {}
+
     # Scan
     click.echo("\nScanning...\n")
     articles, skipped = scan(source_dir, include_drafts=drafts)
 
+    # Determine stale / fresh sets for incremental mode
+    if incremental:
+        stale_set: set[int] = set()
+        fresh_set: set[int] = set()
+        for article in articles:
+            key = str(article.relative_path)
+            if key not in manifest or article.source_path.stat().st_mtime > manifest[key]:
+                stale_set.add(id(article))
+            else:
+                fresh_set.add(id(article))
+
+        # Delete HTML (and empty parent dirs) for articles absent from the vault
+        current_keys = {str(a.relative_path) for a in articles}
+        for absent_key, out_rel in manifest_outputs.items():
+            if absent_key not in current_keys:
+                out_file = output_dir / out_rel
+                if out_file.exists():
+                    out_file.unlink()
+                    parent = out_file.parent
+                    if parent != output_dir and not any(parent.iterdir()):
+                        parent.rmdir()
+                click.echo(f"  ✗ {absent_key} (removed from output)")
+
+        # Restore feed excerpts for fresh articles (body_html is "" because they weren't rendered)
+        for article in articles:
+            if id(article) in fresh_set and not article.description:
+                key = str(article.relative_path)
+                if key in manifest_excerpts:
+                    article.description = manifest_excerpts[key]
+
+        articles_to_write = [a for a in articles if id(a) in stale_set]
+    else:
+        stale_set = {id(a) for a in articles}
+        fresh_set = set()
+        articles_to_write = None  # write() will use the full list
+
+    # Print scan results
     for article in articles:
+        is_fresh = id(article) in fresh_set
         if article.is_home:
-            click.echo(f"  ✓ {article.relative_path} → / (index)")
+            label = "(unchanged)" if is_fresh else "→ rebuilt" if incremental else "→ / (index)"
+            click.echo(f"  ✓ {article.relative_path} {label}")
         else:
-            click.echo(f"  ✓ {article.relative_path} → {article.url_path}")
+            label = "(unchanged)" if is_fresh else "→ rebuilt" if incremental else f"→ {article.url_path}"
+            click.echo(f"  ✓ {article.relative_path} {label}")
 
     for skip in skipped:
         click.echo(f"  ✗ {skip.path} ({skip.reason})")
 
-    click.echo(f"\nBuilding {len(articles)} articles, skipped {len(skipped)} files\n")
+    rebuild_count = len(stale_set) if incremental else len(articles)
+    click.echo(f"\nBuilding {rebuild_count} articles, skipped {len(skipped)} files\n")
 
     build_start = time.perf_counter()
 
-    # Build path map for wikilink resolution
+    # Build path map for wikilink resolution (always uses full article list)
     path_map = build_path_map(articles)
 
-    # Render markdown to HTML
-    for article in articles:
+    # Render markdown to HTML — only stale articles in incremental mode
+    for article in (articles_to_write if articles_to_write is not None else articles):
         render(article, path_map=path_map, base_url=config.base_url)
 
-    # Collect and copy assets
+    # Collect and copy assets for ALL articles (fresh articles may reference assets)
     asset_refs = collect_assets(articles, source_dir, site=config)
     asset_warnings = copy_assets(asset_refs, output_dir)
     for warning in asset_warnings:
         click.echo(f"  ⚠ {warning}")
 
     # Write templated output
-    written = write(articles, output_dir, site=config, templates_dir=templates_dir)
+    written = write(articles, output_dir, site=config, templates_dir=templates_dir, articles_to_write=articles_to_write)
     for path in written:
         click.echo(f"  → {path.relative_to(output_dir.parent)}")
 
@@ -86,11 +134,14 @@ def build(source: str, output: str, base_url: str | None, templates: str | None,
     # Write build metadata so pb serve can rewrite base_url for local preview
     write_build_meta(output_dir, config.base_url)
 
+    # Save manifest after every build (full or incremental)
+    save_manifest(output_dir, articles)
+
     elapsed = time.perf_counter() - build_start
     num_assets = len([r for r in asset_refs if r.source_path])
     num_warnings = len(asset_warnings)
     warning_str = f", {num_warnings} warning{'s' if num_warnings != 1 else ''}" if num_warnings else ""
-    click.echo(f"\nDone. Built {len(articles)} articles, {num_assets} assets{warning_str} in {elapsed:.2f}s.")
+    click.echo(f"\nDone. Built {rebuild_count} articles, {num_assets} assets{warning_str} in {elapsed:.2f}s.")
 
 
 @main.command()

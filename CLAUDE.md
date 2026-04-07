@@ -62,3 +62,4 @@ Key modules:
 - `assets.py` — asset discovery, copy, path rewriting
 - `templating.py` — Jinja2 environment setup + render
 - `writer.py` — output directory creation + file writing
+- `manifest.py` — incremental build manifest (load/save `.pb-manifest.json`)
