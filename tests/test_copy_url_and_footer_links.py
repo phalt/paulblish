@@ -30,11 +30,11 @@ class TestCopyUrlButton:
         html = (tmp_path / "my-post" / "index.html").read_text()
         assert "copy-url-btn" in html
 
-    def test_copy_button_contains_article_url(self, tmp_path):
+    def test_copy_button_uses_window_location(self, tmp_path):
         article = _make_article("my-post")
         write([article], tmp_path, site=SITE)
         html = (tmp_path / "my-post" / "index.html").read_text()
-        assert "https://example.com/my-post/" in html
+        assert "window.location.href" in html
 
     def test_copy_button_has_title_attribute(self, tmp_path):
         article = _make_article("my-post")
