@@ -4,7 +4,14 @@
     <title>Paul Writes Software</title>
     <link />
     <description>Paul Hallett is a software engineer</description>
-    <lastBuildDate>Thu, 02 Apr 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 07 Apr 2026 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Now</title>
+      <link>/now/</link>
+      <guid>/now/</guid>
+      <pubDate>Tue, 07 Apr 2026 00:00:00 +0000</pubDate>
+      <description>This is my now page . It's where you'll see what I am currently doing with my life. Living The majority of my free time is spent enjoying life with my family - my partner, my son, and my two cats.…</description>
+    </item>
     <item>
       <title>Markdown features supported by Paulblish</title>
       <link>/articles/paulblish-features/</link>

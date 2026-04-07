@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>All Pages — Paul Writes Software</title>
+  <title>Now — Paul Writes Software</title>
   
   <!-- Open Graph -->
   <meta property="og:type"        content="article">
   <meta property="og:site_name"   content="Paul Writes Software">
-  <meta property="og:title"       content="Paul Writes Software">
+  <meta property="og:title"       content="Now">
   <meta property="og:description" content="Paul Hallett is a software engineer">
-  <meta property="og:url"         content="">
+  <meta property="og:url"         content="/now/">
   
   <meta property="og:image"       content="/assets/site-logo.jpeg">
   
   <!-- Twitter Card -->
   <meta name="twitter:card"        content="summary">
-  <meta name="twitter:title"       content="Paul Writes Software">
+  <meta name="twitter:title"       content="Now">
   <meta name="twitter:description" content="Paul Hallett is a software engineer">
   
   <meta name="twitter:image"       content="/assets/site-logo.jpeg">
@@ -61,120 +61,91 @@
 
   <main>
     
-<div class="listing">
-  <h1>All Pages</h1>
+<article>
+  <header class="article-meta">
+    <h1>
+      Now
+      <button class="copy-url-btn" title="Copy URL to article" aria-label="Copy URL to article">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+        </svg>
+      </button>
+    </h1>
+    <script>
+      document.querySelector('.copy-url-btn').addEventListener('click', function() {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+          this.classList.add('copied');
+          setTimeout(() => this.classList.remove('copied'), 2000);
+        });
+      });
+    </script>
+    <time datetime="2026-04-07T00:00:00">07 April 2026</time>
+    <span class="reading-time">1 min read</span>
+    
+    <div class="tags">
+      
+        <a href="/tags/Now/" class="tag">Now</a>
+      
+    </div>
+    
+    
+  </header>
+
   
-  <h2>/</h2>
-  <ul class="article-list">
-    
-    <li>
-      <a href="/now/">Now</a>
-      <time datetime="2026-04-07T00:00:00">07 April 2026</time>
-    </li>
-    
-    <li>
-      <a href="/">Paul Writes Software</a>
-      <time datetime="2023-10-24T00:00:00">24 October 2023</time>
-    </li>
-    
-  </ul>
-  
-  <h2>Articles</h2>
-  <ul class="article-list">
-    
-    <li>
-      <a href="/articles/paulblish-features/">Markdown features supported by Paulblish</a>
-      <time datetime="2026-04-02T00:00:00">02 April 2026</time>
-    </li>
-    
-    <li>
-      <a href="/articles/clientele-updates/">Clientele Updates</a>
-      <time datetime="2026-01-19T00:00:00">19 January 2026</time>
-    </li>
-    
-    <li>
-      <a href="/articles/python-api-clients/">A different way to think about Python API Clients</a>
-      <time datetime="2026-01-01T00:00:00">01 January 2026</time>
-    </li>
-    
-    <li>
-      <a href="/articles/software-eng-ai-age/">Software Engineering and AI insights</a>
-      <time datetime="2025-12-12T00:00:00">12 December 2025</time>
-    </li>
-    
-    <li>
-      <a href="/articles/toy-cameras/">Man I love Toy Cameras</a>
-      <time datetime="2025-04-07T00:00:00">07 April 2025</time>
-    </li>
-    
-    <li>
-      <a href="/articles/life-moves-pretty-fast/">Life Moves Pretty Fast</a>
-      <time datetime="2023-11-10T00:00:00">10 November 2023</time>
-    </li>
-    
-    <li>
-      <a href="/articles/lessons-from-10-hours-of-flight-training/">Lessons from 10 hours of flight training</a>
-      <time datetime="2023-10-30T00:00:00">30 October 2023</time>
-    </li>
-    
-    <li>
-      <a href="/articles/remembering-stuff/">How I remember stuff</a>
-      <time datetime="2023-10-25T00:00:00">25 October 2023</time>
-    </li>
-    
-    <li>
-      <a href="/articles/hypermedia-in-technology/">Hypermedia isn't just for HTML</a>
-      <time datetime="2023-10-25T00:00:00">25 October 2023</time>
-    </li>
-    
-  </ul>
-  
-  <h2>Photography</h2>
-  <ul class="article-list">
-    
-    <li>
-      <a href="/photography/polaroid/">Polaroid</a>
-      <time datetime="2025-05-20T00:00:00">20 May 2025</time>
-    </li>
-    
-    <li>
-      <a href="/photography/colour/">Colour</a>
-      <time datetime="2025-05-02T00:00:00">02 May 2025</time>
-    </li>
-    
-    <li>
-      <a href="/photography/toy-cameras/">Toy Cameras</a>
-      <time datetime="2025-04-07T00:00:00">07 April 2025</time>
-    </li>
-    
-  </ul>
-  
-  <h2>Pokemon</h2>
-  <ul class="article-list">
-    
-    <li>
-      <a href="/pokemon/pokemon/shiny-rotom/">Shiny Rotom Hunt</a>
-      <time datetime="2024-12-20T00:00:00">20 December 2024</time>
-    </li>
-    
-    <li>
-      <a href="/pokemon/pokemon/transfer/">How to Transfer Pokémon</a>
-      <time datetime="2024-12-16T00:00:00">16 December 2024</time>
-    </li>
-    
-    <li>
-      <a href="/pokemon/pokemon/hardware/">Nintendo Hardware</a>
-      <time datetime="2024-12-15T00:00:00">15 December 2024</time>
-    </li>
-    
-    <li>
-      <a href="/pokemon/pokemon/games/">Pokemon Games</a>
-      <time datetime="2024-12-15T00:00:00">15 December 2024</time>
-    </li>
-    
-  </ul>
-  
-</div>
+  <div class="article-body">
+    <p>This is my <a href="https://nownownow.com/about">now page</a>.</p>
+<p>It's where you'll see what I am currently doing with my life.</p>
+<h1>Living</h1>
+<p>The majority of my free time is spent enjoying life with my family - my partner, my son, and my two cats.</p>
+<h1>Building</h1>
+<p>I am writing a lot of software when I get the chance, usually during lunch hours.</p>
+<p>I am actively building:</p>
+<ul>
+<li><a href="https://github.com/phalt/paulblish">Paulblish</a> for building this website.</li>
+<li><a href="https://github.com/phalt/atpcli">atpcli</a> for browsing and using <a href="https://atproto.com/">at proto</a> and <a href="https://bsky.app/">bluesky</a> in the CLI.</li>
+<li><a href="https://github.com/phalt/clientele">Clientele</a> for creating API clients in Python.</li>
+</ul>
+<p>I am maintaining and supporting:</p>
+<ul>
+<li><a href="https://github.com/PokeAPI/pokeapi">PokeAPI</a> - the Pokémon API.</li>
+</ul>
+<h1>Reading</h1>
+<p>I am trying to read 20 books this year.</p>
+<p>I have currently read 5.</p>
+<p>Reading is usually what I do the hour before I go to sleep.</p>
+<h1>Creating</h1>
+<p>I am being creative in two ways:</p>
+<ul>
+<li>Running the <a href="https://shootfilmnorwi.ch">shoot film norwich</a> photo club
+<ul>
+<li>We meet up regularly, and chat nearly every day.</li>
+<li>We host monthly(ish) photo walks.</li>
+</ul>
+</li>
+<li>Learning to play the drums 🥁
+<ul>
+<li>I play when I get free time during the day.</li>
+<li>I am taking weekly lessons.</li>
+<li>I am close to grade 1 already (I started in November 2025).</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+
+  <nav class="article-nav">
+    <div class="article-nav-prev">
+      
+      <a href="/articles/paulblish-features/">← Older: Markdown features supported by Paulblish</a>
+      
+    </div>
+    <div class="article-nav-next">
+      
+    </div>
+  </nav>
+</article>
+
 
   </main>
 
