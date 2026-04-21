@@ -1,58 +1,58 @@
 {
   "Articles/A different way to think about Python API Clients.md": {
-    "mtime": 1775156342.0372808,
+    "mtime": 1775157831.8723655,
     "output": "articles/python-api-clients/index.html",
     "excerpt": "\u2b50\ufe0f A beta release of this tool is now available to download and use I've spent a lot of my free time in the past few months working on Clientele , which is a project I started way back in 2023. I've\u2026"
   },
   "Articles/Clientele Updates.md": {
-    "mtime": 1775156362.286262,
+    "mtime": 1775157831.8728178,
     "output": "articles/clientele-updates/index.html",
     "excerpt": "It's been a productive month in the Clientele project. At the time of writing we have just shipped version 1.7.0 and we're preparing the 1.8.0 release. Numbers I've merged 82 pull requests and seen\u2026"
   },
   "Articles/How I remember stuff.md": {
-    "mtime": 1775556876.857,
+    "mtime": 1775556876.8565526,
     "output": "articles/remembering-stuff/index.html",
     "excerpt": "I struggle to remember things. Not everything. I remember the phonetic alphabet (which I need for flying). And I can name nearly every single Pokemon off by heart. I can recite various algorithms and\u2026"
   },
   "Articles/Hypermedia isn't just for HTML.md": {
-    "mtime": 1775156157.2521946,
+    "mtime": 1775157828.877763,
     "output": "articles/hypermedia-in-technology/index.html",
     "excerpt": "The concept of Hypermedia is a bit fluffy. It's an abstract concept in computing and information architecture. It deals with the concept of nonlinear connections of information in a computer system.\u2026"
   },
   "Articles/Lessons from 10 hours of flight training.md": {
-    "mtime": 1775156179.1762497,
+    "mtime": 1775157829.8811135,
     "output": "articles/lessons-from-10-hours-of-flight-training/index.html",
     "excerpt": "The biggest change to my life in 2022 was the birth of my son. I also decided that I'd commit to learning to fly before he turned 5 years old. The problem with life is that it gets in the way\u2026"
   },
   "Articles/Life Moves Pretty Fast.md": {
-    "mtime": 1775156192.1782582,
+    "mtime": 1775157829.8818812,
     "output": "articles/life-moves-pretty-fast/index.html",
     "excerpt": "In the immortal words of Ferris Bueller : Life moves pretty fast. If you don't stop and look around once in a while, you could miss it. and boy, has life moved pretty fast since 2019. I've had to\u2026"
   },
   "Articles/Man I love Toy Cameras.md": {
-    "mtime": 1775156233.6552792,
+    "mtime": 1775157830.8752525,
     "output": "articles/toy-cameras/index.html",
     "excerpt": "\ud83c\udfa7 Listen to this article as a podcast I've done a fair bit of photography in my time. Specifically analog photography. There were two events that really pulled me into the world of photography when I\u2026"
   },
   "Articles/Markdown features supported by Paulblish.md": {
-    "mtime": 1775567397.0750797,
+    "mtime": 1775567397.075,
     "output": "articles/paulblish-features/index.html",
     "excerpt": "Paulblish supports a bunch of standard html page content, as well as a few extra nifty little things that sets it apart. Please remember: this is hyper-personalised software, so I have included the\u2026"
   },
   "Articles/Software Engineering and AI insights.md": {
-    "mtime": 1775156279.562295,
+    "mtime": 1775157830.8764238,
     "output": "articles/software-eng-ai-age/index.html",
     "excerpt": "I am maintaining this list actively. I work day to day in software engineering where all everyone talks about is AI and it's impact. Biases I am anti-AI when it comes to creative arts, music,\u2026"
   },
   "Home.md": {
-    "mtime": 1775574808.4222496,
+    "mtime": 1775574808.421999,
     "output": "index.html",
     "excerpt": "Paul Hallett is a software engineer"
   },
   "Now.md": {
-    "mtime": 1775574718.3409796,
+    "mtime": 1776779456.7958007,
     "output": "now/index.html",
-    "excerpt": "This is my now page . It's where you'll see what I am currently doing with my life. Living The majority of my free time is spent enjoying life with my family - my partner, my son, and my two cats.\u2026"
+    "excerpt": "This is my now page . It's where you'll see what I am currently doing with my life. \ud83d\udcc6 Last updated: 21st April 2026 Living The majority of my free time is spent enjoying life with my family - my\u2026"
   },
   "Photography/Colour.md": {
     "mtime": 1775311441.651,
@@ -65,7 +65,7 @@
     "excerpt": ""
   },
   "Photography/Toy Cameras.md": {
-    "mtime": 1775311456.752,
+    "mtime": 1776780236.4402552,
     "output": "photography/toy-cameras/index.html",
     "excerpt": ""
   },
