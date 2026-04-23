@@ -44,8 +44,13 @@
     "output": "articles/software-eng-ai-age/index.html",
     "excerpt": "I am maintaining this list actively. I work day to day in software engineering where all everyone talks about is AI and it's impact. Biases I am anti-AI when it comes to creative arts, music,\u2026"
   },
+  "Articles/The GB energy mix now lives in your terminal.md": {
+    "mtime": 1776941452.3623986,
+    "output": "articles/gb-eng-cli/index.html",
+    "excerpt": "I love https://grid.iamkate.com/ - it is a website that I lurk on a lot! The UK is transitioning rapidly to a green energy future and Kate's website is visited often by people in my company (and may\u2026"
+  },
   "Home.md": {
-    "mtime": 1775574808.4222496,
+    "mtime": 1776940832.628999,
     "output": "index.html",
     "excerpt": "Paul Hallett is a software engineer"
   },

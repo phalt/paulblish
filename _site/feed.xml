@@ -4,7 +4,14 @@
     <title>Paul Writes Software</title>
     <link />
     <description>Paul Hallett is a software engineer</description>
-    <lastBuildDate>Tue, 07 Apr 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 23 Apr 2026 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>The GB energy mix now lives in your terminal</title>
+      <link>/articles/gb-eng-cli/</link>
+      <guid>/articles/gb-eng-cli/</guid>
+      <pubDate>Thu, 23 Apr 2026 00:00:00 +0000</pubDate>
+      <description>I love https://grid.iamkate.com/ - it is a website that I lurk on a lot! The UK is transitioning rapidly to a green energy future and Kate's website is visited often by people in my company (and may…</description>
+    </item>
     <item>
       <title>Now</title>
       <link>/now/</link>
