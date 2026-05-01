@@ -214,3 +214,20 @@ class TestBaseUrlNormalization:
         )
         config, _ = load_config(tmp_path)
         assert config.base_url == "https://user.github.io/repo"
+
+    def test_relative_base_url_derived_from_cname(self, tmp_path):
+        """When base_url is not absolute but cname is set, base_url is derived from cname."""
+        (tmp_path / "site.toml").write_text(
+            '[site]\ntitle = "T"\nbase_url = "paulblish/"\ndescription = "D"\nauthor = "A"\n'
+            'cname = "paulwrites.software"\n'
+        )
+        config, _ = load_config(tmp_path)
+        assert config.base_url == "https://paulwrites.software"
+
+    def test_relative_base_url_without_cname_left_as_is(self, tmp_path):
+        """When base_url is not absolute and cname is absent, base_url is used verbatim."""
+        (tmp_path / "site.toml").write_text(
+            '[site]\ntitle = "T"\nbase_url = "paulblish"\ndescription = "D"\nauthor = "A"\n'
+        )
+        config, _ = load_config(tmp_path)
+        assert config.base_url == "paulblish"

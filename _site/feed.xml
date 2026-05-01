@@ -2,139 +2,139 @@
 <rss version="2.0">
   <channel>
     <title>Paul Writes Software</title>
-    <link />
+    <link>https://paulwrites.software</link>
     <description>Paul Hallett is a software engineer</description>
     <lastBuildDate>Fri, 01 May 2026 00:00:00 +0000</lastBuildDate>
     <item>
       <title>Hyper Personal Software</title>
-      <link>/articles/hyps/</link>
-      <guid>/articles/hyps/</guid>
+      <link>https://paulwrites.software/articles/hyps/</link>
+      <guid>https://paulwrites.software/articles/hyps/</guid>
       <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
       <description>There's a funny kind of tiredness that comes from building software for other people all day. Not bad-tiredness (I love my job), but the specific weight of writing code that has to work for users…</description>
     </item>
     <item>
       <title>The GB energy mix now lives in your terminal</title>
-      <link>/articles/gb-eng-cli/</link>
-      <guid>/articles/gb-eng-cli/</guid>
+      <link>https://paulwrites.software/articles/gb-eng-cli/</link>
+      <guid>https://paulwrites.software/articles/gb-eng-cli/</guid>
       <pubDate>Thu, 23 Apr 2026 00:00:00 +0000</pubDate>
       <description>I love https://grid.iamkate.com/ - it is a website that I lurk on a lot! The UK is transitioning rapidly to a green energy future and Kate's website is visited often by people in my company (and may…</description>
     </item>
     <item>
       <title>Now</title>
-      <link>/now/</link>
-      <guid>/now/</guid>
+      <link>https://paulwrites.software/now/</link>
+      <guid>https://paulwrites.software/now/</guid>
       <pubDate>Tue, 07 Apr 2026 00:00:00 +0000</pubDate>
       <description>This is my now page . It's where you'll see what I am currently doing with my life. 📆 Last updated: 21st April 2026 Living The majority of my free time is spent enjoying life with my family - my…</description>
     </item>
     <item>
       <title>Markdown features supported by Paulblish</title>
-      <link>/articles/paulblish-features/</link>
-      <guid>/articles/paulblish-features/</guid>
+      <link>https://paulwrites.software/articles/paulblish-features/</link>
+      <guid>https://paulwrites.software/articles/paulblish-features/</guid>
       <pubDate>Thu, 02 Apr 2026 00:00:00 +0000</pubDate>
       <description>Paulblish supports a bunch of standard html page content, as well as a few extra nifty little things that sets it apart. Please remember: this is hyper-personalised software, so I have included the…</description>
     </item>
     <item>
       <title>Clientele Updates</title>
-      <link>/articles/clientele-updates/</link>
-      <guid>/articles/clientele-updates/</guid>
+      <link>https://paulwrites.software/articles/clientele-updates/</link>
+      <guid>https://paulwrites.software/articles/clientele-updates/</guid>
       <pubDate>Mon, 19 Jan 2026 00:00:00 +0000</pubDate>
       <description>It's been a productive month in the Clientele project. At the time of writing we have just shipped version 1.7.0 and we're preparing the 1.8.0 release. Numbers I've merged 82 pull requests and seen…</description>
     </item>
     <item>
       <title>A different way to think about Python API Clients</title>
-      <link>/articles/python-api-clients/</link>
-      <guid>/articles/python-api-clients/</guid>
+      <link>https://paulwrites.software/articles/python-api-clients/</link>
+      <guid>https://paulwrites.software/articles/python-api-clients/</guid>
       <pubDate>Thu, 01 Jan 2026 00:00:00 +0000</pubDate>
       <description>⭐️ A beta release of this tool is now available to download and use I've spent a lot of my free time in the past few months working on Clientele , which is a project I started way back in 2023. I've…</description>
     </item>
     <item>
       <title>Software Engineering and AI insights</title>
-      <link>/articles/software-eng-ai-age/</link>
-      <guid>/articles/software-eng-ai-age/</guid>
+      <link>https://paulwrites.software/articles/software-eng-ai-age/</link>
+      <guid>https://paulwrites.software/articles/software-eng-ai-age/</guid>
       <pubDate>Fri, 12 Dec 2025 00:00:00 +0000</pubDate>
       <description>I am maintaining this list actively. I work day to day in software engineering where all everyone talks about is AI and it's impact. Biases I am anti-AI when it comes to creative arts, music,…</description>
     </item>
     <item>
       <title>Polaroid</title>
-      <link>/photography/polaroid/</link>
-      <guid>/photography/polaroid/</guid>
+      <link>https://paulwrites.software/photography/polaroid/</link>
+      <guid>https://paulwrites.software/photography/polaroid/</guid>
       <pubDate>Tue, 20 May 2025 00:00:00 +0000</pubDate>
       <description />
     </item>
     <item>
       <title>Colour</title>
-      <link>/photography/colour/</link>
-      <guid>/photography/colour/</guid>
+      <link>https://paulwrites.software/photography/colour/</link>
+      <guid>https://paulwrites.software/photography/colour/</guid>
       <pubDate>Fri, 02 May 2025 00:00:00 +0000</pubDate>
       <description />
     </item>
     <item>
       <title>Man I love Toy Cameras</title>
-      <link>/articles/toy-cameras/</link>
-      <guid>/articles/toy-cameras/</guid>
+      <link>https://paulwrites.software/articles/toy-cameras/</link>
+      <guid>https://paulwrites.software/articles/toy-cameras/</guid>
       <pubDate>Mon, 07 Apr 2025 00:00:00 +0000</pubDate>
       <description>🎧 Listen to this article as a podcast I've done a fair bit of photography in my time. Specifically analog photography. There were two events that really pulled me into the world of photography when I…</description>
     </item>
     <item>
       <title>Toy Cameras</title>
-      <link>/photography/toy-cameras/</link>
-      <guid>/photography/toy-cameras/</guid>
+      <link>https://paulwrites.software/photography/toy-cameras/</link>
+      <guid>https://paulwrites.software/photography/toy-cameras/</guid>
       <pubDate>Mon, 07 Apr 2025 00:00:00 +0000</pubDate>
       <description />
     </item>
     <item>
       <title>Shiny Rotom Hunt</title>
-      <link>/pokemon/pokemon/shiny-rotom/</link>
-      <guid>/pokemon/pokemon/shiny-rotom/</guid>
+      <link>https://paulwrites.software/pokemon/pokemon/shiny-rotom/</link>
+      <guid>https://paulwrites.software/pokemon/pokemon/shiny-rotom/</guid>
       <pubDate>Fri, 20 Dec 2024 00:00:00 +0000</pubDate>
       <description>Background Rotom , my favourite Pokémon. Ever since I heard about this mysterious ghost in the Old Chateau I've been intrigued. My favourite type of Pokémon is the Ghost type. Ostensibly, Pokémon is…</description>
     </item>
     <item>
       <title>How to Transfer Pokémon</title>
-      <link>/pokemon/pokemon/transfer/</link>
-      <guid>/pokemon/pokemon/transfer/</guid>
+      <link>https://paulwrites.software/pokemon/pokemon/transfer/</link>
+      <guid>https://paulwrites.software/pokemon/pokemon/transfer/</guid>
       <pubDate>Mon, 16 Dec 2024 00:00:00 +0000</pubDate>
       <description>Transfer diagram Trading on Generation IV / V You can still trade on older generation DS games. https://pkmnclassic.net/ Obtain old event Pokémon You can obtain old event Pokémon in Gen IV / V using…</description>
     </item>
     <item>
       <title>Nintendo Hardware</title>
-      <link>/pokemon/pokemon/hardware/</link>
-      <guid>/pokemon/pokemon/hardware/</guid>
+      <link>https://paulwrites.software/pokemon/pokemon/hardware/</link>
+      <guid>https://paulwrites.software/pokemon/pokemon/hardware/</guid>
       <pubDate>Sun, 15 Dec 2024 00:00:00 +0000</pubDate>
       <description>Hardware Model Software version Memory Modded Other notes Colour Original 11.17.0-50E 2GB SD N/A My original console Black 2DS XL 11.17.0-50E 32GB SD ✅ Luma3DS 13.2.1 Purchased second hand in New…</description>
     </item>
     <item>
       <title>Pokemon Games</title>
-      <link>/pokemon/pokemon/games/</link>
-      <guid>/pokemon/pokemon/games/</guid>
+      <link>https://paulwrites.software/pokemon/pokemon/games/</link>
+      <guid>https://paulwrites.software/pokemon/pokemon/games/</guid>
       <pubDate>Sun, 15 Dec 2024 00:00:00 +0000</pubDate>
       <description>Background In 2019, just ahead of the COVID pandemic, I got nostalgic. I had just moved to New Zealand, and I was unpacking my things when I stumbled upon my original 3DS and some Pokémon games. I…</description>
     </item>
     <item>
       <title>Life Moves Pretty Fast</title>
-      <link>/articles/life-moves-pretty-fast/</link>
-      <guid>/articles/life-moves-pretty-fast/</guid>
+      <link>https://paulwrites.software/articles/life-moves-pretty-fast/</link>
+      <guid>https://paulwrites.software/articles/life-moves-pretty-fast/</guid>
       <pubDate>Fri, 10 Nov 2023 00:00:00 +0000</pubDate>
       <description>In the immortal words of Ferris Bueller : Life moves pretty fast. If you don't stop and look around once in a while, you could miss it. and boy, has life moved pretty fast since 2019. I've had to…</description>
     </item>
     <item>
       <title>Lessons from 10 hours of flight training</title>
-      <link>/articles/lessons-from-10-hours-of-flight-training/</link>
-      <guid>/articles/lessons-from-10-hours-of-flight-training/</guid>
+      <link>https://paulwrites.software/articles/lessons-from-10-hours-of-flight-training/</link>
+      <guid>https://paulwrites.software/articles/lessons-from-10-hours-of-flight-training/</guid>
       <pubDate>Mon, 30 Oct 2023 00:00:00 +0000</pubDate>
       <description>The biggest change to my life in 2022 was the birth of my son. I also decided that I'd commit to learning to fly before he turned 5 years old. The problem with life is that it gets in the way…</description>
     </item>
     <item>
       <title>How I remember stuff</title>
-      <link>/articles/remembering-stuff/</link>
-      <guid>/articles/remembering-stuff/</guid>
+      <link>https://paulwrites.software/articles/remembering-stuff/</link>
+      <guid>https://paulwrites.software/articles/remembering-stuff/</guid>
       <pubDate>Wed, 25 Oct 2023 00:00:00 +0000</pubDate>
       <description>I struggle to remember things. Not everything. I remember the phonetic alphabet (which I need for flying). And I can name nearly every single Pokemon off by heart. I can recite various algorithms and…</description>
     </item>
     <item>
       <title>Hypermedia isn't just for HTML</title>
-      <link>/articles/hypermedia-in-technology/</link>
-      <guid>/articles/hypermedia-in-technology/</guid>
+      <link>https://paulwrites.software/articles/hypermedia-in-technology/</link>
+      <guid>https://paulwrites.software/articles/hypermedia-in-technology/</guid>
       <pubDate>Wed, 25 Oct 2023 00:00:00 +0000</pubDate>
       <description>The concept of Hypermedia is a bit fluffy. It's an abstract concept in computing and information architecture. It deals with the concept of nonlinear connections of information in a computer system.…</description>
     </item>

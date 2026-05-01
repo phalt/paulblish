@@ -54,12 +54,17 @@ def _validate_and_build(site: dict, source_label: str, **overrides: str) -> Site
         if value is not None:
             site[key] = value
 
+    base_url = str(site["base_url"]).rstrip("/")
+    cname = site.get("cname", "")
+    if not base_url.startswith(("http://", "https://")) and cname:
+        base_url = f"https://{cname}"
+
     return SiteConfig(
         title=site["title"],
-        base_url=str(site["base_url"]).rstrip("/"),
+        base_url=base_url,
         description=site["description"],
         author=site["author"],
-        cname=site.get("cname", ""),
+        cname=cname,
         avatar=site.get("avatar", ""),
         github=site.get("github", ""),
         bluesky=site.get("bluesky", ""),
