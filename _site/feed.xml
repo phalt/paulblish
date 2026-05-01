@@ -4,7 +4,14 @@
     <title>Paul Writes Software</title>
     <link />
     <description>Paul Hallett is a software engineer</description>
-    <lastBuildDate>Thu, 23 Apr 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 01 May 2026 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Hyper Personal Software</title>
+      <link>/articles/hyps/</link>
+      <guid>/articles/hyps/</guid>
+      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
+      <description>There's a funny kind of tiredness that comes from building software for other people all day. Not bad-tiredness (I love my job), but the specific weight of writing code that has to work for users…</description>
+    </item>
     <item>
       <title>The GB energy mix now lives in your terminal</title>
       <link>/articles/gb-eng-cli/</link>

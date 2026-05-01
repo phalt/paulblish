@@ -14,6 +14,11 @@
     "output": "articles/remembering-stuff/index.html",
     "excerpt": "I struggle to remember things. Not everything. I remember the phonetic alphabet (which I need for flying). And I can name nearly every single Pokemon off by heart. I can recite various algorithms and\u2026"
   },
+  "Articles/Hyper Personal Software.md": {
+    "mtime": 1777638898.259464,
+    "output": "articles/hyps/index.html",
+    "excerpt": "There's a funny kind of tiredness that comes from building software for other people all day. Not bad-tiredness (I love my job), but the specific weight of writing code that has to work for users\u2026"
+  },
   "Articles/Hypermedia isn't just for HTML.md": {
     "mtime": 1775157828.877763,
     "output": "articles/hypermedia-in-technology/index.html",
@@ -50,7 +55,7 @@
     "excerpt": "I love https://grid.iamkate.com/ - it is a website that I lurk on a lot! The UK is transitioning rapidly to a green energy future and Kate's website is visited often by people in my company (and may\u2026"
   },
   "Home.md": {
-    "mtime": 1777149713.889474,
+    "mtime": 1777638342.9908557,
     "output": "index.html",
     "excerpt": "Paul Hallett is a software engineer"
   },
