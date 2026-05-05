@@ -119,8 +119,8 @@ class TestSitemapStructure:
     def test_no_feed_or_robots_in_sitemap(self):
         xml = generate_sitemap([_make_article("foo")], SITE)
         locs = _locs(xml)
-        assert not any("feed.xml" in l for l in locs)
-        assert not any("robots.txt" in l for l in locs)
+        assert not any("feed.xml" in _ for _ in locs)
+        assert not any("robots.txt" in _ for _ in locs)
 
 
 class TestSitemapWritten:

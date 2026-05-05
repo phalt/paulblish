@@ -194,7 +194,9 @@ class TestDateResolution:
         assert articles[0].date == datetime(2026, 1, 10)
 
     def test_created_takes_precedence_over_date(self, tmp_path):
-        _write_md(tmp_path / "post.md", "---\npublish: true\nslug: p\ncreated: 2026-01-10\ndate: 2026-06-01\n---\nHello")
+        _write_md(
+            tmp_path / "post.md", "---\npublish: true\nslug: p\ncreated: 2026-01-10\ndate: 2026-06-01\n---\nHello"
+        )
         articles, _ = scan(tmp_path)
         assert articles[0].date == datetime(2026, 1, 10)
 

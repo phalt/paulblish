@@ -25,3 +25,10 @@ clean:  ## Clear any cache files and build outputs
 	rm -rf **/*.pyc
 	find . -type d -name __pycache__ -exec rm -rf {} +
 	find . -type d -name "*.egg-info" -exec rm -rf {} +
+
+serve:  ## Serve the site locally
+	uv run pb serve
+
+rebuild:  ## Rebuild the blog content
+	uv run pb clean
+	uv run pb build -s ../../Documents/main/Writing/ --base-url ""

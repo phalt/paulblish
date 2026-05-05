@@ -27,7 +27,9 @@ def main():
 @click.option("--templates", default=None, help="Path to custom Jinja2 templates directory.")
 @click.option("--drafts", is_flag=True, default=False, help="Include articles without publish: true.")
 @click.option("--incremental", is_flag=True, default=False, help="Skip articles unchanged since last build.")
-def build(source: str, output: str, base_url: str | None, templates: str | None, drafts: bool, incremental: bool) -> None:
+def build(
+    source: str, output: str, base_url: str | None, templates: str | None, drafts: bool, incremental: bool
+) -> None:
     """Build the static site from a source directory."""
     source_dir = Path(source).resolve()
     output_dir = Path(output).resolve()
@@ -112,7 +114,7 @@ def build(source: str, output: str, base_url: str | None, templates: str | None,
     path_map = build_path_map(articles)
 
     # Render markdown to HTML — only stale articles in incremental mode
-    for article in (articles_to_write if articles_to_write is not None else articles):
+    for article in articles_to_write if articles_to_write is not None else articles:
         render(article, path_map=path_map, base_url=config.base_url)
 
     # Collect and copy assets for ALL articles (fresh articles may reference assets)

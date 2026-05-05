@@ -21,7 +21,9 @@ FIXTURES = Path(__file__).parent / "fixtures"
 SITE = SiteConfig(title="T", base_url="http://x", description="D", author="A")
 
 
-def _make_article(tmp_path: Path, slug: str, path_prefix: str = "", is_home: bool = False, mtime_offset: float = 0.0) -> Article:
+def _make_article(
+    tmp_path: Path, slug: str, path_prefix: str = "", is_home: bool = False, mtime_offset: float = 0.0
+) -> Article:
     """Create a real temp source file so stat().st_mtime works."""
     if path_prefix:
         src_dir = tmp_path / path_prefix
@@ -35,6 +37,7 @@ def _make_article(tmp_path: Path, slug: str, path_prefix: str = "", is_home: boo
     if mtime_offset:
         new_mtime = src.stat().st_mtime + mtime_offset
         import os
+
         os.utime(src, (new_mtime, new_mtime))
 
     url_path = "/" if is_home else (f"/{path_prefix}/{slug}/" if path_prefix else f"/{slug}/")
@@ -234,6 +237,7 @@ class TestIncrementalFlag:
         article_src = source / "article.md"
         new_mtime = article_src.stat().st_mtime + 10
         import os
+
         os.utime(article_src, (new_mtime, new_mtime))
 
         result = runner.invoke(main, ["build", "-s", str(source), "-o", str(output), "--incremental"])
@@ -255,6 +259,7 @@ class TestIncrementalFlag:
         article_src = source / "article.md"
         new_mtime = article_src.stat().st_mtime + 10
         import os
+
         os.utime(article_src, (new_mtime, new_mtime))
 
         runner.invoke(main, ["build", "-s", str(source), "-o", str(output), "--incremental"])
@@ -272,6 +277,7 @@ class TestIncrementalFlag:
         article_src = source / "article.md"
         new_mtime = article_src.stat().st_mtime + 10
         import os
+
         os.utime(article_src, (new_mtime, new_mtime))
 
         runner.invoke(main, ["build", "-s", str(source), "-o", str(output), "--incremental"])
@@ -347,7 +353,9 @@ class TestIncrementalFlag:
         """
         source = tmp_path / "source"
         source.mkdir()
-        (source / "site.toml").write_text('[site]\ntitle = "T"\nbase_url = "http://x"\ndescription = "D"\nauthor = "A"\n')
+        (source / "site.toml").write_text(
+            '[site]\ntitle = "T"\nbase_url = "http://x"\ndescription = "D"\nauthor = "A"\n'
+        )
         # Deliberately no `description:` field — forces excerpt fallback
         (source / "article.md").write_text(
             "---\npublish: true\nslug: my-article\n---\nThis is the body content of the article."
@@ -368,7 +376,9 @@ class TestIncrementalFlag:
     def test_incremental_compatible_with_drafts_flag(self, tmp_path):
         source = tmp_path / "source"
         source.mkdir()
-        (source / "site.toml").write_text('[site]\ntitle = "T"\nbase_url = "http://x"\ndescription = "D"\nauthor = "A"\n')
+        (source / "site.toml").write_text(
+            '[site]\ntitle = "T"\nbase_url = "http://x"\ndescription = "D"\nauthor = "A"\n'
+        )
         (source / "draft.md").write_text("---\nslug: my-draft\n---\nDraft content")
         output = tmp_path / "_site"
         runner = CliRunner()

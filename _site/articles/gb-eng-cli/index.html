@@ -104,11 +104,13 @@
 <h2>How to use it</h2>
 <p>If you are using <a href="https://docs.astral.sh/uv/">uv</a> then you already have <a href="https://docs.astral.sh/uv/guides/tools/">uvx</a> installed, so you don't need a separate install step.</p>
 <p>Just run:</p>
-<pre><code>uvx gbeng mix
-</code></pre>
+<pre><code class="language-shell"><div class="code-block" data-lang="shell"><div class="code-header"><span class="code-lang">shell</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>uvx<span class="w"> </span>gbeng<span class="w"> </span>mix
+</pre></div>
+</div></code></pre>
 <p>If you want to run it forever and have it update every few minutes than just pass the <code>--live</code> flag:</p>
-<pre><code>uvx gbeng mix --live
-</code></pre>
+<pre><code class="language-shell"><div class="code-block" data-lang="shell"><div class="code-header"><span class="code-lang">shell</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>uvx<span class="w"> </span>gbeng<span class="w"> </span>mix<span class="w"> </span>--live
+</pre></div>
+</div></code></pre>
 <p>(Note that the data updates every 30 minutes, and the CLI tool will make a request every five minutes).</p>
 <h2>How does it look?</h2>
 <p><img src="https://paulwrites.software/assets/gb-eng.png" alt="gb-eng.png"></p>
@@ -131,6 +133,19 @@
     </div>
   </nav>
 </article>
+
+<script>
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('.code-copy-btn');
+    if (!btn) return;
+    var block = btn.closest('.code-block');
+    var pre = block.querySelector('td.code pre') || block.querySelector('pre');
+    navigator.clipboard.writeText(pre.textContent).then(function() {
+      btn.classList.add('copied');
+      setTimeout(function() { btn.classList.remove('copied'); }, 2000);
+    });
+  });
+</script>
 
 
   </main>
