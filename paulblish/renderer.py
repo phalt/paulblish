@@ -47,6 +47,9 @@ def _highlight(code: str, lang: str, _attrs: str) -> str:
         from markupsafe import escape
 
         return f'<pre class="mermaid">{escape(code)}</pre>'
+    if lang == "html" and "embed" in (_attrs or ""):
+        # Pass raw HTML through unwrapped — the author opted in explicitly via "embed"
+        return f'<div class="html-embed">{code}</div>'
     if not lang:
         return ""  # markdown-it-py falls back to default <pre><code> rendering
     try:
