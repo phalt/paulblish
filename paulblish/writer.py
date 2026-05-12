@@ -4,7 +4,7 @@ from pathlib import Path
 from paulblish.feed import generate_feed
 from paulblish.models import Article, SiteConfig
 from paulblish.sitemap import generate_sitemap
-from paulblish.templating import render_404, render_all_pages, render_article, render_tag_page
+from paulblish.templating import render_404, render_all_pages, render_article, render_section_listing, render_tag_page
 
 DEFAULT_TEMPLATES = Path(__file__).parent.parent / "templates"
 
@@ -70,6 +70,9 @@ def write(
     # Write tag pages
     written.extend(write_tag_pages(articles, output_dir, site, templates_dir=templates_dir))
 
+    # Write section listing pages (/articles/ and /tools/)
+    written.extend(write_section_listings(articles, output_dir, site, templates_dir=templates_dir))
+
     # Write RSS feed
     written.extend(write_feed(articles, output_dir, site))
 
@@ -116,6 +119,26 @@ def write_tag_pages(
         path.write_text(html)
         written.append(path)
 
+    return written
+
+
+def write_section_listings(
+    articles: list[Article],
+    output_dir: Path,
+    site: SiteConfig,
+    templates_dir: Path | None = None,
+) -> list[Path]:
+    """Write /articles/index.html and /tools/index.html listing pages. Returns written paths."""
+    written: list[Path] = []
+    for section in ("articles", "tools"):
+        section_articles = [
+            a for a in articles if a.path_prefix == section or a.path_prefix.startswith(f"{section}/")
+        ]
+        path = output_dir / section / "index.html"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        html = render_section_listing(section, section_articles, site, templates_dir=templates_dir)
+        path.write_text(html)
+        written.append(path)
     return written
 
 

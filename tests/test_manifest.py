@@ -356,8 +356,10 @@ class TestIncrementalFlag:
         (source / "site.toml").write_text(
             '[site]\ntitle = "T"\nbase_url = "http://x"\ndescription = "D"\nauthor = "A"\n'
         )
+        # Article must be in articles/ directory to appear in feed
+        (source / "articles").mkdir()
         # Deliberately no `description:` field — forces excerpt fallback
-        (source / "article.md").write_text(
+        (source / "articles" / "article.md").write_text(
             "---\npublish: true\nslug: my-article\n---\nThis is the body content of the article."
         )
         output = tmp_path / "_site"
