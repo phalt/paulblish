@@ -23,12 +23,18 @@ def _make_article(
     description: str = "",
     body_html: str = "<p>Content.</p>",
     tags: list[str] | None = None,
+    path_prefix: str = "articles",
 ) -> Article:
-    url_path = "/" if is_home else f"/{slug}/"
+    if is_home:
+        url_path = "/"
+    elif path_prefix:
+        url_path = f"/{path_prefix}/{slug}/"
+    else:
+        url_path = f"/{slug}/"
     return Article(
         source_path=Path(f"/vault/{slug}.md"),
         relative_path=Path(f"{slug}.md"),
-        path_prefix="",
+        path_prefix=path_prefix,
         title=slug.replace("-", " ").title(),
         slug=slug,
         url_path=url_path,
@@ -136,13 +142,13 @@ class TestGenerateFeed:
         articles = [_make_article("my-post", datetime(2026, 3, 15))]
         xml_str = generate_feed(articles, SITE)
         root = ET.fromstring(xml_str)
-        assert root.find("channel/item/link").text == "https://example.com/my-post/"
+        assert root.find("channel/item/link").text == "https://example.com/articles/my-post/"
 
     def test_item_guid(self):
         articles = [_make_article("my-post", datetime(2026, 3, 15))]
         xml_str = generate_feed(articles, SITE)
         root = ET.fromstring(xml_str)
-        assert root.find("channel/item/guid").text == "https://example.com/my-post/"
+        assert root.find("channel/item/guid").text == "https://example.com/articles/my-post/"
 
     def test_item_pub_date_rfc822(self):
         articles = [_make_article("my-post", datetime(2026, 3, 15, 9, 0, 0))]
@@ -231,6 +237,32 @@ class TestGenerateFeed:
         xml_str = generate_feed([], SITE)
         assert xml_str.startswith("<?xml")
 
+    def test_only_articles_prefix_included(self):
+        articles = [
+            _make_article("in-feed", datetime(2026, 3, 15), path_prefix="articles"),
+            _make_article("not-in-feed", datetime(2026, 3, 14), path_prefix=""),
+            _make_article("tools-post", datetime(2026, 3, 13), path_prefix="tools"),
+        ]
+        xml_str = generate_feed(articles, SITE)
+        root = ET.fromstring(xml_str)
+        titles = [item.find("title").text for item in root.findall("channel/item")]
+        assert titles == ["In Feed"]
+
+    def test_nested_articles_prefix_included(self):
+        articles = [_make_article("deep-post", datetime(2026, 3, 15), path_prefix="articles/python")]
+        xml_str = generate_feed(articles, SITE)
+        root = ET.fromstring(xml_str)
+        assert len(root.findall("channel/item")) == 1
+
+    def test_non_articles_prefix_excluded(self):
+        articles = [
+            _make_article("tools-post", datetime(2026, 3, 15), path_prefix="tools"),
+            _make_article("root-post", datetime(2026, 3, 14), path_prefix=""),
+        ]
+        xml_str = generate_feed(articles, SITE)
+        root = ET.fromstring(xml_str)
+        assert root.findall("channel/item") == []
+
 
 # ---------------------------------------------------------------------------
 # write_feed integration
@@ -264,12 +296,12 @@ class TestFeedDiscoveryLink:
     def test_base_template_includes_rss_link(self, tmp_path):
         articles = [_make_article("post", datetime(2026, 3, 15))]
         write(articles, tmp_path, site=SITE)
-        html = (tmp_path / "post" / "index.html").read_text()
+        html = (tmp_path / "articles" / "post" / "index.html").read_text()
         assert 'type="application/rss+xml"' in html
         assert "feed.xml" in html
 
     def test_rss_link_points_to_correct_url(self, tmp_path):
         articles = [_make_article("post", datetime(2026, 3, 15))]
         write(articles, tmp_path, site=SITE)
-        html = (tmp_path / "post" / "index.html").read_text()
+        html = (tmp_path / "articles" / "post" / "index.html").read_text()
         assert "https://example.com/feed.xml" in html

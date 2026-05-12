@@ -58,9 +58,13 @@ def generate_feed(articles: list[Article], site: SiteConfig) -> str:
     Excludes the Home article, sorts by date descending, caps at MAX_ITEMS.
     Returns the feed as an XML string (UTF-8, with XML declaration).
     """
-    # Exclude home, sort newest first, cap at MAX_ITEMS
+    # Only include articles in the articles/ directory (top-level or nested), exclude home
     feed_articles = sorted(
-        [a for a in articles if not a.is_home],
+        [
+            a
+            for a in articles
+            if not a.is_home and (a.path_prefix == "articles" or a.path_prefix.startswith("articles/"))
+        ],
         key=lambda a: a.date,
         reverse=True,
     )[:MAX_ITEMS]

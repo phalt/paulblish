@@ -9,6 +9,7 @@ from paulblish.writer import (
     write_build_meta,
     write_cname,
     write_robots,
+    write_section_listings,
     write_tag_pages,
 )
 
@@ -316,8 +317,8 @@ class TestWriteMultiple:
             _make_article("post-two", path_prefix="articles"),
         ]
         written = write(articles, tmp_path, site=SITE)
-        # 3 articles + 1 all-pages + 0 tag pages + 1 feed.xml + 1 sitemap.xml + 1 robots.txt + 1 404.html
-        assert len(written) == 8
+        # 3 articles + 1 all-pages + 0 tag pages + 1 feed.xml + 1 sitemap.xml + 1 robots.txt + 1 404.html + 2 section listings
+        assert len(written) == 10
         assert all(p.exists() for p in written)
 
 
@@ -505,6 +506,47 @@ class TestSocialIcons:
         assert 'aria-label="GitHub"' in content
         assert 'aria-label="Bluesky"' not in content
         assert 'aria-label="Email"' not in content
+
+
+class TestSectionListings:
+    def test_articles_listing_written(self, tmp_path):
+        articles = [_make_article("post", path_prefix="articles", title="My Article")]
+        write_section_listings(articles, tmp_path, site=SITE)
+        assert (tmp_path / "articles" / "index.html").exists()
+
+    def test_tools_listing_written(self, tmp_path):
+        articles = [_make_article("tool", path_prefix="tools", title="My Tool")]
+        write_section_listings(articles, tmp_path, site=SITE)
+        assert (tmp_path / "tools" / "index.html").exists()
+
+    def test_articles_listing_contains_article(self, tmp_path):
+        articles = [_make_article("post", path_prefix="articles", title="My Article")]
+        write_section_listings(articles, tmp_path, site=SITE)
+        content = (tmp_path / "articles" / "index.html").read_text()
+        assert "My Article" in content
+
+    def test_tools_listing_excludes_articles(self, tmp_path):
+        articles = [
+            _make_article("post", path_prefix="articles", title="An Article"),
+            _make_article("tool", path_prefix="tools", title="A Tool"),
+        ]
+        write_section_listings(articles, tmp_path, site=SITE)
+        tools_content = (tmp_path / "tools" / "index.html").read_text()
+        assert "A Tool" in tools_content
+        assert "An Article" not in tools_content
+
+    def test_section_listing_included_in_write(self, tmp_path):
+        articles = [_make_article("post", path_prefix="articles")]
+        written = write(articles, tmp_path, site=SITE)
+        assert any(str(p).endswith("articles/index.html") for p in written)
+        assert any(str(p).endswith("tools/index.html") for p in written)
+
+    def test_nav_includes_articles_and_tools_links(self, tmp_path):
+        articles = [_make_article("post")]
+        write(articles, tmp_path, site=SITE)
+        content = (tmp_path / "post" / "index.html").read_text()
+        assert "/articles/" in content
+        assert "/tools/" in content
 
 
 class TestWriteBuildMeta:
