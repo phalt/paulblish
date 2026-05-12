@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A dotfiles and tools manager built just for me — Paul Writes Software</title>
+  
+  <!-- Open Graph -->
+  <meta property="og:type"        content="article">
+  <meta property="og:site_name"   content="Paul Writes Software">
+  <meta property="og:title"       content="A dotfiles and tools manager built just for me">
+  <meta property="og:description" content="Paul Hallett is a software engineer">
+  <meta property="og:url"         content="https://paulwrites.software/articles/pauldot/">
+  
+  <meta property="og:image"       content="https://paulwrites.software/assets/site-logo.jpeg">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary">
+  <meta name="twitter:title"       content="A dotfiles and tools manager built just for me">
+  <meta name="twitter:description" content="Paul Hallett is a software engineer">
+  
+  <meta name="twitter:image"       content="https://paulwrites.software/assets/site-logo.jpeg">
+  
+  <link rel="stylesheet" href="https://paulwrites.software/static/style.css">
+  <link rel="alternate" type="application/rss+xml" title="Paul Writes Software" href="https://paulwrites.software/feed.xml">
+  
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="https://paulwrites.software/" class="nav-title">Paul Writes Software</a>
+<a href="https://paulwrites.software/all/">All Pages</a>
+
+<div class="social-icons">
+  
+  <a href="https://github.com/phalt" class="social-icon" aria-label="GitHub" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M10.226 17.284c-2.965-.36-5.054-2.493-5.054-5.256 0-1.123.404-2.336 1.078-3.144-.292-.741-.247-2.314.09-2.965.898-.112 2.111.36 2.83 1.01.853-.269 1.752-.404 2.853-.404 1.1 0 1.999.135 2.807.382.696-.629 1.932-1.1 2.83-.988.315.606.36 2.179.067 2.942.72.854 1.101 2 1.101 3.167 0 2.763-2.089 4.852-5.098 5.234.763.494 1.28 1.572 1.28 2.807v2.336c0 .674.561 1.056 1.235.786 4.066-1.55 7.255-5.615 7.255-10.646C23.5 6.188 18.334 1 11.978 1 5.62 1 .5 6.188.5 12.545c0 4.986 3.167 9.12 7.435 10.669.606.225 1.19-.18 1.19-.786V20.63a2.9 2.9 0 0 1-1.078.224c-1.483 0-2.359-.808-2.987-2.313-.247-.607-.517-.966-1.034-1.033-.27-.023-.359-.135-.359-.27 0-.27.45-.471.898-.471.652 0 1.213.404 1.797 1.235.45.651.921.943 1.483.943.561 0 .92-.202 1.437-.719.382-.381.674-.718.944-.943"/>
+    </svg>
+  </a>
+  
+  
+  <a href="https://bsky.app/profile/paulwrites.software" class="social-icon" aria-label="Bluesky" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M5.202 2.857C7.954 4.922 10.913 9.11 12 11.358c1.087-2.247 4.046-6.436 6.798-8.501C20.783 1.366 24 .213 24 3.883c0 .732-.42 6.156-.667 7.037-.856 3.061-3.978 3.842-6.755 3.37 4.854.826 6.089 3.562 3.422 6.299-5.065 5.196-7.28-1.304-7.847-2.97-.104-.305-.152-.448-.153-.327 0-.121-.05.022-.153.327-.568 1.666-2.782 8.166-7.847 2.97-2.667-2.737-1.432-5.473 3.422-6.3-2.777.473-5.899-.308-6.755-3.369C.42 10.04 0 4.615 0 3.883c0-3.67 3.217-2.517 5.202-1.026"/>
+    </svg>
+  </a>
+  
+  
+  <a href="mailto:case@hey.com" class="social-icon" aria-label="Email">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+    </svg>
+  </a>
+  
+</div>
+
+  </nav>
+
+  <main>
+    
+<article>
+  <header class="article-meta">
+    <h1>
+      A dotfiles and tools manager built just for me
+      <button class="copy-url-btn" title="Copy URL to article" aria-label="Copy URL to article">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+        </svg>
+      </button>
+    </h1>
+    <script>
+      document.querySelector('.copy-url-btn').addEventListener('click', function() {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+          this.classList.add('copied');
+          setTimeout(() => this.classList.remove('copied'), 2000);
+        });
+      });
+    </script>
+    <time datetime="2026-05-06T00:00:00">06 May 2026</time>
+    <span class="reading-time">9 min read</span>
+    
+    <div class="tags">
+      
+        <a href="https://paulwrites.software/tags/Software/" class="tag">Software</a>
+      
+        <a href="https://paulwrites.software/tags/Tools/" class="tag">Tools</a>
+      
+    </div>
+    
+    
+  </header>
+
+  
+  <div class="article-body">
+    <p>I love trying out new tools.</p>
+<p>The recent explosion in <a href="https://paulwrites.software/articles/hyps/">Hyper Personal Software</a> and terminal tooling, catalysed by the rise of LLM coding tools, means I’m installing and trying out new things almost daily.</p>
+<p>I recently set up <a href="https://zed.dev">zed.dev</a> and <a href="https://pi.dev">pi.dev</a> on my work machine (because we’re actively encouraged to try new tooling in the LLM agent space) and I liked them both so much I wanted to install them on my personal laptop as well.</p>
+<p>And then I remembered: it’s going to be a tedious repeat performance to install them both and configure them exactly as I like.</p>
+<p>And then I also remembered: while I’m on my personal laptop, I’d better open up my <code>zsh</code> config and port over all the new aliases I set up yesterday too.</p>
+<p>Oh! And I'd better update my other tools while I'm at it...</p>
+<p>Suddenly a simple “oh I’ll just update my other machine to use this” thought became a long list of chores.</p>
+<h2>Dotfiles management isn’t new</h2>
+<p>I figured it was time to finally set up and use a dotfiles manager.</p>
+<p>In the past I’ve just copied and pasted bits of my favourite bash scripts and aliases into a directory in my Obsidian vault and manually copied over things when I got a new machine. The implementation difficulty of this approach: basically zero. But the effort to keep in sync: pretty high.</p>
+<p>So I went looking online. <a href="https://www.chezmoi.io/">Chezmoi</a> and <a href="https://github.com/yadm-dev/yadm">yadm</a> came out as some of the most popular pre-built solutions. With implementation effort being very low (configuration, set up, done) and the effort to keep in sync across machines also pretty low.</p>
+<p>So why was I put off by them?</p>
+<p>I think one factor I hadn’t taken into consideration is learning of the tool. My current copy and paste solution was already figured out, but with these new tools I’d have to figure out <em>their workflows</em>. They had almost what I wanted for managing certain files like bash configs and aliases, but not quite enough for managing the tools I want to install.</p>
+<p>So what did I want from a dot files manager?</p>
+<ol>
+<li><strong>File over app.</strong> Store all the config in clear, simple file formats. Particularly for the aliases and bash config, just store exactly what those files are.</li>
+<li><strong>A simple abstraction over my aliases.</strong> I don’t want to edit my zsh config by hand. Something like <code>alias add gs &quot;git status&quot;</code> and then <code>mytool sync</code> would be ideal.</li>
+<li><strong>Tool installations.</strong> I want to declare a tool I install across all my machines, with a check for whether it’s installed and the command to install it. Easy updating too. This is something none of the existing tools offered, (understandably, because it’s out of scope for dotfiles). But if I’m managing configurations for tools, I want to manage their installation as well.</li>
+<li><strong>Profiles.</strong> Sometimes I want aliases or tools to only live on certain machines. None of the existing options had this in a shape that fit me.</li>
+<li><strong>Sync.</strong> One command. Conflict resolution. Basically a git-like model because that workflow already fits my brain.</li>
+</ol>
+<p>So basically: not really a dotfiles manager, more like a system configuration tool.</p>
+<h2>A custom tool to suit my needs</h2>
+<p>It’s pretty clear this thought process was driving me down the <a href="https://paulwrites.software/articles/hyps/">Hyper Personal Software</a> path: I wanted a tool that’s <em>quite a lot like other existing tools</em> but just different enough to suit my exact needs.</p>
+<p>So I figured I’d start building one. I clearly already did the work to figure out what and how I wanted it to work. So I may as well use LLMs to whip up a prototype and see if it can work for me, then “eject” from the LLM doing all the work and refine things myself.</p>
+<p>I think this is one of the most enjoyable ways to build personal software today.</p>
+<h2>Reading other people’s recipes</h2>
+<p>Before writing a single line of code, I cracked open Chezmoi’s docs and yadm’s docs and read them. I didn’t want to copy their functionality exactly, but I did want to understand how they think about dotfiles.</p>
+<p>What does each one optimise for, and what does it ignore?</p>
+<p>By the time I was done I had a much better mental model than I’d ever have arrived at on my own. Some of the things I liked:</p>
+<ul>
+<li>Chezmoi’s single source-of-truth git repo with a generated output file felt right.</li>
+<li>The “apply” verb as the reconciliation step felt right.</li>
+<li>Yadm’s “it’s just a git repo” simplicity felt right.</li>
+</ul>
+<div class="callout callout-tip" data-callout="tip">
+<div class="callout-title">Pre-existing solutions are the best starting point you’ll ever get.</div>
+<div class="callout-body">
+<p>Someone else has already done the hard thinking about the messy edge cases. You don’t have to invent the data model from scratch, you can stand on the shoulders of folks who shipped a real thing for real users, and work out which of their ideas suits you.</p>
+</div>
+</div>
+<p>I took all this learning (I wrote a ton of notes), links to all the documentation I had read. Then I started exploring the idea by talking to an LLM about my plan. Over the course of  about two dozen prompts we refined a spec for implementation.</p>
+<p>I made sure to keep things aligned with my HYPS manifesto, how I like to build my tooling, the way I wanted it to work, etc etc. Then we got to building.</p>
+<h2>What I built</h2>
+<p>I call it <a href="https://github.com/phalt/pauldot">pauldot</a>.</p>
+<p>It is, predictably, a Python CLI.</p>
+<p>It uses a very simple directory structure for recording configuration:</p>
+<pre><code>~/.pauldot/
+├── pauldot.toml         # top-level config
+├── profiles/
+│   ├── base.toml        # shared base
+│   └── personal.toml    # extends base
+├── files/
+│   ├── zshrc.base
+│   ├── aliases.zsh      # managed by `pauldot alias add`
+│   └── home/            # tracked dotfiles
+├── tools/
+│   └── tools.toml       # tool check + install commands
+└── bootstrap.sh
+</code></pre>
+<p>Everything is plain TOML. The bootstrap.sh is just a script I can curl when I want to set up a new computer.</p>
+<p>The workflow is the bit that actually matters to me though:</p>
+<pre><code class="language-shell"><div class="code-block" data-lang="shell"><div class="code-header"><span class="code-lang">shell</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>pauldot<span class="w"> </span><span class="nb">alias</span><span class="w"> </span>add<span class="w"> </span>gs<span class="w"> </span><span class="s2">&quot;git status&quot;</span><span class="w">   </span><span class="c1"># no opening .zshrc</span>
+pauldot<span class="w"> </span>tool<span class="w"> </span>add<span class="w">                    </span><span class="c1"># interactive, writes to tools.toml</span>
+pauldot<span class="w"> </span>apply<span class="w">                       </span><span class="c1"># reconcile this machine</span>
+pauldot<span class="w"> </span>sync<span class="w">                        </span><span class="c1"># pull remote, push local</span>
+pauldot<span class="w"> </span>profile<span class="w"> </span><span class="nb">set</span><span class="w"> </span>personal<span class="w">        </span><span class="c1"># swap context</span>
+</pre></div>
+</div></code></pre>
+<p>That’s basically it. Four commands I can use daily, plus <code>status</code> and <code>doctor</code> for when I forget the workflow and need to know where I am at.</p>
+<h2>How it works</h2>
+<p>Pauldot compiles a <code>.zshrc</code> file from the files in the configuration directory.</p>
+<p>For the dotfiles tracking the configuration tracks the file and hosts a copy of it too. Dotfiles are pushed back to the appropriate locations when synced. So no symlinking.</p>
+<p>For tools the configuration tracks:</p>
+<ul>
+<li>A “check” state to see if it’s installed. I.e. <code>atuin -v</code>. A <code>stderr</code> response considers to tool to not be installed</li>
+<li>Installation bash commands for installing across both MacOS and Linux</li>
+<li>Update commands too.</li>
+</ul>
+<pre><code class="language-Toml"><div class="code-block" data-lang="Toml"><div class="code-header"><span class="code-lang">tools.toml</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span><span class="k">[[tool]]</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ripgrep&quot;</span>
+<span class="n">check</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;command -v rg&quot;</span>
+<span class="n">install</span><span class="p">.</span><span class="n">macos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;brew install ripgrep&quot;</span>
+<span class="n">update</span><span class="p">.</span><span class="n">macos</span><span class="w"> </span><span class="o">=</span><span class="s2">&quot;brew upgrade ripgrep&quot;</span>
+<span class="n">install</span><span class="p">.</span><span class="n">linux</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;sudo apt install ripgrep&quot;</span>
+</pre></div>
+</div></code></pre>
+<p>So it basically tracks the bash scripts you run to install it. For example - most of the macOS ones are just brew commands.</p>
+<p>A local config file tracks the state we’re currently in to avoid clashes with remote changes.</p>
+<p>And the actual syncing? It’s just git.</p>
+<p>To recap, the five things I wanted, lined up against what I built:</p>
+<ol>
+<li><strong>File over app.</strong> The repo is the truth. <code>aliases.zsh</code> is just a file of aliases. <code>tools.toml</code> is just a list of tools.</li>
+<li><strong>A simple abstraction over aliases.</strong> <code>pauldot alias add</code> writes to <code>aliases.zsh</code>. I never have to remember which line my git aliases live on.</li>
+<li><strong>Tool installations.</strong> Each tool gets a <code>check</code> command and an <code>install</code> command. <code>pauldot apply</code> runs the check, and if it fails, runs the install. That is the entire feature.</li>
+<li><strong>Profiles.</strong> <code>base.toml</code> is shared. <code>personal.toml</code> and <code>work.toml</code> extend it. The active profile lives in local state, not the repo, so the same repo can be cloned to any machine and configured differently.</li>
+<li><strong>Sync.</strong> A simple lock in the local configuration prevents clashes and prints clear instructions on how to reconcile.</li>
+</ol>
+<h2>Back to zed and pi</h2>
+<p>So, the original problem that triggered all this: I had two new tools I wanted on both machines, and a pile of fresh aliases I’d forget to copy over.</p>
+<p>On the work machine, where I first installed them I can now run:</p>
+<pre><code class="language-Shell"><div class="code-block" data-lang="Shell"><div class="code-header"><span class="code-lang">Shell</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>pauldot<span class="w"> </span>tool<span class="w"> </span>add<span class="w">        </span><span class="c1"># add zed, paste in the check + install commands</span>
+pauldot<span class="w"> </span>tool<span class="w"> </span>add<span class="w">        </span><span class="c1"># same for pi</span>
+pauldot<span class="w"> </span><span class="nb">alias</span><span class="w"> </span>add<span class="w"> </span>zd<span class="w"> </span><span class="s2">&quot;zed .&quot;</span>
+pauldot<span class="w"> </span>sync<span class="w">            </span><span class="c1"># commit and push everything to the dotfiles repo</span>
+</pre></div>
+</div></code></pre>
+<p>A minute or two of work. Then on my personal laptop:</p>
+<pre><code class="language-shell"><div class="code-block" data-lang="shell"><div class="code-header"><span class="code-lang">shell</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>pauldot<span class="w"> </span>sync<span class="w">            </span><span class="c1"># pull the latest config</span>
+pauldot<span class="w"> </span>apply<span class="w">           </span><span class="c1"># zed and pi get installed, aliases land in the shell</span>
+</pre></div>
+</div></code></pre>
+<p>That’s it. The friction of “oh, I’d better port this over later” was a thing that risked stopping me from trying new tools in the first place.</p>
+<p>Now there is just <code>sync</code>.</p>
+<h2>The maintenance question</h2>
+<p>The thing I worried about most before starting was: am I just signing myself up for a second job? Am I gonna build a tool that makes managing this more complicated?</p>
+<p>So far, no, and I think it’s because of three deliberate choices.</p>
+<p><strong>The docs are for me in six months.</strong> I wrote a <code>SPEC.md</code> and an actual <a href="https://phalt.github.io/pauldot/">mkdocs site</a> so I can refer back and understand what was built and how it works.</p>
+<p><strong>The interface is small.</strong> Around a dozen commands, each doing one obvious thing.</p>
+<p><strong>No lock-in.</strong> If I wake up one Tuesday and decide Pauldot is annoying me, I stop using Pauldot and I still have a git repo full of plain files. And all my config files are just there - not symlinked.</p>
+<p>The HYPS rule “if you stop enjoying it, stop building it” only works if stopping is genuinely cheap.</p>
+<h2>Go and shape your own</h2>
+<p>The next time you find yourself frustrated with a tool that’s <em>almost-but-not-quite right</em>, read the docs of the closest two or three alternatives.</p>
+<p>Learn a bit about how they work. Write down which bits you would like.</p>
+<p>Then build the small, specific shaped thing that fits your hand. Keep the data in plain files. Keep the interface small enough that you can hold it in your head. Make sure you can walk away from it without losing anything.</p>
+<p>And most of all - enjoy building it!</p>
+
+  </div>
+
+  <nav class="article-nav">
+    <div class="article-nav-prev">
+      
+      <a href="https://paulwrites.software/articles/hyps/">← Older: Hyper Personal Software</a>
+      
+    </div>
+    <div class="article-nav-next">
+      
+    </div>
+  </nav>
+</article>
+
+<script>
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('.code-copy-btn');
+    if (!btn) return;
+    var block = btn.closest('.code-block');
+    var pre = block.querySelector('td.code pre') || block.querySelector('pre');
+    navigator.clipboard.writeText(pre.textContent).then(function() {
+      btn.classList.add('copied');
+      setTimeout(function() { btn.classList.remove('copied'); }, 2000);
+    });
+  });
+</script>
+
+
+  </main>
+
+  <footer class="site-footer">
+    <p>Paul Writes Software — built with <a href="https://github.com/phalt/paulblish">Paulblish</a></p>
+    
+<div class="social-icons">
+  
+  <a href="https://github.com/phalt" class="social-icon" aria-label="GitHub" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M10.226 17.284c-2.965-.36-5.054-2.493-5.054-5.256 0-1.123.404-2.336 1.078-3.144-.292-.741-.247-2.314.09-2.965.898-.112 2.111.36 2.83 1.01.853-.269 1.752-.404 2.853-.404 1.1 0 1.999.135 2.807.382.696-.629 1.932-1.1 2.83-.988.315.606.36 2.179.067 2.942.72.854 1.101 2 1.101 3.167 0 2.763-2.089 4.852-5.098 5.234.763.494 1.28 1.572 1.28 2.807v2.336c0 .674.561 1.056 1.235.786 4.066-1.55 7.255-5.615 7.255-10.646C23.5 6.188 18.334 1 11.978 1 5.62 1 .5 6.188.5 12.545c0 4.986 3.167 9.12 7.435 10.669.606.225 1.19-.18 1.19-.786V20.63a2.9 2.9 0 0 1-1.078.224c-1.483 0-2.359-.808-2.987-2.313-.247-.607-.517-.966-1.034-1.033-.27-.023-.359-.135-.359-.27 0-.27.45-.471.898-.471.652 0 1.213.404 1.797 1.235.45.651.921.943 1.483.943.561 0 .92-.202 1.437-.719.382-.381.674-.718.944-.943"/>
+    </svg>
+  </a>
+  
+  
+  <a href="https://bsky.app/profile/paulwrites.software" class="social-icon" aria-label="Bluesky" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M5.202 2.857C7.954 4.922 10.913 9.11 12 11.358c1.087-2.247 4.046-6.436 6.798-8.501C20.783 1.366 24 .213 24 3.883c0 .732-.42 6.156-.667 7.037-.856 3.061-3.978 3.842-6.755 3.37 4.854.826 6.089 3.562 3.422 6.299-5.065 5.196-7.28-1.304-7.847-2.97-.104-.305-.152-.448-.153-.327 0-.121-.05.022-.153.327-.568 1.666-2.782 8.166-7.847 2.97-2.667-2.737-1.432-5.473 3.422-6.3-2.777.473-5.899-.308-6.755-3.369C.42 10.04 0 4.615 0 3.883c0-3.67 3.217-2.517 5.202-1.026"/>
+    </svg>
+  </a>
+  
+  
+  <a href="mailto:case@hey.com" class="social-icon" aria-label="Email">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+    </svg>
+  </a>
+  
+</div>
+
+    <p class="footer-links">
+      <a href="https://paulwrites.software/feed.xml">RSS</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://paulwrites.software/sitemap.xml">Sitemap</a>
+    </p>
+  </footer>
+</body>
+</html>

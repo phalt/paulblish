@@ -4,7 +4,14 @@
     <title>Paul Writes Software</title>
     <link>https://paulwrites.software</link>
     <description>Paul Hallett is a software engineer</description>
-    <lastBuildDate>Fri, 01 May 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 06 May 2026 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>A dotfiles and tools manager built just for me</title>
+      <link>https://paulwrites.software/articles/pauldot/</link>
+      <guid>https://paulwrites.software/articles/pauldot/</guid>
+      <pubDate>Wed, 06 May 2026 00:00:00 +0000</pubDate>
+      <description>I love trying out new tools. The recent explosion in Hyper Personal Software and terminal tooling, catalysed by the rise of LLM coding tools, means I’m installing and trying out new things almost…</description>
+    </item>
     <item>
       <title>Hyper Personal Software</title>
       <link>https://paulwrites.software/articles/hyps/</link>
