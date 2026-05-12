@@ -3,7 +3,7 @@
   <channel>
     <title>Paul Writes Software</title>
     <link>https://paulwrites.software</link>
-    <description>Paul Hallett is a software engineer</description>
+    <description>Paul Hallett is a software engineer with 15+ years experience working in tech. He builds tools with Python and HTTP. He loves file-over-app, local-first, and smallweb software. He blogs way too much.</description>
     <lastBuildDate>Wed, 06 May 2026 00:00:00 +0000</lastBuildDate>
     <item>
       <title>A dotfiles and tools manager built just for me</title>
