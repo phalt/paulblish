@@ -317,7 +317,7 @@ class TestWriteMultiple:
             _make_article("post-two", path_prefix="articles"),
         ]
         written = write(articles, tmp_path, site=SITE)
-        # 3 articles + 1 all-pages + 0 tag pages + 1 feed.xml + 1 sitemap.xml + 1 robots.txt + 1 404.html + 2 section listings
+        # 3 articles + 1 all-pages + 0 tag pages + 1 feed.xml + 1 sitemap.xml + 1 robots.txt + 1 404.html + 2 sections
         assert len(written) == 10
         assert all(p.exists() for p in written)
 
