@@ -537,47 +537,43 @@ pre code {
 }
 
 /* === Mobile nav === */
-.nav-toggle {
+.nav-toggle-input {
     display: none;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--text);
-    padding: 0;
-    line-height: 1;
 }
 
-.nav-toggle:hover {
+.nav-toggle-label {
+    display: none;
+    cursor: pointer;
+    color: var(--text);
+    line-height: 1;
+    align-items: center;
+}
+
+.nav-toggle-label:hover {
     color: var(--accent-teal);
 }
 
 @media (max-width: 640px) {
     .site-nav {
         flex-wrap: wrap;
-        position: relative;
     }
 
     .nav-links {
         display: none;
+        order: 10;
         width: 100%;
-        order: 3;
         flex-direction: column;
         gap: 0.75rem;
         padding: 0.75rem 0;
         border-top: 1px solid var(--border);
     }
 
-    .site-nav.nav-open .nav-links {
+    .nav-toggle-input:checked ~ .nav-links {
         display: flex;
     }
 
-    .site-nav .social-icons {
-        margin-left: auto;
-    }
-
-    .nav-toggle {
+    .nav-toggle-label {
         display: flex;
-        align-items: center;
     }
 }
 
