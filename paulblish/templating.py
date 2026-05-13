@@ -50,7 +50,9 @@ def render_tag_page(tag: str, articles: list[Article], site: SiteConfig, templat
     return template.render(title=f"#{tag}", articles=sorted_articles, site=site, **_og_context(site))
 
 
-def render_section_listing(section: str, articles: list[Article], site: SiteConfig, templates_dir: Path | None = None) -> str:
+def render_section_listing(
+    section: str, articles: list[Article], site: SiteConfig, templates_dir: Path | None = None
+) -> str:
     """Render a section listing page (e.g. /articles/ or /tools/) using the listing template."""
     env = _create_env(templates_dir)
     template = env.get_template("listing.html")
