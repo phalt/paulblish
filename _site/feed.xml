@@ -4,7 +4,14 @@
     <title>Paul Writes Software</title>
     <link>https://paulwrites.software</link>
     <description>Paul Hallett is a software engineer with 15+ years experience working in tech. He builds tools with Python and HTTP. He loves file-over-app, local-first, and smallweb software. He blogs way too much.</description>
-    <lastBuildDate>Wed, 06 May 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 13 May 2026 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Turn a single markdown file into your own URL shortener</title>
+      <link>https://paulwrites.software/articles/paulias/</link>
+      <guid>https://paulwrites.software/articles/paulias/</guid>
+      <pubDate>Wed, 13 May 2026 00:00:00 +0000</pubDate>
+      <description>I can't stop building tools. Ever since I realised that I can use LLM coding agents to build lots of little bits of personal software I've been on a roll creating a tonne of tools just for my own…</description>
+    </item>
     <item>
       <title>A dotfiles and tools manager built just for me</title>
       <link>https://paulwrites.software/articles/pauldot/</link>

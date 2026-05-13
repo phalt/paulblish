@@ -20,7 +20,7 @@ def _make_article(body_markdown: str) -> Article:
 
 EMBED_BLOCK = '```html embed\n<form id="test"><button>Go</button></form>\n<script>console.log("ok")</script>\n```'
 
-PLAIN_HTML_BLOCK = "```html\n<form id=\"test\"><button>Go</button></form>\n```"
+PLAIN_HTML_BLOCK = '```html\n<form id="test"><button>Go</button></form>\n```'
 
 
 class TestHtmlEmbed:

@@ -23,6 +23,9 @@
   {% if site.avatar %}
   <meta name="twitter:image"       content="{{ site.base_url }}/assets/{{ site.avatar | basename }}">
   {% endif %}
+  {% if site.emoji_favicon %}
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>{{ site.emoji_favicon }}</text></svg>">
+  {% endif %}
   <link rel="stylesheet" href="{{ site.base_url }}/static/{{ static_url('style.css') }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ site.base_url }}/feed.xml">
   {% if article is defined and 'class="mermaid"' in article.body_html %}

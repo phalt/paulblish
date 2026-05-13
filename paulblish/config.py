@@ -69,6 +69,7 @@ def _validate_and_build(site: dict, source_label: str, **overrides: str) -> Site
         github=site.get("github", ""),
         bluesky=site.get("bluesky", ""),
         email=site.get("email", ""),
+        emoji_favicon=site.get("emoji_favicon", ""),
     )
 
 

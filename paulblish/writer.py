@@ -101,9 +101,7 @@ def write(
     written.append(all_pages_path)
 
     # Write tag pages
-    written.extend(
-        write_tag_pages(articles, output_dir, site, templates_dir=templates_dir, static_files=static_files)
-    )
+    written.extend(write_tag_pages(articles, output_dir, site, templates_dir=templates_dir, static_files=static_files))
 
     # Write section listing pages (/articles/ and /tools/)
     written.extend(
@@ -165,9 +163,7 @@ def write_section_listings(
     """Write /articles/index.html and /tools/index.html listing pages. Returns written paths."""
     written: list[Path] = []
     for section in ("articles", "tools"):
-        section_articles = [
-            a for a in articles if a.path_prefix == section or a.path_prefix.startswith(f"{section}/")
-        ]
+        section_articles = [a for a in articles if a.path_prefix == section or a.path_prefix.startswith(f"{section}/")]
         path = output_dir / section / "index.html"
         path.parent.mkdir(parents=True, exist_ok=True)
         html = render_section_listing(
