@@ -8,11 +8,21 @@ from paulblish.models import Article, SiteConfig
 DEFAULT_TEMPLATES = Path(__file__).parent.parent / "templates"
 
 
-def _create_env(templates_dir: Path | None = None) -> Environment:
-    """Create a Jinja2 environment with the given (or default) templates directory."""
+def _create_env(
+    templates_dir: Path | None = None,
+    static_files: dict[str, str] | None = None,
+) -> Environment:
+    """Create a Jinja2 environment with the given (or default) templates directory.
+
+    *static_files* maps an original static filename (e.g. ``style.css``) to its
+    cache-busted output name (e.g. ``style.a3f9c2.css``). Templates resolve the
+    mapping via the ``static_url`` global.
+    """
     path = templates_dir if templates_dir else DEFAULT_TEMPLATES
     env = Environment(loader=FileSystemLoader(str(path)), autoescape=False)
     env.filters["basename"] = lambda p: Path(p).name
+    sf = static_files or {}
+    env.globals["static_url"] = lambda name: sf.get(name, name)
     return env
 
 
@@ -33,44 +43,64 @@ def render_article(
     site: SiteConfig,
     templates_dir: Path | None = None,
     latest_articles: list[Article] | None = None,
+    static_files: dict[str, str] | None = None,
 ) -> str:
     """Render a single article page. Uses home.html for the home article, article.html otherwise."""
-    env = _create_env(templates_dir)
+    env = _create_env(templates_dir, static_files=static_files)
     template_name = "home.html" if article.is_home else "article.html"
     template = env.get_template(template_name)
     extra = {"latest_articles": latest_articles or []} if article.is_home else {}
     return template.render(article=article, site=site, **_og_context(site, article), **extra)
 
 
-def render_tag_page(tag: str, articles: list[Article], site: SiteConfig, templates_dir: Path | None = None) -> str:
+def render_tag_page(
+    tag: str,
+    articles: list[Article],
+    site: SiteConfig,
+    templates_dir: Path | None = None,
+    static_files: dict[str, str] | None = None,
+) -> str:
     """Render a tag listing page for a single tag."""
-    env = _create_env(templates_dir)
+    env = _create_env(templates_dir, static_files=static_files)
     template = env.get_template("listing.html")
     sorted_articles = sorted(articles, key=lambda a: a.date, reverse=True)
     return template.render(title=f"#{tag}", articles=sorted_articles, site=site, **_og_context(site))
 
 
 def render_section_listing(
-    section: str, articles: list[Article], site: SiteConfig, templates_dir: Path | None = None
+    section: str,
+    articles: list[Article],
+    site: SiteConfig,
+    templates_dir: Path | None = None,
+    static_files: dict[str, str] | None = None,
 ) -> str:
     """Render a section listing page (e.g. /articles/ or /tools/) using the listing template."""
-    env = _create_env(templates_dir)
+    env = _create_env(templates_dir, static_files=static_files)
     template = env.get_template("listing.html")
     sorted_articles = sorted(articles, key=lambda a: a.date, reverse=True)
     title = section.replace("-", " ").title()
     return template.render(title=title, articles=sorted_articles, site=site, **_og_context(site))
 
 
-def render_404(site: SiteConfig, templates_dir: Path | None = None) -> str:
+def render_404(
+    site: SiteConfig,
+    templates_dir: Path | None = None,
+    static_files: dict[str, str] | None = None,
+) -> str:
     """Render the 404 error page."""
-    env = _create_env(templates_dir)
+    env = _create_env(templates_dir, static_files=static_files)
     template = env.get_template("404.html")
     return template.render(site=site, **_og_context(site))
 
 
-def render_all_pages(articles: list[Article], site: SiteConfig, templates_dir: Path | None = None) -> str:
+def render_all_pages(
+    articles: list[Article],
+    site: SiteConfig,
+    templates_dir: Path | None = None,
+    static_files: dict[str, str] | None = None,
+) -> str:
     """Render the all-pages listing, grouped by path_prefix, sorted by date descending."""
-    env = _create_env(templates_dir)
+    env = _create_env(templates_dir, static_files=static_files)
     template = env.get_template("all_pages.html")
 
     # Group articles by path_prefix, sorted by date descending within each group

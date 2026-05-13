@@ -1,3 +1,4 @@
+import shutil
 from datetime import datetime
 from pathlib import Path
 
@@ -116,10 +117,14 @@ class TestTemplatedOutput:
         assert "Paulblish" in content
 
     def test_css_link(self, tmp_path):
+        import re
+
         articles = [_make_article("post")]
         write(articles, tmp_path, site=SITE)
         content = (tmp_path / "post" / "index.html").read_text()
-        assert "/static/style.css" in content
+        match = re.search(r"/static/(style\.[0-9a-f]{8}\.css)", content)
+        assert match, f"expected hashed style link, got: {content}"
+        assert (tmp_path / "static" / match.group(1)).exists()
 
     def test_article_metadata_block(self, tmp_path):
         article = _make_article("post", title="My Post")
@@ -206,7 +211,30 @@ class TestStaticAssets:
     def test_style_css_copied(self, tmp_path):
         articles = [_make_article("post")]
         write(articles, tmp_path, site=SITE)
-        assert (tmp_path / "static" / "style.css").exists()
+        css_files = list((tmp_path / "static").glob("style.*.css"))
+        assert len(css_files) == 1
+        # Plain unhashed name should not be present
+        assert not (tmp_path / "static" / "style.css").exists()
+
+    def test_style_css_hash_changes_with_content(self, tmp_path, monkeypatch):
+        # Build into one output dir, capture hashed filename
+        articles = [_make_article("post")]
+        out1 = tmp_path / "site1"
+        write(articles, out1, site=SITE)
+        first = next((out1 / "static").glob("style.*.css")).name
+
+        # Point at a custom templates dir with a tweaked stylesheet
+        custom_templates = tmp_path / "templates"
+        original_templates = Path(__file__).parent.parent / "templates"
+        shutil.copytree(original_templates, custom_templates)
+        css_path = custom_templates / "static" / "style.css"
+        css_path.write_text(css_path.read_text() + "\n/* changed */\n")
+
+        out2 = tmp_path / "site2"
+        write(articles, out2, site=SITE, templates_dir=custom_templates)
+        second = next((out2 / "static").glob("style.*.css")).name
+
+        assert first != second
 
 
 class TestCname:

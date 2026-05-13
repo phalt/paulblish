@@ -1,3 +1,4 @@
+import hashlib
 import shutil
 from pathlib import Path
 
@@ -7,6 +8,33 @@ from paulblish.sitemap import generate_sitemap
 from paulblish.templating import render_404, render_all_pages, render_article, render_section_listing, render_tag_page
 
 DEFAULT_TEMPLATES = Path(__file__).parent.parent / "templates"
+
+HASHED_STATIC_EXTENSIONS = {".css"}
+
+
+def _hashed_static_files(static_src: Path) -> dict[str, str]:
+    """Map static filenames to their content-hashed versions for cache busting."""
+    mapping: dict[str, str] = {}
+    if not static_src.is_dir():
+        return mapping
+    for path in static_src.iterdir():
+        if path.is_file() and path.suffix in HASHED_STATIC_EXTENSIONS:
+            digest = hashlib.sha256(path.read_bytes()).hexdigest()[:8]
+            mapping[path.name] = f"{path.stem}.{digest}{path.suffix}"
+    return mapping
+
+
+def _copy_static_dir(static_src: Path, static_dst: Path, mapping: dict[str, str]) -> None:
+    """Copy static_src into static_dst, renaming files in *mapping* to their hashed names."""
+    if static_dst.exists():
+        shutil.rmtree(static_dst)
+    static_dst.mkdir(parents=True)
+    for entry in static_src.iterdir():
+        if entry.is_dir():
+            shutil.copytree(entry, static_dst / entry.name)
+        else:
+            dest_name = mapping.get(entry.name, entry.name)
+            shutil.copy2(entry, static_dst / dest_name)
 
 
 def output_path(article: Article, output_dir: Path) -> Path:
@@ -49,6 +77,11 @@ def write(
         reverse=True,
     )[:3]
 
+    # Compute static-file hash mapping up-front so templates can reference the hashed names
+    tpl_dir = templates_dir if templates_dir else DEFAULT_TEMPLATES
+    static_src = tpl_dir / "static"
+    static_files = _hashed_static_files(static_src)
+
     subset = articles if articles_to_write is None else articles_to_write
 
     written: list[Path] = []
@@ -56,22 +89,26 @@ def write(
         path = output_path(article, output_dir)
         path.parent.mkdir(parents=True, exist_ok=True)
         la = latest_articles if article.is_home else None
-        html = render_article(article, site, templates_dir=templates_dir, latest_articles=la)
+        html = render_article(article, site, templates_dir=templates_dir, latest_articles=la, static_files=static_files)
         path.write_text(html)
         written.append(path)
 
     # Write all-pages listing
     all_pages_path = output_dir / "all" / "index.html"
     all_pages_path.parent.mkdir(parents=True, exist_ok=True)
-    all_pages_html = render_all_pages(articles, site, templates_dir=templates_dir)
+    all_pages_html = render_all_pages(articles, site, templates_dir=templates_dir, static_files=static_files)
     all_pages_path.write_text(all_pages_html)
     written.append(all_pages_path)
 
     # Write tag pages
-    written.extend(write_tag_pages(articles, output_dir, site, templates_dir=templates_dir))
+    written.extend(
+        write_tag_pages(articles, output_dir, site, templates_dir=templates_dir, static_files=static_files)
+    )
 
     # Write section listing pages (/articles/ and /tools/)
-    written.extend(write_section_listings(articles, output_dir, site, templates_dir=templates_dir))
+    written.extend(
+        write_section_listings(articles, output_dir, site, templates_dir=templates_dir, static_files=static_files)
+    )
 
     # Write RSS feed
     written.extend(write_feed(articles, output_dir, site))
@@ -83,16 +120,11 @@ def write(
     written.append(write_robots(output_dir, site))
 
     # Write 404 page
-    written.append(write_404(output_dir, site, templates_dir=templates_dir))
+    written.append(write_404(output_dir, site, templates_dir=templates_dir, static_files=static_files))
 
-    # Copy static assets from templates
-    tpl_dir = templates_dir if templates_dir else DEFAULT_TEMPLATES
-    static_src = tpl_dir / "static"
+    # Copy static assets from templates, renaming hashed files to their cache-busted names
     if static_src.is_dir():
-        static_dst = output_dir / "static"
-        if static_dst.exists():
-            shutil.rmtree(static_dst)
-        shutil.copytree(static_src, static_dst)
+        _copy_static_dir(static_src, output_dir / "static", static_files)
 
     return written
 
@@ -102,6 +134,7 @@ def write_tag_pages(
     output_dir: Path,
     site: SiteConfig,
     templates_dir: Path | None = None,
+    static_files: dict[str, str] | None = None,
 ) -> list[Path]:
     """Write a /tags/{tag}/index.html page for each unique tag. Returns written paths."""
     from collections import defaultdict
@@ -115,7 +148,7 @@ def write_tag_pages(
     for tag, tagged_articles in sorted(tag_map.items()):
         path = output_dir / "tags" / tag / "index.html"
         path.parent.mkdir(parents=True, exist_ok=True)
-        html = render_tag_page(tag, tagged_articles, site, templates_dir=templates_dir)
+        html = render_tag_page(tag, tagged_articles, site, templates_dir=templates_dir, static_files=static_files)
         path.write_text(html)
         written.append(path)
 
@@ -127,6 +160,7 @@ def write_section_listings(
     output_dir: Path,
     site: SiteConfig,
     templates_dir: Path | None = None,
+    static_files: dict[str, str] | None = None,
 ) -> list[Path]:
     """Write /articles/index.html and /tools/index.html listing pages. Returns written paths."""
     written: list[Path] = []
@@ -136,7 +170,9 @@ def write_section_listings(
         ]
         path = output_dir / section / "index.html"
         path.parent.mkdir(parents=True, exist_ok=True)
-        html = render_section_listing(section, section_articles, site, templates_dir=templates_dir)
+        html = render_section_listing(
+            section, section_articles, site, templates_dir=templates_dir, static_files=static_files
+        )
         path.write_text(html)
         written.append(path)
     return written
@@ -158,11 +194,16 @@ def write_sitemap(articles: list[Article], output_dir: Path, site: SiteConfig) -
     return [path]
 
 
-def write_404(output_dir: Path, site: SiteConfig, templates_dir: Path | None = None) -> Path:
+def write_404(
+    output_dir: Path,
+    site: SiteConfig,
+    templates_dir: Path | None = None,
+    static_files: dict[str, str] | None = None,
+) -> Path:
     """Render and write 404.html to the output root. GitHub Pages serves this automatically."""
     path = output_dir / "404.html"
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(render_404(site, templates_dir=templates_dir))
+    path.write_text(render_404(site, templates_dir=templates_dir, static_files=static_files))
     return path
 
 
