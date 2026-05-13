@@ -1,14 +1,15 @@
 <a href="{{ site.base_url }}/" class="nav-title">{{ site.title }}</a>
-<div class="nav-links" id="nav-links">
+<input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+<div class="nav-links">
   <a href="{{ site.base_url }}/articles/">Articles</a>
   <a href="{{ site.base_url }}/tools/">Tools</a>
   <a href="{{ site.base_url }}/all/">All Pages</a>
 </div>
 {% include "_social.html" %}
-<button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-links">
+<label for="nav-toggle" class="nav-toggle-label" aria-label="Toggle navigation">
   <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
     <rect y="3" width="20" height="2" rx="1"/>
     <rect y="9" width="20" height="2" rx="1"/>
     <rect y="15" width="20" height="2" rx="1"/>
   </svg>
-</button>
+</label>

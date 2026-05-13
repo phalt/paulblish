@@ -38,18 +38,6 @@
     {% block content %}{% endblock %}
   </main>
 
-  <script>
-    (function() {
-      var btn = document.querySelector('.nav-toggle');
-      if (!btn) return;
-      btn.addEventListener('click', function() {
-        var nav = document.querySelector('.site-nav');
-        var open = nav.classList.toggle('nav-open');
-        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-      });
-    })();
-  </script>
-
   <footer class="site-footer">
     <p>{{ site.title }} — built with <a href="https://github.com/phalt/paulblish">Paulblish</a></p>
     {% include "_social.html" %}
