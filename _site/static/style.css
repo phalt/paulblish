@@ -536,6 +536,47 @@ pre code {
     display: block;
 }
 
+/* === Mobile nav === */
+.nav-toggle-input {
+    display: none;
+}
+
+.nav-toggle-label {
+    display: none;
+    cursor: pointer;
+    color: var(--text);
+    line-height: 1;
+    align-items: center;
+}
+
+.nav-toggle-label:hover {
+    color: var(--accent-teal);
+}
+
+@media (max-width: 640px) {
+    .site-nav {
+        flex-wrap: wrap;
+    }
+
+    .nav-links {
+        display: none;
+        order: 10;
+        width: 100%;
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 0.75rem 0;
+        border-top: 1px solid var(--border);
+    }
+
+    .nav-toggle-input:checked ~ .nav-links {
+        display: flex;
+    }
+
+    .nav-toggle-label {
+        display: flex;
+    }
+}
+
 .site-footer .social-icons {
     justify-content: center;
     margin-top: 0.5rem;

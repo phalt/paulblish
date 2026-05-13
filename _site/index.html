@@ -30,9 +30,12 @@
 <body>
   <nav class="site-nav">
     <a href="https://paulwrites.software/" class="nav-title">Paul Writes Software</a>
-<a href="https://paulwrites.software/articles/">Articles</a>
-<a href="https://paulwrites.software/tools/">Tools</a>
-<a href="https://paulwrites.software/all/">All Pages</a>
+<input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+<div class="nav-links">
+  <a href="https://paulwrites.software/articles/">Articles</a>
+  <a href="https://paulwrites.software/tools/">Tools</a>
+  <a href="https://paulwrites.software/all/">All Pages</a>
+</div>
 
 <div class="social-icons">
   
@@ -61,6 +64,13 @@
   
 </div>
 
+<label for="nav-toggle" class="nav-toggle-label" aria-label="Toggle navigation">
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+    <rect y="3" width="20" height="2" rx="1"/>
+    <rect y="9" width="20" height="2" rx="1"/>
+    <rect y="15" width="20" height="2" rx="1"/>
+  </svg>
+</label>
   </nav>
 
   <main>
