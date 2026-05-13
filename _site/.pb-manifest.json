@@ -45,7 +45,7 @@
     "excerpt": "\ud83c\udfa7 Listen to this article as a podcast I've done a fair bit of photography in my time. Specifically analog photography. There were two events that really pulled me into the world of photography when I\u2026"
   },
   "Articles/Markdown features supported by Paulblish.md": {
-    "mtime": 1775567397.075,
+    "mtime": 1778661062.0652814,
     "output": "articles/paulblish-features/index.html",
     "excerpt": "Paulblish supports a bunch of standard html page content, as well as a few extra nifty little things that sets it apart. Please remember: this is hyper-personalised software, so I have included the\u2026"
   },
@@ -103,5 +103,10 @@
     "mtime": 1734706723.395999,
     "output": "pokemon/pokemon/shiny-rotom/index.html",
     "excerpt": "Background Rotom , my favourite Pok\u00e9mon. Ever since I heard about this mysterious ghost in the Old Chateau I've been intrigued. My favourite type of Pok\u00e9mon is the Ghost type. Ostensibly, Pok\u00e9mon is\u2026"
+  },
+  "Tools/air-fryer-conversion.md": {
+    "mtime": 1778661160.84057,
+    "output": "tools/air-fryer/index.html",
+    "excerpt": "Convert oven temperature and time to air fryer temperature and time Oven values: Convert Air fryer result: Cook at for . /* scoped styles here */ function convert() { const ovenTime =\u2026"
   }
 }

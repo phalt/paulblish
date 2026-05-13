@@ -30,6 +30,8 @@
 <body>
   <nav class="site-nav">
     <a href="https://paulwrites.software/" class="nav-title">Paul Writes Software</a>
+<a href="https://paulwrites.software/articles/">Articles</a>
+<a href="https://paulwrites.software/tools/">Tools</a>
 <a href="https://paulwrites.software/all/">All Pages</a>
 
 <div class="social-icons">
@@ -83,7 +85,7 @@
       });
     </script>
     <time datetime="2026-04-02T00:00:00">02 April 2026</time>
-    <span class="reading-time">3 min read</span>
+    <span class="reading-time">4 min read</span>
     
     <div class="tags">
       
@@ -122,10 +124,12 @@
 <hr />
 <h2>More complex markdown things</h2>
 <h3>Code blocks</h3>
+<p>With file titles and line numbers!</p>
 <pre><code class="language-python"><div class="code-block" data-lang="python"><div class="code-header"><span class="code-lang">file.py</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;python code blocks&quot;</span><span class="p">)</span>
 </pre></div></td></tr></table></div>
 </div></code></pre>
 <h3>Mermaid.js diagrams</h3>
+<p>When these are present then Paulblish will import the specific JS script to render it.</p>
 <pre class="mermaid">flowchart TD
     Start(Use hyper-personal software) --&gt; Stop(Enjoy writing software again!)
 
@@ -167,35 +171,60 @@
 <h3>Images</h3>
 <p><img src="https://paulwrites.software/assets/site-logo.jpeg" alt="Image, duh" /></p>
 <p>(check the alt text to see it works too)</p>
-<h2>Frontmatter supported properties</h2>
+<h2>Configuration properties</h2>
+<p>Everything is controlled by Markdown files and the properties below are in <a href="https://www.markdownlang.com/advanced/frontmatter.html">frontmatter</a> format at the top of each file.</p>
 <h3>Home.md</h3>
-<pre><code class="language-yaml"><div class="code-block" data-lang="yaml"><div class="code-header"><span class="code-lang">yaml</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span><span class="nt">cname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">creates a CNAME file with this content, for github pages support</span>
-<span class="nt">avatar</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">relative path to an image will show an icon on the home page</span>
-<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">used in the &lt;meta name=&quot;description&quot;&gt; tag</span>
-<span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">used in the &lt;title&gt; tag</span>
-<span class="nt">bluesky</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">link to a bluesky account will create a social icon</span>
-<span class="nt">github</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">link to a github account will create a github icon</span>
-<span class="nt">email: link to an email will create a mailto</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">link</span>
-</pre></div>
-</div></code></pre>
+<p>Most of the site config is controlled by this file. The content renders as your home page.</p>
+<ul>
+<li><code>cname</code>: creates a CNAME file with this content, for github pages support</li>
+<li><code>avatar</code>: relative path to an image will show an icon on the home page</li>
+<li><code>description</code>: used in the <code>&lt;meta name=&quot;description&quot;&gt;</code> tag</li>
+<li><code>title</code>: used in the <code>&lt;title&gt;</code> tag</li>
+<li><code>bluesky</code>: link to a bluesky account will create a social icon</li>
+<li><code>github</code>: link to a github account will create a github icon</li>
+<li><code>email</code>: link to an email will create a mailto: link</li>
+</ul>
 <h3>Articles</h3>
-<pre><code class="language-yaml"><div class="code-block" data-lang="yaml"><div class="code-header"><span class="code-lang">yaml</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span><span class="nt">author</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Your name</span>
-<span class="nt">created</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">date (also determines the next/prev link order!)</span>
-<span class="nt">permalink</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local path (uses directories to build paths, btw)</span>
-<span class="nt">tags</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">builds static tag pages grouping related articles</span>
-<span class="nt">publish</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bool, determines if the article is generated or not</span>
+<p>Individual articles and tools or (any page for that matter) require these properties to be rendered as pages on your site:</p>
+<ul>
+<li><code>author</code>: Your name</li>
+<li><code>created</code>: date (also determines the next/prev link order!)</li>
+<li><code>permalink</code>: local path (uses directories to build paths, btw)</li>
+<li><code>tags</code>: builds static tag pages grouping related articles</li>
+<li><code>publish</code>: bool, determines if the article is generated or not</li>
+</ul>
+<h2>Custom features</h2>
+<h3>Embedded HTML and JavaScript</h3>
+<p>Paulblish allows you to build simple web tools by writing html and js directly into a markdown file.
+Just make a code block start with <code>html embedded</code> and it'll render in the browser, see this example below:</p>
+<pre><code class="language-html"><div class="html-embed"><button onclick="helloWorld()">Click me!</button>
+<script>
+    function helloWorld() {
+	    alert("Wowza!");
+    }
+</script>
+</div></code></pre>
+<p>The source for this looks like this (minus the <code>embed</code> keyword on the top line):</p>
+<pre><code class="language-html"><div class="code-block" data-lang="html"><div class="code-header"><span class="code-lang">html</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">button</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;helloWorld()&quot;</span><span class="p">&gt;</span>Click me!<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="w">    </span><span class="kd">function</span><span class="w"> </span><span class="nx">helloWorld</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">	    </span><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Wowza!&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </pre></div>
 </div></code></pre>
 <h2>Other features</h2>
 <ul>
-<li>An <a href="https://paulwrites.software/feed.xml">RSS feed</a> is automatically generated for you.</li>
+<li>An <a href="https://paulwrites.software/feed.xml">RSS feed</a> is automatically generated for you.
+<ul>
+<li>Note that only content under <code>articles</code> is included in the RSS feed.</li>
+</ul>
+</li>
 <li>As is a <a href="https://paulwrites.software/robots.txt">robots.txt</a> and the relevant <a href="https://paulwrites.software/sitemap.xml">site map</a>.</li>
 <li>And also a <a href="https://paulwrites.software/foo">404 page</a> which perhaps can be funnier...</li>
 <li>Did you click on any of the <a href="https://paulwrites.software/tags/Software/">tags</a> at the top of the page yet? That's all just static pages too.</li>
 <li>Various open graph and twitter tags are also generated (inspect the source of this page and look in the <code>&lt;head&gt;</code> and you'll see what I mean).</li>
 </ul>
-<h2>I missed something!</h2>
-<p>Let me know, and I'll consider it if it's something I want - just <a href="https://github.com/phalt/paulblish">drop an issue on the project</a></p>
 <hr />
 <hr class="footnotes-sep" />
 <section class="footnotes">
