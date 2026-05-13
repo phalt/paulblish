@@ -536,6 +536,51 @@ pre code {
     display: block;
 }
 
+/* === Mobile nav === */
+.nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text);
+    padding: 0;
+    line-height: 1;
+}
+
+.nav-toggle:hover {
+    color: var(--accent-teal);
+}
+
+@media (max-width: 640px) {
+    .site-nav {
+        flex-wrap: wrap;
+        position: relative;
+    }
+
+    .nav-links {
+        display: none;
+        width: 100%;
+        order: 3;
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 0.75rem 0;
+        border-top: 1px solid var(--border);
+    }
+
+    .site-nav.nav-open .nav-links {
+        display: flex;
+    }
+
+    .site-nav .social-icons {
+        margin-left: auto;
+    }
+
+    .nav-toggle {
+        display: flex;
+        align-items: center;
+    }
+}
+
 .site-footer .social-icons {
     justify-content: center;
     margin-top: 0.5rem;
