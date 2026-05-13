@@ -1,6 +1,6 @@
 [project]
 name = "paulblish"
-version = "0.2.0"
+version = "0.3.0"
 description = "Turn your markdown directory into a static site"
 authors = [{ name = "Paul Hallett", email = "paulandrewhallett@gmail.com" }]
 license = { text = "MIT" }

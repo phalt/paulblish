@@ -32,3 +32,7 @@ serve:  ## Serve the site locally
 rebuild:  ## Rebuild the blog content
 	uv run pb clean
 	uv run pb build -s ../../Documents/main/Writing/ --base-url ""
+
+release:  ## Release a new version
+	uv build
+	uv publish
