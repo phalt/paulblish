@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Clientele 2.0 is here — Paul Writes Software</title>
+  
+  <!-- Open Graph -->
+  <meta property="og:type"        content="article">
+  <meta property="og:site_name"   content="Paul Writes Software">
+  <meta property="og:title"       content="Clientele 2.0 is here">
+  <meta property="og:description" content="Paul Hallett is a software engineer with 15+ years experience working in tech. He builds tools with Python and HTTP. He loves file-over-app, local-first, and smallweb software. He blogs way too much.">
+  <meta property="og:url"         content="https://paulwrites.software/articles/clientele-2/">
+  
+  <meta property="og:image"       content="https://paulwrites.software/assets/site-logo.jpeg">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary">
+  <meta name="twitter:title"       content="Clientele 2.0 is here">
+  <meta name="twitter:description" content="Paul Hallett is a software engineer with 15+ years experience working in tech. He builds tools with Python and HTTP. He loves file-over-app, local-first, and smallweb software. He blogs way too much.">
+  
+  <meta name="twitter:image"       content="https://paulwrites.software/assets/site-logo.jpeg">
+  
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👨🏻‍💻</text></svg>">
+  
+  <link rel="stylesheet" href="https://paulwrites.software/static/style.4cbc0e29.css">
+  <link rel="alternate" type="application/rss+xml" title="Paul Writes Software" href="https://paulwrites.software/feed.xml">
+  
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="https://paulwrites.software/" class="nav-title">Paul Writes Software</a>
+<input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+<div class="nav-links">
+  <a href="https://paulwrites.software/articles/">Articles</a>
+  <a href="https://paulwrites.software/tools/">Tools</a>
+  <a href="https://paulwrites.software/all/">All Pages</a>
+</div>
+
+<div class="social-icons">
+  
+  <a href="https://github.com/phalt" class="social-icon" aria-label="GitHub" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M10.226 17.284c-2.965-.36-5.054-2.493-5.054-5.256 0-1.123.404-2.336 1.078-3.144-.292-.741-.247-2.314.09-2.965.898-.112 2.111.36 2.83 1.01.853-.269 1.752-.404 2.853-.404 1.1 0 1.999.135 2.807.382.696-.629 1.932-1.1 2.83-.988.315.606.36 2.179.067 2.942.72.854 1.101 2 1.101 3.167 0 2.763-2.089 4.852-5.098 5.234.763.494 1.28 1.572 1.28 2.807v2.336c0 .674.561 1.056 1.235.786 4.066-1.55 7.255-5.615 7.255-10.646C23.5 6.188 18.334 1 11.978 1 5.62 1 .5 6.188.5 12.545c0 4.986 3.167 9.12 7.435 10.669.606.225 1.19-.18 1.19-.786V20.63a2.9 2.9 0 0 1-1.078.224c-1.483 0-2.359-.808-2.987-2.313-.247-.607-.517-.966-1.034-1.033-.27-.023-.359-.135-.359-.27 0-.27.45-.471.898-.471.652 0 1.213.404 1.797 1.235.45.651.921.943 1.483.943.561 0 .92-.202 1.437-.719.382-.381.674-.718.944-.943"/>
+    </svg>
+  </a>
+  
+  
+  <a href="https://bsky.app/profile/paulwrites.software" class="social-icon" aria-label="Bluesky" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M5.202 2.857C7.954 4.922 10.913 9.11 12 11.358c1.087-2.247 4.046-6.436 6.798-8.501C20.783 1.366 24 .213 24 3.883c0 .732-.42 6.156-.667 7.037-.856 3.061-3.978 3.842-6.755 3.37 4.854.826 6.089 3.562 3.422 6.299-5.065 5.196-7.28-1.304-7.847-2.97-.104-.305-.152-.448-.153-.327 0-.121-.05.022-.153.327-.568 1.666-2.782 8.166-7.847 2.97-2.667-2.737-1.432-5.473 3.422-6.3-2.777.473-5.899-.308-6.755-3.369C.42 10.04 0 4.615 0 3.883c0-3.67 3.217-2.517 5.202-1.026"/>
+    </svg>
+  </a>
+  
+  
+  <a href="mailto:case@hey.com" class="social-icon" aria-label="Email">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+    </svg>
+  </a>
+  
+</div>
+
+<label for="nav-toggle" class="nav-toggle-label" aria-label="Toggle navigation">
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+    <rect y="3" width="20" height="2" rx="1"/>
+    <rect y="9" width="20" height="2" rx="1"/>
+    <rect y="15" width="20" height="2" rx="1"/>
+  </svg>
+</label>
+  </nav>
+
+  <main>
+    
+<article>
+  <header class="article-meta">
+    <h1>
+      Clientele 2.0 is here
+      <button class="copy-url-btn" title="Copy URL to article" aria-label="Copy URL to article">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+        </svg>
+      </button>
+    </h1>
+    <script>
+      document.querySelector('.copy-url-btn').addEventListener('click', function() {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+          this.classList.add('copied');
+          setTimeout(() => this.classList.remove('copied'), 2000);
+        });
+      });
+    </script>
+    <time datetime="2026-05-22T00:00:00">22 May 2026</time>
+    <span class="reading-time">5 min read</span>
+    
+    <div class="tags">
+      
+        <a href="https://paulwrites.software/tags/Software/" class="tag">Software</a>
+      
+    </div>
+    
+    
+  </header>
+
+  
+  <div class="article-body">
+    <p>I've been neglecting one of my more popular open source projects for a while. Clientele hit 200 stars last week and I figured it was a good time to review the issues, pull requests, contributions, and my original plans for version 2.0.</p>
+<p>Most of what I wanted to implement for version 2.0.0 has now been shipped, along with a bunch of extra little bug fixes and contributions. It is fun revisiting this project from my pre-LLM days and seeing how I can apply LLM support here and there to reduce the time it takes me to add new features.</p>
+<h2>Dependency separation</h2>
+<p>One problem I had with Clientele was that it gained a lot of bloat - particularly when it transitioned from being a CLI code generator (pre-LLM era) to a full blown Django/FastAPI-scale framework for API integrations.</p>
+<p>The appeal of the framework is that you can build neat API integrations without all the fuss of managing the HTTP layer / hydration / serialisation etc, but installing it meant you also had to install a bunch of CLI-related tools like <code>click</code> and <code>rich</code>.</p>
+<p>So I've separated it out into:</p>
+<ul>
+<li><code>clientele</code> will just install the API framework.</li>
+<li><code>clientele[cli]</code> will install the requirements for running the code generator.</li>
+</ul>
+<p>This should make it far nicer to install and use. I also took the opportunity to drop a lot of old code and template files that were used in the version first code generator (the original main function of clientele).</p>
+<h2>Move from HTTPX to HTTPX2.</h2>
+<p>I honestly can't say <a href="https://github.com/encode/httpx/discussions/3784">what's going on with httpx</a>. I feel like I know the author quite well, and I understand they might feel hurt or let down by the community. I genuinely hope they are okay and getting the support they need to feel welcome and safe again in the tech community.</p>
+<p>But I also think their actions are quite drastic, and don't give me confidence in running Clientele on httpx as the core http backend.</p>
+<p>The community has since split two ways. <a href="https://codeberg.org/httpxyz/httpxyz">httpxyz</a> was the first major fork from httpx and quickly merged a whole bunch of pending pull requests. But then the well-respected Pydantic team launched their own fork called <a href="https://github.com/pydantic/httpx2/">httpx2</a> which is also raising ahead with updates.</p>
+<p>It's a busy time, but I'd prefer to be with a well established organisation as the core HTTP backend, so I am going to put my chips in with httpx2.</p>
+<h2>New HTTPbackends</h2>
+<p>On that note... the documentation has had a section on how to write your own HTTPBackend for a while.</p>
+<p>One huge advantage with the abstraction I have built, and the popularity of certain frameworks, is that I can get LLMs to quickly produce a bunch of common backends using popular plugins.</p>
+<p>So backends for <code>requests</code>, <code>aiohttp</code> and <code>niquests</code> are now officially shipped with Clientele.</p>
+<p>You still need to install them explicitly, so installing clientele won't come with a bunch of extra http dependencies</p>
+<p>Here is the code for using the <code>RequestsHTTpBackend</code>. All the others follow an identical interface.</p>
+<pre><code class="language-python"><div class="code-block" data-lang="python"><div class="code-header"><span class="code-lang">api.py</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">clientele.http.requests_backend</span><span class="w"> </span><span class="kn">import</span> <span class="n">RequestsHTTPBackend</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">clientele.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span><span class="p">,</span> <span class="n">client</span>
+
+<span class="c1"># Use RequestsHTTPBackend</span>
+<span class="n">http_backend</span> <span class="o">=</span> <span class="n">RequestsHTTPBackend</span><span class="p">(</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://api.example.com&quot;</span><span class="p">,</span>
+    <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="s2">&quot;Bearer my-token&quot;</span><span class="p">},</span>
+    <span class="n">timeout</span><span class="o">=</span><span class="mf">30.0</span><span class="p">,</span>
+    <span class="n">follow_redirects</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">verify</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">cfg</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">BaseConfig</span><span class="p">(</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://api.example.com&quot;</span><span class="p">,</span>
+    <span class="n">http_backend</span><span class="o">=</span><span class="n">http_backend</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">api</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">APIClient</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">cfg</span><span class="p">)</span>
+
+<span class="nd">@api</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/users/</span><span class="si">{user_id}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_user</span><span class="p">(</span><span class="n">result</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div></code></pre>
+<h2>Drastically better typing support</h2>
+<p>Last time I worked on Clientele the new type checker <code>ty</code> was still new and fresh. It didn't even have plugin support. I had written a <code>mypy</code> plugin to handle the parameter injection paradigm that Clientele uses. Even so, Clientele's use of property injection in functions was <em>weird</em> for type checkers.</p>
+<p>To explain consider this example:</p>
+<pre><code class="language-python"><div class="code-block" data-lang="python"><div class="code-header"><span class="code-lang">api.py</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">clientele</span><span class="w"> </span><span class="kn">import</span> <span class="n">api</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">APIClient</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://pokeapi.co/api/v2/&quot;</span><span class="p">)</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Pokemon</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+
+<span class="nd">@client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/pokemon/</span><span class="si">{id}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_pokemon_name</span><span class="p">(</span><span class="n">result</span><span class="p">:</span> <span class="n">Pokemon</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">name</span>
+    
+<span class="c1"># call the api</span>
+<span class="n">get_pokemon_name</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s2">&quot;Bulbasaur&quot;</span>
+</pre></div>
+</div></code></pre>
+<p>The problem is on the last line of code - calling the <code>get_pokemon_name</code> function without passing the <code>result</code> parameter causes a major issue for type checkers because they do not understand it is injected by the decorated function. They complain and break, saying you need to provide <code>result</code> - even though the decorator does.</p>
+<p>I once again leveraged LLMs to get around this very complex issue with Python, and I am now excited to say that the <code>result</code> and <code>request</code> properties of these functions are fully supported <strong>even without the mypy plugin</strong>. They also work with <code>pyright</code> and <code>ty</code>. This also means that IDE support will work correctly - it won't offer you to option to pass <code>result</code> or <code>request</code> any longer.</p>
+<p>One small side effect of this change is that they <em>must</em> be declared as the first properties of the function. I think that is a minor inconvenience given it is just pure python type hinting to make it work.</p>
+<h2>Configuration tidy up</h2>
+<p>Somewhat related to the points above about HTTPBackends: the <code>BaseConfig</code> model for configuring Clientele has all the <code>httpx</code>-specific bits removed in favour of the HTTPBackend interface pattern. It will also help to clear up what is http configuration and what is clientele-specific configuration.</p>
+<p>This was all legacy from when there was only support for httpx directly.</p>
+<h2>Other changes</h2>
+<p>The <a href="https://github.com/phalt/clientele/blob/main/CHANGELOG.md#200">changelog</a> includes a host of other small changes that made it into 2.0.0 and beyond.</p>
+<p>As always, any feature requests, bug submissions, or contributions, please <a href="https://github.com/phalt/clientele">checkout the github project!</a>.</p>
+
+  </div>
+
+  <nav class="article-nav">
+    <div class="article-nav-prev">
+      
+      <a href="https://paulwrites.software/articles/cyberpunk/">← Older: Man I love Cyberpunk</a>
+      
+    </div>
+    <div class="article-nav-next">
+      
+    </div>
+  </nav>
+</article>
+
+<script>
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('.code-copy-btn');
+    if (!btn) return;
+    var block = btn.closest('.code-block');
+    var pre = block.querySelector('td.code pre') || block.querySelector('pre');
+    navigator.clipboard.writeText(pre.textContent).then(function() {
+      btn.classList.add('copied');
+      setTimeout(function() { btn.classList.remove('copied'); }, 2000);
+    });
+  });
+</script>
+
+
+  </main>
+
+  <footer class="site-footer">
+    <p>Paul Writes Software — built with <a href="https://github.com/phalt/paulblish">Paulblish</a></p>
+    
+<div class="social-icons">
+  
+  <a href="https://github.com/phalt" class="social-icon" aria-label="GitHub" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M10.226 17.284c-2.965-.36-5.054-2.493-5.054-5.256 0-1.123.404-2.336 1.078-3.144-.292-.741-.247-2.314.09-2.965.898-.112 2.111.36 2.83 1.01.853-.269 1.752-.404 2.853-.404 1.1 0 1.999.135 2.807.382.696-.629 1.932-1.1 2.83-.988.315.606.36 2.179.067 2.942.72.854 1.101 2 1.101 3.167 0 2.763-2.089 4.852-5.098 5.234.763.494 1.28 1.572 1.28 2.807v2.336c0 .674.561 1.056 1.235.786 4.066-1.55 7.255-5.615 7.255-10.646C23.5 6.188 18.334 1 11.978 1 5.62 1 .5 6.188.5 12.545c0 4.986 3.167 9.12 7.435 10.669.606.225 1.19-.18 1.19-.786V20.63a2.9 2.9 0 0 1-1.078.224c-1.483 0-2.359-.808-2.987-2.313-.247-.607-.517-.966-1.034-1.033-.27-.023-.359-.135-.359-.27 0-.27.45-.471.898-.471.652 0 1.213.404 1.797 1.235.45.651.921.943 1.483.943.561 0 .92-.202 1.437-.719.382-.381.674-.718.944-.943"/>
+    </svg>
+  </a>
+  
+  
+  <a href="https://bsky.app/profile/paulwrites.software" class="social-icon" aria-label="Bluesky" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M5.202 2.857C7.954 4.922 10.913 9.11 12 11.358c1.087-2.247 4.046-6.436 6.798-8.501C20.783 1.366 24 .213 24 3.883c0 .732-.42 6.156-.667 7.037-.856 3.061-3.978 3.842-6.755 3.37 4.854.826 6.089 3.562 3.422 6.299-5.065 5.196-7.28-1.304-7.847-2.97-.104-.305-.152-.448-.153-.327 0-.121-.05.022-.153.327-.568 1.666-2.782 8.166-7.847 2.97-2.667-2.737-1.432-5.473 3.422-6.3-2.777.473-5.899-.308-6.755-3.369C.42 10.04 0 4.615 0 3.883c0-3.67 3.217-2.517 5.202-1.026"/>
+    </svg>
+  </a>
+  
+  
+  <a href="mailto:case@hey.com" class="social-icon" aria-label="Email">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+    </svg>
+  </a>
+  
+</div>
+
+    <p class="footer-links">
+      <a href="https://paulwrites.software/feed.xml">RSS</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://paulwrites.software/sitemap.xml">Sitemap</a>
+    </p>
+  </footer>
+</body>
+</html>

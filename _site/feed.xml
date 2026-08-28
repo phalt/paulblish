@@ -4,7 +4,21 @@
     <title>Paul Writes Software</title>
     <link>https://paulwrites.software</link>
     <description>Paul Hallett is a software engineer with 15+ years experience working in tech. He builds tools with Python and HTTP. He loves file-over-app, local-first, and smallweb software. He blogs way too much.</description>
-    <lastBuildDate>Wed, 13 May 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 22 May 2026 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Clientele 2.0 is here</title>
+      <link>https://paulwrites.software/articles/clientele-2/</link>
+      <guid>https://paulwrites.software/articles/clientele-2/</guid>
+      <pubDate>Fri, 22 May 2026 00:00:00 +0000</pubDate>
+      <description>I've been neglecting one of my more popular open source projects for a while. Clientele hit 200 stars last week and I figured it was a good time to review the issues, pull requests, contributions,…</description>
+    </item>
+    <item>
+      <title>Man I love Cyberpunk</title>
+      <link>https://paulwrites.software/articles/cyberpunk/</link>
+      <guid>https://paulwrites.software/articles/cyberpunk/</guid>
+      <pubDate>Tue, 19 May 2026 00:00:00 +0000</pubDate>
+      <description>Note: this an an old archived post I am reviving. I like to read over some of my old content and enjoy the speculation I had about the future. This article is littered with predictions and what-ifs…</description>
+    </item>
     <item>
       <title>Turn a single markdown file into your own URL shortener</title>
       <link>https://paulwrites.software/articles/paulias/</link>

@@ -9,6 +9,11 @@
     "output": "articles/pauldot/index.html",
     "excerpt": "I love trying out new tools. The recent explosion in Hyper Personal Software and terminal tooling, catalysed by the rise of LLM coding tools, means I\u2019m installing and trying out new things almost\u2026"
   },
+  "Articles/Clientele 2.0 is here.md": {
+    "mtime": 1779479172.305,
+    "output": "articles/clientele-2/index.html",
+    "excerpt": "I've been neglecting one of my more popular open source projects for a while. Clientele hit 200 stars last week and I figured it was a good time to review the issues, pull requests, contributions,\u2026"
+  },
   "Articles/Clientele Updates.md": {
     "mtime": 1775157831.8728178,
     "output": "articles/clientele-updates/index.html",
@@ -39,8 +44,13 @@
     "output": "articles/life-moves-pretty-fast/index.html",
     "excerpt": "In the immortal words of Ferris Bueller : Life moves pretty fast. If you don't stop and look around once in a while, you could miss it. and boy, has life moved pretty fast since 2019. I've had to\u2026"
   },
+  "Articles/Man I love Cyberpunk.md": {
+    "mtime": 1779193757.586265,
+    "output": "articles/cyberpunk/index.html",
+    "excerpt": "Note: this an an old archived post I am reviving. I like to read over some of my old content and enjoy the speculation I had about the future. This article is littered with predictions and what-ifs\u2026"
+  },
   "Articles/Man I love Toy Cameras.md": {
-    "mtime": 1775157830.8752525,
+    "mtime": 1779193768.4507127,
     "output": "articles/toy-cameras/index.html",
     "excerpt": "\ud83c\udfa7 Listen to this article as a podcast I've done a fair bit of photography in my time. Specifically analog photography. There were two events that really pulled me into the world of photography when I\u2026"
   },
@@ -70,9 +80,9 @@
     "excerpt": "Paul Hallett is a software engineer with 15+ years experience working in tech. He builds tools with Python and HTTP. He loves file-over-app, local-first, and smallweb software. He blogs way too much."
   },
   "Now.md": {
-    "mtime": 1778672852.4581912,
+    "mtime": 1782719335.3178327,
     "output": "now/index.html",
-    "excerpt": "This is my now page . It's where you'll see what I am currently doing with my life. \ud83d\udcc6 Last updated: May 2026 Living The majority of my free time is spent enjoying life with my family - my partner, my\u2026"
+    "excerpt": "This is my now page . It's where you'll see what I am currently doing with my life. \ud83d\udcc6 Last updated: June 2026 Living The majority of my free time is spent enjoying life with my family - my partner,\u2026"
   },
   "Photography/Colour.md": {
     "mtime": 1775311441.651,
@@ -95,12 +105,12 @@
     "excerpt": "Transfer diagram Trading on Generation IV / V You can still trade on older generation DS games. https://pkmnclassic.net/ Obtain old event Pok\u00e9mon You can obtain old event Pok\u00e9mon in Gen IV / V using\u2026"
   },
   "Pokemon/Nintendo Hardware.md": {
-    "mtime": 1766314418.351,
+    "mtime": 1784535593.4286044,
     "output": "pokemon/pokemon/hardware/index.html",
     "excerpt": "Hardware Model Software version Memory Modded Other notes Colour Original 11.17.0-50E 2GB SD N/A My original console Black 2DS XL 11.17.0-50E 32GB SD \u2705 Luma3DS 13.2.1 Purchased second hand in New\u2026"
   },
   "Pokemon/Pokemon Games.md": {
-    "mtime": 1757529754.848999,
+    "mtime": 1787919733.796,
     "output": "pokemon/pokemon/games/index.html",
     "excerpt": "Background In 2019, just ahead of the COVID pandemic, I got nostalgic. I had just moved to New Zealand, and I was unpacking my things when I stumbled upon my original 3DS and some Pok\u00e9mon games. I\u2026"
   },

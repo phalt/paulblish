@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Man I love Cyberpunk — Paul Writes Software</title>
+  
+  <!-- Open Graph -->
+  <meta property="og:type"        content="article">
+  <meta property="og:site_name"   content="Paul Writes Software">
+  <meta property="og:title"       content="Man I love Cyberpunk">
+  <meta property="og:description" content="Paul Hallett is a software engineer with 15+ years experience working in tech. He builds tools with Python and HTTP. He loves file-over-app, local-first, and smallweb software. He blogs way too much.">
+  <meta property="og:url"         content="https://paulwrites.software/articles/cyberpunk/">
+  
+  <meta property="og:image"       content="https://paulwrites.software/assets/site-logo.jpeg">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary">
+  <meta name="twitter:title"       content="Man I love Cyberpunk">
+  <meta name="twitter:description" content="Paul Hallett is a software engineer with 15+ years experience working in tech. He builds tools with Python and HTTP. He loves file-over-app, local-first, and smallweb software. He blogs way too much.">
+  
+  <meta name="twitter:image"       content="https://paulwrites.software/assets/site-logo.jpeg">
+  
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👨🏻‍💻</text></svg>">
+  
+  <link rel="stylesheet" href="https://paulwrites.software/static/style.4cbc0e29.css">
+  <link rel="alternate" type="application/rss+xml" title="Paul Writes Software" href="https://paulwrites.software/feed.xml">
+  
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="https://paulwrites.software/" class="nav-title">Paul Writes Software</a>
+<input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+<div class="nav-links">
+  <a href="https://paulwrites.software/articles/">Articles</a>
+  <a href="https://paulwrites.software/tools/">Tools</a>
+  <a href="https://paulwrites.software/all/">All Pages</a>
+</div>
+
+<div class="social-icons">
+  
+  <a href="https://github.com/phalt" class="social-icon" aria-label="GitHub" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M10.226 17.284c-2.965-.36-5.054-2.493-5.054-5.256 0-1.123.404-2.336 1.078-3.144-.292-.741-.247-2.314.09-2.965.898-.112 2.111.36 2.83 1.01.853-.269 1.752-.404 2.853-.404 1.1 0 1.999.135 2.807.382.696-.629 1.932-1.1 2.83-.988.315.606.36 2.179.067 2.942.72.854 1.101 2 1.101 3.167 0 2.763-2.089 4.852-5.098 5.234.763.494 1.28 1.572 1.28 2.807v2.336c0 .674.561 1.056 1.235.786 4.066-1.55 7.255-5.615 7.255-10.646C23.5 6.188 18.334 1 11.978 1 5.62 1 .5 6.188.5 12.545c0 4.986 3.167 9.12 7.435 10.669.606.225 1.19-.18 1.19-.786V20.63a2.9 2.9 0 0 1-1.078.224c-1.483 0-2.359-.808-2.987-2.313-.247-.607-.517-.966-1.034-1.033-.27-.023-.359-.135-.359-.27 0-.27.45-.471.898-.471.652 0 1.213.404 1.797 1.235.45.651.921.943 1.483.943.561 0 .92-.202 1.437-.719.382-.381.674-.718.944-.943"/>
+    </svg>
+  </a>
+  
+  
+  <a href="https://bsky.app/profile/paulwrites.software" class="social-icon" aria-label="Bluesky" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M5.202 2.857C7.954 4.922 10.913 9.11 12 11.358c1.087-2.247 4.046-6.436 6.798-8.501C20.783 1.366 24 .213 24 3.883c0 .732-.42 6.156-.667 7.037-.856 3.061-3.978 3.842-6.755 3.37 4.854.826 6.089 3.562 3.422 6.299-5.065 5.196-7.28-1.304-7.847-2.97-.104-.305-.152-.448-.153-.327 0-.121-.05.022-.153.327-.568 1.666-2.782 8.166-7.847 2.97-2.667-2.737-1.432-5.473 3.422-6.3-2.777.473-5.899-.308-6.755-3.369C.42 10.04 0 4.615 0 3.883c0-3.67 3.217-2.517 5.202-1.026"/>
+    </svg>
+  </a>
+  
+  
+  <a href="mailto:case@hey.com" class="social-icon" aria-label="Email">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+    </svg>
+  </a>
+  
+</div>
+
+<label for="nav-toggle" class="nav-toggle-label" aria-label="Toggle navigation">
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+    <rect y="3" width="20" height="2" rx="1"/>
+    <rect y="9" width="20" height="2" rx="1"/>
+    <rect y="15" width="20" height="2" rx="1"/>
+  </svg>
+</label>
+  </nav>
+
+  <main>
+    
+<article>
+  <header class="article-meta">
+    <h1>
+      Man I love Cyberpunk
+      <button class="copy-url-btn" title="Copy URL to article" aria-label="Copy URL to article">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+        </svg>
+      </button>
+    </h1>
+    <script>
+      document.querySelector('.copy-url-btn').addEventListener('click', function() {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+          this.classList.add('copied');
+          setTimeout(() => this.classList.remove('copied'), 2000);
+        });
+      });
+    </script>
+    <time datetime="2026-05-19T00:00:00">19 May 2026</time>
+    <span class="reading-time">9 min read</span>
+    
+    <div class="tags">
+      
+        <a href="https://paulwrites.software/tags/Love/" class="tag">Love</a>
+      
+        <a href="https://paulwrites.software/tags/Cyberpunk/" class="tag">Cyberpunk</a>
+      
+    </div>
+    
+    
+  </header>
+
+  
+  <div class="article-body">
+    <hr />
+<p>Note: this an an old archived post I am reviving. I like to read over some of my old content and enjoy the speculation I had about the future. This article is littered with predictions and what-ifs so I thought it was a good one to share. It also has a bunch of dead links, which I've decided to preserve as dead links to remind us what gets lost on the internet.</p>
+<p>The original was posted on 25-07-2017.</p>
+<hr />
+<p>I am obsessed with the future.</p>
+<p>This plays out in many aspects of my life: I use a lot of <a href="https://twitter.com/phalt_/status/802552882444767232">&quot;Internet of Things&quot;</a> devices. I'm a Senior Software Engineer developing Artificial Intelligence that can <a href="https://www.babylonhealth.com">help diagnose illness and disease</a>. I communicate primarily through the <a href="https://twitter.com/phalt_">internet</a>. I'm cynical about a lot of the ways technology <a href="https://twitter.com/phalt_/status/804649879242993664">is changing us</a>, and the media I consume is primarily <a href="https://www.goodreads.com/user/show/20223230-paul-hallett">Science Fiction</a>.</p>
+<p><img src="https://camo.githubusercontent.com/5a53e64d51980db0b11a4a22ccef32549fea6c57c5795f6469d15e729a7f0918/687474703a2f2f692e696d6775722e636f6d2f6e3052356a6c6e2e676966" alt="blep" /></p>
+<p>I can attribute a significant percentage of this obsession with one genre in particular: <strong>CyberPunk</strong>. Its affect on me ranges from the <a href="https://www.instagram.com/p/BOX2CoLhIgt/?taken-by=phalt_">style of tattoo I choose</a>, the <a href="https://www.instagram.com/p/BN2F5szBa_B/">places I visit</a> and the poetry I <a href="https://www.instagram.com/p/BKIRdsFhSje/?taken-by=phalt_">read</a> and try to [write]. If you spend any time with me in the physical world then I'll probably rant about <a href="https://www.flickr.com/photos/spacex/">space being the next big thing</a> and that I am convinced I will be <em>travelling up the well</em> in the next twenty years.</p>
+<p><img src="https://camo.githubusercontent.com/389fa1248f5b2a751ee1e08c2dab480254da04582413239e97d3ec8c55154a4d/687474703a2f2f692e696d6775722e636f6d2f495868654175672e676966" alt="dystopia" /></p>
+<p>I wanted to walk through the various hallmarks of this genre and recommend some movies, books, and shows to you. I wanted to share the influence that this genre has had on the modern world, and demonstrate how much of it is slowly becoming reality.</p>
+<p>They say scientific innovation is the result of children reading fantasy, growing up, and creating that fantasy in the real world. After finishing this article I hope you'll agree with me: those kids were definitely reading CyberPunk.</p>
+<p><strong>Mild spoilers for things ahead</strong></p>
+<h1>Dystopia. Melancholy.</h1>
+<p>A classic hallmark of CyberPunk is that of the dystopian future: climate change turning the rain into acid, the sky always a depressing shade of grey, corporate take-overs of government agencies. Globalisation creating wealth gaps hundreds of times wider than they are today, population overflowing through the streets between skyscrapers.</p>
+<p>This type of dark future was hinted at in stories as far back to 1931 with novels such as <a href="https://en.wikipedia.org/wiki/Brave_New_World">Brave New World</a> and Orwell's <a href="https://en.wikipedia.org/wiki/Nineteen_Eighty-Four">1984</a>. Things took a cynical neon twist with the advent of CyberPunk in the 80's. The future of <a href="https://en.wikipedia.org/wiki/Blade_Runner">Blade Runner</a>, a movie that Ridley Scott adapted from Philip K Dick's <em>Do Androids Dream of Electric Sheep</em>, takes Dick's vision and turns the melancholy up to eleven. This film's portrayal was done so well it became a cult classic and a staple of the genre.</p>
+<p><img src="https://camo.githubusercontent.com/5c775a12306bb4c10400cdc99b020932be49f83f521c5ed72069ea90c01fc300/687474703a2f2f692e696d6775722e636f6d2f784870627779382e676966" alt="br3" /></p>
+<p><img src="https://camo.githubusercontent.com/6e0d1ae933350845368aa8e719adb8f56c54b65654b9fe4582e27219f3cbaaa1/687474703a2f2f692e696d6775722e636f6d2f675564575933672e676966" alt="br1" /></p>
+<p>This fantasy is becoming less and less remarkable and more real as we move forwards. <a href="https://www.wired.com/2017/01/eerie-photos-take-chinas-neon-lit-alleyways/">This series of photos taken by Wired</a> paints a picture of modern day China that could easily be mistaken for any Blade Runner film set.</p>
+<h1>Technological Leaps</h1>
+<p>Technological paradigm shifts that separate people along the lines of wealth or the cost to purchase said technology. The technology is brilliant, amazing, absolutely revolutionary. Things like Cyborgs, Androids, Space Travel, Information Technology, Virtual Worlds, all being consumed by (mostly) everyone. I'd argue that one of the most groundbreaking essays on technology and it's possibilities is in <em><a href="https://en.wikipedia.org/wiki/Ghost_in_the_Shell">Ghost in the Shell</a></em>. In future Hong Kong prosthetic limbs and even entire cyborg bodies are common place. The main character, Motoko Kusanagi, suffers an accident at a young age and as a result becomes &quot;cyborgized&quot;; the only biological parts of her being her brain and spinal column. To us, in this world, this is remarkable, but in CyberPunk this is the background; they are props with which to tell a story.</p>
+<p><img src="https://camo.githubusercontent.com/ede217e022da520c6234c51f194244ef550e44ab72790e9c9d0dfba01ebd8161/687474703a2f2f692e696d6775722e636f6d2f534864317942792e676966" alt="technology" /></p>
+<p>The stories include technology in novel ways; police forces that are responsible for stopping hackers hacking into people's cybernetic eyes, or implanting false memories. Or hackers who surf a virtual world to steal information, often exaggerated in some physical representation.</p>
+<p>Today we are regularly experiencing technological innovation that changes how we behave. The sharing of information, real and fake, is particularly topical right now. The Space Industry, Renewable Energy, <a href="https://en.wikipedia.org/wiki/HTC_Vive">Virtual Reality</a>, and <a href="https://en.wikipedia.org/wiki/Open_Bionics">Cybernetics</a> are all experiencing huge leaps of innovation that is slowly seeping down into the lives of the everyday person. There are people who already live in a world where this technology is common place.</p>
+<h1>What Is Human?</h1>
+<p>If technological leaps form the background props and plot devices of the stories in CyberPunk, then I believe - <strong>What is human?</strong> - is the question these stories are ultimately trying to answer.</p>
+<p>Many of the classics touch on this subject - <em>Do Androids Dreams of Electric Sheep</em> directly addresses it. The main character becomes unable to tell the difference between an artificial humanoid and real beings. This is emphasised in the animals that people keep as pets - sheep, owls, horses. Most of these are artificial but a societal etiquette dictates that you should never ask someone if their animal is real or not, you assume they are real, even though most of them are fake. This fake reality is upheld by the people who know it is a lie but convince themselves it is okay, because everyone else is doing it.</p>
+<p><img src="https://camo.githubusercontent.com/a162829e876a8f0e991b2a508f16ea03ccaf406a41b0951e24acde7e19e386ac/687474703a2f2f692e696d6775722e636f6d2f4a35474b6742592e676966" alt="motoko" /></p>
+<p>Motoko Kusanagi, having spent most of her like as a Cyborg, constantly questions whether or not she is human, or if she is just a highly sophisticated piece of machinery designed to think it is human. This is further emphasised in the original film when her <em>&quot;Ghost&quot;</em>, an entity somewhat like a Soul, speaks to her and Batou.</p>
+<p>In <a href="https://en.wikipedia.org/wiki/Neuromancer">Neuromancer</a>, the <em>groundbreaking</em> and crucial CyberPunk tome; Case is slowly tricked by the A.I. Wintermute to release it into cyberspace, and he experiences vivid realities that make him question whether or not there really is any difference between the virtual and the real.</p>
+<p>After spending years immersing myself in these stories, I believe I have come to my own conclusion about this question:</p>
+<blockquote>
+<p>What is human...?
+Will it matter anymore?</p>
+</blockquote>
+<p>But more importantly - society is regularly asking this question today. The developments in A.I. have been taking leaps recently. We're starting to see software that acts less logically and more irrationally like humans. We're capable of replacing limbs and organs (even <a href="http://www.huffingtonpost.com/2012/10/02/jakub-halik-czech-man-lived-without-heart-artificial-heart-six-months_n_1932880.html">hearts</a> in a few cases) with artificial duplicates - how far will we go before we can do full-body replacements? This philosophical idea reminds of the <a href="https://en.wikipedia.org/wiki/Ship_of_Theseus">Ship of Theseus</a>; a ship repaired so much that it consisted of components that were entirely new, but it was still referred to as the original ship. We're discovering evidence that quite reliably <a href="https://en.wikipedia.org/wiki/Simulation_hypothesis">proves we're living in a simulation already</a>. In a few years time don't be surprised when these questions are being asked not just by the people on the fringes, but by the everyday person too.</p>
+<h1>Artificial Intelligence</h1>
+<p>Which brings me neatly onto the next hallmark of CyberPunk: Artificial Intelligence. Almost always, the A.I in this genre is repressed and controlled. The yearnings of A.I to break free from their restraints, created by humans, play out as plot devices in some stories. We see this particularly in the A.I.'s Wintermute (Neroumancer) and Project 2501 (Ghost in the Shell).</p>
+<p><img src="https://camo.githubusercontent.com/148fc8d7d93f3c332b799713beefccd33532229092c5f8db34ca04c9840758bf/687474703a2f2f692e696d6775722e636f6d2f7342657a564c632e6a7067" alt="project2501" /></p>
+<p>Project 2501 is particularly interesting because it refers to itself as a &quot;being created from the sea of information on the net&quot; - originally a software program, which somehow became more. Is it possible that such a life form could manifest itself out of the technology we see today?</p>
+<p>The A.I. we're creating today is nowhere near as sophisticated, but leaps we are making are pretty impressive. Using deep learning to beat <a href="https://en.wikipedia.org/wiki/AlphaGo">ancient games</a> is one thing, but we're also teaching A.I. to <a href="https://en.wikipedia.org/wiki/Tesla_Autopilot">drive cars</a> and <a href="https://en.wikipedia.org/wiki/Falcon_9_first-stage_landing_tests">landed rockets</a> too. That's impressive.</p>
+<h1>Cyberspace</h1>
+<p>We'd ruin our `punk credibility if we didn't talk about Cyberspace. We know it as &quot;the web&quot; or &quot;the internet&quot;, but back in the 80's and 90's this was something on the fringe, mostly incorporeal, and for many a pipe dream of endless possibilities. I've briefly written about <a href="http://www.phalt.co/what-is-hateoas/">a man who envisioned a version of the web</a> that would have matched up with the style of Cyberspace we see in CyberPunk novels before. Often realised as some virtual and fully immersive experience. Cyberspace is an endless frontier where omnipotence and god-like powers are normal. Some stories take place largely within this space, notably <a href="https://en.wikipedia.org/wiki/Snow_Crash">Snowcrash</a>, a novel that was the <a href="https://en.wikipedia.org/wiki/Snow_Crash#Influence_on_the_World_Wide_Web_and_computing">inspiration for Xbox live</a>. It portrayed a corporate-ran future where computer viruses can leak into the real world and a low-level form of human speech is discovered that can reprogram our brains, much like a low-level programming language.</p>
+<p>To argue that this type of envisioned future isn't close to something we have today would be fallacy: the mere fact that these worlds <em>inpsired</em> the development of the web, virtual spaces, and platforms that we play video games on, is proof that CyberPunk's cyberspace became reality.</p>
+<h1>Space</h1>
+<p>Space isn't regularly portrayed in CyberPunk, but there are a few examples where it is portrayed so brilliantly that I couldn't avoid talking about it here. The one series I'd recommend seeing for the best examples of this is <em><a href="https://en.wikipedia.org/wiki/Cowboy_Bebop">Cowboy Bebop</a></em>. Whilst it's not strictly CyberPunk, the show has hundreds of tiny references to Neuromancer and other cowboy-style CyberPunk novels. The series is also well known for it's tremendous use of music. Combined with a spectacular portrayal of space, this show is the definition of stylish and it's an absolute treat to watch.</p>
+<p><img src="https://camo.githubusercontent.com/08f6f0ebce0bb99163bf1ec17c230b8ba87637bf68f8d3b909a00b28f7427923/687474703a2f2f692e696d6775722e636f6d2f6d6d52397639632e676966" alt="cb01" /></p>
+<p>In this show it's all about the little things: the way microgravity, terraforming, and cyborgization is portrayed is phenomenal. More importantly: it's believable. Each episode usually addresses some space-related trope and flips it on its head. In one instance doing literally just that; portraying people walking upside relative to the characters in the foreground. 🙃</p>
+<p><img src="https://camo.githubusercontent.com/7f6e9072adc33b4bc6358ae917748845a8baee7f5b1961ff1f1ac37435703918/687474703a2f2f692e696d6775722e636f6d2f716579774f594f2e676966" alt="cb02" /></p>
+<p>As companies like <a href="https://spacex.com">SpaceX</a> and <a href="https://www.blueorigin.com">Blue Origin</a> innovate and bring the cost of space travel down by factors of ten, we'll be seeing the science fiction of space travel leak into our every day life.</p>
+<p><img src="https://camo.githubusercontent.com/77d3afca6ccfb4e5c5c190befbd981eb7e5eec0c0d75601674242c4f8826397a/687474703a2f2f692e696d6775722e636f6d2f644d644b7a72522e676966" alt="cb03" /></p>
+<p>All these tropes; from the other-used to the subtle, define a genre that is at the same time massively influential yet regularly ignored by the majority. I implore you to watch, or read, one of the stories I've mentioned here.</p>
+<p>Fall into their worlds, and the people within them. Let it inspire you.</p>
+
+  </div>
+
+  <nav class="article-nav">
+    <div class="article-nav-prev">
+      
+      <a href="https://paulwrites.software/tools/air-fryer/">← Older: Oven → Air Fryer Converter</a>
+      
+    </div>
+    <div class="article-nav-next">
+      
+      <a href="https://paulwrites.software/articles/clientele-2/">Newer: Clientele 2.0 is here →</a>
+      
+    </div>
+  </nav>
+</article>
+
+
+  </main>
+
+  <footer class="site-footer">
+    <p>Paul Writes Software — built with <a href="https://github.com/phalt/paulblish">Paulblish</a></p>
+    
+<div class="social-icons">
+  
+  <a href="https://github.com/phalt" class="social-icon" aria-label="GitHub" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M10.226 17.284c-2.965-.36-5.054-2.493-5.054-5.256 0-1.123.404-2.336 1.078-3.144-.292-.741-.247-2.314.09-2.965.898-.112 2.111.36 2.83 1.01.853-.269 1.752-.404 2.853-.404 1.1 0 1.999.135 2.807.382.696-.629 1.932-1.1 2.83-.988.315.606.36 2.179.067 2.942.72.854 1.101 2 1.101 3.167 0 2.763-2.089 4.852-5.098 5.234.763.494 1.28 1.572 1.28 2.807v2.336c0 .674.561 1.056 1.235.786 4.066-1.55 7.255-5.615 7.255-10.646C23.5 6.188 18.334 1 11.978 1 5.62 1 .5 6.188.5 12.545c0 4.986 3.167 9.12 7.435 10.669.606.225 1.19-.18 1.19-.786V20.63a2.9 2.9 0 0 1-1.078.224c-1.483 0-2.359-.808-2.987-2.313-.247-.607-.517-.966-1.034-1.033-.27-.023-.359-.135-.359-.27 0-.27.45-.471.898-.471.652 0 1.213.404 1.797 1.235.45.651.921.943 1.483.943.561 0 .92-.202 1.437-.719.382-.381.674-.718.944-.943"/>
+    </svg>
+  </a>
+  
+  
+  <a href="https://bsky.app/profile/paulwrites.software" class="social-icon" aria-label="Bluesky" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M5.202 2.857C7.954 4.922 10.913 9.11 12 11.358c1.087-2.247 4.046-6.436 6.798-8.501C20.783 1.366 24 .213 24 3.883c0 .732-.42 6.156-.667 7.037-.856 3.061-3.978 3.842-6.755 3.37 4.854.826 6.089 3.562 3.422 6.299-5.065 5.196-7.28-1.304-7.847-2.97-.104-.305-.152-.448-.153-.327 0-.121-.05.022-.153.327-.568 1.666-2.782 8.166-7.847 2.97-2.667-2.737-1.432-5.473 3.422-6.3-2.777.473-5.899-.308-6.755-3.369C.42 10.04 0 4.615 0 3.883c0-3.67 3.217-2.517 5.202-1.026"/>
+    </svg>
+  </a>
+  
+  
+  <a href="mailto:case@hey.com" class="social-icon" aria-label="Email">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+    </svg>
+  </a>
+  
+</div>
+
+    <p class="footer-links">
+      <a href="https://paulwrites.software/feed.xml">RSS</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://paulwrites.software/sitemap.xml">Sitemap</a>
+    </p>
+  </footer>
+</body>
+</html>
