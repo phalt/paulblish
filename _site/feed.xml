@@ -4,7 +4,14 @@
     <title>Paul Writes Software</title>
     <link>https://paulwrites.software</link>
     <description>Paul Hallett is a software engineer with 15+ years experience working in tech. He builds tools with Python and HTTP. He loves file-over-app, local-first, and smallweb software. He blogs way too much.</description>
-    <lastBuildDate>Fri, 22 May 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 13 Oct 2026 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Markdown files that execute</title>
+      <link>https://paulwrites.software/articles/paulrun/</link>
+      <guid>https://paulwrites.software/articles/paulrun/</guid>
+      <pubDate>Tue, 13 Oct 2026 00:00:00 +0000</pubDate>
+      <description>I keep forgetting how to release my own software. My major project Clientele has a PUBLISHING.md file with every step written down, but I release so rarely that I end up with the file open in one…</description>
+    </item>
     <item>
       <title>Clientele 2.0 is here</title>
       <link>https://paulwrites.software/articles/clientele-2/</link>
