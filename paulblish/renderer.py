@@ -1,6 +1,12 @@
 import re
+from collections.abc import Sequence
 
 from markdown_it import MarkdownIt
+from markdown_it.common.utils import unescapeAll
+from markdown_it.renderer import RendererHTML
+from markdown_it.token import Token
+from markdown_it.utils import EnvType, OptionsDict
+from markupsafe import escape
 from mdit_py_plugins.footnote import footnote_plugin
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
@@ -40,33 +46,63 @@ def _code_header(label: str) -> str:
     )
 
 
-def _highlight(code: str, lang: str, _attrs: str) -> str:
-    """Highlight callback for markdown-it-py fenced code blocks."""
-    if lang == "mermaid":
-        # Pass through as a bare <pre class="mermaid"> for mermaid.js to render client-side
-        from markupsafe import escape
+_EMBED_KEYWORDS = frozenset({"embed", "embedded"})
 
+
+def _is_embed(lang: str, attrs: str) -> bool:
+    """True for ```html embed (and ```html embedded, the spelling used in older docs)."""
+    return lang == "html" and not _EMBED_KEYWORDS.isdisjoint(attrs.split())
+
+
+def _html_embed(code: str, attrs: str) -> str:
+    """Wrap author HTML in the sketch-pad container. The code itself is passed through raw."""
+    label = escape(_parse_title(attrs) or "Tool")
+    return (
+        '<div class="html-embed">'
+        f'<div class="html-embed-bar"><span class="html-embed-label">{label}</span></div>'
+        f'<div class="html-embed-body">{code}</div>'
+        "</div>"
+    )
+
+
+def _highlight(code: str, lang: str, attrs: str) -> str:
+    """Render a fenced block to finished HTML, or return "" to use markdown-it-py's default <pre><code>."""
+    if lang == "mermaid":
+        # Bare <pre class="mermaid"> for mermaid.js to render client-side
         return f'<pre class="mermaid">{escape(code)}</pre>'
-    if lang == "html" and "embed" in (_attrs or ""):
-        # Pass raw HTML through unwrapped — the author opted in explicitly via "embed"
-        return f'<div class="html-embed">{code}</div>'
+    if _is_embed(lang, attrs):
+        # Raw HTML pass-through: the author opted in explicitly via "embed"
+        return _html_embed(code, attrs)
     if not lang:
-        return ""  # markdown-it-py falls back to default <pre><code> rendering
+        return ""
     try:
         lexer = get_lexer_by_name(lang)
     except ClassNotFound:
-        return ""  # unknown language, fall back to default rendering
+        return ""
 
-    attrs = _attrs or ""
-    use_linenos = "linenos" in attrs
     title = _parse_title(attrs)
     label = title if title else lang
-    formatter = _formatter_linenos if use_linenos else _formatter
+    formatter = _formatter_linenos if "linenos" in attrs else _formatter
     highlighted = highlight(code, lexer, formatter)
     return f'<div class="code-block" data-lang="{lang}">{_code_header(label)}{highlighted}</div>'
 
 
-_md = MarkdownIt("commonmark", {"highlight": _highlight}).enable("table")
+def _render_fence(self: RendererHTML, tokens: Sequence[Token], idx: int, options: OptionsDict, env: EnvType) -> str:
+    """Fence rule that returns our blocks as-is.
+
+    markdown-it-py's own fence rule only skips its <pre><code> wrapper when highlight output
+    starts with "<pre", so <div class="html-embed"> and <div class="code-block"> were being
+    nested inside <pre><code>. Owning the rule avoids that.
+    """
+    token = tokens[idx]
+    lang, _, attrs = unescapeAll(token.info).strip().partition(" ")
+    if rendered := _highlight(token.content, lang, attrs):
+        return rendered + "\n"
+    return self.fence(tokens, idx, options, env)
+
+
+_md = MarkdownIt("commonmark").enable("table")
+_md.add_render_rule("fence", _render_fence)
 wikilinks_plugin(_md)
 embeds_plugin(_md)
 highlights_plugin(_md)

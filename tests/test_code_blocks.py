@@ -29,6 +29,16 @@ class TestCodeBlockWrapper:
         article = render(_make_article("```python\nx = 1\n```"))
         assert 'data-lang="python"' in article.body_html
 
+    def test_code_block_not_nested_in_pre_code(self):
+        # Regression: the wrapper div used to sit inside markdown-it-py's <pre><code class="language-python">
+        html = render(_make_article("```python\nx = 1\n```")).body_html
+        assert html.startswith('<div class="code-block"')
+        assert "language-python" not in html
+
+    def test_unknown_language_falls_back_to_escaped_pre_code(self):
+        html = render(_make_article("```notreallylang\n<b>code</b>\n```")).body_html
+        assert html == '<pre><code class="language-notreallylang">&lt;b&gt;code&lt;/b&gt;\n</code></pre>\n'
+
     def test_no_wrapper_for_unknown_language(self):
         article = render(_make_article("```notreallylang\ncode\n```"))
         assert 'class="code-block"' not in article.body_html

@@ -64,6 +64,35 @@ class TestHtmlEmbed:
         # The mermaid CDN script must not appear for non-mermaid pages
         assert "mermaid" not in html or "cdn.jsdelivr.net" not in html
 
+    def test_embed_is_not_wrapped_in_pre_code(self):
+        # Regression: markdown-it-py used to nest the embed inside <pre><code class="language-html">
+        html = render(_make_article(EMBED_BLOCK)).body_html
+        assert html.startswith('<div class="html-embed">')
+        assert "<pre>" not in html
+        assert "language-html" not in html
+
+    def test_embedded_spelling_also_embeds(self):
+        html = render(_make_article("```html embedded\n<p>hi</p>\n```")).body_html
+        assert html.startswith('<div class="html-embed">')
+
+    def test_embed_keyword_must_be_a_whole_word(self):
+        html = render(_make_article('```html title="embedding notes"\n<p>hi</p>\n```')).body_html
+        assert 'class="html-embed"' not in html
+        assert 'data-lang="html"' in html
+
+    def test_embed_has_sketch_pad_structure(self):
+        html = render(_make_article(EMBED_BLOCK)).body_html
+        assert '<div class="html-embed-bar"><span class="html-embed-label">Tool</span></div>' in html
+        assert '<div class="html-embed-body"><form id="test">' in html
+
+    def test_embed_title_becomes_label(self):
+        html = render(_make_article('```html embed title="Air fryer"\n<p>hello</p>\n```')).body_html
+        assert '<span class="html-embed-label">Air fryer</span>' in html
+
+    def test_embed_title_is_escaped(self):
+        html = render(_make_article("```html embed title='<b>x</b>'\n<p>hello</p>\n```")).body_html
+        assert '<span class="html-embed-label">&lt;b&gt;x&lt;/b&gt;</span>' in html
+
     def test_air_fryer_fixture_renders(self):
         """End-to-end: the air fryer converter fixture renders with a working form."""
         fixture = Path(__file__).parent / "fixtures" / "air_fryer_converter.md"
