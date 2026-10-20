@@ -27,7 +27,7 @@
 
   {% if latest_articles %}
   <section class="recent-posts">
-    <h2>Recent Posts</h2>
+    <h2>Recent Articles</h2>
     <ul>
       {% for a in latest_articles %}
       <li><a href="{{ site.base_url }}{{ a.url_path }}">{{ a.title }}</a></li>

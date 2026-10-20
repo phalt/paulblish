@@ -350,8 +350,8 @@ class TestWriteMultiple:
         assert all(p.exists() for p in written)
 
 
-def _make_dated(slug: str, year: int, title: str = "") -> Article:
-    a = _make_article(slug, title=title or slug)
+def _make_dated(slug: str, year: int, title: str = "", path_prefix: str = "") -> Article:
+    a = _make_article(slug, path_prefix=path_prefix, title=title or slug)
     a.date = datetime(year, 1, 1)
     return a
 
@@ -449,19 +449,20 @@ class TestPrevNextTemplate:
 class TestHomeLatestArticles:
     def test_latest_articles_shown_on_home(self, tmp_path):
         home = _make_article("home", is_home=True)
-        a1 = _make_dated("alpha", 2023, title="Alpha Post")
-        a2 = _make_dated("beta", 2022, title="Beta Post")
-        a3 = _make_dated("gamma", 2021, title="Gamma Post")
+        a1 = _make_dated("alpha", 2023, title="Alpha Post", path_prefix="articles")
+        a2 = _make_dated("beta", 2022, title="Beta Post", path_prefix="articles")
+        a3 = _make_dated("gamma", 2021, title="Gamma Post", path_prefix="articles")
         write([home, a1, a2, a3], tmp_path, site=SITE)
         content = (tmp_path / "index.html").read_text()
         assert "recent-posts" in content
+        assert "Recent Articles" in content
         assert "Alpha Post" in content
         assert "Beta Post" in content
         assert "Gamma Post" in content
 
     def test_home_shows_at_most_three_latest(self, tmp_path):
         home = _make_article("home", is_home=True)
-        articles = [_make_dated(f"post-{i}", 2020 + i, title=f"Post {i}") for i in range(5)]
+        articles = [_make_dated(f"post-{i}", 2020 + i, title=f"Post {i}", path_prefix="articles") for i in range(5)]
         write([home] + articles, tmp_path, site=SITE)
         content = (tmp_path / "index.html").read_text()
         # Most recent 3 should appear; oldest 2 should not
@@ -471,35 +472,41 @@ class TestHomeLatestArticles:
         assert "Post 1" not in content
         assert "Post 0" not in content
 
-    def test_home_excludes_tools_from_recent_posts(self, tmp_path):
+    def test_nested_articles_included(self, tmp_path):
         home = _make_article("home", is_home=True)
-        post = _make_dated("post", 2021, title="Real Post")
-        tool = _make_dated("tool", 2023, title="Shiny Tool")
-        tool.path_prefix = "tools"
-        nested_tool = _make_dated("nested-tool", 2024, title="Nested Tool")
-        nested_tool.path_prefix = "tools/converters"
-        write([home, post, tool, nested_tool], tmp_path, site=SITE)
+        post = _make_dated("deep", 2021, title="Deep Article", path_prefix="articles/python")
+        write([home, post], tmp_path, site=SITE)
         content = (tmp_path / "index.html").read_text()
-        assert "Real Post" in content
-        assert "Shiny Tool" not in content
-        assert "Nested Tool" not in content
+        assert "Deep Article" in content
 
-    def test_tools_do_not_take_recent_post_slots(self, tmp_path):
+    def test_only_articles_section_shown(self, tmp_path):
         home = _make_article("home", is_home=True)
-        posts = [_make_dated(f"post-{i}", 2020 + i, title=f"Post {i}") for i in range(3)]
-        tool = _make_dated("tool", 2030, title="Newest Tool")
-        tool.path_prefix = "tools"
+        post = _make_dated("post", 2021, title="Real Article", path_prefix="articles")
+        tool = _make_dated("tool", 2030, title="Shiny Tool", path_prefix="tools")
+        now = _make_dated("now", 2030, title="Now Page")
+        other = _make_dated("team", 2030, title="Pokemon Team", path_prefix="pokemon")
+        write([home, post, tool, now, other], tmp_path, site=SITE)
+        content = (tmp_path / "index.html").read_text()
+        assert "Real Article" in content
+        assert "Shiny Tool" not in content
+        assert "Now Page" not in content
+        assert "Pokemon Team" not in content
+
+    def test_non_articles_do_not_take_slots(self, tmp_path):
+        home = _make_article("home", is_home=True)
+        posts = [_make_dated(f"post-{i}", 2020 + i, title=f"Post {i}", path_prefix="articles") for i in range(3)]
+        tool = _make_dated("tool", 2030, title="Newest Tool", path_prefix="tools")
         write([home, tool] + posts, tmp_path, site=SITE)
         content = (tmp_path / "index.html").read_text()
         assert "Post 0" in content
         assert "Post 1" in content
         assert "Post 2" in content
 
-    def test_home_no_recent_posts_with_only_tools(self, tmp_path):
+    def test_home_no_recent_posts_without_articles_section(self, tmp_path):
         home = _make_article("home", is_home=True)
-        tool = _make_dated("tool", 2023)
-        tool.path_prefix = "tools"
-        write([home, tool], tmp_path, site=SITE)
+        tool = _make_dated("tool", 2023, path_prefix="tools")
+        root = _make_dated("now", 2023)
+        write([home, tool, root], tmp_path, site=SITE)
         content = (tmp_path / "index.html").read_text()
         assert "recent-posts" not in content
 

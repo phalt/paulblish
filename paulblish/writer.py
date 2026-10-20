@@ -76,7 +76,7 @@ def write(
     """
     assign_prev_next(articles)
     latest_articles = sorted(
-        [a for a in articles if not a.is_home and not _in_section(a, "tools")],
+        [a for a in articles if _in_section(a, "articles")],
         key=lambda a: a.date,
         reverse=True,
     )[:3]
