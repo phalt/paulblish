@@ -132,6 +132,6 @@
   "Tools/air-fryer-conversion.md": {
     "mtime": 1778661160.84057,
     "output": "tools/air-fryer/index.html",
-    "excerpt": "Convert oven temperature and time to air fryer temperature and time Oven values: Convert Air fryer result: Cook at for . /* scoped styles here */ function convert() { const ovenTime =\u2026"
+    "excerpt": "Convert oven temperature and time to air fryer temperature and time Tool Oven values: Convert Air fryer result: Cook at for . /* scoped styles here */ function convert() { const ovenTime =\u2026"
   }
 }

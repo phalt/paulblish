@@ -24,7 +24,7 @@
   
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👨🏻‍💻</text></svg>">
   
-  <link rel="stylesheet" href="https://paulwrites.software/static/style.4cbc0e29.css">
+  <link rel="stylesheet" href="https://paulwrites.software/static/style.ac1d6848.css">
   <link rel="alternate" type="application/rss+xml" title="Paul Writes Software" href="https://paulwrites.software/feed.xml">
   
 </head>
@@ -114,7 +114,7 @@
     <p>I keep forgetting how to release my own software. My major project <a href="https://paulwrites.software/articles/clientele-2/">Clientele</a> has a <code>PUBLISHING.md</code> file with every step written down, but I release so rarely that I end up with the file open in one window and a terminal in the other, copying and pasting commands and fat-fingering version numbers. Writing the steps down helped, but it is still tedious to copy and paste - why can't I just execute the file? So, following <a href="https://paulwrites.software/articles/pauldot/">pauldot</a> and <a href="https://paulwrites.software/articles/paulias/">paulias</a>, I built <strong>paulrun</strong>.</p>
 <p>Paul (me). Run(books). 🏃 I think I am getting a bit of psychosis.</p>
 <p>A <code>paulrun</code> runbook is just a markdown file. It reads like normal documentation, renders fine on GitHub, and you can still follow it by hand if you want. Mark a code block with <code>run</code> and <code>paulrun</code> executes it. Inputs get declared once in the frontmatter, checked against a pattern, and filled in wherever a placeholder like <code>&lt;VERSION&gt;</code> appears. And a <code>confirm</code> block pauses for the bits only a person can do, like clicking buttons on GitHub:</p>
-<pre><code class="language-md"><div class="code-block" data-lang="md"><div class="code-header"><span class="code-lang">RELEASING.md</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>---
+<div class="code-block" data-lang="md"><div class="code-header"><span class="code-lang">RELEASING.md</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>---
 title: Release my-package
 inputs:
 <span class="w">  </span><span class="k">-</span><span class="w"> </span>name: VERSION
@@ -140,20 +140,20 @@ git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </
 <span class="s">Create a GitHub release from tag &lt;VERSION&gt;, then come back here.</span>
 <span class="sb">```</span>
 </pre></div>
-</div></code></pre>
-<pre><code class="language-shell"><div class="code-block" data-lang="shell"><div class="code-header"><span class="code-lang">shell</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>uv<span class="w"> </span>tool<span class="w"> </span>install<span class="w"> </span>paulrun
+</div>
+<div class="code-block" data-lang="shell"><div class="code-header"><span class="code-lang">shell</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>uv<span class="w"> </span>tool<span class="w"> </span>install<span class="w"> </span>paulrun
 paulrun<span class="w"> </span>check<span class="w"> </span>RELEASING.md<span class="w">      </span><span class="c1"># find mistakes before anything runs</span>
 paulrun<span class="w"> </span>go<span class="w"> </span>RELEASING.md<span class="w"> </span>--dry<span class="w">   </span><span class="c1"># show every command, run nothing</span>
 paulrun<span class="w"> </span>go<span class="w"> </span>RELEASING.md<span class="w">         </span><span class="c1"># ask for VERSION, then run each step</span>
 </pre></div>
-</div></code></pre>
+</div>
 <p>Once I had a few runbooks working I wanted them <em>everywhere</em>, but not every runbook belongs to a single project. Updating dependencies is the same in every repo I have, and my routine for rebuilding a frontend at work is personal - it doesn't belong in a work repository. So 0.2.0 introduces the <strong>runbook library</strong>: one folder (<code>~/runbooks</code> by default) that holds my whole collection, where every <code>.md</code> file is a book I can run by name from anywhere. To make that work, blocks now run in whichever folder I start <code>paulrun</code> from rather than the folder the runbook lives in, which means one book works on every project:</p>
-<pre><code class="language-shell"><div class="code-block" data-lang="shell"><div class="code-header"><span class="code-lang">shell</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>paulrun<span class="w"> </span>books<span class="w">             </span><span class="c1"># see what&#39;s in my collection 📚</span>
+<div class="code-block" data-lang="shell"><div class="code-header"><span class="code-lang">shell</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>paulrun<span class="w"> </span>books<span class="w">             </span><span class="c1"># see what&#39;s in my collection 📚</span>
 <span class="nb">cd</span><span class="w"> </span>~/code/clientele
 paulrun<span class="w"> </span>go<span class="w"> </span>update-deps<span class="w">    </span><span class="c1"># run a book from my library, right here</span>
 paulrun<span class="w"> </span>go<span class="w">                </span><span class="c1"># forgot the name? pick from a list</span>
 </pre></div>
-</div></code></pre>
+</div>
 <p>And of course, I dogfood all of it. <code>paulrun</code> releases itself with its own <a href="https://github.com/phalt/paulrun/blob/main/PUBLISHING.md"><code>PUBLISHING.md</code></a>, which checks I'm on an up-to-date <code>main</code> with the changelog ready, then runs the tests, bumps the version, tags, deploys the docs and publishes to PyPI.</p>
 <p>The <a href="https://phalt.github.io/paulrun/">docs are here</a>, the code is <a href="https://github.com/phalt/paulrun">on GitHub</a>, and it's MIT licensed - so as always, fork away. 🏃‍♂️‍➡️</p>
 

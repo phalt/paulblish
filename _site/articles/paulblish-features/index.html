@@ -24,7 +24,7 @@
   
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👨🏻‍💻</text></svg>">
   
-  <link rel="stylesheet" href="https://paulwrites.software/static/style.4cbc0e29.css">
+  <link rel="stylesheet" href="https://paulwrites.software/static/style.ac1d6848.css">
   <link rel="alternate" type="application/rss+xml" title="Paul Writes Software" href="https://paulwrites.software/feed.xml">
   
   <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"; mermaid.initialize({startOnLoad:true});</script>
@@ -138,9 +138,9 @@
 <h2>More complex markdown things</h2>
 <h3>Code blocks</h3>
 <p>With file titles and line numbers!</p>
-<pre><code class="language-python"><div class="code-block" data-lang="python"><div class="code-header"><span class="code-lang">file.py</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;python code blocks&quot;</span><span class="p">)</span>
+<div class="code-block" data-lang="python"><div class="code-header"><span class="code-lang">file.py</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;python code blocks&quot;</span><span class="p">)</span>
 </pre></div></td></tr></table></div>
-</div></code></pre>
+</div>
 <h3>Mermaid.js diagrams</h3>
 <p>When these are present then Paulblish will import the specific JS script to render it.</p>
 <pre class="mermaid">flowchart TD
@@ -211,22 +211,22 @@
 <h3>Embedded HTML and JavaScript</h3>
 <p>Paulblish allows you to build simple web tools by writing html and js directly into a markdown file.
 Just make a code block start with <code>html embedded</code> and it'll render in the browser, see this example below:</p>
-<pre><code class="language-html"><div class="html-embed"><button onclick="helloWorld()">Click me!</button>
+<div class="html-embed"><div class="html-embed-bar"><span class="html-embed-label">Tool</span></div><div class="html-embed-body"><button onclick="helloWorld()">Click me!</button>
 <script>
     function helloWorld() {
 	    alert("Wowza!");
     }
 </script>
-</div></code></pre>
+</div></div>
 <p>The source for this looks like this (minus the <code>embed</code> keyword on the top line):</p>
-<pre><code class="language-html"><div class="code-block" data-lang="html"><div class="code-header"><span class="code-lang">html</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">button</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;helloWorld()&quot;</span><span class="p">&gt;</span>Click me!<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<div class="code-block" data-lang="html"><div class="code-header"><span class="code-lang">html</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">button</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;helloWorld()&quot;</span><span class="p">&gt;</span>Click me!<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
 <span class="w">    </span><span class="kd">function</span><span class="w"> </span><span class="nx">helloWorld</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">	    </span><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Wowza!&quot;</span><span class="p">);</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </pre></div>
-</div></code></pre>
+</div>
 <h2>Other features</h2>
 <ul>
 <li>An <a href="https://paulwrites.software/feed.xml">RSS feed</a> is automatically generated for you.

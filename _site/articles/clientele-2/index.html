@@ -24,7 +24,7 @@
   
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👨🏻‍💻</text></svg>">
   
-  <link rel="stylesheet" href="https://paulwrites.software/static/style.4cbc0e29.css">
+  <link rel="stylesheet" href="https://paulwrites.software/static/style.ac1d6848.css">
   <link rel="alternate" type="application/rss+xml" title="Paul Writes Software" href="https://paulwrites.software/feed.xml">
   
 </head>
@@ -131,7 +131,7 @@
 <p>So backends for <code>requests</code>, <code>aiohttp</code> and <code>niquests</code> are now officially shipped with Clientele.</p>
 <p>You still need to install them explicitly, so installing clientele won't come with a bunch of extra http dependencies</p>
 <p>Here is the code for using the <code>RequestsHTTpBackend</code>. All the others follow an identical interface.</p>
-<pre><code class="language-python"><div class="code-block" data-lang="python"><div class="code-header"><span class="code-lang">api.py</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">clientele.http.requests_backend</span><span class="w"> </span><span class="kn">import</span> <span class="n">RequestsHTTPBackend</span>
+<div class="code-block" data-lang="python"><div class="code-header"><span class="code-lang">api.py</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">clientele.http.requests_backend</span><span class="w"> </span><span class="kn">import</span> <span class="n">RequestsHTTPBackend</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">clientele.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span><span class="p">,</span> <span class="n">client</span>
 
 <span class="c1"># Use RequestsHTTPBackend</span>
@@ -154,11 +154,11 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">get_user</span><span class="p">(</span><span class="n">result</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
     <span class="k">return</span> <span class="n">result</span>
 </pre></div>
-</div></code></pre>
+</div>
 <h2>Drastically better typing support</h2>
 <p>Last time I worked on Clientele the new type checker <code>ty</code> was still new and fresh. It didn't even have plugin support. I had written a <code>mypy</code> plugin to handle the parameter injection paradigm that Clientele uses. Even so, Clientele's use of property injection in functions was <em>weird</em> for type checkers.</p>
 <p>To explain consider this example:</p>
-<pre><code class="language-python"><div class="code-block" data-lang="python"><div class="code-header"><span class="code-lang">api.py</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">clientele</span><span class="w"> </span><span class="kn">import</span> <span class="n">api</span>
+<div class="code-block" data-lang="python"><div class="code-header"><span class="code-lang">api.py</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">clientele</span><span class="w"> </span><span class="kn">import</span> <span class="n">api</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">APIClient</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://pokeapi.co/api/v2/&quot;</span><span class="p">)</span>
@@ -174,7 +174,7 @@
 <span class="n">get_pokemon_name</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="s2">&quot;Bulbasaur&quot;</span>
 </pre></div>
-</div></code></pre>
+</div>
 <p>The problem is on the last line of code - calling the <code>get_pokemon_name</code> function without passing the <code>result</code> parameter causes a major issue for type checkers because they do not understand it is injected by the decorated function. They complain and break, saying you need to provide <code>result</code> - even though the decorator does.</p>
 <p>I once again leveraged LLMs to get around this very complex issue with Python, and I am now excited to say that the <code>result</code> and <code>request</code> properties of these functions are fully supported <strong>even without the mypy plugin</strong>. They also work with <code>pyright</code> and <code>ty</code>. This also means that IDE support will work correctly - it won't offer you to option to pass <code>result</code> or <code>request</code> any longer.</p>
 <p>One small side effect of this change is that they <em>must</em> be declared as the first properties of the function. I think that is a minor inconvenience given it is just pure python type hinting to make it work.</p>

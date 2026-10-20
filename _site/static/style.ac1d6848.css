@@ -710,3 +710,197 @@ mark {
     border-radius: 2px;
     padding: 0 2px;
 }
+
+/* === HTML embeds (```html embed): a sketch pad for little tools === */
+.html-embed {
+    --pad-line: color-mix(in srgb, var(--accent-teal) 10%, transparent);
+    --pad-edge: #3a3a48;
+    --pad-shadow: color-mix(in srgb, var(--accent-amber) 40%, transparent);
+    margin: 2rem 0;
+    border: 2px solid var(--pad-edge);
+    border-radius: 6px;
+    background-color: var(--surface);
+    /* graph paper */
+    background-image:
+        linear-gradient(var(--pad-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--pad-line) 1px, transparent 1px);
+    background-size: 22px 22px;
+    background-position: -1px -1px;
+    box-shadow: 6px 6px 0 var(--pad-shadow);
+    overflow: hidden;
+}
+
+/* Binding strip: label on the left, punched holes filling the rest */
+.html-embed-bar {
+    display: flex;
+    align-items: stretch;
+    gap: 0.5rem;
+    min-height: 2.25rem;
+    padding: 0 0.75rem;
+    background: color-mix(in srgb, var(--surface) 55%, var(--pad-edge));
+    border-bottom: 2px solid var(--pad-edge);
+}
+
+.html-embed-bar::after {
+    content: "";
+    flex: 1;
+    /* "space" only ever draws whole holes, so none get clipped at the edges */
+    background: radial-gradient(circle, var(--bg) 0 4px, transparent 5px) 0 50% / 26px 100% space no-repeat;
+}
+
+.html-embed-label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    color: var(--accent-amber);
+}
+
+.html-embed-label::before {
+    content: "✎";
+}
+
+.html-embed-body {
+    display: flow-root;
+    padding: 1.25rem 1.5rem 1.5rem;
+}
+
+/*
+ * Base styles for whatever the author puts in the pad. :where() keeps specificity at
+ * zero so any class or id selector in the embed's own <style> wins without a fight.
+ */
+.html-embed-body :where(h2, h3, h4):first-child {
+    margin-top: 0;
+}
+
+.html-embed-body :where(p):last-child,
+.html-embed-body :where(form, div) > :where(p):last-child {
+    margin-bottom: 0;
+}
+
+.html-embed-body :where(label) {
+    display: block;
+    margin: 1rem 0 0.4rem;
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    color: var(--text-bright);
+}
+
+.html-embed-body
+    :where(
+        input:not([type="checkbox"], [type="radio"], [type="range"], [type="color"], [type="button"], [type="submit"], [type="reset"]),
+        select,
+        textarea
+    ) {
+    display: block;
+    width: 100%;
+    max-width: 22rem;
+    min-height: 3.25rem;
+    margin: 0.4rem 0;
+    padding: 0.6rem 0.9rem;
+    font-family: var(--font-heading);
+    font-size: 1.15rem; /* >= 16px so iOS doesn't zoom on focus */
+    color: var(--text-bright);
+    background: var(--bg);
+    border: 2px solid var(--pad-edge);
+    border-radius: 4px;
+}
+
+.html-embed-body :where(input, select, textarea)::placeholder {
+    color: var(--text);
+    opacity: 0.55;
+}
+
+.html-embed-body :where(input, select, textarea):focus-visible {
+    outline: 3px solid var(--accent-amber);
+    outline-offset: 2px;
+    border-color: var(--accent-amber);
+}
+
+.html-embed-body :where(input[type="checkbox"], input[type="radio"]) {
+    width: 1.4rem;
+    height: 1.4rem;
+    accent-color: var(--accent-amber);
+    vertical-align: middle;
+}
+
+.html-embed-body :where(input[type="range"]) {
+    width: 100%;
+    max-width: 22rem;
+    height: 2.5rem;
+    accent-color: var(--accent-amber);
+}
+
+.html-embed-body :where(button, input[type="button"], input[type="submit"], input[type="reset"]) {
+    min-height: 3.25rem;
+    min-width: 10rem;
+    margin: 1rem 0.5rem 1rem 0;
+    padding: 0.75rem 1.5rem;
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: bold;
+    color: var(--bg);
+    background: var(--accent-amber);
+    border: 2px solid var(--accent-amber);
+    border-radius: 4px;
+    box-shadow: 4px 4px 0 var(--accent-rose);
+    cursor: pointer;
+    touch-action: manipulation; /* no double-tap zoom delay */
+}
+
+.html-embed-body :where(button, input[type="button"], input[type="submit"], input[type="reset"]):hover {
+    filter: brightness(1.1);
+}
+
+.html-embed-body :where(button, input[type="button"], input[type="submit"], input[type="reset"]):active {
+    transform: translate(3px, 3px);
+    box-shadow: 1px 1px 0 var(--accent-rose);
+}
+
+.html-embed-body :where(button, input[type="button"], input[type="submit"], input[type="reset"]):focus-visible {
+    outline: 3px solid var(--text-bright);
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .html-embed-body :where(button, input[type="button"], input[type="submit"], input[type="reset"]) {
+        transition:
+            transform 0.08s ease-out,
+            box-shadow 0.08s ease-out;
+    }
+}
+
+/* Results: use <output> (screen readers announce changes) or class="result" */
+.html-embed-body :where(output, .result) {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--accent-amber);
+}
+
+@media (max-width: 640px) {
+    .html-embed {
+        margin: 1.5rem 0;
+        box-shadow: 4px 4px 0 var(--pad-shadow);
+    }
+
+    .html-embed-body {
+        padding: 1rem 1rem 1.25rem;
+    }
+
+    .html-embed-body
+        :where(
+            input:not([type="checkbox"], [type="radio"], [type="color"], [type="button"], [type="submit"], [type="reset"]),
+            select,
+            textarea,
+            button,
+            input[type="button"],
+            input[type="submit"],
+            input[type="reset"]
+        ) {
+        width: 100%;
+        max-width: none;
+        margin-right: 0;
+    }
+}

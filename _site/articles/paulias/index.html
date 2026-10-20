@@ -24,7 +24,7 @@
   
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👨🏻‍💻</text></svg>">
   
-  <link rel="stylesheet" href="https://paulwrites.software/static/style.4cbc0e29.css">
+  <link rel="stylesheet" href="https://paulwrites.software/static/style.ac1d6848.css">
   <link rel="alternate" type="application/rss+xml" title="Paul Writes Software" href="https://paulwrites.software/feed.xml">
   
 </head>
@@ -133,7 +133,7 @@
 <p>If we combine this desire with the realisation I had earlier about LLMs being able to build a lot of the scaffolding for stuff like this now, then you can start to see how this idea came around.</p>
 <p>I also had another idea I wanted to try: could I make this configurable with a <strong>single markdown file</strong> and have it be a <strong>static website</strong>? That would be ideal for me as it would fit my <a href="https://paulwrites.software/articles/hyps/">Hyper Personal Software</a> manifesto.</p>
 <p>URL redirection is easy with static pages, they look like this:</p>
-<pre><code class="language-html"><div class="code-block" data-lang="html"><div class="code-header"><span class="code-lang">index.html</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<div class="code-block" data-lang="html"><div class="code-header"><span class="code-lang">index.html</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;utf-8&quot;</span><span class="p">&gt;</span>
@@ -146,7 +146,7 @@
 <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://github.com/phalt&quot;</span><span class="p">&gt;</span>Redirecting to https://github.com/phalt<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </pre></div>
-</div></code></pre>
+</div>
 <p>The key part is the <code>&lt;script&gt;</code> which triggers a <a href="https://developer.mozilla.org/en-US/docs/Web/API/Location/replace">location.replace</a>. The <code>anchor</code> tag is there to support people who do not have JavaScript enabled. We've also got the <code>canonical</code> link here to help search engines understand what these pages are.</p>
 <div class="callout callout-faq" data-callout="faq">
 <div class="callout-title">❔Is this how other URL shorteners work?</div>
@@ -156,7 +156,7 @@
 </div>
 <p>The static site portion of my goal is done, now how is the &quot;configured from a single markdown file&quot; goal going to be achieved?</p>
 <p><a href="frontmatter.codes/docs/markdown">Frontmatter</a>, basically:</p>
-<pre><code class="language-md"><div class="code-block" data-lang="md"><div class="code-header"><span class="code-lang">paulias.md</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>---
+<div class="code-block" data-lang="md"><div class="code-header"><span class="code-lang">paulias.md</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>---
 repo: phalt/paulias
 cname: paulias.dev
 branch: main
@@ -170,7 +170,7 @@ about: &quot;Hello. I am [<span class="nt">Paul Hallett</span>](<span class="na"
 [<span class="nl">bsky</span>]: <span class="na">https://bsky.app/profile/paulwrites.software</span>
 [<span class="nl">pauldot</span>]: <span class="na">https://paulwrites.software/articles/pauldot</span>
 </pre></div>
-</div></code></pre>
+</div>
 <p>All the configuration I need for my URL shortener is frontmatter properties. Most of them are just content for the landing page (because if you're like me and you see a web address, you always wonder what is on the <code>/</code> path).</p>
 <p>The three most important ones are:</p>
 <ul>
@@ -180,9 +180,9 @@ about: &quot;Hello. I am [<span class="nt">Paul Hallett</span>](<span class="na"
 </ul>
 <p>The very last thing I needed was a way to track the look up between the short link -&gt; redirect link.</p>
 <p>I settled on this format:</p>
-<pre><code class="language-md"><div class="code-block" data-lang="md"><div class="code-header"><span class="code-lang">md</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>[short] -&gt; https://destination.com
+<div class="code-block" data-lang="md"><div class="code-header"><span class="code-lang">md</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>[short] -&gt; https://destination.com
 </pre></div>
-</div></code></pre>
+</div>
 <p>This would translate to the <code>/short</code> path on my website, and redirect to <code>destination.com</code>.</p>
 <p>This format is already an <a href="https://www.markdownguide.org/basic-syntax/#reference-style-links">established part of markdown syntax</a> so not some silly made up format that I invented.</p>
 <h2>Okay, what's the tool and how does it work?</h2>
@@ -192,11 +192,11 @@ about: &quot;Hello. I am [<span class="nt">Paul Hallett</span>](<span class="na"
 <p>Paulias works a bit like other static site generators - you install the CLI tool, then use it within a git repository to generate the html pages.</p>
 <h3>Installation</h3>
 <p>Paulias is available as a <a href="https://pypi.org/project/paulias/">pypi package</a> and I recommend installing it with <a href="https://docs.astral.sh/uv/getting-started/installation/">uv</a>:</p>
-<pre><code class="language-shell"><div class="code-block" data-lang="shell"><div class="code-header"><span class="code-lang">shell</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>uv<span class="w"> </span>tool<span class="w"> </span>install<span class="w"> </span>paulias
+<div class="code-block" data-lang="shell"><div class="code-header"><span class="code-lang">shell</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>uv<span class="w"> </span>tool<span class="w"> </span>install<span class="w"> </span>paulias
 </pre></div>
-</div></code></pre>
+</div>
 <p>Confirm it works:</p>
-<pre><code class="language-shell"><div class="code-block" data-lang="shell"><div class="code-header"><span class="code-lang">shell</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>&gt;<span class="w"> </span>paulias
+<div class="code-block" data-lang="shell"><div class="code-header"><span class="code-lang">shell</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>&gt;<span class="w"> </span>paulias
 Usage:<span class="w"> </span>paulias<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>COMMAND<span class="w"> </span><span class="o">[</span>ARGS<span class="o">]</span>...
 
 <span class="w">  </span>______<span class="w">           </span>_<span class="w"> </span>_
@@ -208,14 +208,14 @@ Usage:<span class="w"> </span>paulias<span class="w"> </span><span class="o">[</
 
 <span class="w">  </span>Paulias.<span class="w"> </span>Version:<span class="w"> </span><span class="m">0</span>.1.0
 </pre></div>
-</div></code></pre>
+</div>
 <h3>Set up and adding links</h3>
 <p>Within your git repo, start by running <code>paulias init</code> to create a new <code>paulias.md</code> file:</p>
-<pre><code class="language-sh"><div class="code-block" data-lang="sh"><div class="code-header"><span class="code-lang">sh</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>paulias<span class="w"> </span>init
+<div class="code-block" data-lang="sh"><div class="code-header"><span class="code-lang">sh</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>paulias<span class="w"> </span>init
 </pre></div>
-</div></code></pre>
+</div>
 <p>Paulias will tell you what to do next when you run this:</p>
-<pre><code class="language-shell"><div class="code-block" data-lang="shell"><div class="code-header"><span class="code-lang">shell</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>&gt;<span class="w"> </span>paulias<span class="w"> </span>init
+<div class="code-block" data-lang="shell"><div class="code-header"><span class="code-lang">shell</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>&gt;<span class="w"> </span>paulias<span class="w"> </span>init
 ✓<span class="w"> </span>Wrote<span class="w"> </span>paulias.md.
 
 Next<span class="w"> </span>steps:
@@ -223,24 +223,24 @@ Next<span class="w"> </span>steps:
 <span class="w">  </span><span class="m">2</span>.<span class="w"> </span>Run<span class="w"> </span>paulias<span class="w"> </span>add<span class="w"> </span>&lt;path&gt;<span class="w"> </span>&lt;url&gt;<span class="w"> </span>to<span class="w"> </span>add<span class="w"> </span>shortlinks.
 <span class="w">  </span><span class="m">3</span>.<span class="w"> </span>Run<span class="w"> </span>paulias<span class="w"> </span>deploy<span class="w"> </span>to<span class="w"> </span>build<span class="w"> </span>and<span class="w"> </span>publish.
 </pre></div>
-</div></code></pre>
+</div>
 <p>Once you've modified the file you don't need to modify the file directly, you can use CLI commands to do everything:</p>
-<pre><code class="language-sh"><div class="code-block" data-lang="sh"><div class="code-header"><span class="code-lang">sh</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>&gt;<span class="w"> </span>paulias<span class="w"> </span>add<span class="w"> </span>gh<span class="w"> </span>https://github.com/phalt
+<div class="code-block" data-lang="sh"><div class="code-header"><span class="code-lang">sh</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>&gt;<span class="w"> </span>paulias<span class="w"> </span>add<span class="w"> </span>gh<span class="w"> </span>https://github.com/phalt
 ✓<span class="w"> </span>Added<span class="w"> </span>:<span class="w"> </span>https://github.com/phalt
 <span class="w">  </span>Run<span class="w"> </span>paulias<span class="w"> </span>deploy<span class="w"> </span>to<span class="w"> </span>publish.
 </pre></div>
-</div></code></pre>
+</div>
 <p>Links are validated to make sure you don't overwrite an existing link, and that the redirect path is a proper URL.</p>
 <p>To delete a link just run <code>paulias delete PATH</code>.</p>
 <p>At any time you can run <code>paulias list</code> to see what short links you have:</p>
-<pre><code class="language-shell"><div class="code-block" data-lang="shell"><div class="code-header"><span class="code-lang">shell</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>&gt;<span class="w"> </span>paulias<span class="w"> </span>list
+<div class="code-block" data-lang="shell"><div class="code-header"><span class="code-lang">shell</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>&gt;<span class="w"> </span>paulias<span class="w"> </span>list
 My<span class="w"> </span>shortlinks<span class="w">  </span><span class="o">(</span><span class="m">2</span><span class="w"> </span>entries,<span class="w"> </span>deploying<span class="w"> </span>to<span class="w"> </span>paulias.dev<span class="o">)</span>
 
 short<span class="w">      </span>target
 gh<span class="w">         </span>https://github.com/phalt
 me<span class="w">         </span>https://paulwrites.software
 </pre></div>
-</div></code></pre>
+</div>
 <div class="callout callout-faq" data-callout="faq">
 <div class="callout-title">🤩 It can also be a CLI bookmark tool!</div>
 <div class="callout-body">
@@ -255,10 +255,10 @@ me<span class="w">         </span>https://paulwrites.software
 <li>Configure your CNAME properly so it matches (if you're using a CNAME).</li>
 </ol>
 <p>Once that is done, <code>paulias deploy</code> will build and then push the changes for you.</p>
-<pre><code class="language-shell"><div class="code-block" data-lang="shell"><div class="code-header"><span class="code-lang">shell</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>&gt;<span class="w"> </span>paulias<span class="w"> </span>deploy
+<div class="code-block" data-lang="shell"><div class="code-header"><span class="code-lang">shell</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>&gt;<span class="w"> </span>paulias<span class="w"> </span>deploy
 ✓<span class="w"> </span>Deployed<span class="w"> </span><span class="m">5</span><span class="w"> </span>shortlinks<span class="w"> </span>→<span class="w"> </span>paulias.dev
 </pre></div>
-</div></code></pre>
+</div>
 <p>There is also a <code>paulias serve</code> command if you want to run the site locally to test it out.</p>
 <h2>Wrapping up</h2>
 <p>That's it! You now have a statically hosted URL shortener!</p>

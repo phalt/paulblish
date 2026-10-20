@@ -24,7 +24,7 @@
   
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👨🏻‍💻</text></svg>">
   
-  <link rel="stylesheet" href="https://paulwrites.software/static/style.4cbc0e29.css">
+  <link rel="stylesheet" href="https://paulwrites.software/static/style.ac1d6848.css">
   <link rel="alternate" type="application/rss+xml" title="Paul Writes Software" href="https://paulwrites.software/feed.xml">
   
 </head>
@@ -173,13 +173,13 @@
 </code></pre>
 <p>Everything is plain TOML. The bootstrap.sh is just a script I can curl when I want to set up a new computer.</p>
 <p>The workflow is the bit that actually matters to me though:</p>
-<pre><code class="language-shell"><div class="code-block" data-lang="shell"><div class="code-header"><span class="code-lang">shell</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>pauldot<span class="w"> </span><span class="nb">alias</span><span class="w"> </span>add<span class="w"> </span>gs<span class="w"> </span><span class="s2">&quot;git status&quot;</span><span class="w">   </span><span class="c1"># no opening .zshrc</span>
+<div class="code-block" data-lang="shell"><div class="code-header"><span class="code-lang">shell</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>pauldot<span class="w"> </span><span class="nb">alias</span><span class="w"> </span>add<span class="w"> </span>gs<span class="w"> </span><span class="s2">&quot;git status&quot;</span><span class="w">   </span><span class="c1"># no opening .zshrc</span>
 pauldot<span class="w"> </span>tool<span class="w"> </span>add<span class="w">                    </span><span class="c1"># interactive, writes to tools.toml</span>
 pauldot<span class="w"> </span>apply<span class="w">                       </span><span class="c1"># reconcile this machine</span>
 pauldot<span class="w"> </span>sync<span class="w">                        </span><span class="c1"># pull remote, push local</span>
 pauldot<span class="w"> </span>profile<span class="w"> </span><span class="nb">set</span><span class="w"> </span>personal<span class="w">        </span><span class="c1"># swap context</span>
 </pre></div>
-</div></code></pre>
+</div>
 <p>That’s basically it. Four commands I can use daily, plus <code>status</code> and <code>doctor</code> for when I forget the workflow and need to know where I am at.</p>
 <h2>How it works</h2>
 <p>Pauldot compiles a <code>.zshrc</code> file from the files in the configuration directory.</p>
@@ -190,14 +190,14 @@ pauldot<span class="w"> </span>profile<span class="w"> </span><span class="nb">s
 <li>Installation bash commands for installing across both MacOS and Linux</li>
 <li>Update commands too.</li>
 </ul>
-<pre><code class="language-Toml"><div class="code-block" data-lang="Toml"><div class="code-header"><span class="code-lang">tools.toml</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span><span class="k">[[tool]]</span>
+<div class="code-block" data-lang="Toml"><div class="code-header"><span class="code-lang">tools.toml</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span><span class="k">[[tool]]</span>
 <span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ripgrep&quot;</span>
 <span class="n">check</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;command -v rg&quot;</span>
 <span class="n">install</span><span class="p">.</span><span class="n">macos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;brew install ripgrep&quot;</span>
 <span class="n">update</span><span class="p">.</span><span class="n">macos</span><span class="w"> </span><span class="o">=</span><span class="s2">&quot;brew upgrade ripgrep&quot;</span>
 <span class="n">install</span><span class="p">.</span><span class="n">linux</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;sudo apt install ripgrep&quot;</span>
 </pre></div>
-</div></code></pre>
+</div>
 <p>So it basically tracks the bash scripts you run to install it. For example - most of the macOS ones are just brew commands.</p>
 <p>A local config file tracks the state we’re currently in to avoid clashes with remote changes.</p>
 <p>And the actual syncing? It’s just git.</p>
@@ -212,17 +212,17 @@ pauldot<span class="w"> </span>profile<span class="w"> </span><span class="nb">s
 <h2>Back to zed and pi</h2>
 <p>So, the original problem that triggered all this: I had two new tools I wanted on both machines, and a pile of fresh aliases I’d forget to copy over.</p>
 <p>On the work machine, where I first installed them I can now run:</p>
-<pre><code class="language-Shell"><div class="code-block" data-lang="Shell"><div class="code-header"><span class="code-lang">Shell</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>pauldot<span class="w"> </span>tool<span class="w"> </span>add<span class="w">        </span><span class="c1"># add zed, paste in the check + install commands</span>
+<div class="code-block" data-lang="Shell"><div class="code-header"><span class="code-lang">Shell</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>pauldot<span class="w"> </span>tool<span class="w"> </span>add<span class="w">        </span><span class="c1"># add zed, paste in the check + install commands</span>
 pauldot<span class="w"> </span>tool<span class="w"> </span>add<span class="w">        </span><span class="c1"># same for pi</span>
 pauldot<span class="w"> </span><span class="nb">alias</span><span class="w"> </span>add<span class="w"> </span>zd<span class="w"> </span><span class="s2">&quot;zed .&quot;</span>
 pauldot<span class="w"> </span>sync<span class="w">            </span><span class="c1"># commit and push everything to the dotfiles repo</span>
 </pre></div>
-</div></code></pre>
+</div>
 <p>A minute or two of work. Then on my personal laptop:</p>
-<pre><code class="language-shell"><div class="code-block" data-lang="shell"><div class="code-header"><span class="code-lang">shell</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>pauldot<span class="w"> </span>sync<span class="w">            </span><span class="c1"># pull the latest config</span>
+<div class="code-block" data-lang="shell"><div class="code-header"><span class="code-lang">shell</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>pauldot<span class="w"> </span>sync<span class="w">            </span><span class="c1"># pull the latest config</span>
 pauldot<span class="w"> </span>apply<span class="w">           </span><span class="c1"># zed and pi get installed, aliases land in the shell</span>
 </pre></div>
-</div></code></pre>
+</div>
 <p>That’s it. The friction of “oh, I’d better port this over later” was a thing that risked stopping me from trying new tools in the first place.</p>
 <p>Now there is just <code>sync</code>.</p>
 <h2>The maintenance question</h2>
