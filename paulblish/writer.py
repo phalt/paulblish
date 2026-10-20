@@ -46,6 +46,10 @@ def output_path(article: Article, output_dir: Path) -> Path:
     return output_dir / article.slug / "index.html"
 
 
+def _in_section(article: Article, section: str) -> bool:
+    return article.path_prefix == section or article.path_prefix.startswith(f"{section}/")
+
+
 def assign_prev_next(articles: list[Article]) -> None:
     """Set prev_article / next_article on each non-home article, ordered by date then url_path."""
     sequence = sorted(
@@ -72,7 +76,7 @@ def write(
     """
     assign_prev_next(articles)
     latest_articles = sorted(
-        [a for a in articles if not a.is_home],
+        [a for a in articles if not a.is_home and not _in_section(a, "tools")],
         key=lambda a: a.date,
         reverse=True,
     )[:3]
@@ -163,7 +167,7 @@ def write_section_listings(
     """Write /articles/index.html and /tools/index.html listing pages. Returns written paths."""
     written: list[Path] = []
     for section in ("articles", "tools"):
-        section_articles = [a for a in articles if a.path_prefix == section or a.path_prefix.startswith(f"{section}/")]
+        section_articles = [a for a in articles if _in_section(a, section)]
         path = output_dir / section / "index.html"
         path.parent.mkdir(parents=True, exist_ok=True)
         html = render_section_listing(

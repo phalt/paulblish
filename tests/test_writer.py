@@ -471,6 +471,38 @@ class TestHomeLatestArticles:
         assert "Post 1" not in content
         assert "Post 0" not in content
 
+    def test_home_excludes_tools_from_recent_posts(self, tmp_path):
+        home = _make_article("home", is_home=True)
+        post = _make_dated("post", 2021, title="Real Post")
+        tool = _make_dated("tool", 2023, title="Shiny Tool")
+        tool.path_prefix = "tools"
+        nested_tool = _make_dated("nested-tool", 2024, title="Nested Tool")
+        nested_tool.path_prefix = "tools/converters"
+        write([home, post, tool, nested_tool], tmp_path, site=SITE)
+        content = (tmp_path / "index.html").read_text()
+        assert "Real Post" in content
+        assert "Shiny Tool" not in content
+        assert "Nested Tool" not in content
+
+    def test_tools_do_not_take_recent_post_slots(self, tmp_path):
+        home = _make_article("home", is_home=True)
+        posts = [_make_dated(f"post-{i}", 2020 + i, title=f"Post {i}") for i in range(3)]
+        tool = _make_dated("tool", 2030, title="Newest Tool")
+        tool.path_prefix = "tools"
+        write([home, tool] + posts, tmp_path, site=SITE)
+        content = (tmp_path / "index.html").read_text()
+        assert "Post 0" in content
+        assert "Post 1" in content
+        assert "Post 2" in content
+
+    def test_home_no_recent_posts_with_only_tools(self, tmp_path):
+        home = _make_article("home", is_home=True)
+        tool = _make_dated("tool", 2023)
+        tool.path_prefix = "tools"
+        write([home, tool], tmp_path, site=SITE)
+        content = (tmp_path / "index.html").read_text()
+        assert "recent-posts" not in content
+
     def test_home_no_recent_posts_without_articles(self, tmp_path):
         home = _make_article("home", is_home=True)
         write([home], tmp_path, site=SITE)
