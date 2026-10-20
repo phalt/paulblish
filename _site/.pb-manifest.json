@@ -133,5 +133,10 @@
     "mtime": 1792484598.2042892,
     "output": "tools/air-fryer/index.html",
     "excerpt": "Oven temp to air fryer temp converter"
+  },
+  "Tools/currency-conversion.md": {
+    "mtime": 1792484823.2007952,
+    "output": "tools/currency/index.html",
+    "excerpt": "Convert between currencies using todays central bank rates."
   }
 }
