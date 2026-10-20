@@ -1469,7 +1469,7 @@ All three icons are inline SVGs with `width="20" height="20" viewBox="0 0 24 24"
 - `renderer.py` output is unchanged: a bare `<pre class="mermaid">` holding the HTML-escaped source. Readers without JavaScript still see the diagram source.
 - `templating.py` defines `PELE_VERSION` (an exact release, never a range) and `PELE_URL` (the jsDelivr ESM build, `dist/pele.js`), and exposes `PELE_URL` to templates as the `pele_url` global so custom `--templates` can use it.
 - `base.html` loads Pele only when `article.body_html` contains `class="mermaid"`. A `<script type="module">` imports `mount` from `pele_url`, replaces each `pre.mermaid` with a `<div class="diagram">`, and calls `mount(div, pre.textContent)`. `mount()` sizes the diagram to its container, re-lays it out on resize, adds zoom when the diagram is shrunk to fit, and draws parse errors in place of the diagram.
-- `style.css` maps the `--pele-*` variables on `.diagram` to the site palette (`--bg`, `--surface`, `--text`, `--text-bright`, `--highlight`, `--border`, accent colours) and sets `--pele-font` / `--pele-font-mono` to `--font-heading`, with square corners (`--pele-radius: 0`).
+- `style.css` maps the `--pele-*` variables on `.diagram` to the site palette (`--bg`, `--surface`, `--text`, `--text-bright`, `--highlight`, `--border`, accent colours) and sets `--pele-font` / `--pele-font-mono` to `--font-heading`, with square corners (`--pele-radius: 0`). Pele's zoom buttons (shown when a diagram is shrunk to fit) default to a column over the top-right corner, which covers the end of wide `LR` flowcharts, so they are moved into a row in a strip below the diagram (`--pele-zoom-*` variables plus `.diagram:has(.pele-zoom)` padding).
 - mermaid.js is no longer referenced anywhere.
 
 **Known differences from mermaid.js** (see https://pele.run/compatibility): Pele uses its own layout engine, so node positions differ; Mermaid `theme` / `themeVariables` are ignored; arbitrary HTML labels, ZenUML and `fa:` icons (without a resolver) are not supported.
@@ -1481,5 +1481,6 @@ All three icons are inline SVGs with `width="20" height="20" viewBox="0 0 24 24"
 - No mermaid.js URL appears in rendered pages.
 - `pele_url` is available to custom templates.
 - `style.css` maps the core `--pele-*` variables to site palette variables on `.diagram`.
+- `style.css` moves the zoom controls off the diagram.
 
 **Documentation:** Update the syntax table in section 5 and `CHANGELOG.md`. Rebuild `_site/` so committed pages stop loading mermaid.js.

@@ -99,3 +99,9 @@ class TestPeleTheme:
         assert ".diagram {" in self.CSS
         for var in ("--pele-bg", "--pele-fg", "--pele-line", "--pele-surface", "--pele-border", "--pele-font"):
             assert f"{var}: var(--" in self.CSS, var
+
+    def test_zoom_controls_moved_off_the_diagram(self):
+        # Pele's default top-right column of zoom buttons covers the end of wide LR flowcharts.
+        assert "--pele-zoom-top: auto;" in self.CSS
+        assert "--pele-zoom-bottom: 0;" in self.CSS
+        assert ".diagram:has(.pele-zoom)" in self.CSS
