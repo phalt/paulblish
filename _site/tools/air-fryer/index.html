@@ -5,11 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Oven → Air Fryer Converter — Paul Writes Software</title>
   
+  <meta name="description" content="Oven temp to air fryer temp converter">
+  
   <!-- Open Graph -->
   <meta property="og:type"        content="article">
   <meta property="og:site_name"   content="Paul Writes Software">
   <meta property="og:title"       content="Oven → Air Fryer Converter">
-  <meta property="og:description" content="Paul Hallett is a software engineer with 15+ years experience working in tech. He builds tools with Python and HTTP. He loves file-over-app, local-first, and smallweb software. He blogs way too much.">
+  <meta property="og:description" content="Oven temp to air fryer temp converter">
   <meta property="og:url"         content="https://paulwrites.software/tools/air-fryer/">
   
   <meta property="og:image"       content="https://paulwrites.software/assets/site-logo.jpeg">
@@ -17,7 +19,7 @@
   <!-- Twitter Card -->
   <meta name="twitter:card"        content="summary">
   <meta name="twitter:title"       content="Oven → Air Fryer Converter">
-  <meta name="twitter:description" content="Paul Hallett is a software engineer with 15+ years experience working in tech. He builds tools with Python and HTTP. He loves file-over-app, local-first, and smallweb software. He blogs way too much.">
+  <meta name="twitter:description" content="Oven temp to air fryer temp converter">
   
   <meta name="twitter:image"       content="https://paulwrites.software/assets/site-logo.jpeg">
   
@@ -95,7 +97,7 @@
         });
       });
     </script>
-    <time datetime="2026-05-13T09:32:40.840570">13 May 2026</time>
+    <time datetime="2026-10-20T09:23:18.204289">20 October 2026</time>
     <span class="reading-time">1 min read</span>
     
     <div class="tags">
@@ -105,48 +107,64 @@
     </div>
     
     
+    <p class="description">Oven temp to air fryer temp converter</p>
+    
   </header>
 
   
   <div class="article-body">
-    <p>Convert oven temperature and time to air fryer temperature and time</p>
-<div class="html-embed"><div class="html-embed-bar"><span class="html-embed-label">Tool</span></div><div class="html-embed-body"><div>
-  <h3>Oven values:</h3>
-  <input type="number" id="temp" placeholder="temp °C">
-  <input type="number" id="time" placeholder="minutes">
-  <p><button onclick="convert()">Convert</button></p>
-  <h3>Air fryer result:</h3>
-  <p> Cook at <span id="result-temp"></span> for <span id="result-time"></span>.
+    <p>Knock 25 °C off the temperature and a fifth off the time, then check it early.</p>
+<div class="code-block" data-lang="html"><div class="code-header"><span class="code-lang">html</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">form</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;air-fryer&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;af-temp&quot;</span><span class="p">&gt;</span>Oven temperature (°C)<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">input</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;af-temp&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;temp&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;number&quot;</span> <span class="na">inputmode</span><span class="o">=</span><span class="s">&quot;numeric&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;200&quot;</span> <span class="na">min</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="na">max</span><span class="o">=</span><span class="s">&quot;300&quot;</span><span class="p">&gt;</span>
+
+  <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;af-time&quot;</span><span class="p">&gt;</span>Oven time (minutes)<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">input</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;af-time&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;time&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;number&quot;</span> <span class="na">inputmode</span><span class="o">=</span><span class="s">&quot;numeric&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;30&quot;</span> <span class="na">min</span><span class="o">=</span><span class="s">&quot;1&quot;</span><span class="p">&gt;</span>
+
+  <span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span><span class="p">&gt;</span>Convert<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Cook at <span class="p">&lt;</span><span class="nt">output</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;af-out-temp&quot;</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;af-temp&quot;</span><span class="p">&gt;</span>175 °C<span class="p">&lt;/</span><span class="nt">output</span><span class="p">&gt;</span>
+     for <span class="p">&lt;</span><span class="nt">output</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;af-out-time&quot;</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;af-time&quot;</span><span class="p">&gt;</span>24 min<span class="p">&lt;/</span><span class="nt">output</span><span class="p">&gt;</span>.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;air-fryer&quot;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;submit&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">temp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">+</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;af-temp&quot;</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">+</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;af-time&quot;</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
+<span class="w">  </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;af-out-temp&quot;</span><span class="p">).</span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span><span class="si">${</span><span class="nx">temp</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">25</span><span class="si">}</span><span class="sb"> °C`</span><span class="p">;</span>
+<span class="w">  </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;af-out-time&quot;</span><span class="p">).</span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span><span class="si">${</span><span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nx">time</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.8</span><span class="p">)</span><span class="si">}</span><span class="sb"> min`</span><span class="p">;</span>
+<span class="p">});</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
 </div>
-
-<style>
-/* scoped styles here */
-</style>
-
-<script>
-function convert() {
-  const ovenTime = +document.getElementById('time').value * 0.8
-  const temp = +document.getElementById('temp').value - 25;
-  document.getElementById('result-temp').textContent = temp + ' °C';
-  document.getElementById('result-time').textContent = ovenTime + ' minutes';
-}
-</script></div></div>
 
   </div>
 
   <nav class="article-nav">
     <div class="article-nav-prev">
       
-      <a href="https://paulwrites.software/articles/paulias/">← Older: Turn a single markdown file into your own URL shortener</a>
+      <a href="https://paulwrites.software/articles/paulrun/">← Older: Markdown files that execute</a>
       
     </div>
     <div class="article-nav-next">
       
-      <a href="https://paulwrites.software/articles/cyberpunk/">Newer: Man I love Cyberpunk →</a>
-      
     </div>
   </nav>
 </article>
+
+<script>
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('.code-copy-btn');
+    if (!btn) return;
+    var block = btn.closest('.code-block');
+    var pre = block.querySelector('td.code pre') || block.querySelector('pre');
+    navigator.clipboard.writeText(pre.textContent).then(function() {
+      btn.classList.add('copied');
+      setTimeout(function() { btn.classList.remove('copied'); }, 2000);
+    });
+  });
+</script>
 
 
   </main>

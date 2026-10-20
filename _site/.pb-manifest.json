@@ -130,8 +130,8 @@
     "excerpt": "Background Rotom , my favourite Pok\u00e9mon. Ever since I heard about this mysterious ghost in the Old Chateau I've been intrigued. My favourite type of Pok\u00e9mon is the Ghost type. Ostensibly, Pok\u00e9mon is\u2026"
   },
   "Tools/air-fryer-conversion.md": {
-    "mtime": 1778661160.84057,
+    "mtime": 1792484598.2042892,
     "output": "tools/air-fryer/index.html",
-    "excerpt": "Convert oven temperature and time to air fryer temperature and time Tool Oven values: Convert Air fryer result: Cook at for . /* scoped styles here */ function convert() { const ovenTime =\u2026"
+    "excerpt": "Oven temp to air fryer temp converter"
   }
 }
