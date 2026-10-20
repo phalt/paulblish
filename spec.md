@@ -168,7 +168,7 @@ class SiteConfig:
 | Callouts | `> [!note] Title` | `<div class="callout callout-note">` | P1 |
 | Highlights | `==text==` | `<mark>text</mark>` | P1 |
 | Fenced code blocks | ` ```python ` | `<pre><code>` with Pygments highlighting | P0 |
-| Mermaid blocks | ` ```mermaid ` | `<pre class="mermaid">` (client-side JS) | P2 |
+| Mermaid blocks | ` ```mermaid ` | `<pre class="mermaid">` (rendered client-side by [Pele](https://pele.run)) | P2 |
 | LaTeX inline | `$E=mc^2$` | `<span class="math">` (KaTeX client-side) | P2 |
 | LaTeX block | `$$\sum_{i=1}^{n}$$` | `<div class="math">` (KaTeX client-side) | P2 |
 | Dataview blocks | `dataview ...` | Stripped entirely with optional warning comment | P2 |
@@ -1140,6 +1140,7 @@ A collection of high-value improvements and two larger features (light/dark mode
 - [X] **8.7** Light / dark mode toggle with `localStorage` persistence and anti-FOUC inline script.
 - [x] **8.8** Incremental builds via `--incremental` flag and `.pb-manifest.json`.
 - [x] **8.9** Social icons in nav and footer for Bluesky, GitHub, and email.
+- [x] **8.10** Render Mermaid diagrams with Pele instead of mermaid.js, themed from the site palette.
 
 **Milestone:** All pages include social sharing meta tags, are discoverable by crawlers, have a working 404, support light/dark theming, large vaults can be rebuilt incrementally in a fraction of the full build time, and the site displays the author's social presence via icons in the nav and footer.
 
@@ -1456,3 +1457,29 @@ All three icons are inline SVGs with `width="20" height="20" viewBox="0 0 24 24"
 - Icon links have `rel="noopener noreferrer"` and `target="_blank"` for external links (GitHub, Bluesky); email link does not have `target="_blank"`.
 
 **Documentation:** Update `README.md` Site Configuration section — add `bluesky`, `github`, `email` to the fields table with descriptions. Update the `site.toml` example block and the `Home.md` frontmatter example to show these fields. Update `CHANGELOG.md`.
+
+---
+
+#### 8.10 — Mermaid Diagrams via Pele
+
+**What:** Replace mermaid.js with [Pele](https://pele.run) (MIT, by kepano/Obsidian) for rendering ` ```mermaid ` blocks. Pele parses the same Mermaid syntax, ships ~230 kB gzipped against mermaid.js's ~1.6 MB, has zero dependencies, adapts the layout to narrow screens instead of shrinking it, and is themed with CSS variables, so diagrams pick up the site palette.
+
+**Requirements:**
+
+- `renderer.py` output is unchanged: a bare `<pre class="mermaid">` holding the HTML-escaped source. Readers without JavaScript still see the diagram source.
+- `templating.py` defines `PELE_VERSION` (an exact release, never a range) and `PELE_URL` (the jsDelivr ESM build, `dist/pele.js`), and exposes `PELE_URL` to templates as the `pele_url` global so custom `--templates` can use it.
+- `base.html` loads Pele only when `article.body_html` contains `class="mermaid"`. A `<script type="module">` imports `mount` from `pele_url`, replaces each `pre.mermaid` with a `<div class="diagram">`, and calls `mount(div, pre.textContent)`. `mount()` sizes the diagram to its container, re-lays it out on resize, adds zoom when the diagram is shrunk to fit, and draws parse errors in place of the diagram.
+- `style.css` maps the `--pele-*` variables on `.diagram` to the site palette (`--bg`, `--surface`, `--text`, `--text-bright`, `--highlight`, `--border`, accent colours) and sets `--pele-font` / `--pele-font-mono` to `--font-heading`, with square corners (`--pele-radius: 0`).
+- mermaid.js is no longer referenced anywhere.
+
+**Known differences from mermaid.js** (see https://pele.run/compatibility): Pele uses its own layout engine, so node positions differ; Mermaid `theme` / `themeVariables` are ignored; arbitrary HTML labels, ZenUML and `fa:` icons (without a resolver) are not supported.
+
+**Tests:**
+
+- The Pele script (pinned `PELE_URL`) appears on pages with a mermaid block and not on pages without one, including pages with other fenced code.
+- The script mounts every `pre.mermaid` from its `textContent`.
+- No mermaid.js URL appears in rendered pages.
+- `pele_url` is available to custom templates.
+- `style.css` maps the core `--pele-*` variables to site palette variables on `.diagram`.
+
+**Documentation:** Update the syntax table in section 5 and `CHANGELOG.md`. Rebuild `_site/` so committed pages stop loading mermaid.js.

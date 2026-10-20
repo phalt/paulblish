@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+
+### Changed
+
+- Mermaid diagrams are rendered with [Pele](https://pele.run) instead of mermaid.js. Pele is roughly a seventh of the download, lays diagrams out to fit narrow screens, adds zoom for large diagrams, and is themed from the site palette via CSS variables. The version is pinned in `paulblish/templating.py` (`PELE_VERSION`).
+
 ## [0.1.0] - Unreleased
 
 ### Added

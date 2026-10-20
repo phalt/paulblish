@@ -68,7 +68,8 @@ def _html_embed(code: str, attrs: str) -> str:
 def _highlight(code: str, lang: str, attrs: str) -> str:
     """Render a fenced block to finished HTML, or return "" to use markdown-it-py's default <pre><code>."""
     if lang == "mermaid":
-        # Bare <pre class="mermaid"> for mermaid.js to render client-side
+        # Bare <pre class="mermaid"> holding the escaped source; Pele renders it client-side
+        # (see base.html). Readers without JS still see the diagram source.
         return f'<pre class="mermaid">{escape(code)}</pre>'
     if _is_embed(lang, attrs):
         # Raw HTML pass-through: the author opted in explicitly via "embed"

@@ -280,6 +280,24 @@ pre code {
     padding: 0;
 }
 
+/* === Diagrams (Pele renders ```mermaid blocks into div.diagram) === */
+/* Pele reads these variables live, so diagrams follow the site palette without re-rendering. */
+.diagram {
+    --pele-bg: var(--bg);
+    --pele-fg: var(--text-bright);
+    --pele-muted: var(--text);
+    --pele-line: var(--text);
+    --pele-surface: var(--surface);
+    --pele-surface-alt: var(--highlight);
+    --pele-border: var(--accent-teal);
+    --pele-accent: var(--accent-amber);
+    --pele-critical: var(--accent-rose);
+    --pele-font: var(--font-heading);
+    --pele-font-mono: var(--font-heading);
+    --pele-radius: 0;
+    margin: 1.5rem 0;
+}
+
 /* === Fenced code block wrapper (language-highlighted blocks) === */
 .code-block {
     border: 1px solid var(--border);

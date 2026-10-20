@@ -61,8 +61,8 @@ class TestHtmlEmbed:
         article = render(_make_article(EMBED_BLOCK))
         site = SiteConfig(title="T", base_url="https://example.com", description="D", author="A")
         html = render_article(article, site)
-        # The mermaid CDN script must not appear for non-mermaid pages
-        assert "mermaid" not in html or "cdn.jsdelivr.net" not in html
+        # The Pele CDN script must not appear for non-mermaid pages
+        assert "cdn.jsdelivr.net" not in html
 
     def test_embed_is_not_wrapped_in_pre_code(self):
         # Regression: markdown-it-py used to nest the embed inside <pre><code class="language-html">
