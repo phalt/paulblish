@@ -114,68 +114,67 @@
   
   <div class="article-body">
     <p>How much downtime an availability target actually allows. Months are 30 days and years are 365, which is close enough for arguing about SLAs.</p>
-<div class="code-block" data-lang="html"><div class="code-header"><span class="code-lang">html</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">form</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;nines&quot;</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;nines-pct&quot;</span><span class="p">&gt;</span>Availability (%)<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">input</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;nines-pct&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;number&quot;</span> <span class="na">inputmode</span><span class="o">=</span><span class="s">&quot;decimal&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;99.9&quot;</span> <span class="na">min</span><span class="o">=</span><span class="s">&quot;0&quot;</span> <span class="na">max</span><span class="o">=</span><span class="s">&quot;100&quot;</span> <span class="na">step</span><span class="o">=</span><span class="s">&quot;any&quot;</span><span class="p">&gt;</span>
+<div class="html-embed"><div class="html-embed-bar"><span class="html-embed-label">Tool</span></div><div class="html-embed-body"><form id="nines">
+  <label for="nines-pct">Availability (%)</label>
+  <input id="nines-pct" type="number" inputmode="decimal" value="99.9" min="0" max="100" step="any">
 
-  <span class="p">&lt;</span><span class="nt">table</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">thead</span><span class="p">&gt;&lt;</span><span class="nt">tr</span><span class="p">&gt;&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Per<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Allowed downtime<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;&lt;/</span><span class="nt">tr</span><span class="p">&gt;&lt;/</span><span class="nt">thead</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">tbody</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Day<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">output</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;nines-day&quot;</span><span class="p">&gt;</span>1m 26s<span class="p">&lt;/</span><span class="nt">output</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Week<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">output</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;nines-week&quot;</span><span class="p">&gt;</span>10m 5s<span class="p">&lt;/</span><span class="nt">output</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Month<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">output</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;nines-month&quot;</span><span class="p">&gt;</span>43m 12s<span class="p">&lt;/</span><span class="nt">output</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Year<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">output</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;nines-year&quot;</span><span class="p">&gt;</span>8h 45m 36s<span class="p">&lt;/</span><span class="nt">output</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">tbody</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
+  <table>
+    <thead><tr><th>Per</th><th>Allowed downtime</th></tr></thead>
+    <tbody>
+      <tr><td>Day</td><td><output id="nines-day">1m 26s</output></td></tr>
+      <tr><td>Week</td><td><output id="nines-week">10m 5s</output></td></tr>
+      <tr><td>Month</td><td><output id="nines-month">43m 12s</output></td></tr>
+      <tr><td>Year</td><td><output id="nines-year">8h 45m 36s</output></td></tr>
+    </tbody>
+  </table>
 
-  <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;nines-down&quot;</span><span class="p">&gt;</span>Or: downtime this month (minutes)<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">input</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;nines-down&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;number&quot;</span> <span class="na">inputmode</span><span class="o">=</span><span class="s">&quot;decimal&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;20&quot;</span> <span class="na">min</span><span class="o">=</span><span class="s">&quot;0&quot;</span> <span class="na">step</span><span class="o">=</span><span class="s">&quot;any&quot;</span><span class="p">&gt;</span>
+  <label for="nines-down">Or: downtime this month (minutes)</label>
+  <input id="nines-down" type="number" inputmode="decimal" value="20" min="0" step="any">
 
-  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>That&#39;s <span class="p">&lt;</span><span class="nt">output</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;nines-actual&quot;</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;nines-down&quot;</span><span class="p">&gt;</span>99.9537%<span class="p">&lt;/</span><span class="nt">output</span><span class="p">&gt;</span> uptime for the month.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+  <p>That's <output id="nines-actual" for="nines-down">99.9537%</output> uptime for the month.</p>
+</form>
 
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">$</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">id</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">DAY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">86</span><span class="nx">_400</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">periods</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">day</span><span class="o">:</span><span class="w"> </span><span class="nx">DAY</span><span class="p">,</span><span class="w"> </span><span class="nx">week</span><span class="o">:</span><span class="w"> </span><span class="mf">7</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">DAY</span><span class="p">,</span><span class="w"> </span><span class="nx">month</span><span class="o">:</span><span class="w"> </span><span class="mf">30</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">DAY</span><span class="p">,</span><span class="w"> </span><span class="nx">year</span><span class="o">:</span><span class="w"> </span><span class="mf">365</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">DAY</span><span class="w"> </span><span class="p">};</span>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const DAY = 86_400;
+  const periods = { day: DAY, week: 7 * DAY, month: 30 * DAY, year: 365 * DAY };
 
-<span class="w">  </span><span class="kd">function</span><span class="w"> </span><span class="nx">duration</span><span class="p">(</span><span class="nx">seconds</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">seconds</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="sb">`</span><span class="si">${</span><span class="p">(</span><span class="nx">seconds</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1000</span><span class="p">).</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">0</span><span class="p">)</span><span class="si">}</span><span class="sb">ms`</span><span class="p">;</span>
-<span class="w">    </span><span class="nx">seconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nx">seconds</span><span class="p">);</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">parts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">      </span><span class="p">[</span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">seconds</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nx">DAY</span><span class="p">),</span><span class="w"> </span><span class="s2">&quot;d&quot;</span><span class="p">],</span>
-<span class="w">      </span><span class="p">[</span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">((</span><span class="nx">seconds</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="nx">DAY</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">3600</span><span class="p">),</span><span class="w"> </span><span class="s2">&quot;h&quot;</span><span class="p">],</span>
-<span class="w">      </span><span class="p">[</span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">((</span><span class="nx">seconds</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mf">3600</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">60</span><span class="p">),</span><span class="w"> </span><span class="s2">&quot;m&quot;</span><span class="p">],</span>
-<span class="w">      </span><span class="p">[</span><span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nx">seconds</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mf">60</span><span class="p">),</span><span class="w"> </span><span class="s2">&quot;s&quot;</span><span class="p">],</span>
-<span class="w">    </span><span class="p">];</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">parts</span><span class="p">.</span><span class="nx">filter</span><span class="p">(([</span><span class="nx">n</span><span class="p">])</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">n</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="p">).</span><span class="nx">map</span><span class="p">(([</span><span class="nx">n</span><span class="p">,</span><span class="w"> </span><span class="nx">unit</span><span class="p">])</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="sb">`</span><span class="si">${</span><span class="nx">n</span><span class="si">}${</span><span class="nx">unit</span><span class="si">}</span><span class="sb">`</span><span class="p">).</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s2">&quot;0s&quot;</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
+  function duration(seconds) {
+    if (seconds < 1) return `${(seconds * 1000).toFixed(0)}ms`;
+    seconds = Math.round(seconds);
+    const parts = [
+      [Math.floor(seconds / DAY), "d"],
+      [Math.floor((seconds % DAY) / 3600), "h"],
+      [Math.floor((seconds % 3600) / 60), "m"],
+      [Math.round(seconds % 60), "s"],
+    ];
+    return parts.filter(([n]) => n > 0).map(([n, unit]) => `${n}${unit}`).join(" ") || "0s";
+  }
 
-<span class="w">  </span><span class="kd">function</span><span class="w"> </span><span class="nx">fromTarget</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">pct</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Number</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;nines-pct&quot;</span><span class="p">).</span><span class="nx">value</span><span class="p">);</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="nx">pct</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mf">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">pct</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">100</span><span class="p">))</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">seconds</span><span class="p">]</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nb">Object</span><span class="p">.</span><span class="nx">entries</span><span class="p">(</span><span class="nx">periods</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">$</span><span class="p">(</span><span class="sb">`nines-</span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb">`</span><span class="p">).</span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">duration</span><span class="p">((</span><span class="mf">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">pct</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">100</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">seconds</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
+  function fromTarget() {
+    const pct = Number($("nines-pct").value);
+    if (!(pct >= 0 && pct <= 100)) return;
+    for (const [name, seconds] of Object.entries(periods)) {
+      $(`nines-${name}`).value = duration((1 - pct / 100) * seconds);
+    }
+  }
 
-<span class="w">  </span><span class="kd">function</span><span class="w"> </span><span class="nx">fromDowntime</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">minutes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Number</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;nines-down&quot;</span><span class="p">).</span><span class="nx">value</span><span class="p">);</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="nx">minutes</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mf">0</span><span class="p">))</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">pct</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">100</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="mf">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="nx">minutes</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">60</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nx">periods</span><span class="p">.</span><span class="nx">month</span><span class="p">));</span>
-<span class="w">    </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;nines-actual&quot;</span><span class="p">).</span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span><span class="si">${</span><span class="nb">Number</span><span class="p">(</span><span class="nx">pct</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">4</span><span class="p">))</span><span class="si">}</span><span class="sb">%`</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
+  function fromDowntime() {
+    const minutes = Number($("nines-down").value);
+    if (!(minutes >= 0)) return;
+    const pct = Math.max(0, 100 * (1 - (minutes * 60) / periods.month));
+    $("nines-actual").value = `${Number(pct.toFixed(4))}%`;
+  }
 
-<span class="w">  </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;nines&quot;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;submit&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">());</span>
-<span class="w">  </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;nines-pct&quot;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;input&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">fromTarget</span><span class="p">);</span>
-<span class="w">  </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;nines-down&quot;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;input&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">fromDowntime</span><span class="p">);</span>
-<span class="w">  </span><span class="nx">fromTarget</span><span class="p">();</span>
-<span class="w">  </span><span class="nx">fromDowntime</span><span class="p">();</span>
-<span class="p">})();</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</pre></div>
-</div>
+  $("nines").addEventListener("submit", (event) => event.preventDefault());
+  $("nines-pct").addEventListener("input", fromTarget);
+  $("nines-down").addEventListener("input", fromDowntime);
+  fromTarget();
+  fromDowntime();
+})();
+</script>
+</div></div>
 <h2>Cheat sheet</h2>
 <table>
 <thead>
@@ -229,19 +228,6 @@
     </div>
   </nav>
 </article>
-
-<script>
-  document.addEventListener('click', function(e) {
-    var btn = e.target.closest('.code-copy-btn');
-    if (!btn) return;
-    var block = btn.closest('.code-block');
-    var pre = block.querySelector('td.code pre') || block.querySelector('pre');
-    navigator.clipboard.writeText(pre.textContent).then(function() {
-      btn.classList.add('copied');
-      setTimeout(function() { btn.classList.remove('copied'); }, 2000);
-    });
-  });
-</script>
 
 
   </main>
