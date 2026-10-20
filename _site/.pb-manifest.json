@@ -135,8 +135,13 @@
     "excerpt": "Oven temp to air fryer temp converter"
   },
   "Tools/currency-conversion.md": {
-    "mtime": 1792485081.1590443,
+    "mtime": 1792486006.6325867,
     "output": "tools/currency/index.html",
     "excerpt": "Convert between currencies using todays central bank rates."
+  },
+  "Tools/five nines.md": {
+    "mtime": 1792486084.1181421,
+    "output": "tools/nines/index.html",
+    "excerpt": "How much downtime an availability target allows."
   }
 }
