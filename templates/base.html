@@ -29,7 +29,17 @@
   <link rel="stylesheet" href="{{ site.base_url }}/static/{{ static_url('style.css') }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ site.base_url }}/feed.xml">
   {% if article is defined and 'class="mermaid"' in article.body_html %}
-  <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"; mermaid.initialize({startOnLoad:true});</script>
+  <script type="module">
+    import { mount } from "{{ pele_url }}";
+    // Swap each source <pre> for a block container: mount() sizes the diagram to the
+    // container's width and re-lays it out on resize. Without JS the source stays readable.
+    for (const source of document.querySelectorAll("pre.mermaid")) {
+      const diagram = document.createElement("div");
+      diagram.className = "diagram";
+      source.replaceWith(diagram);
+      mount(diagram, source.textContent);
+    }
+  </script>
   {% endif %}
 </head>
 <body>

@@ -7,6 +7,11 @@ from paulblish.models import Article, SiteConfig
 
 DEFAULT_TEMPLATES = Path(__file__).parent.parent / "templates"
 
+# Pele (https://pele.run) renders ```mermaid blocks client-side. Pinned to an exact release
+# so a new upstream version can't change how published diagrams look without a rebuild.
+PELE_VERSION = "1.7.0"
+PELE_URL = f"https://cdn.jsdelivr.net/npm/pele@{PELE_VERSION}/dist/pele.js"
+
 
 def _create_env(
     templates_dir: Path | None = None,
@@ -23,6 +28,7 @@ def _create_env(
     env.filters["basename"] = lambda p: Path(p).name
     sf = static_files or {}
     env.globals["static_url"] = lambda name: sf.get(name, name)
+    env.globals["pele_url"] = PELE_URL
     return env
 
 
