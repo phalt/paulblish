@@ -114,88 +114,87 @@
   
   <div class="article-body">
     <p>Mid-market rates from <a href="https://frankfurter.dev/">Frankfurter</a>, which blends daily figures from central banks. Card and cash rates will be worse than this.</p>
-<div class="code-block" data-lang="html"><div class="code-header"><span class="code-lang">html</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">form</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;fx&quot;</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;fx-amount&quot;</span><span class="p">&gt;</span>Amount<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">input</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;fx-amount&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;number&quot;</span> <span class="na">inputmode</span><span class="o">=</span><span class="s">&quot;decimal&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;100&quot;</span> <span class="na">min</span><span class="o">=</span><span class="s">&quot;0&quot;</span> <span class="na">step</span><span class="o">=</span><span class="s">&quot;any&quot;</span><span class="p">&gt;</span>
+<div class="html-embed"><div class="html-embed-bar"><span class="html-embed-label">Tool</span></div><div class="html-embed-body"><form id="fx">
+  <label for="fx-amount">Amount</label>
+  <input id="fx-amount" type="number" inputmode="decimal" value="100" min="0" step="any">
 
-  <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;fx-from&quot;</span><span class="p">&gt;</span>From<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">select</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;fx-from&quot;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;GBP&quot;</span> <span class="na">selected</span><span class="p">&gt;</span>GBP, pound sterling<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;JPY&quot;</span><span class="p">&gt;</span>JPY, Japanese yen<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;EUR&quot;</span><span class="p">&gt;</span>EUR, euro<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;USD&quot;</span><span class="p">&gt;</span>USD, US dollar<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;AUD&quot;</span><span class="p">&gt;</span>AUD, Australian dollar<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;CAD&quot;</span><span class="p">&gt;</span>CAD, Canadian dollar<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;CHF&quot;</span><span class="p">&gt;</span>CHF, Swiss franc<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;NZD&quot;</span><span class="p">&gt;</span>NZD, New Zealand dollar<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">select</span><span class="p">&gt;</span>
+  <label for="fx-from">From</label>
+  <select id="fx-from">
+    <option value="GBP" selected>GBP, pound sterling</option>
+    <option value="JPY">JPY, Japanese yen</option>
+    <option value="EUR">EUR, euro</option>
+    <option value="USD">USD, US dollar</option>
+    <option value="AUD">AUD, Australian dollar</option>
+    <option value="CAD">CAD, Canadian dollar</option>
+    <option value="CHF">CHF, Swiss franc</option>
+    <option value="NZD">NZD, New Zealand dollar</option>
+  </select>
 
-  <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;fx-to&quot;</span><span class="p">&gt;</span>To<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">select</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;fx-to&quot;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;GBP&quot;</span><span class="p">&gt;</span>GBP, pound sterling<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;JPY&quot;</span> <span class="na">selected</span><span class="p">&gt;</span>JPY, Japanese yen<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;EUR&quot;</span><span class="p">&gt;</span>EUR, euro<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;USD&quot;</span><span class="p">&gt;</span>USD, US dollar<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;AUD&quot;</span><span class="p">&gt;</span>AUD, Australian dollar<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;CAD&quot;</span><span class="p">&gt;</span>CAD, Canadian dollar<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;CHF&quot;</span><span class="p">&gt;</span>CHF, Swiss franc<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;NZD&quot;</span><span class="p">&gt;</span>NZD, New Zealand dollar<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">select</span><span class="p">&gt;</span>
+  <label for="fx-to">To</label>
+  <select id="fx-to">
+    <option value="GBP">GBP, pound sterling</option>
+    <option value="JPY" selected>JPY, Japanese yen</option>
+    <option value="EUR">EUR, euro</option>
+    <option value="USD">USD, US dollar</option>
+    <option value="AUD">AUD, Australian dollar</option>
+    <option value="CAD">CAD, Canadian dollar</option>
+    <option value="CHF">CHF, Swiss franc</option>
+    <option value="NZD">NZD, New Zealand dollar</option>
+  </select>
 
-  <span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span><span class="p">&gt;</span>Convert<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;button&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;fx-swap&quot;</span><span class="p">&gt;</span>Swap<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+  <button type="submit">Convert</button>
+  <button type="button" id="fx-swap">Swap</button>
 
-  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;&lt;</span><span class="nt">output</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;fx-result&quot;</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;fx-amount fx-from fx-to&quot;</span><span class="p">&gt;</span>Press convert<span class="p">&lt;/</span><span class="nt">output</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">p</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;fx-detail&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+  <p><output id="fx-result" for="fx-amount fx-from fx-to">Press convert</output></p>
+  <p id="fx-detail"></p>
+</form>
 
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">$</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">id</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">money</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">value</span><span class="p">,</span><span class="w"> </span><span class="nx">currency</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span>
-<span class="w">    </span><span class="ow">new</span><span class="w"> </span><span class="nb">Intl</span><span class="p">.</span><span class="nx">NumberFormat</span><span class="p">(</span><span class="s2">&quot;en-GB&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">style</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;currency&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">currency</span><span class="w"> </span><span class="p">}).</span><span class="nx">format</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const money = (value, currency) =>
+    new Intl.NumberFormat("en-GB", { style: "currency", currency }).format(value);
 
-<span class="w">  </span><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">convert</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">amount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Number</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;fx-amount&quot;</span><span class="p">).</span><span class="nx">value</span><span class="p">);</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;fx-from&quot;</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;fx-to&quot;</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nb">Number</span><span class="p">.</span><span class="nb">isFinite</span><span class="p">(</span><span class="nx">amount</span><span class="p">))</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+  async function convert() {
+    const amount = Number($("fx-amount").value);
+    const from = $("fx-from").value;
+    const to = $("fx-to").value;
+    if (!Number.isFinite(amount)) return;
 
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="kr">from</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">to</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;fx-result&quot;</span><span class="p">).</span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">money</span><span class="p">(</span><span class="nx">amount</span><span class="p">,</span><span class="w"> </span><span class="nx">to</span><span class="p">);</span>
-<span class="w">      </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;fx-detail&quot;</span><span class="p">).</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Same currency, nothing to convert.&quot;</span><span class="p">;</span>
-<span class="w">      </span><span class="k">return</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    if (from === to) {
+      $("fx-result").value = money(amount, to);
+      $("fx-detail").textContent = "Same currency, nothing to convert.";
+      return;
+    }
 
-<span class="w">    </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;fx-result&quot;</span><span class="p">).</span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Fetching rate…&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;fx-detail&quot;</span><span class="p">).</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="sb">`https://api.frankfurter.dev/v2/rates?base=</span><span class="si">${</span><span class="kr">from</span><span class="si">}</span><span class="sb">&amp;quotes=</span><span class="si">${</span><span class="nx">to</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">response</span><span class="p">.</span><span class="nx">ok</span><span class="p">)</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="sb">`HTTP </span><span class="si">${</span><span class="nx">response</span><span class="p">.</span><span class="nx">status</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">row</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
-<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">row</span><span class="p">)</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="s2">&quot;no rate returned&quot;</span><span class="p">);</span>
-<span class="w">      </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;fx-result&quot;</span><span class="p">).</span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">money</span><span class="p">(</span><span class="nx">amount</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">row</span><span class="p">.</span><span class="nx">rate</span><span class="p">,</span><span class="w"> </span><span class="nx">to</span><span class="p">);</span>
-<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">rateDate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Date</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">row</span><span class="p">.</span><span class="nx">date</span><span class="si">}</span><span class="sb">T12:00:00Z`</span><span class="p">).</span><span class="nx">toLocaleDateString</span><span class="p">(</span><span class="s2">&quot;en-GB&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">day</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;numeric&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">month</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;long&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">year</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;numeric&quot;</span><span class="w"> </span><span class="p">});</span>
-<span class="w">      </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;fx-detail&quot;</span><span class="p">).</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`1 </span><span class="si">${</span><span class="kr">from</span><span class="si">}</span><span class="sb"> = </span><span class="si">${</span><span class="nx">row</span><span class="p">.</span><span class="nx">rate</span><span class="si">}</span><span class="sb"> </span><span class="si">${</span><span class="nx">to</span><span class="si">}</span><span class="sb">, rate from </span><span class="si">${</span><span class="nx">rateDate</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;fx-result&quot;</span><span class="p">).</span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Couldn&#39;t get a rate&quot;</span><span class="p">;</span>
-<span class="w">      </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;fx-detail&quot;</span><span class="p">).</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`The rates API didn&#39;t answer (</span><span class="si">${</span><span class="nx">error</span><span class="p">.</span><span class="nx">message</span><span class="si">}</span><span class="sb">). Try again in a minute.`</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
+    $("fx-result").value = "Fetching rate…";
+    $("fx-detail").textContent = "";
+    try {
+      const response = await fetch(`https://api.frankfurter.dev/v2/rates?base=${from}&quotes=${to}`);
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const [row] = await response.json();
+      if (!row) throw new Error("no rate returned");
+      $("fx-result").value = money(amount * row.rate, to);
+      const rateDate = new Date(`${row.date}T12:00:00Z`).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+      $("fx-detail").textContent = `1 ${from} = ${row.rate} ${to}, rate from ${rateDate}`;
+    } catch (error) {
+      $("fx-result").value = "Couldn't get a rate";
+      $("fx-detail").textContent = `The rates API didn't answer (${error.message}). Try again in a minute.`;
+    }
+  }
 
-<span class="w">  </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;fx&quot;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;submit&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
-<span class="w">    </span><span class="nx">convert</span><span class="p">();</span>
-<span class="w">  </span><span class="p">});</span>
+  $("fx").addEventListener("submit", (event) => {
+    event.preventDefault();
+    convert();
+  });
 
-<span class="w">  </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;fx-swap&quot;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="p">[</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;fx-from&quot;</span><span class="p">).</span><span class="nx">value</span><span class="p">,</span><span class="w"> </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;fx-to&quot;</span><span class="p">).</span><span class="nx">value</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;fx-to&quot;</span><span class="p">).</span><span class="nx">value</span><span class="p">,</span><span class="w"> </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;fx-from&quot;</span><span class="p">).</span><span class="nx">value</span><span class="p">];</span>
-<span class="w">    </span><span class="nx">convert</span><span class="p">();</span>
-<span class="w">  </span><span class="p">});</span>
-<span class="p">})();</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</pre></div>
-</div>
+  $("fx-swap").addEventListener("click", () => {
+    [$("fx-from").value, $("fx-to").value] = [$("fx-to").value, $("fx-from").value];
+    convert();
+  });
+})();
+</script>
+</div></div>
 <h2>Notes</h2>
 <ul>
 <li>One request per press of Convert, nothing cached, so it's always today's rate (or the last working day's, at weekends).</li>
@@ -217,19 +216,6 @@
     </div>
   </nav>
 </article>
-
-<script>
-  document.addEventListener('click', function(e) {
-    var btn = e.target.closest('.code-copy-btn');
-    if (!btn) return;
-    var block = btn.closest('.code-block');
-    var pre = block.querySelector('td.code pre') || block.querySelector('pre');
-    navigator.clipboard.writeText(pre.textContent).then(function() {
-      btn.classList.add('copied');
-      setTimeout(function() { btn.classList.remove('copied'); }, 2000);
-    });
-  });
-</script>
 
 
   </main>
