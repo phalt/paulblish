@@ -280,6 +280,38 @@ pre code {
     padding: 0;
 }
 
+/* === Diagrams (Pele renders ```mermaid blocks into div.diagram) === */
+/* Pele reads these variables live, so diagrams follow the site palette without re-rendering. */
+.diagram {
+    --pele-bg: var(--bg);
+    --pele-fg: var(--text-bright);
+    --pele-muted: var(--text);
+    --pele-line: var(--text);
+    --pele-surface: var(--surface);
+    --pele-surface-alt: var(--highlight);
+    --pele-border: var(--accent-teal);
+    --pele-accent: var(--accent-amber);
+    --pele-critical: var(--accent-rose);
+    --pele-font: var(--font-heading);
+    --pele-font-mono: var(--font-heading);
+    --pele-radius: 0;
+    /* Pele's zoom buttons default to a column over the top-right corner, which covers the end of
+       wide LR diagrams. Put them in a row in a strip under the diagram instead. */
+    --pele-zoom-top: auto;
+    --pele-zoom-bottom: 0;
+    --pele-zoom-right: 0;
+    margin: 1.5rem 0;
+}
+
+.diagram:has(.pele-zoom) {
+    padding-bottom: 2.5rem;
+}
+
+/* Pele sets flex-direction inline, so this needs !important to win. */
+.diagram .pele-zoom {
+    flex-direction: row !important;
+}
+
 /* === Fenced code block wrapper (language-highlighted blocks) === */
 .code-block {
     border: 1px solid var(--border);

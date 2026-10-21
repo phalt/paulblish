@@ -24,10 +24,20 @@
   
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👨🏻‍💻</text></svg>">
   
-  <link rel="stylesheet" href="https://paulwrites.software/static/style.ac1d6848.css">
+  <link rel="stylesheet" href="https://paulwrites.software/static/style.566d7cfe.css">
   <link rel="alternate" type="application/rss+xml" title="Paul Writes Software" href="https://paulwrites.software/feed.xml">
   
-  <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"; mermaid.initialize({startOnLoad:true});</script>
+  <script type="module">
+    import { mount } from "https://cdn.jsdelivr.net/npm/pele@1.7.0/dist/pele.js";
+    // Swap each source <pre> for a block container: mount() sizes the diagram to the
+    // container's width and re-lays it out on resize. Without JS the source stays readable.
+    for (const source of document.querySelectorAll("pre.mermaid")) {
+      const diagram = document.createElement("div");
+      diagram.className = "diagram";
+      source.replaceWith(diagram);
+      mount(diagram, source.textContent);
+    }
+  </script>
   
 </head>
 <body>
