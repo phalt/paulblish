@@ -64,6 +64,11 @@
     "output": "articles/paulrun/index.html",
     "excerpt": "I keep forgetting how to release my own software. My major project Clientele has a PUBLISHING.md file with every step written down, but I release so rarely that I end up with the file open in one\u2026"
   },
+  "Articles/My diagrams are nicer now thanks to Pele.md": {
+    "mtime": 1792570604.0688791,
+    "output": "articles/pele/index.html",
+    "excerpt": "Paulblish turns mermaid code blocks into diagrams, and until now it used mermaid.js to do it. It worked, but the diagrams always looked a bit off next to the rest of my site, and on a phone anything\u2026"
+  },
   "Articles/Software Engineering and AI insights.md": {
     "mtime": 1775157830.8764238,
     "output": "articles/software-eng-ai-age/index.html",

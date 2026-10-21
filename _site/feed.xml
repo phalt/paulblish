@@ -4,7 +4,14 @@
     <title>Paul Writes Software</title>
     <link>https://paulwrites.software</link>
     <description>Paul Hallett is a software engineer with 15+ years experience working in tech. He builds tools with Python and HTTP. He loves file-over-app, local-first, and smallweb software. He blogs way too much.</description>
-    <lastBuildDate>Tue, 13 Oct 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 21 Oct 2026 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>My diagrams are nicer now thanks to Pele</title>
+      <link>https://paulwrites.software/articles/pele/</link>
+      <guid>https://paulwrites.software/articles/pele/</guid>
+      <pubDate>Wed, 21 Oct 2026 00:00:00 +0000</pubDate>
+      <description>Paulblish turns mermaid code blocks into diagrams, and until now it used mermaid.js to do it. It worked, but the diagrams always looked a bit off next to the rest of my site, and on a phone anything…</description>
+    </item>
     <item>
       <title>Markdown files that execute</title>
       <link>https://paulwrites.software/articles/paulrun/</link>
