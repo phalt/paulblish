@@ -748,6 +748,8 @@ mark {
     --pad-line: color-mix(in srgb, var(--accent-teal) 10%, transparent);
     --pad-edge: #3a3a48;
     --pad-shadow: color-mix(in srgb, var(--accent-amber) 40%, transparent);
+    /* --accent-rose is too dark to read on --bg */
+    --pad-error: #d0607a;
     margin: 2rem 0;
     border: 2px solid var(--pad-edge);
     border-radius: 6px;
@@ -857,11 +859,51 @@ mark {
     vertical-align: middle;
 }
 
+/* --value (0-100) is kept in sync by the tools helper in _tools.html */
 .html-embed-body :where(input[type="range"]) {
+    appearance: none;
+    display: block;
     width: 100%;
     max-width: 22rem;
     height: 2.5rem;
-    accent-color: var(--accent-amber);
+    margin: 0.4rem 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+/* Vendor pseudo-elements can't share a rule: one unknown selector drops the whole rule */
+.html-embed-body :where(input[type="range"])::-webkit-slider-runnable-track {
+    height: 0.75rem;
+    border-radius: 2px;
+    background: linear-gradient(to right, var(--accent-amber) calc(var(--value, 0) * 1%), var(--bg) 0);
+    box-shadow: inset 0 0 0 2px var(--pad-edge);
+}
+
+.html-embed-body :where(input[type="range"])::-moz-range-track {
+    height: 0.75rem;
+    border-radius: 2px;
+    background: linear-gradient(to right, var(--accent-amber) calc(var(--value, 0) * 1%), var(--bg) 0);
+    box-shadow: inset 0 0 0 2px var(--pad-edge);
+}
+
+.html-embed-body :where(input[type="range"])::-webkit-slider-thumb {
+    appearance: none;
+    width: 1.25rem;
+    height: 2rem;
+    margin-top: -0.625rem;
+    background: var(--accent-amber);
+    border: 2px solid var(--bg);
+    border-radius: 2px;
+    box-shadow: 3px 3px 0 var(--accent-rose);
+}
+
+.html-embed-body :where(input[type="range"])::-moz-range-thumb {
+    width: 1.25rem;
+    height: 2rem;
+    background: var(--accent-amber);
+    border: 2px solid var(--bg);
+    border-radius: 2px;
+    box-shadow: 3px 3px 0 var(--accent-rose);
 }
 
 .html-embed-body :where(button, input[type="button"], input[type="submit"], input[type="reset"]) {
@@ -911,6 +953,394 @@ mark {
     color: var(--accent-amber);
 }
 
+/*
+ * Tool widgets. Each needs at most one class. Same zero-specificity rule as above, so a
+ * tool's own <style> can restyle any of them.
+ */
+
+.html-embed-body :where(small) {
+    font-size: 0.85rem;
+    color: var(--text);
+    opacity: 0.8;
+}
+
+/* A <small> on its own line is a hint under a control; inside running text it stays inline */
+.html-embed-body :where(:not(p, li, td, th, label, span) > small) {
+    display: block;
+    margin: 0.25rem 0 0.75rem;
+}
+
+.html-embed-body :where(fieldset) {
+    margin: 1rem 0;
+    padding: 0.75rem 1rem 1rem;
+    border: 2px solid var(--pad-edge);
+    border-radius: 4px;
+}
+
+.html-embed-body :where(legend) {
+    padding: 0 0.4rem;
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    color: var(--text-bright);
+}
+
+/* Inline labels: <label><input type="checkbox"> Text</label> */
+.html-embed-body :where(label:has(> input[type="checkbox"], > input[type="radio"])) {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    cursor: pointer;
+}
+
+/* :user-invalid waits for the reader to interact, so untouched required fields aren't red */
+.html-embed-body :where(input, select, textarea):user-invalid {
+    border-color: var(--pad-error);
+}
+
+.html-embed-body :where(.error, input:user-invalid + small) {
+    color: var(--pad-error);
+    opacity: 1;
+}
+
+.html-embed-body :where(input, select, textarea, button):disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.html-embed-body :where(button, input[type="button"], input[type="submit"], input[type="reset"]):disabled {
+    filter: none;
+    transform: none;
+    box-shadow: none;
+}
+
+/* .row: controls side by side, e.g. a number and its unit select */
+.html-embed-body :where(.row) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.75rem;
+    margin: 0.4rem 0;
+}
+
+.html-embed-body :where(.row) > :where(*) {
+    margin: 0;
+}
+
+.html-embed-body :where(.row) > :where(input:not([type="checkbox"], [type="radio"]), select) {
+    flex: 1 1 8rem;
+    width: auto;
+    min-width: 0;
+}
+
+/* After an input, a select is a unit picker: keep it to its content width */
+.html-embed-body :where(.row) > :where(input + select) {
+    flex: none;
+}
+
+.html-embed-body :where(.row) > :where(span) {
+    font-family: var(--font-heading);
+    color: var(--text-bright);
+}
+
+/* .fields: label/control pairs in a two-column grid that stacks on phones */
+.html-embed-body :where(.fields) {
+    display: grid;
+    grid-template-columns: minmax(8rem, max-content) minmax(0, 1fr);
+    align-items: center;
+    gap: 0.75rem 1rem;
+    margin: 1rem 0;
+}
+
+.html-embed-body :where(.fields) > :where(*) {
+    margin: 0;
+    max-width: none;
+}
+
+/* .panel: a box for results */
+.html-embed-body :where(.panel) {
+    margin: 1rem 0;
+    padding: 0.85rem 1rem;
+    background: var(--bg);
+    border-left: 4px solid var(--accent-amber);
+}
+
+.html-embed-body :where(.panel) > :where(:last-child) {
+    margin-bottom: 0;
+}
+
+/* .switch: a checkbox drawn as a toggle */
+.html-embed-body :where(input.switch) {
+    appearance: none;
+    position: relative;
+    flex: none;
+    width: 3.25rem;
+    height: 1.75rem;
+    margin: 0;
+    background: var(--bg);
+    border: 2px solid var(--pad-edge);
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.html-embed-body :where(input.switch)::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 1.25rem;
+    height: calc(100% - 4px);
+    background: var(--text);
+    border-radius: 1px;
+}
+
+.html-embed-body :where(input.switch:checked) {
+    background: color-mix(in srgb, var(--accent-amber) 25%, var(--bg));
+    border-color: var(--accent-amber);
+}
+
+.html-embed-body :where(input.switch:checked)::before {
+    left: calc(100% - 1.25rem - 2px);
+    background: var(--accent-amber);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .html-embed-body :where(input.switch)::before {
+        transition: left 0.12s ease-out;
+    }
+}
+
+/* .segmented: a fieldset of radio labels drawn as a button bar */
+.html-embed-body :where(fieldset.segmented) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    padding: 0;
+    border: 0;
+}
+
+.html-embed-body :where(fieldset.segmented) > :where(legend) {
+    width: 100%;
+    margin: 1rem 0 0.4rem;
+    padding: 0;
+}
+
+.html-embed-body :where(fieldset.segmented) > :where(label) {
+    flex: 1 1 auto;
+    position: relative;
+    display: block;
+    margin: 0 0 0 -2px;
+    padding: 0.6rem 1rem;
+    text-align: center;
+    background: var(--bg);
+    border: 2px solid var(--pad-edge);
+}
+
+.html-embed-body :where(fieldset.segmented) > :where(label:first-of-type) {
+    margin-left: 0;
+}
+
+.html-embed-body :where(fieldset.segmented) :where(input) {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+}
+
+/* z-index lifts the highlight over the neighbour it overlaps by 2px */
+.html-embed-body :where(fieldset.segmented) > :where(label:has(:checked)) {
+    z-index: 1;
+    color: var(--bg);
+    background: var(--accent-amber);
+    border-color: var(--accent-amber);
+}
+
+.html-embed-body :where(fieldset.segmented) > :where(label:has(:focus-visible)) {
+    z-index: 2;
+    outline: 3px solid var(--text-bright);
+    outline-offset: 2px;
+}
+
+/* .knob: a range input the tools helper turns into a draggable dial */
+.html-embed-body :where(input.knob) {
+    appearance: none;
+    display: block;
+    width: 7rem;
+    height: 7rem;
+    margin: 0.75rem 0;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle closest-side, var(--surface) 0 66%, transparent 67%),
+        conic-gradient(
+            from 225deg,
+            var(--accent-amber) calc(var(--value, 0) * 2.7deg),
+            var(--bg) 0 270deg,
+            transparent 0
+        );
+    box-shadow: 0 0 0 2px var(--pad-edge);
+    cursor: grab;
+    touch-action: none; /* dragging the dial must not scroll the page */
+}
+
+/* Hide the slider track/thumb so only the dial shows */
+.html-embed-body :where(input.knob)::-webkit-slider-runnable-track {
+    background: none;
+    box-shadow: none;
+}
+
+.html-embed-body :where(input.knob)::-moz-range-track {
+    background: none;
+    box-shadow: none;
+}
+
+.html-embed-body :where(input.knob)::-webkit-slider-thumb {
+    opacity: 0;
+}
+
+.html-embed-body :where(input.knob)::-moz-range-thumb {
+    opacity: 0;
+}
+
+.html-embed-body :where(input.knob):active {
+    cursor: grabbing;
+}
+
+/* <meter> and <progress>: low/high/optimum on <meter> pick the colour */
+.html-embed-body :where(meter, progress) {
+    appearance: none;
+    display: block;
+    width: 100%;
+    max-width: 22rem;
+    height: 0.9rem;
+    margin: 0.4rem 0;
+    background: var(--bg);
+    border: 2px solid var(--pad-edge);
+    border-radius: 2px;
+}
+
+.html-embed-body :where(meter)::-webkit-meter-bar {
+    height: 100%;
+    background: var(--bg);
+    border: 0;
+    border-radius: 0;
+}
+
+.html-embed-body :where(meter)::-webkit-meter-optimum-value {
+    background: var(--accent-teal);
+}
+
+.html-embed-body :where(meter)::-webkit-meter-suboptimum-value {
+    background: var(--accent-amber);
+}
+
+.html-embed-body :where(meter)::-webkit-meter-even-less-good-value {
+    background: var(--pad-error);
+}
+
+.html-embed-body :where(meter):-moz-meter-optimum::-moz-meter-bar {
+    background: var(--accent-teal);
+}
+
+.html-embed-body :where(meter):-moz-meter-sub-optimum::-moz-meter-bar {
+    background: var(--accent-amber);
+}
+
+.html-embed-body :where(meter):-moz-meter-sub-sub-optimum::-moz-meter-bar {
+    background: var(--pad-error);
+}
+
+.html-embed-body :where(progress)::-webkit-progress-bar {
+    background: var(--bg);
+}
+
+.html-embed-body :where(progress)::-webkit-progress-value {
+    background: var(--accent-amber);
+}
+
+.html-embed-body :where(progress)::-moz-progress-bar {
+    background: var(--accent-amber);
+}
+
+/* .gauge: a read-only dial. Text inside is the value; set style="--value: 0-100" */
+.html-embed-body :where(.gauge) {
+    display: grid;
+    place-items: center;
+    width: 8rem;
+    aspect-ratio: 1;
+    margin: 1rem 0;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle closest-side, var(--surface) 0 76%, transparent 77%),
+        conic-gradient(
+            from 225deg,
+            var(--accent-amber) calc(var(--value, 0) * 2.7deg),
+            var(--bg) 0 270deg,
+            transparent 0
+        );
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: var(--text-bright);
+}
+
+/* .bars: a <dl> bar chart. Each <dd> holds the value text; set style="--value: 0-100" */
+.html-embed-body :where(dl.bars) {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    align-items: center;
+    gap: 0.5rem 0.75rem;
+    margin: 1rem 0;
+}
+
+.html-embed-body :where(dl.bars) > :where(dt) {
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    color: var(--text-bright);
+}
+
+.html-embed-body :where(dl.bars) > :where(dd) {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--text);
+}
+
+.html-embed-body :where(dl.bars) > :where(dd)::before {
+    content: "";
+    flex: none;
+    width: calc(var(--value, 0) * (100% - 5rem) / 100);
+    height: 1.1rem;
+    background: var(--accent-amber);
+    border-radius: 0 4px 4px 0;
+}
+
+/* .stats: a row of figures. Each child is a <div> with a <strong> value and a caption */
+.html-embed-body :where(.stats) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: 0.75rem;
+    margin: 1rem 0;
+}
+
+.html-embed-body :where(.stats) > :where(*) {
+    margin: 0;
+    padding: 0.75rem 1rem;
+    background: var(--bg);
+    border: 2px solid var(--pad-edge);
+    font-size: 0.85rem;
+}
+
+.html-embed-body :where(.stats) :where(strong, output) {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    line-height: 1.2;
+    color: var(--text-bright);
+}
+
 @media (max-width: 640px) {
     .html-embed {
         margin: 1.5rem 0;
@@ -934,5 +1364,19 @@ mark {
         width: 100%;
         max-width: none;
         margin-right: 0;
+    }
+
+    /* Undo the full-width rule above: a row's children share the line */
+    .html-embed-body :where(.row) > :where(*) {
+        width: auto;
+    }
+
+    .html-embed-body :where(input.knob) {
+        width: 7rem;
+    }
+
+    .html-embed-body :where(.fields) {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0.4rem;
     }
 }

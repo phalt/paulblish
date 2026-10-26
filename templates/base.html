@@ -60,5 +60,8 @@
       <a href="{{ site.base_url }}/sitemap.xml">Sitemap</a>
     </p>
   </footer>
+  {% if article is defined and 'class="html-embed"' in article.body_html %}
+  {% include "_tools.html" %}
+  {% endif %}
 </body>
 </html>

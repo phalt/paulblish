@@ -26,7 +26,7 @@
   
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👨🏻‍💻</text></svg>">
   
-  <link rel="stylesheet" href="https://paulwrites.software/static/style.566d7cfe.css">
+  <link rel="stylesheet" href="https://paulwrites.software/static/style.36f8def4.css">
   <link rel="alternate" type="application/rss+xml" title="Paul Writes Software" href="https://paulwrites.software/feed.xml">
   
 </head>
@@ -115,38 +115,42 @@
   <div class="article-body">
     <p>Mid-market rates from <a href="https://frankfurter.dev/">Frankfurter</a>, which blends daily figures from central banks. Card and cash rates will be worse than this.</p>
 <div class="html-embed"><div class="html-embed-bar"><span class="html-embed-label">Tool</span></div><div class="html-embed-body"><form id="fx">
-  <label for="fx-amount">Amount</label>
-  <input id="fx-amount" type="number" inputmode="decimal" value="100" min="0" step="any">
+  <div class="fields">
+    <label for="fx-amount">Amount</label>
+    <input id="fx-amount" type="number" inputmode="decimal" value="100" min="0" step="any">
 
-  <label for="fx-from">From</label>
-  <select id="fx-from">
-    <option value="GBP" selected>GBP, pound sterling</option>
-    <option value="JPY">JPY, Japanese yen</option>
-    <option value="EUR">EUR, euro</option>
-    <option value="USD">USD, US dollar</option>
-    <option value="AUD">AUD, Australian dollar</option>
-    <option value="CAD">CAD, Canadian dollar</option>
-    <option value="CHF">CHF, Swiss franc</option>
-    <option value="NZD">NZD, New Zealand dollar</option>
-  </select>
+    <label for="fx-from">From</label>
+    <select id="fx-from">
+      <option value="GBP" selected>GBP, pound sterling</option>
+      <option value="JPY">JPY, Japanese yen</option>
+      <option value="EUR">EUR, euro</option>
+      <option value="USD">USD, US dollar</option>
+      <option value="AUD">AUD, Australian dollar</option>
+      <option value="CAD">CAD, Canadian dollar</option>
+      <option value="CHF">CHF, Swiss franc</option>
+      <option value="NZD">NZD, New Zealand dollar</option>
+    </select>
 
-  <label for="fx-to">To</label>
-  <select id="fx-to">
-    <option value="GBP">GBP, pound sterling</option>
-    <option value="JPY" selected>JPY, Japanese yen</option>
-    <option value="EUR">EUR, euro</option>
-    <option value="USD">USD, US dollar</option>
-    <option value="AUD">AUD, Australian dollar</option>
-    <option value="CAD">CAD, Canadian dollar</option>
-    <option value="CHF">CHF, Swiss franc</option>
-    <option value="NZD">NZD, New Zealand dollar</option>
-  </select>
+    <label for="fx-to">To</label>
+    <select id="fx-to">
+      <option value="GBP">GBP, pound sterling</option>
+      <option value="JPY" selected>JPY, Japanese yen</option>
+      <option value="EUR">EUR, euro</option>
+      <option value="USD">USD, US dollar</option>
+      <option value="AUD">AUD, Australian dollar</option>
+      <option value="CAD">CAD, Canadian dollar</option>
+      <option value="CHF">CHF, Swiss franc</option>
+      <option value="NZD">NZD, New Zealand dollar</option>
+    </select>
+  </div>
 
   <button type="submit">Convert</button>
   <button type="button" id="fx-swap">Swap</button>
 
-  <p><output id="fx-result" for="fx-amount fx-from fx-to">Press convert</output></p>
-  <p id="fx-detail"></p>
+  <div class="panel">
+    <p><output id="fx-result" for="fx-amount fx-from fx-to">Press convert</output></p>
+    <small id="fx-detail"></small>
+  </div>
 </form>
 
 <script>
@@ -256,5 +260,74 @@
       <a href="https://paulwrites.software/sitemap.xml">Sitemap</a>
     </p>
   </footer>
+  
+  <script>
+  // Wiring for tool widgets (style.css, "Tool widgets"). Delegated from document so widgets
+  // a tool adds later work too. Tool scripts that set a value should dispatch an "input" event.
+  (function() {
+    var SWEEP = 270, START = 225; // knob arc in degrees clockwise from 12 o'clock; matches the CSS
+    function inTool(el) { return el instanceof HTMLElement && el.closest('.html-embed-body'); }
+
+    function sync(el) {
+      if (el.type === 'range') {
+        var min = +el.min || 0, max = el.max === '' ? 100 : +el.max;
+        el.style.setProperty('--value', max > min ? (el.value - min) / (max - min) * 100 : 0);
+      }
+      if (!el.id) return;
+      document.querySelectorAll('.html-embed-body output.live').forEach(function(out) {
+        if (out.htmlFor.contains(el.id)) out.value = el.value;
+      });
+    }
+
+    function syncAll(root) { root.querySelectorAll('input, select, textarea').forEach(sync); }
+
+    document.addEventListener('input', function(e) { if (inTool(e.target)) sync(e.target); });
+    document.addEventListener('change', function(e) { if (inTool(e.target)) sync(e.target); });
+    // Reset changes values without firing input events
+    document.addEventListener('reset', function(e) {
+      if (inTool(e.target)) setTimeout(function() { syncAll(e.target); });
+    });
+
+    function turn(knob, e) {
+      var box = knob.getBoundingClientRect();
+      var angle = Math.atan2(e.clientX - box.left - box.width / 2, box.top + box.height / 2 - e.clientY) * 180 / Math.PI;
+      var along = ((angle - START) % 360 + 360) % 360;
+      if (along > SWEEP) along = along > (SWEEP + 360) / 2 ? 0 : SWEEP; // dead zone: snap to nearest end
+      var min = +knob.min || 0, max = knob.max === '' ? 100 : +knob.max;
+      knob.value = min + along / SWEEP * (max - min); // the browser snaps this to step
+      knob.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+
+    function knobOf(e) { return inTool(e.target) && e.target.closest('input.knob'); }
+
+    // A knob is still a native range input underneath, which would treat the drag as a
+    // horizontal slide. Arrow keys still work natively.
+    ['mousedown', 'touchstart'].forEach(function(type) {
+      document.addEventListener(type, function(e) { if (knobOf(e)) e.preventDefault(); }, { passive: false });
+    });
+
+    document.addEventListener('pointerdown', function(e) {
+      var knob = knobOf(e);
+      if (!knob) return;
+      e.preventDefault();
+      knob.focus();
+      knob.setPointerCapture(e.pointerId);
+      turn(knob, e);
+      function move(ev) { turn(knob, ev); }
+      function end() {
+        knob.removeEventListener('pointermove', move);
+        knob.removeEventListener('pointerup', end);
+        knob.removeEventListener('pointercancel', end);
+        knob.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+      knob.addEventListener('pointermove', move);
+      knob.addEventListener('pointerup', end);
+      knob.addEventListener('pointercancel', end);
+    });
+
+    document.querySelectorAll('.html-embed-body').forEach(syncAll);
+  })();
+</script>
+  
 </body>
 </html>

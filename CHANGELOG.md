@@ -6,7 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added
+
+- Tool widgets for ` ```html embed ` blocks: styled form controls, sliders, meters and progress bars with no classes, plus one-class widgets (`row`, `fields`, `panel`, `switch`, `segmented`, `knob`, `gauge`, `bars`, `stats`, `error`, `live`). Pages with an embed load a small helper script that fills slider tracks, updates `output.live` readouts and makes `knob` dials draggable. See `tests/fixtures/tool_widgets.md` for every widget and the HTML to write. Embeds and widgets work in any markdown file, including `Home.md`.
+
 ### Changed
+
+- `pb build`, `pb clean` and `pb serve` output is coloured with [Rich](https://github.com/Textualize/rich): green ✓, red ✗, yellow warnings, red errors. Piped output and `NO_COLOR` stay plain text.
+
+### Fixed
+
+- RSS excerpts no longer include JavaScript or CSS source from embedded tools.
 
 - Mermaid diagrams are rendered with [Pele](https://pele.run) instead of mermaid.js. Pele is roughly a seventh of the download, lays diagrams out to fit narrow screens, adds zoom for large diagrams, and is themed from the site palette via CSS variables. The version is pinned in `paulblish/templating.py` (`PELE_VERSION`).
 

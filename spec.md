@@ -654,6 +654,8 @@ Error: No site.toml found in ~/obsidian/blog
 - Output paths are shown for every file written.
 - A summary line reports totals.
 
+**Colour:** output is printed with [Rich](https://github.com/Textualize/rich): ✓ green, ✗ red with a dimmed reason, ⚠ yellow, output URLs cyan, written paths dimmed, errors red. Colour is dropped when stdout is not a terminal or `NO_COLOR` is set, so piped output is the plain text shown above. File names are escaped so `[...]` is never read as markup, and lines are never wrapped.
+
 **Verbose mode** (`-v`) additionally shows: asset copying, template rendering, wikilink resolution details, and timing information.
 
 ### 8.7 Exit Codes
@@ -783,6 +785,7 @@ dependencies = [
     "jinja2>=3.1",
     "pygments>=2.18",
     "click>=8.1",
+    "rich>=15.0.0",
 ]
 
 [project.scripts]
@@ -1141,6 +1144,7 @@ A collection of high-value improvements and two larger features (light/dark mode
 - [x] **8.8** Incremental builds via `--incremental` flag and `.pb-manifest.json`.
 - [x] **8.9** Social icons in nav and footer for Bluesky, GitHub, and email.
 - [x] **8.10** Render Mermaid diagrams with Pele instead of mermaid.js, themed from the site palette.
+- [x] **8.11** Tool widgets: default styles for form controls and visualisations inside `html embed` blocks, each needing at most one class, plus a small helper script.
 
 **Milestone:** All pages include social sharing meta tags, are discoverable by crawlers, have a working 404, support light/dark theming, large vaults can be rebuilt incrementally in a fraction of the full build time, and the site displays the author's social presence via icons in the nav and footer.
 
@@ -1484,3 +1488,20 @@ All three icons are inline SVGs with `width="20" height="20" viewBox="0 0 24 24"
 - `style.css` moves the zoom controls off the diagram.
 
 **Documentation:** Update the syntax table in section 5 and `CHANGELOG.md`. Rebuild `_site/` so committed pages stop loading mermaid.js.
+
+#### 8.11 — Tool Widgets
+
+**What:** Default styles for the controls and visualisations used in ` ```html embed ` tools, so a tool needs no CSS of its own. Bare form elements need no class; every widget needs at most one.
+
+**Requirements:**
+
+- All rules live under `.html-embed-body` with the widget selector inside `:where()`, so they never reach article content and any selector in a tool's own `<style>` wins.
+- No class: `label`, `input`, `select`, `textarea`, `button`, `output`, `small` (hint), `fieldset`/`legend`, checkbox/radio inside a `label`, `input[type="range"]` (filled track), `meter` (teal/amber/red from `low`/`high`/`optimum`), `progress`, `:user-invalid` inputs, disabled controls.
+- One class: `.row`, `.fields`, `.panel`, `input.switch`, `fieldset.segmented`, `input.knob`, `.gauge`, `dl.bars`, `.stats`, `.error`, `output.live`.
+- Value-driven widgets (`.gauge`, `dl.bars > dd`, range track, `.knob`) read a `--value` custom property from 0 to 100, and print their value as text so colour is never the only signal.
+- Embeds work in any published markdown file, not only `tools/`. `templates/_tools.html` is included by `base.html` (so article and home pages alike) only when `body_html` contains an embed. It keeps `--value` in sync on range inputs, writes a control's value into any `output.live` whose `for` names it, turns `.knob` drags into a rotary value, and loads nothing external.
+- `tests/fixtures/tool_widgets.md` demonstrates every widget with the HTML to write for it.
+
+**Tests:** Every widget class has a scoped, zero-specificity rule; meter states and vendor pseudo-elements are styled without grouping; the helper is included on embed pages only and loads nothing external; the fixture renders every widget with at most one class per element.
+
+**Documentation:** `CHANGELOG.md`.

@@ -91,6 +91,10 @@ class TestPlainTextExcerpt:
         result = _plain_text_excerpt("<p>hello</p>  <p>world</p>")
         assert "  " not in result
 
+    def test_drops_script_and_style_source(self):
+        html = '<p>Intro.</p><div class="html-embed"><style>.x { color: red }</style><script>let a = 1;</script></div>'
+        assert _plain_text_excerpt(html) == "Intro."
+
 
 # ---------------------------------------------------------------------------
 # Feed XML structure

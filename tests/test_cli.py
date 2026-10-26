@@ -143,6 +143,61 @@ class TestBuildSkippedFiles:
         assert "Building 1 articles, skipped 1 files" in result.output
 
 
+class TestColouredOutput:
+    GREEN_TICK = "\x1b[1;32m✓"
+    RED_CROSS = "\x1b[1;31m✗"
+
+    def _source(self, tmp_path):
+        source = tmp_path / "source"
+        source.mkdir()
+        (source / "site.toml").write_text(
+            '[site]\ntitle = "T"\nbase_url = "http://x"\ndescription = "D"\nauthor = "A"\n'
+        )
+        (source / "good.md").write_text("---\npublish: true\nslug: good\n---\nGood")
+        (source / "draft.md").write_text("---\npublish: false\n---\nDraft")
+        return source
+
+    def test_terminal_output_colours_ticks_and_crosses(self, tmp_path):
+        args = ["build", "-s", str(self._source(tmp_path)), "-o", str(tmp_path / "_site")]
+        result = CliRunner().invoke(main, args, env={"FORCE_COLOR": "1", "NO_COLOR": None})
+        assert result.exit_code == 0
+        assert self.GREEN_TICK in result.output
+        assert self.RED_CROSS in result.output
+
+    def test_piped_output_is_plain(self, tmp_path):
+        args = ["build", "-s", str(self._source(tmp_path)), "-o", str(tmp_path / "_site")]
+        result = CliRunner().invoke(main, args, env={"FORCE_COLOR": None})
+        assert "\x1b[" not in result.output
+        assert "  ✓ good.md → /good/" in result.output
+        assert "  ✗ draft.md (publish is not true)" in result.output
+
+    def test_no_color_disables_colour(self, tmp_path):
+        args = ["build", "-s", str(self._source(tmp_path)), "-o", str(tmp_path / "_site")]
+        result = CliRunner().invoke(main, args, env={"FORCE_COLOR": None, "NO_COLOR": "1"})
+        assert "\x1b[" not in result.output
+
+    def test_square_brackets_in_filenames_are_not_markup(self, tmp_path):
+        source = self._source(tmp_path)
+        (source / "[bold] notes.md").write_text("---\npublish: false\n---\nx")
+        result = CliRunner().invoke(main, ["build", "-s", str(source), "-o", str(tmp_path / "_site")])
+        assert "[bold] notes.md" in result.output
+
+    def test_long_lines_are_not_wrapped(self, tmp_path):
+        source = self._source(tmp_path)
+        name = "a" * 150 + ".md"
+        (source / name).write_text("---\npublish: false\n---\nx")
+        result = CliRunner().invoke(main, ["build", "-s", str(source), "-o", str(tmp_path / "_site")])
+        assert f"  ✗ {name} (publish is not true)" in result.output
+
+    def test_config_error_is_printed_and_exits_1(self, tmp_path):
+        source = tmp_path / "source"
+        source.mkdir()
+        (source / "site.toml").write_text("not = [valid")
+        result = CliRunner().invoke(main, ["build", "-s", str(source), "-o", str(tmp_path / "_site")])
+        assert result.exit_code == 1
+        assert "Error: Failed to parse" in result.output
+
+
 class TestBuildWritesMeta:
     def test_build_writes_pb_meta_json(self, tmp_path):
         import json

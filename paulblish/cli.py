@@ -3,6 +3,8 @@ import time
 from pathlib import Path
 
 import click
+from rich.console import Console
+from rich.markup import escape
 
 from paulblish.assets import collect_assets, copy_assets
 from paulblish.config import load_config
@@ -13,6 +15,24 @@ from paulblish.scanner import scan
 from paulblish.writer import write, write_build_meta, write_cname
 
 VERSION = "0.1.0"
+
+PICKED = "[bold green]✓[/]"
+SKIPPED = "[bold red]✗[/]"
+WARNING = "[bold yellow]⚠[/]"
+WRITTEN = "[magenta]→[/]"
+
+
+def _console() -> Console:
+    # Built per command so it binds to the current stdout (CliRunner swaps it in tests).
+    # Rich drops colour by itself when stdout isn't a terminal or NO_COLOR is set.
+    return Console(highlight=False, soft_wrap=True)
+
+
+def _error(console: Console, message: str) -> None:
+    lines = message.removeprefix("Error: ").splitlines()
+    console.print(f"\n[bold red]Error:[/] [red]{escape(lines[0])}[/]")
+    for line in lines[1:]:
+        console.print(f"       {escape(line.strip())}")
 
 
 @click.group()
@@ -35,17 +55,24 @@ def build(
     output_dir = Path(output).resolve()
     templates_dir = Path(templates).resolve() if templates else None
 
-    click.echo(f"Paulblish v{VERSION}")
-    click.echo(f"Source: {source_dir}")
+    console = _console()
+    console.print(f"[bold magenta]Paulblish[/] [dim]v{VERSION}[/]")
+    console.print(f"[cyan]Source:[/] {escape(str(source_dir))}")
 
     # Validate source directory
     if not source_dir.is_dir():
-        click.echo(f"\nError: Source directory does not exist: {source_dir}")
+        _error(console, f"Source directory does not exist: {source_dir}")
         raise SystemExit(1)
 
     # Load and validate config
-    config, config_source = load_config(source_dir, base_url=base_url)
-    click.echo(f"Config: {config_source} ✓")
+    try:
+        config, config_source = load_config(source_dir, base_url=base_url)
+    except SystemExit as e:
+        if not isinstance(e.code, str):
+            raise
+        _error(console, e.code)
+        raise SystemExit(1) from None
+    console.print(f"[cyan]Config:[/] {escape(config_source)} {PICKED}")
 
     # Load manifest for incremental builds (empty dicts if doing a full build)
     manifest: dict[str, float] = load_manifest(output_dir) if incremental else {}
@@ -53,7 +80,7 @@ def build(
     manifest_excerpts: dict[str, str] = load_manifest_excerpts(output_dir) if incremental else {}
 
     # Scan
-    click.echo("\nScanning...\n")
+    console.print("\n[bold cyan]Scanning...[/]\n")
     articles, skipped = scan(source_dir, include_drafts=drafts)
 
     # Determine stale / fresh sets for incremental mode
@@ -77,7 +104,7 @@ def build(
                     parent = out_file.parent
                     if parent != output_dir and not any(parent.iterdir()):
                         parent.rmdir()
-                click.echo(f"  ✗ {absent_key} (removed from output)")
+                console.print(f"  {SKIPPED} {escape(absent_key)} [dim](removed from output)[/]")
 
         # Restore feed excerpts for fresh articles (body_html is "" because they weren't rendered)
         for article in articles:
@@ -94,19 +121,21 @@ def build(
 
     # Print scan results
     for article in articles:
-        is_fresh = id(article) in fresh_set
-        if article.is_home:
-            label = "(unchanged)" if is_fresh else "→ rebuilt" if incremental else "→ / (index)"
-            click.echo(f"  ✓ {article.relative_path} {label}")
+        if id(article) in fresh_set:
+            label = "[dim](unchanged)[/]"
+        elif incremental:
+            label = "[yellow]→ rebuilt[/]"
+        elif article.is_home:
+            label = "[cyan]→ / (index)[/]"
         else:
-            label = "(unchanged)" if is_fresh else "→ rebuilt" if incremental else f"→ {article.url_path}"
-            click.echo(f"  ✓ {article.relative_path} {label}")
+            label = f"[cyan]→ {escape(article.url_path)}[/]"
+        console.print(f"  {PICKED} [bold]{escape(str(article.relative_path))}[/] {label}")
 
     for skip in skipped:
-        click.echo(f"  ✗ {skip.path} ({skip.reason})")
+        console.print(f"  {SKIPPED} {escape(str(skip.path))} [dim]({escape(skip.reason)})[/]")
 
     rebuild_count = len(stale_set) if incremental else len(articles)
-    click.echo(f"\nBuilding {rebuild_count} articles, skipped {len(skipped)} files\n")
+    console.print(f"\n[bold]Building [green]{rebuild_count}[/] articles, skipped [red]{len(skipped)}[/] files[/]\n")
 
     build_start = time.perf_counter()
 
@@ -121,17 +150,17 @@ def build(
     asset_refs = collect_assets(articles, source_dir, site=config)
     asset_warnings = copy_assets(asset_refs, output_dir)
     for warning in asset_warnings:
-        click.echo(f"  ⚠ {warning}")
+        console.print(f"  {WARNING} [yellow]{escape(warning)}[/]")
 
     # Write templated output
     written = write(articles, output_dir, site=config, templates_dir=templates_dir, articles_to_write=articles_to_write)
     for path in written:
-        click.echo(f"  → {path.relative_to(output_dir.parent)}")
+        console.print(f"  {WRITTEN} [dim]{escape(str(path.relative_to(output_dir.parent)))}[/]")
 
     # Write CNAME if configured
     cname_path = write_cname(output_dir, config.cname)
     if cname_path:
-        click.echo(f"  → {cname_path.relative_to(output_dir.parent)}")
+        console.print(f"  {WRITTEN} [dim]{escape(str(cname_path.relative_to(output_dir.parent)))}[/]")
 
     # Write build metadata so pb serve can rewrite base_url for local preview
     write_build_meta(output_dir, config.base_url)
@@ -142,8 +171,11 @@ def build(
     elapsed = time.perf_counter() - build_start
     num_assets = len([r for r in asset_refs if r.source_path])
     num_warnings = len(asset_warnings)
-    warning_str = f", {num_warnings} warning{'s' if num_warnings != 1 else ''}" if num_warnings else ""
-    click.echo(f"\nDone. Built {rebuild_count} articles, {num_assets} assets{warning_str} in {elapsed:.2f}s.")
+    warning_str = f", [yellow]{num_warnings} warning{'s' if num_warnings != 1 else ''}[/]" if num_warnings else ""
+    console.print(
+        f"\n[bold green]Done.[/] Built [bold]{rebuild_count}[/] articles, [bold]{num_assets}[/] assets"
+        f"{warning_str} in [cyan]{elapsed:.2f}s[/]."
+    )
 
 
 @main.command()
@@ -152,14 +184,15 @@ def clean(output: str) -> None:
     """Remove the built site directory."""
     import shutil
 
+    console = _console()
     output_dir = Path(output).resolve()
 
     if not output_dir.exists():
-        click.echo(f"Nothing to clean: {output_dir} does not exist.")
+        console.print(f"[dim]Nothing to clean: {escape(str(output_dir))} does not exist.[/]")
         return
 
     shutil.rmtree(output_dir)
-    click.echo(f"Removed {output_dir}")
+    console.print(f"[bold green]Removed[/] {escape(str(output_dir))}")
 
 
 @main.command()
@@ -171,11 +204,11 @@ def serve(output: str, port: int) -> None:
     import http.server
     import json
 
+    console = _console()
     output_dir = Path(output).resolve()
 
     if not output_dir.is_dir():
-        click.echo(f"Error: Output directory does not exist: {output_dir}")
-        click.echo("       Run 'pb build' first.")
+        _error(console, f"Output directory does not exist: {output_dir}\nRun 'pb build' first.")
         raise SystemExit(1)
 
     # Read base_url from build metadata so links can be rewritten for local preview
@@ -186,10 +219,10 @@ def serve(output: str, port: int) -> None:
             rewrite_from = json.loads(meta_path.read_text()).get("base_url", "")
 
     if rewrite_from:
-        click.echo(f"Rewriting '{rewrite_from}' → '' in HTML/XML responses for local preview.")
+        console.print(f"[dim]Rewriting '{escape(rewrite_from)}' → '' in HTML/XML responses for local preview.[/]")
 
-    click.echo(f"Serving {output_dir} at http://localhost:{port}")
-    click.echo("Press Ctrl+C to stop.\n")
+    console.print(f"[bold green]Serving[/] {escape(str(output_dir))} at [bold cyan]http://localhost:{port}[/]")
+    console.print("[dim]Press Ctrl+C to stop.[/]\n")
 
     def _make_handler():
         class RewritingHandler(http.server.SimpleHTTPRequestHandler):
@@ -220,7 +253,7 @@ def serve(output: str, port: int) -> None:
     try:
         server.serve_forever()
     except KeyboardInterrupt:
-        click.echo("\nStopped.")
+        console.print("\n[yellow]Stopped.[/]")
 
 
 if __name__ == "__main__":

@@ -134,18 +134,23 @@
     "output": "pokemon/pokemon/shiny-rotom/index.html",
     "excerpt": "Background Rotom , my favourite Pok\u00e9mon. Ever since I heard about this mysterious ghost in the Old Chateau I've been intrigued. My favourite type of Pok\u00e9mon is the Ghost type. Ostensibly, Pok\u00e9mon is\u2026"
   },
+  "Tools/Tools Widgets.md": {
+    "mtime": 1792983049.9739525,
+    "output": "tools/examples/index.html",
+    "excerpt": "Every form control and widget the tools CSS supports, with the HTML to write for each."
+  },
   "Tools/air-fryer-conversion.md": {
-    "mtime": 1792977703.425678,
+    "mtime": 1792981946.972519,
     "output": "tools/air-fryer/index.html",
     "excerpt": "Oven temp to air fryer temp converter"
   },
   "Tools/currency-conversion.md": {
-    "mtime": 1792486006.6325867,
+    "mtime": 1792981956.1758938,
     "output": "tools/currency/index.html",
     "excerpt": "Convert between currencies using todays central bank rates."
   },
   "Tools/five nines.md": {
-    "mtime": 1792486242.0168521,
+    "mtime": 1792981974.9165974,
     "output": "tools/nines/index.html",
     "excerpt": "How much downtime an availability target allows."
   }

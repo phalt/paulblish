@@ -31,8 +31,10 @@ def _plain_text_excerpt(html: str, max_length: int = EXCERPT_LENGTH) -> str:
     Used as the RSS <description> fallback when article.description is empty.
     Strips tags, collapses whitespace, and truncates at word boundary.
     """
+    # Embedded tools carry JS/CSS source, which is not prose
+    text = re.sub(r"<(script|style)\b[^>]*>.*?</\1>", " ", html, flags=re.S | re.I)
     # Remove all HTML tags
-    text = re.sub(r"<[^>]+>", " ", html)
+    text = re.sub(r"<[^>]+>", " ", text)
     # Collapse whitespace
     text = " ".join(text.split())
     if len(text) <= max_length:
