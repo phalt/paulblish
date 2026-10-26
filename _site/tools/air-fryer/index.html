@@ -97,7 +97,7 @@
         });
       });
     </script>
-    <time datetime="2026-10-20T09:23:18.204289">20 October 2026</time>
+    <time datetime="2026-10-26T10:21:43.425678">26 October 2026</time>
     <span class="reading-time">1 min read</span>
     
     <div class="tags">
@@ -114,59 +114,43 @@
   
   <div class="article-body">
     <p>Knock 25 °C off the temperature and a fifth off the time, then check it early.</p>
-<div class="code-block" data-lang="html"><div class="code-header"><span class="code-lang">html</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">form</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;air-fryer&quot;</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;af-temp&quot;</span><span class="p">&gt;</span>Oven temperature (°C)<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">input</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;af-temp&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;temp&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;number&quot;</span> <span class="na">inputmode</span><span class="o">=</span><span class="s">&quot;numeric&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;200&quot;</span> <span class="na">min</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="na">max</span><span class="o">=</span><span class="s">&quot;300&quot;</span><span class="p">&gt;</span>
+<div class="html-embed"><div class="html-embed-bar"><span class="html-embed-label">Tool</span></div><div class="html-embed-body"><form id="air-fryer">
+  <label for="af-temp">Oven temperature (°C)</label>
+  <input id="af-temp" name="temp" type="number" inputmode="numeric" value="200" min="50" max="300">
 
-  <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;af-time&quot;</span><span class="p">&gt;</span>Oven time (minutes)<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">input</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;af-time&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;time&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;number&quot;</span> <span class="na">inputmode</span><span class="o">=</span><span class="s">&quot;numeric&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;30&quot;</span> <span class="na">min</span><span class="o">=</span><span class="s">&quot;1&quot;</span><span class="p">&gt;</span>
+  <label for="af-time">Oven time (minutes)</label>
+  <input id="af-time" name="time" type="number" inputmode="numeric" value="30" min="1">
 
-  <span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span><span class="p">&gt;</span>Convert<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+  <button type="submit">Convert</button>
 
-  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Cook at <span class="p">&lt;</span><span class="nt">output</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;af-out-temp&quot;</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;af-temp&quot;</span><span class="p">&gt;</span>175 °C<span class="p">&lt;/</span><span class="nt">output</span><span class="p">&gt;</span>
-     for <span class="p">&lt;</span><span class="nt">output</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;af-out-time&quot;</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;af-time&quot;</span><span class="p">&gt;</span>24 min<span class="p">&lt;/</span><span class="nt">output</span><span class="p">&gt;</span>.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+  <p>Cook at <output id="af-out-temp" for="af-temp">175 °C</output>
+     for <output id="af-out-time" for="af-time">24 min</output>.</p>
+</form>
 
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;air-fryer&quot;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;submit&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">temp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">+</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;af-temp&quot;</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">+</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;af-time&quot;</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
-<span class="w">  </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;af-out-temp&quot;</span><span class="p">).</span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span><span class="si">${</span><span class="nx">temp</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">25</span><span class="si">}</span><span class="sb"> °C`</span><span class="p">;</span>
-<span class="w">  </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;af-out-time&quot;</span><span class="p">).</span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span><span class="si">${</span><span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nx">time</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.8</span><span class="p">)</span><span class="si">}</span><span class="sb"> min`</span><span class="p">;</span>
-<span class="p">});</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</pre></div>
-</div>
+<script>
+document.getElementById("air-fryer").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const temp = +document.getElementById("af-temp").value;
+  const time = +document.getElementById("af-time").value;
+  document.getElementById("af-out-temp").value = `${temp - 25} °C`;
+  document.getElementById("af-out-time").value = `${Math.round(time * 0.8)} min`;
+});
+</script>
+</div></div>
 
   </div>
 
   <nav class="article-nav">
     <div class="article-nav-prev">
       
-      <a href="https://paulwrites.software/now/">← Older: Now</a>
+      <a href="https://paulwrites.software/articles/pele/">← Older: My diagrams are nicer now thanks to Pele</a>
       
     </div>
     <div class="article-nav-next">
       
-      <a href="https://paulwrites.software/articles/pele/">Newer: My diagrams are nicer now thanks to Pele →</a>
-      
     </div>
   </nav>
 </article>
-
-<script>
-  document.addEventListener('click', function(e) {
-    var btn = e.target.closest('.code-copy-btn');
-    if (!btn) return;
-    var block = btn.closest('.code-block');
-    var pre = block.querySelector('td.code pre') || block.querySelector('pre');
-    navigator.clipboard.writeText(pre.textContent).then(function() {
-      btn.classList.add('copied');
-      setTimeout(function() { btn.classList.remove('copied'); }, 2000);
-    });
-  });
-</script>
 
 
   </main>
