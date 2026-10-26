@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Fixed
 
 - RSS excerpts no longer include JavaScript or CSS source from embedded tools.
+- Wikilinks resolve by filename as well as frontmatter `title`, so `[[Tools Widgets]]` finds a note titled "Tool widgets". Links between articles and tools now work in both directions.
 
 - Mermaid diagrams are rendered with [Pele](https://pele.run) instead of mermaid.js. Pele is roughly a seventh of the download, lays diagrams out to fit narrow screens, adds zoom for large diagrams, and is themed from the site palette via CSS variables. The version is pinned in `paulblish/templating.py` (`PELE_VERSION`).
 

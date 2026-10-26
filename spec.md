@@ -179,7 +179,7 @@ class SiteConfig:
 
 ### 5.3 Wikilink Resolution
 
-A **path lookup table** is built during the scan phase:
+A **path lookup table** is built during the scan phase. Each article is keyed by its filename (as Obsidian links) and by its resolved title; where a filename and another article's title collide, the filename wins.
 
 ```python
 # Maps normalised note name -> url_path for all published articles

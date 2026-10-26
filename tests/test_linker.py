@@ -5,10 +5,11 @@ from paulblish.linker import _normalise, build_path_map
 from paulblish.models import Article
 
 
-def _make_article(title: str, slug: str, url_path: str, path_prefix: str = "") -> Article:
+def _make_article(title: str, slug: str, url_path: str, path_prefix: str = "", filename: str | None = None) -> Article:
+    filename = filename or slug
     return Article(
-        source_path=Path(f"/vault/{slug}.md"),
-        relative_path=Path(f"{slug}.md"),
+        source_path=Path(f"/vault/{filename}.md"),
+        relative_path=Path(f"{filename}.md"),
         path_prefix=path_prefix,
         title=title,
         slug=slug,
@@ -61,3 +62,19 @@ class TestBuildPathMap:
         path_map = build_path_map(articles)
         assert path_map["root post"] == "/root-post/"
         assert path_map["nested post"] == "/articles/deep/nested-post/"
+
+    def test_filename_resolves_when_title_differs(self):
+        articles = [
+            _make_article("Tool widgets", "examples", "/tools/examples/", path_prefix="tools", filename="Tools Widgets")
+        ]
+        path_map = build_path_map(articles)
+        assert path_map["tools widgets"] == "/tools/examples/"
+        assert path_map["tool widgets"] == "/tools/examples/"
+
+    def test_filename_wins_over_another_notes_title(self):
+        articles = [
+            _make_article("Metronome", "practice", "/tools/practice/", filename="Drum practice"),
+            _make_article("Metronome tool", "metronome", "/tools/metronome/", filename="Metronome"),
+        ]
+        path_map = build_path_map(articles)
+        assert path_map["metronome"] == "/tools/metronome/"

@@ -69,6 +69,11 @@
     "output": "articles/pele/index.html",
     "excerpt": "Paulblish turns mermaid code blocks into diagrams, and until now it used mermaid.js to do it. It worked, but the diagrams always looked a bit off next to the rest of my site, and on a phone anything\u2026"
   },
+  "Articles/My tools have proper widgets now.md": {
+    "mtime": 1792990782.7719727,
+    "output": "articles/tool-widgets/index.html",
+    "excerpt": "Paulblish has let me write little web tools straight into markdown for a while: you can put some HTML and JavaScript in an html embed code block and it turns it into real html/js on the page. That's\u2026"
+  },
   "Articles/Software Engineering and AI insights.md": {
     "mtime": 1775157830.8764238,
     "output": "articles/software-eng-ai-age/index.html",
@@ -153,5 +158,20 @@
     "mtime": 1792981974.9165974,
     "output": "tools/nines/index.html",
     "excerpt": "How much downtime an availability target allows."
+  },
+  "Tools/gb-grid.md": {
+    "mtime": 1792990073.3234427,
+    "output": "tools/grid/index.html",
+    "excerpt": "What's generating Great Britain's electricity right now, and how much CO\u2082 it costs."
+  },
+  "Tools/metronome.md": {
+    "mtime": 1792990054.8861408,
+    "output": "tools/metronome/index.html",
+    "excerpt": "A click track for practice, with an accented first beat."
+  },
+  "Tools/race-time-predictor.md": {
+    "mtime": 1792990063.995166,
+    "output": "tools/race-predictor/index.html",
+    "excerpt": "Predict your 5K, 10K, half and marathon times from one recent race."
   }
 }

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Metronome — Paul Writes Software</title>
+  
+  <meta name="description" content="A click track for practice, with an accented first beat.">
+  
+  <!-- Open Graph -->
+  <meta property="og:type"        content="article">
+  <meta property="og:site_name"   content="Paul Writes Software">
+  <meta property="og:title"       content="Metronome">
+  <meta property="og:description" content="A click track for practice, with an accented first beat.">
+  <meta property="og:url"         content="https://paulwrites.software/tools/metronome/">
+  
+  <meta property="og:image"       content="https://paulwrites.software/assets/site-logo.jpeg">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary">
+  <meta name="twitter:title"       content="Metronome">
+  <meta name="twitter:description" content="A click track for practice, with an accented first beat.">
+  
+  <meta name="twitter:image"       content="https://paulwrites.software/assets/site-logo.jpeg">
+  
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👨🏻‍💻</text></svg>">
+  
+  <link rel="stylesheet" href="https://paulwrites.software/static/style.36f8def4.css">
+  <link rel="alternate" type="application/rss+xml" title="Paul Writes Software" href="https://paulwrites.software/feed.xml">
+  
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="https://paulwrites.software/" class="nav-title">Paul Writes Software</a>
+<input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+<div class="nav-links">
+  <a href="https://paulwrites.software/articles/">Articles</a>
+  <a href="https://paulwrites.software/tools/">Tools</a>
+  <a href="https://paulwrites.software/all/">All Pages</a>
+</div>
+
+<div class="social-icons">
+  
+  <a href="https://github.com/phalt" class="social-icon" aria-label="GitHub" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M10.226 17.284c-2.965-.36-5.054-2.493-5.054-5.256 0-1.123.404-2.336 1.078-3.144-.292-.741-.247-2.314.09-2.965.898-.112 2.111.36 2.83 1.01.853-.269 1.752-.404 2.853-.404 1.1 0 1.999.135 2.807.382.696-.629 1.932-1.1 2.83-.988.315.606.36 2.179.067 2.942.72.854 1.101 2 1.101 3.167 0 2.763-2.089 4.852-5.098 5.234.763.494 1.28 1.572 1.28 2.807v2.336c0 .674.561 1.056 1.235.786 4.066-1.55 7.255-5.615 7.255-10.646C23.5 6.188 18.334 1 11.978 1 5.62 1 .5 6.188.5 12.545c0 4.986 3.167 9.12 7.435 10.669.606.225 1.19-.18 1.19-.786V20.63a2.9 2.9 0 0 1-1.078.224c-1.483 0-2.359-.808-2.987-2.313-.247-.607-.517-.966-1.034-1.033-.27-.023-.359-.135-.359-.27 0-.27.45-.471.898-.471.652 0 1.213.404 1.797 1.235.45.651.921.943 1.483.943.561 0 .92-.202 1.437-.719.382-.381.674-.718.944-.943"/>
+    </svg>
+  </a>
+  
+  
+  <a href="https://bsky.app/profile/paulwrites.software" class="social-icon" aria-label="Bluesky" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M5.202 2.857C7.954 4.922 10.913 9.11 12 11.358c1.087-2.247 4.046-6.436 6.798-8.501C20.783 1.366 24 .213 24 3.883c0 .732-.42 6.156-.667 7.037-.856 3.061-3.978 3.842-6.755 3.37 4.854.826 6.089 3.562 3.422 6.299-5.065 5.196-7.28-1.304-7.847-2.97-.104-.305-.152-.448-.153-.327 0-.121-.05.022-.153.327-.568 1.666-2.782 8.166-7.847 2.97-2.667-2.737-1.432-5.473 3.422-6.3-2.777.473-5.899-.308-6.755-3.369C.42 10.04 0 4.615 0 3.883c0-3.67 3.217-2.517 5.202-1.026"/>
+    </svg>
+  </a>
+  
+  
+  <a href="mailto:case@hey.com" class="social-icon" aria-label="Email">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+    </svg>
+  </a>
+  
+</div>
+
+<label for="nav-toggle" class="nav-toggle-label" aria-label="Toggle navigation">
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+    <rect y="3" width="20" height="2" rx="1"/>
+    <rect y="9" width="20" height="2" rx="1"/>
+    <rect y="15" width="20" height="2" rx="1"/>
+  </svg>
+</label>
+  </nav>
+
+  <main>
+    
+<article>
+  <header class="article-meta">
+    <h1>
+      Metronome
+      <button class="copy-url-btn" title="Copy URL to article" aria-label="Copy URL to article">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+        </svg>
+      </button>
+    </h1>
+    <script>
+      document.querySelector('.copy-url-btn').addEventListener('click', function() {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+          this.classList.add('copied');
+          setTimeout(() => this.classList.remove('copied'), 2000);
+        });
+      });
+    </script>
+    <time datetime="2026-10-26T00:00:00">26 October 2026</time>
+    <span class="reading-time">2 min read</span>
+    
+    <div class="tags">
+      
+        <a href="https://paulwrites.software/tags/Tools/" class="tag">Tools</a>
+      
+    </div>
+    
+    
+    <p class="description">A click track for practice, with an accented first beat.</p>
+    
+  </header>
+
+  
+  <div class="article-body">
+    <p>Turn your sound up, then drag the knob (or click it and use the arrow keys) to set the tempo.</p>
+<div class="html-embed"><div class="html-embed-bar"><span class="html-embed-label">Tool</span></div><div class="html-embed-body"><form id="met">
+  <label for="met-bpm">Tempo</label>
+  <input id="met-bpm" type="range" class="knob" min="40" max="220" value="96">
+  <p><output class="live" for="met-bpm">96</output> bpm</p>
+
+  <fieldset class="segmented">
+    <legend>Time signature</legend>
+    <label><input type="radio" name="met-beats" value="3"> 3/4</label>
+    <label><input type="radio" name="met-beats" value="4" checked> 4/4</label>
+    <label><input type="radio" name="met-beats" value="5"> 5/4</label>
+  </fieldset>
+
+  <label><input type="checkbox" class="switch" id="met-accent" checked> Accent the first beat</label>
+
+  <button type="submit" id="met-go">Start</button>
+
+  <progress id="met-pos" max="4" value="0" aria-label="Position in the bar"></progress>
+  <div class="stats">
+    <div><output id="met-beat">–</output> beat</div>
+    <div><output id="met-bar">0</output> bars</div>
+  </div>
+</form>
+
+<script>
+(() => {
+  const form = document.getElementById("met");
+  const $ = (id) => document.getElementById(id);
+  let audio, timer, next, beat;
+
+  function click(time, accent) {
+    const osc = audio.createOscillator();
+    const gain = audio.createGain();
+    osc.frequency.value = accent ? 1500 : 1000;
+    gain.gain.setValueAtTime(0.5, time);
+    gain.gain.exponentialRampToValueAtTime(0.001, time + 0.05);
+    osc.connect(gain).connect(audio.destination);
+    osc.start(time);
+    osc.stop(time + 0.05);
+  }
+
+  // Book clicks a little ahead on the audio clock, so timers can be late without the beat drifting
+  function schedule() {
+    const beats = Number(form.elements["met-beats"].value);
+    while (next < audio.currentTime + 0.1) {
+      const n = beat % beats;
+      click(next, n === 0 && $("met-accent").checked);
+      setTimeout(() => {
+        $("met-beat").value = n + 1;
+        $("met-pos").max = beats;
+        $("met-pos").value = n + 1;
+        if (n === 0) $("met-bar").value = Number($("met-bar").value) + 1;
+      }, (next - audio.currentTime) * 1000);
+      next += 60 / Number($("met-bpm").value);
+      beat++;
+    }
+  }
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (timer) {
+      clearInterval(timer);
+      timer = null;
+      $("met-go").textContent = "Start";
+      return;
+    }
+    audio ??= new AudioContext();
+    audio.resume();
+    next = audio.currentTime + 0.05;
+    beat = 0;
+    $("met-bar").value = 0;
+    timer = setInterval(schedule, 25);
+    $("met-go").textContent = "Stop";
+  });
+})();
+</script>
+</div></div>
+<h2>Notes</h2>
+<ul>
+<li>You can change the tempo, time signature and accent while it's playing.</li>
+<li>The click is generated in the browser, so it works offline once the page has loaded.</li>
+</ul>
+
+  </div>
+
+  <nav class="article-nav">
+    <div class="article-nav-prev">
+      
+      <a href="https://paulwrites.software/tools/grid/">← Older: GB grid right now</a>
+      
+    </div>
+    <div class="article-nav-next">
+      
+      <a href="https://paulwrites.software/tools/race-predictor/">Newer: Race time predictor →</a>
+      
+    </div>
+  </nav>
+</article>
+
+
+  </main>
+
+  <footer class="site-footer">
+    <p>Paul Writes Software — built with <a href="https://github.com/phalt/paulblish">Paulblish</a></p>
+    
+<div class="social-icons">
+  
+  <a href="https://github.com/phalt" class="social-icon" aria-label="GitHub" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M10.226 17.284c-2.965-.36-5.054-2.493-5.054-5.256 0-1.123.404-2.336 1.078-3.144-.292-.741-.247-2.314.09-2.965.898-.112 2.111.36 2.83 1.01.853-.269 1.752-.404 2.853-.404 1.1 0 1.999.135 2.807.382.696-.629 1.932-1.1 2.83-.988.315.606.36 2.179.067 2.942.72.854 1.101 2 1.101 3.167 0 2.763-2.089 4.852-5.098 5.234.763.494 1.28 1.572 1.28 2.807v2.336c0 .674.561 1.056 1.235.786 4.066-1.55 7.255-5.615 7.255-10.646C23.5 6.188 18.334 1 11.978 1 5.62 1 .5 6.188.5 12.545c0 4.986 3.167 9.12 7.435 10.669.606.225 1.19-.18 1.19-.786V20.63a2.9 2.9 0 0 1-1.078.224c-1.483 0-2.359-.808-2.987-2.313-.247-.607-.517-.966-1.034-1.033-.27-.023-.359-.135-.359-.27 0-.27.45-.471.898-.471.652 0 1.213.404 1.797 1.235.45.651.921.943 1.483.943.561 0 .92-.202 1.437-.719.382-.381.674-.718.944-.943"/>
+    </svg>
+  </a>
+  
+  
+  <a href="https://bsky.app/profile/paulwrites.software" class="social-icon" aria-label="Bluesky" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M5.202 2.857C7.954 4.922 10.913 9.11 12 11.358c1.087-2.247 4.046-6.436 6.798-8.501C20.783 1.366 24 .213 24 3.883c0 .732-.42 6.156-.667 7.037-.856 3.061-3.978 3.842-6.755 3.37 4.854.826 6.089 3.562 3.422 6.299-5.065 5.196-7.28-1.304-7.847-2.97-.104-.305-.152-.448-.153-.327 0-.121-.05.022-.153.327-.568 1.666-2.782 8.166-7.847 2.97-2.667-2.737-1.432-5.473 3.422-6.3-2.777.473-5.899-.308-6.755-3.369C.42 10.04 0 4.615 0 3.883c0-3.67 3.217-2.517 5.202-1.026"/>
+    </svg>
+  </a>
+  
+  
+  <a href="mailto:case@hey.com" class="social-icon" aria-label="Email">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+    </svg>
+  </a>
+  
+</div>
+
+    <p class="footer-links">
+      <a href="https://paulwrites.software/feed.xml">RSS</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://paulwrites.software/sitemap.xml">Sitemap</a>
+    </p>
+  </footer>
+  
+  <script>
+  // Wiring for tool widgets (style.css, "Tool widgets"). Delegated from document so widgets
+  // a tool adds later work too. Tool scripts that set a value should dispatch an "input" event.
+  (function() {
+    var SWEEP = 270, START = 225; // knob arc in degrees clockwise from 12 o'clock; matches the CSS
+    function inTool(el) { return el instanceof HTMLElement && el.closest('.html-embed-body'); }
+
+    function sync(el) {
+      if (el.type === 'range') {
+        var min = +el.min || 0, max = el.max === '' ? 100 : +el.max;
+        el.style.setProperty('--value', max > min ? (el.value - min) / (max - min) * 100 : 0);
+      }
+      if (!el.id) return;
+      document.querySelectorAll('.html-embed-body output.live').forEach(function(out) {
+        if (out.htmlFor.contains(el.id)) out.value = el.value;
+      });
+    }
+
+    function syncAll(root) { root.querySelectorAll('input, select, textarea').forEach(sync); }
+
+    document.addEventListener('input', function(e) { if (inTool(e.target)) sync(e.target); });
+    document.addEventListener('change', function(e) { if (inTool(e.target)) sync(e.target); });
+    // Reset changes values without firing input events
+    document.addEventListener('reset', function(e) {
+      if (inTool(e.target)) setTimeout(function() { syncAll(e.target); });
+    });
+
+    function turn(knob, e) {
+      var box = knob.getBoundingClientRect();
+      var angle = Math.atan2(e.clientX - box.left - box.width / 2, box.top + box.height / 2 - e.clientY) * 180 / Math.PI;
+      var along = ((angle - START) % 360 + 360) % 360;
+      if (along > SWEEP) along = along > (SWEEP + 360) / 2 ? 0 : SWEEP; // dead zone: snap to nearest end
+      var min = +knob.min || 0, max = knob.max === '' ? 100 : +knob.max;
+      knob.value = min + along / SWEEP * (max - min); // the browser snaps this to step
+      knob.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+
+    function knobOf(e) { return inTool(e.target) && e.target.closest('input.knob'); }
+
+    // A knob is still a native range input underneath, which would treat the drag as a
+    // horizontal slide. Arrow keys still work natively.
+    ['mousedown', 'touchstart'].forEach(function(type) {
+      document.addEventListener(type, function(e) { if (knobOf(e)) e.preventDefault(); }, { passive: false });
+    });
+
+    document.addEventListener('pointerdown', function(e) {
+      var knob = knobOf(e);
+      if (!knob) return;
+      e.preventDefault();
+      knob.focus();
+      knob.setPointerCapture(e.pointerId);
+      turn(knob, e);
+      function move(ev) { turn(knob, ev); }
+      function end() {
+        knob.removeEventListener('pointermove', move);
+        knob.removeEventListener('pointerup', end);
+        knob.removeEventListener('pointercancel', end);
+        knob.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+      knob.addEventListener('pointermove', move);
+      knob.addEventListener('pointerup', end);
+      knob.addEventListener('pointercancel', end);
+    });
+
+    document.querySelectorAll('.html-embed-body').forEach(syncAll);
+  })();
+</script>
+  
+</body>
+</html>

@@ -4,7 +4,14 @@
     <title>Paul Writes Software</title>
     <link>https://paulwrites.software</link>
     <description>Paul Hallett is a software engineer with 15+ years experience working in tech. He builds tools with Python and HTTP. He loves file-over-app, local-first, and smallweb software. He blogs way too much.</description>
-    <lastBuildDate>Wed, 21 Oct 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 26 Oct 2026 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>My tools have proper widgets now</title>
+      <link>https://paulwrites.software/articles/tool-widgets/</link>
+      <guid>https://paulwrites.software/articles/tool-widgets/</guid>
+      <pubDate>Mon, 26 Oct 2026 00:00:00 +0000</pubDate>
+      <description>Paulblish has let me write little web tools straight into markdown for a while: you can put some HTML and JavaScript in an html embed code block and it turns it into real html/js on the page. That's…</description>
+    </item>
     <item>
       <title>My diagrams are nicer now thanks to Pele</title>
       <link>https://paulwrites.software/articles/pele/</link>
