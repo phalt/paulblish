@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Terminal demos are real now — Paul Writes Software</title>
+  
+  <!-- Open Graph -->
+  <meta property="og:type"        content="article">
+  <meta property="og:site_name"   content="Paul Writes Software">
+  <meta property="og:title"       content="My Terminal demos are real now">
+  <meta property="og:description" content="Paul Hallett is a software engineer with 15+ years experience working in tech. He builds tools with Python and HTTP. He loves file-over-app, local-first, and smallweb software. He blogs way too much.">
+  <meta property="og:url"         content="https://paulwrites.software/articles/zoetty/">
+  
+  <meta property="og:image"       content="https://paulwrites.software/assets/site-logo.jpeg">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary">
+  <meta name="twitter:title"       content="My Terminal demos are real now">
+  <meta name="twitter:description" content="Paul Hallett is a software engineer with 15+ years experience working in tech. He builds tools with Python and HTTP. He loves file-over-app, local-first, and smallweb software. He blogs way too much.">
+  
+  <meta name="twitter:image"       content="https://paulwrites.software/assets/site-logo.jpeg">
+  
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👨🏻‍💻</text></svg>">
+  
+  <link rel="stylesheet" href="https://paulwrites.software/static/style.36f8def4.css">
+  <link rel="alternate" type="application/rss+xml" title="Paul Writes Software" href="https://paulwrites.software/feed.xml">
+  
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="https://paulwrites.software/" class="nav-title">Paul Writes Software</a>
+<input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+<div class="nav-links">
+  <a href="https://paulwrites.software/articles/">Articles</a>
+  <a href="https://paulwrites.software/tools/">Tools</a>
+  <a href="https://paulwrites.software/all/">All Pages</a>
+</div>
+
+<div class="social-icons">
+  
+  <a href="https://github.com/phalt" class="social-icon" aria-label="GitHub" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M10.226 17.284c-2.965-.36-5.054-2.493-5.054-5.256 0-1.123.404-2.336 1.078-3.144-.292-.741-.247-2.314.09-2.965.898-.112 2.111.36 2.83 1.01.853-.269 1.752-.404 2.853-.404 1.1 0 1.999.135 2.807.382.696-.629 1.932-1.1 2.83-.988.315.606.36 2.179.067 2.942.72.854 1.101 2 1.101 3.167 0 2.763-2.089 4.852-5.098 5.234.763.494 1.28 1.572 1.28 2.807v2.336c0 .674.561 1.056 1.235.786 4.066-1.55 7.255-5.615 7.255-10.646C23.5 6.188 18.334 1 11.978 1 5.62 1 .5 6.188.5 12.545c0 4.986 3.167 9.12 7.435 10.669.606.225 1.19-.18 1.19-.786V20.63a2.9 2.9 0 0 1-1.078.224c-1.483 0-2.359-.808-2.987-2.313-.247-.607-.517-.966-1.034-1.033-.27-.023-.359-.135-.359-.27 0-.27.45-.471.898-.471.652 0 1.213.404 1.797 1.235.45.651.921.943 1.483.943.561 0 .92-.202 1.437-.719.382-.381.674-.718.944-.943"/>
+    </svg>
+  </a>
+  
+  
+  <a href="https://bsky.app/profile/paulwrites.software" class="social-icon" aria-label="Bluesky" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M5.202 2.857C7.954 4.922 10.913 9.11 12 11.358c1.087-2.247 4.046-6.436 6.798-8.501C20.783 1.366 24 .213 24 3.883c0 .732-.42 6.156-.667 7.037-.856 3.061-3.978 3.842-6.755 3.37 4.854.826 6.089 3.562 3.422 6.299-5.065 5.196-7.28-1.304-7.847-2.97-.104-.305-.152-.448-.153-.327 0-.121-.05.022-.153.327-.568 1.666-2.782 8.166-7.847 2.97-2.667-2.737-1.432-5.473 3.422-6.3-2.777.473-5.899-.308-6.755-3.369C.42 10.04 0 4.615 0 3.883c0-3.67 3.217-2.517 5.202-1.026"/>
+    </svg>
+  </a>
+  
+  
+  <a href="mailto:case@hey.com" class="social-icon" aria-label="Email">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+    </svg>
+  </a>
+  
+</div>
+
+<label for="nav-toggle" class="nav-toggle-label" aria-label="Toggle navigation">
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+    <rect y="3" width="20" height="2" rx="1"/>
+    <rect y="9" width="20" height="2" rx="1"/>
+    <rect y="15" width="20" height="2" rx="1"/>
+  </svg>
+</label>
+  </nav>
+
+  <main>
+    
+<article>
+  <header class="article-meta">
+    <h1>
+      My Terminal demos are real now
+      <button class="copy-url-btn" title="Copy URL to article" aria-label="Copy URL to article">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+        </svg>
+      </button>
+    </h1>
+    <script>
+      document.querySelector('.copy-url-btn').addEventListener('click', function() {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+          this.classList.add('copied');
+          setTimeout(() => this.classList.remove('copied'), 2000);
+        });
+      });
+    </script>
+    <time datetime="2026-11-05T00:00:00">05 November 2026</time>
+    <span class="reading-time">4 min read</span>
+    
+    <div class="tags">
+      
+        <a href="https://paulwrites.software/tags/Software/" class="tag">Software</a>
+      
+    </div>
+    
+    
+  </header>
+
+  
+  <div class="article-body">
+    <h1>My terminal demos are real now</h1>
+<p>I build a lot of terminal tools.</p>
+<p>I have <a href="https://paulwrites.software/articles/paulrun/">paulrun</a> to execute my runbooks, <a href="https://github.com/phalt/clientele">clientele</a> to generate API clients, and there's a long tail of little CLI things that I have made too.</p>
+<p>When I publish them, I always find that a README full of code blocks never quite shows what using them <em>feels</em> like, and so I like to add little animations of the tool running. Because CLI output is wicked, right?</p>
+<p>The usual way to make one is a GIF, and GIFs are terrible for a few reasons: megabytes for a few seconds of text, blurry on any decent screen, and stale the moment you change how your CLI works. For example: Clientele's README had a GIF of a command that doesn't even exist any more, and I didn't realise until last week, oops!</p>
+<h2>So I built something to scratch my itch...</h2>
+<p>I built <a href="https://github.com/phalt/zoetty">zoetty</a>.</p>
+<p>It generates CLI demo clips for you in either SVG or html/css format. A clip is <em>defined</em> in a toml file. It's not just a raw video.</p>
+<p>Here's a demo of zoetty CLI, recorded <em>using</em> zoetty:</p>
+<p><img src="https://raw.githubusercontent.com/phalt/zoetty/main/docs/clips/quickstart.svg" alt="zoetty recording itself" /></p>
+<blockquote>
+<p>Note: I realise now the example above is a total mindfuck: it is an SVG generated by zoetty, showing how zoetty generated the clip itself, what! I guess it's a <a href="https://en.wikipedia.org/wiki/Quine_(computing)">quine</a>?</p>
+</blockquote>
+<p>The toml file for the clip above looks like this:</p>
+<div class="code-block" data-lang="toml"><div class="code-header"><span class="code-lang">toml</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span><span class="c1"># zoetty recording itself: init a clip, build it, check it.</span>
+<span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;~/my-project&quot;</span>
+<span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;zoetty init writes a starter clip spec, zoetty build renders it to SVG, and zoetty check confirms it is up to date&quot;</span>
+<span class="n">cols</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">72</span>
+<span class="n">out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;quickstart.svg&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;quickstart.html&quot;</span><span class="p">]</span>
+
+<span class="k">[[run]]</span>
+<span class="n">cmd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;zoetty init clips/hello.toml&quot;</span>
+<span class="n">exec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;cd zoetty-quickstart &amp;&amp; zoetty init clips/hello.toml&quot;</span>
+<span class="n">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;captures/quickstart-init.ansi&quot;</span>
+
+<span class="k">[[run]]</span>
+<span class="n">cmd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;zoetty build clips/hello.toml&quot;</span>
+<span class="n">exec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;cd zoetty-quickstart &amp;&amp; zoetty build clips/hello.toml&quot;</span>
+<span class="n">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;captures/quickstart-build.ansi&quot;</span>
+
+<span class="p">...</span>
+</pre></div>
+</div>
+<p>You can either hard code what is shown yourself, or run <code>zoetty record</code> to run real CLI commands and save what goes to stdout, colours and all.</p>
+<p>Recording the output of a real command is defined like this:</p>
+<div class="code-block" data-lang="toml"><div class="code-header"><span class="code-lang">toml</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span><span class="c1"># An interactive program: `input` is typed into it while recording,</span>
+<span class="c1"># one line each time it goes quiet, so answers land after their prompts.</span>
+<span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;python&quot;</span>
+<span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;A Python REPL importing zoetty&#39;s markup parser and parsing some styled text&quot;</span>
+<span class="n">cols</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">64</span>
+<span class="n">out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;repl.svg&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;repl.html&quot;</span><span class="p">]</span>
+
+<span class="k">[record]</span>
+<span class="n">env</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">PYTHON_BASIC_REPL</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="w"> </span><span class="p">}</span>
+
+<span class="k">[[run]]</span>
+<span class="n">cmd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;python -q&quot;</span>
+<span class="n">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;captures/repl.ansi&quot;</span>
+<span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">from zoetty.markup import parse, plain</span>
+<span class="s2">plain(parse(&quot;[bold]zoe[/]tty&quot;))</span>
+<span class="s2">[s.styles for s in parse(&quot;[bold green]ok[/] done&quot;)]</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">pause</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.2</span>
+</pre></div>
+</div>
+<p>Then you run <code>zoetty build</code> which turns that saved output into an animated SVG, or an HTML fragment with selectable text for a docs site. The clips are only a few KB of text instead of megabytes, and zoetty itself is pure Python with two dependencies (click and rich) so no ffmpeg, no headless browser, no Node.</p>
+<p>The bit I really like is that the clip output lives in the repo, the &quot;spec&quot; toml file, the captured output, and the built clip are all just files. That means a clip can be checked to make sure it is consistent with the latest version of the CLI command.</p>
+<p>In your CLI you can run <code>zoetty check</code> which will fail the second a clip stops matching.</p>
+<h2>Small tools or just get LLMs to do everything?</h2>
+<p>It also turns out this is a perfect tool for a coding agent: the spec is tiny, every command tells you what it did, and there's a <a href="https://phalt.github.io/zoetty/agents/">page in the docs</a> written for agents to follow, plus a prompt in the README you can paste straight into Claude Code or whatever you use. An LLM <em>could</em> do this for you itself, but this is a deterministic, tiny way to produce the same result, which can lead to you saving tokens and saving yourself from frustration.</p>
+<p>Zoetty isn't trying to be everything: if you're recording a full-screen TUI, <a href="https://github.com/charmbracelet/vhs">VHS</a> is the better tool. But if you want a few CLI commands and their real output in a README that stays up to date, this is perfect. It's on PyPI (<code>uv tool install zoetty</code>), the <a href="https://phalt.github.io/zoetty/">docs are here</a>, and the code is MIT licensed on <a href="https://github.com/phalt/zoetty">GitHub</a>, so as always, fork away ⚜️</p>
+
+  </div>
+
+  <nav class="article-nav">
+    <div class="article-nav-prev">
+      
+      <a href="https://paulwrites.software/tools/air-fryer/">← Older: Oven → Air Fryer Converter</a>
+      
+    </div>
+    <div class="article-nav-next">
+      
+    </div>
+  </nav>
+</article>
+
+<script>
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('.code-copy-btn');
+    if (!btn) return;
+    var block = btn.closest('.code-block');
+    var pre = block.querySelector('td.code pre') || block.querySelector('pre');
+    navigator.clipboard.writeText(pre.textContent).then(function() {
+      btn.classList.add('copied');
+      setTimeout(function() { btn.classList.remove('copied'); }, 2000);
+    });
+  });
+</script>
+
+
+  </main>
+
+  <footer class="site-footer">
+    <p>Paul Writes Software — built with <a href="https://github.com/phalt/paulblish">Paulblish</a></p>
+    
+<div class="social-icons">
+  
+  <a href="https://github.com/phalt" class="social-icon" aria-label="GitHub" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M10.226 17.284c-2.965-.36-5.054-2.493-5.054-5.256 0-1.123.404-2.336 1.078-3.144-.292-.741-.247-2.314.09-2.965.898-.112 2.111.36 2.83 1.01.853-.269 1.752-.404 2.853-.404 1.1 0 1.999.135 2.807.382.696-.629 1.932-1.1 2.83-.988.315.606.36 2.179.067 2.942.72.854 1.101 2 1.101 3.167 0 2.763-2.089 4.852-5.098 5.234.763.494 1.28 1.572 1.28 2.807v2.336c0 .674.561 1.056 1.235.786 4.066-1.55 7.255-5.615 7.255-10.646C23.5 6.188 18.334 1 11.978 1 5.62 1 .5 6.188.5 12.545c0 4.986 3.167 9.12 7.435 10.669.606.225 1.19-.18 1.19-.786V20.63a2.9 2.9 0 0 1-1.078.224c-1.483 0-2.359-.808-2.987-2.313-.247-.607-.517-.966-1.034-1.033-.27-.023-.359-.135-.359-.27 0-.27.45-.471.898-.471.652 0 1.213.404 1.797 1.235.45.651.921.943 1.483.943.561 0 .92-.202 1.437-.719.382-.381.674-.718.944-.943"/>
+    </svg>
+  </a>
+  
+  
+  <a href="https://bsky.app/profile/paulwrites.software" class="social-icon" aria-label="Bluesky" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M5.202 2.857C7.954 4.922 10.913 9.11 12 11.358c1.087-2.247 4.046-6.436 6.798-8.501C20.783 1.366 24 .213 24 3.883c0 .732-.42 6.156-.667 7.037-.856 3.061-3.978 3.842-6.755 3.37 4.854.826 6.089 3.562 3.422 6.299-5.065 5.196-7.28-1.304-7.847-2.97-.104-.305-.152-.448-.153-.327 0-.121-.05.022-.153.327-.568 1.666-2.782 8.166-7.847 2.97-2.667-2.737-1.432-5.473 3.422-6.3-2.777.473-5.899-.308-6.755-3.369C.42 10.04 0 4.615 0 3.883c0-3.67 3.217-2.517 5.202-1.026"/>
+    </svg>
+  </a>
+  
+  
+  <a href="mailto:case@hey.com" class="social-icon" aria-label="Email">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+    </svg>
+  </a>
+  
+</div>
+
+    <p class="footer-links">
+      <a href="https://paulwrites.software/feed.xml">RSS</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://paulwrites.software/sitemap.xml">Sitemap</a>
+    </p>
+  </footer>
+  
+</body>
+</html>

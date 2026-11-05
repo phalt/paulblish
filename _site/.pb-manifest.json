@@ -64,6 +64,11 @@
     "output": "articles/paulrun/index.html",
     "excerpt": "I keep forgetting how to release my own software. My major project Clientele has a PUBLISHING.md file with every step written down, but I release so rarely that I end up with the file open in one\u2026"
   },
+  "Articles/My Terminal demos are real now.md": {
+    "mtime": 1793884662.8527918,
+    "output": "articles/zoetty/index.html",
+    "excerpt": "My terminal demos are real now I build a lot of terminal tools. I have paulrun to execute my runbooks, clientele to generate API clients, and there's a long tail of little CLI things that I have made\u2026"
+  },
   "Articles/My diagrams are nicer now thanks to Pele.md": {
     "mtime": 1792570604.0688791,
     "output": "articles/pele/index.html",

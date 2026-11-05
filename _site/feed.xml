@@ -4,7 +4,14 @@
     <title>Paul Writes Software</title>
     <link>https://paulwrites.software</link>
     <description>Paul Hallett is a software engineer with 15+ years experience working in tech. He builds tools with Python and HTTP. He loves file-over-app, local-first, and smallweb software. He blogs way too much.</description>
-    <lastBuildDate>Mon, 26 Oct 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 05 Nov 2026 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>My Terminal demos are real now</title>
+      <link>https://paulwrites.software/articles/zoetty/</link>
+      <guid>https://paulwrites.software/articles/zoetty/</guid>
+      <pubDate>Thu, 05 Nov 2026 00:00:00 +0000</pubDate>
+      <description>My terminal demos are real now I build a lot of terminal tools. I have paulrun to execute my runbooks, clientele to generate API clients, and there's a long tail of little CLI things that I have made…</description>
+    </item>
     <item>
       <title>My tools have proper widgets now</title>
       <link>https://paulwrites.software/articles/tool-widgets/</link>
