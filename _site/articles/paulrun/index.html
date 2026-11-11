@@ -111,7 +111,13 @@
 
   
   <div class="article-body">
-    <p>I keep forgetting how to release my own software. My major project <a href="https://paulwrites.software/articles/clientele-2/">Clientele</a> has a <code>PUBLISHING.md</code> file with every step written down, but I release so rarely that I end up with the file open in one window and a terminal in the other, copying and pasting commands and fat-fingering version numbers. Writing the steps down helped, but it is still tedious to copy and paste - why can't I just execute the file? So, following <a href="https://paulwrites.software/articles/pauldot/">pauldot</a> and <a href="https://paulwrites.software/articles/paulias/">paulias</a>, I built <strong>paulrun</strong>.</p>
+    <div class="callout callout-tip" data-callout="tip">
+<div class="callout-title">Update 11-11-2026</div>
+<div class="callout-body">
+<p>Paulrun has been renamed to <code>rundot</code> and is now available at <a href="https://rundot.dev">https://rundot.dev</a></p>
+</div>
+</div>
+<p>I keep forgetting how to release my own software. My major project <a href="https://paulwrites.software/articles/clientele-2/">Clientele</a> has a <code>PUBLISHING.md</code> file with every step written down, but I release so rarely that I end up with the file open in one window and a terminal in the other, copying and pasting commands and fat-fingering version numbers. Writing the steps down helped, but it is still tedious to copy and paste - why can't I just execute the file? So, following <a href="https://paulwrites.software/articles/pauldot/">pauldot</a> and <a href="https://paulwrites.software/articles/paulias/">paulias</a>, I built <strong>paulrun</strong>.</p>
 <p>Paul (me). Run(books). 🏃 I think I am getting a bit of psychosis.</p>
 <p>A <code>paulrun</code> runbook is just a markdown file. It reads like normal documentation, renders fine on GitHub, and you can still follow it by hand if you want. Mark a code block with <code>run</code> and <code>paulrun</code> executes it. Inputs get declared once in the frontmatter, checked against a pattern, and filled in wherever a placeholder like <code>&lt;VERSION&gt;</code> appears. And a <code>confirm</code> block pauses for the bits only a person can do, like clicking buttons on GitHub:</p>
 <div class="code-block" data-lang="md"><div class="code-header"><span class="code-lang">RELEASING.md</span><button class="code-copy-btn" aria-label="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="highlight"><pre><span></span>---
