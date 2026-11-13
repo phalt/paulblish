@@ -524,6 +524,41 @@ class TestHomeLatestArticles:
         assert 'class="article-nav"' not in content
 
 
+class TestKofi:
+    SITE_KOFI = SiteConfig(title="T", base_url="https://x.com", description="D", author="A", kofi="A6W12AL86B")
+
+    def test_absent_when_not_configured(self, tmp_path):
+        write([_make_article("post")], tmp_path, site=SITE_SOCIAL)
+        content = (tmp_path / "post" / "index.html").read_text()
+        assert "ko-fi.com" not in content
+        assert "kofi-button" not in content
+
+    def test_icon_in_nav_and_footer(self, tmp_path):
+        write([_make_article("post")], tmp_path, site=self.SITE_KOFI)
+        content = (tmp_path / "post" / "index.html").read_text()
+        assert content.count('aria-label="Ko-fi"') == 2
+        assert content.count("social-icons") == 2
+
+    def test_footer_button(self, tmp_path):
+        write([_make_article("post")], tmp_path, site=self.SITE_KOFI)
+        content = (tmp_path / "post" / "index.html").read_text()
+        footer = content.split('<footer class="site-footer">')[1]
+        assert 'class="kofi-button"' in footer
+        assert 'href="https://ko-fi.com/A6W12AL86B"' in footer
+        assert "Support me on Ko-fi" in footer
+
+    def test_no_widget_script(self, tmp_path):
+        write([_make_article("post")], tmp_path, site=self.SITE_KOFI)
+        content = (tmp_path / "post" / "index.html").read_text()
+        assert "storage.ko-fi.com" not in content
+        assert "kofiwidget" not in content
+
+    def test_on_home_page(self, tmp_path):
+        write([_make_article("home", is_home=True)], tmp_path, site=self.SITE_KOFI)
+        content = (tmp_path / "index.html").read_text()
+        assert 'class="kofi-button"' in content
+
+
 class TestSocialIcons:
     def test_icons_absent_when_not_configured(self, tmp_path):
         articles = [_make_article("post")]

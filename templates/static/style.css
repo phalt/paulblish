@@ -628,6 +628,24 @@ pre code {
     color: var(--accent-teal);
 }
 
+.kofi {
+    margin-top: 0.75rem;
+}
+
+.site-footer .kofi-button {
+    display: inline-block;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid var(--accent-amber);
+    border-radius: 4px;
+    color: var(--accent-amber);
+}
+
+.site-footer .kofi-button:hover {
+    background: var(--accent-amber);
+    color: var(--bg);
+    text-decoration: none;
+}
+
 .footer-links {
     margin-top: 0.4rem;
     display: flex;

@@ -146,6 +146,7 @@ class TestSocialFields:
         assert config.github == ""
         assert config.bluesky == ""
         assert config.email == ""
+        assert config.kofi == ""
 
     def test_social_fields_loaded_from_toml(self, tmp_path):
         (tmp_path / "site.toml").write_text(
@@ -153,11 +154,13 @@ class TestSocialFields:
             'github = "https://github.com/phalt"\n'
             'bluesky = "https://bsky.app/profile/paul.bsky.social"\n'
             'email = "paul@example.com"\n'
+            'kofi = "A6W12AL86B"\n'
         )
         config, _ = load_config(tmp_path)
         assert config.github == "https://github.com/phalt"
         assert config.bluesky == "https://bsky.app/profile/paul.bsky.social"
         assert config.email == "paul@example.com"
+        assert config.kofi == "A6W12AL86B"
 
     def test_social_fields_loaded_from_home_md(self, tmp_path):
         (tmp_path / "Home.md").write_text(
@@ -166,11 +169,13 @@ class TestSocialFields:
             'title: "T"\nbase_url: "http://x"\ndescription: "D"\nauthor: "A"\n'
             'github: "https://github.com/phalt"\n'
             'email: "paul@example.com"\n'
+            'kofi: "A6W12AL86B"\n'
             "---\n\n# Hi\n"
         )
         config, _ = load_config(tmp_path)
         assert config.github == "https://github.com/phalt"
         assert config.email == "paul@example.com"
+        assert config.kofi == "A6W12AL86B"
 
 
 class TestNoConfigFound:

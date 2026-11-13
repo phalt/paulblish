@@ -36,4 +36,5 @@ class SiteConfig:
     github: str = ""
     bluesky: str = ""
     email: str = ""
+    kofi: str = ""
     emoji_favicon: str = ""

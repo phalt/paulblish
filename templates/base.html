@@ -54,6 +54,11 @@
   <footer class="site-footer">
     <p>{{ site.title }} — built with <a href="https://github.com/phalt/paulblish">Paulblish</a></p>
     {% include "_social.html" %}
+    {% if site.kofi %}
+    <p class="kofi">
+      <a href="https://ko-fi.com/{{ site.kofi }}" class="kofi-button" rel="noopener noreferrer" target="_blank">Support me on Ko-fi</a>
+    </p>
+    {% endif %}
     <p class="footer-links">
       <a href="{{ site.base_url }}/feed.xml">RSS</a>
       <span aria-hidden="true">·</span>

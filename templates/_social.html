@@ -1,4 +1,4 @@
-{% if site.github or site.bluesky or site.email %}
+{% if site.github or site.bluesky or site.email or site.kofi %}
 <div class="social-icons">
   {% if site.github %}
   <a href="{{ site.github }}" class="social-icon" aria-label="GitHub" rel="noopener noreferrer" target="_blank">
@@ -21,6 +21,14 @@
     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
       {# Envelope icon — constructed from primitives #}
       <path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+    </svg>
+  </a>
+  {% endif %}
+  {% if site.kofi %}
+  <a href="https://ko-fi.com/{{ site.kofi }}" class="social-icon" aria-label="Ko-fi" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      {# Coffee cup — constructed from primitives #}
+      <path d="M18 8h-1V6H3v9a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4v-1h1a3 3 0 0 0 0-6zm0 4h-1v-2h1a1 1 0 0 1 0 2zM5 2h2v3H5zm4 0h2v3H9zm4 0h2v3h-2zM2 20h17v2H2z"/>
     </svg>
   </a>
   {% endif %}

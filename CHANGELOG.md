@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- `kofi` site config field. Set it to your Ko-fi page ID to add a coffee icon to the social links (nav and footer) and a "Support me on Ko-fi" button to the footer of every page. Plain links, no Ko-fi widget script.
 - Tool widgets for ` ```html embed ` blocks: styled form controls, sliders, meters and progress bars with no classes, plus one-class widgets (`row`, `fields`, `panel`, `switch`, `segmented`, `knob`, `gauge`, `bars`, `stats`, `error`, `live`). Pages with an embed load a small helper script that fills slider tracks, updates `output.live` readouts and makes `knob` dials draggable. See `tests/fixtures/tool_widgets.md` for every widget and the HTML to write. Embeds and widgets work in any markdown file, including `Home.md`.
 
 ### Changed

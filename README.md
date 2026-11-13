@@ -106,6 +106,10 @@ description = "A blog about things."
 author      = "Your Name"
 cname       = ""   # optional — your custom domain, e.g. "blog.example.com"
 avatar      = ""   # optional — relative path to a square image for the home page
+github      = ""   # optional — GitHub profile URL
+bluesky     = ""   # optional — Bluesky profile URL
+email       = ""   # optional — email address
+kofi        = ""   # optional — Ko-fi page ID, e.g. "A6W12AL86B"
 ```
 
 ### Method 2: `Home.md` frontmatter
@@ -121,6 +125,7 @@ description: "A blog about things."
 author: "Your Name"
 cname: ""    # optional
 avatar: ""   # optional
+kofi: ""     # optional
 ---
 ```
 
@@ -134,6 +139,10 @@ avatar: ""   # optional
 | `author` | yes | Author name shown in footer and meta |
 | `cname` | no | Custom domain — writes a `CNAME` file to the output root |
 | `avatar` | no | Path to a square image shown on the home page |
+| `github` | no | GitHub profile URL — icon in nav and footer |
+| `bluesky` | no | Bluesky profile URL — icon in nav and footer |
+| `email` | no | Email address — `mailto:` icon in nav and footer |
+| `kofi` | no | Ko-fi page ID (the part after `ko-fi.com/`) — coffee icon in nav and footer, plus a "Support me on Ko-fi" button in the footer. No Ko-fi JavaScript is loaded. |
 
 ## Frontmatter Schema
 

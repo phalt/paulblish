@@ -1145,6 +1145,7 @@ A collection of high-value improvements and two larger features (light/dark mode
 - [x] **8.9** Social icons in nav and footer for Bluesky, GitHub, and email.
 - [x] **8.10** Render Mermaid diagrams with Pele instead of mermaid.js, themed from the site palette.
 - [x] **8.11** Tool widgets: default styles for form controls and visualisations inside `html embed` blocks, each needing at most one class, plus a small helper script.
+- [x] **8.12** Ko-fi support link: `kofi` config field adds a coffee icon to the social icons and a support button in the footer. Plain links, no widget JavaScript.
 
 **Milestone:** All pages include social sharing meta tags, are discoverable by crawlers, have a working 404, support light/dark theming, large vaults can be rebuilt incrementally in a fraction of the full build time, and the site displays the author's social presence via icons in the nav and footer.
 
