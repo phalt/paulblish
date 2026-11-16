@@ -137,32 +137,297 @@
 <p>When I build web applications I tend to use <a href="https://www.djangoproject.com/">Django</a>. Though I’ve also used <a href="https://flask.palletsprojects.com/en/3.0.x/">Flask</a> and <a href="https://fastapi.tiangolo.com/">FastAPI</a> a fair bit too. I’ve been using <a href="https://react.dev/">React</a>, <a href="https://www.typescriptlang.org/">TypeScript</a>, and <a href="https://htmx.org/">HTMX</a> a lot on the front end recently.</p>
 <p>My career has mostly focused on <em>internal customer tools</em> - the “back office” functions that aren’t always seen by the average consumer. I’ve developed a knack for befriending and building trust with internal customers and teasing requirements out of them.</p>
 <p>I'm currently a Lead Software Engineer at <a href="https://kraken.tech">Kraken Tech</a>, the technology behind <a href="https://octopus.energy/">Octopus Energy</a> and other major energy utilities.</p>
+<h3>On GitHub</h3>
+<div class="html-embed"><div class="html-embed-bar"><span class="html-embed-label">Live from GitHub</span></div><div class="html-embed-body"><div class="stats">
+  <div><strong id="gh-repos">–</strong> public repos</div>
+  <div><strong id="gh-stars">–</strong> stars on my repos</div>
+  <div><strong id="gh-followers">–</strong> followers</div>
+  <div><strong id="gh-years">–</strong> years on GitHub</div>
+</div>
+
+<p>Where I've been busy lately:</p>
+<dl class="bars" id="gh-busy"></dl>
+<ul id="gh-feed"></ul>
+<small id="gh-when"></small>
+<p class="error" id="gh-error" hidden></p>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const USER = "phalt";
+
+  // Unauthenticated: 60 requests an hour per visitor, so cache for the browser session
+  async function get(path) {
+    const key = `gh:${path}`;
+    const cached = sessionStorage.getItem(key);
+    if (cached) return JSON.parse(cached);
+    const response = await fetch(`https://api.github.com/${path}`);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const data = await response.json();
+    try { sessionStorage.setItem(key, JSON.stringify(data)); } catch {}
+    return data;
+  }
+
+  const rtf = new Intl.RelativeTimeFormat("en-GB", { numeric: "auto" });
+  function ago(date) {
+    const minutes = Math.round((new Date(date) - Date.now()) / 60000);
+    if (minutes > -60) return rtf.format(minutes, "minute");
+    if (minutes > -1440) return rtf.format(Math.round(minutes / 60), "hour");
+    return rtf.format(Math.round(minutes / 1440), "day");
+  }
+
+  const link = (path, text) => `<a href="https://github.com/${path}">${text}</a>`;
+
+  // The events API no longer includes commit lists or PR titles, so describe events by repo and PR number
+  function describe({ type, repo, payload }) {
+    if (type === "PushEvent") return `Pushed to ${link(repo.name, repo.name)}`;
+    if (type === "PullRequestEvent") {
+      const action = payload.action[0].toUpperCase() + payload.action.slice(1);
+      return `${action} ${link(`${repo.name}/pull/${payload.number}`, `#${payload.number}`)} in ${link(repo.name, repo.name)}`;
+    }
+    if (type === "CreateEvent" && payload.ref_type === "repository") return `Created ${link(repo.name, repo.name)}`;
+    return null;
+  }
+
+  async function load() {
+    try {
+      const [user, repos, events] = await Promise.all([
+        get(`users/${USER}`),
+        get(`users/${USER}/repos?per_page=100`),
+        get(`users/${USER}/events/public?per_page=100`),
+      ]);
+
+      $("gh-repos").textContent = user.public_repos;
+      $("gh-followers").textContent = user.followers.toLocaleString("en-GB");
+      $("gh-years").textContent = new Date().getFullYear() - new Date(user.created_at).getFullYear();
+      $("gh-stars").textContent = repos
+        .filter((r) => !r.fork)
+        .reduce((sum, r) => sum + r.stargazers_count, 0)
+        .toLocaleString("en-GB");
+
+      const counts = {};
+      for (const e of events) counts[e.repo.name] = (counts[e.repo.name] ?? 0) + 1;
+      const busiest = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 5);
+      $("gh-busy").replaceChildren(...busiest.flatMap(([name, n]) => {
+        const dt = document.createElement("dt");
+        dt.textContent = name.replace(`${USER}/`, "");
+        const dd = document.createElement("dd");
+        dd.style.setProperty("--value", (n / busiest[0][1]) * 100);
+        dd.textContent = `${n} events`;
+        return [dt, dd];
+      }));
+
+      $("gh-feed").innerHTML = events
+        .map((e) => [describe(e), e.created_at])
+        .filter(([text]) => text)
+        .slice(0, 5)
+        .map(([text, when]) => `<li>${text} <small>${ago(when)}</small></li>`)
+        .join("");
+
+      if (events.length) {
+        const since = new Date(events.at(-1).created_at).toLocaleDateString("en-GB", { day: "numeric", month: "long" });
+        $("gh-when").textContent = `My last ${events.length} public events on GitHub, back to ${since}.`;
+      }
+    } catch (error) {
+      $("gh-error").textContent = `Couldn't reach GitHub (${error.message}). Try again later.`;
+      $("gh-error").hidden = false;
+    }
+  }
+
+  load();
+})();
+</script>
+</div></div>
 <h3>Software projects</h3>
 <h4>Hyper Personal Software</h4>
-<p>I build a lot of tools tailored just for me, following a personal manifesto.</p>
-<p>I call this type of software <em>hyper personal software</em>. HYPS, or <em>”hyps”</em>.</p>
-<p>If it was an emoji it would be 🦛</p>
-<p>You can read the manifesto on the <a href="https://paulwrites.software/articles/hyps/">Hyper Personal Software</a> article.</p>
+<p>I build a lot of tools tailored just for me, following a personal manifesto.  I call this type of software <em>hyper personal software</em>. HYPS, or <em>”hyps”</em>. If it was an emoji it would be 🦛 You can read the manifesto on the <a href="https://paulwrites.software/articles/hyps/">Hyper Personal Software</a> article.</p>
 <h4>PokeAPI</h4>
 <p><img src="https://raw.githubusercontent.com/PokeAPI/pokeapi.co/refs/heads/master/src/images/pokeapi_256.png" alt="PokeAPI logo" /></p>
 <p>In 2014 I created <a href="https://pokeapi.co/">PokeAPI</a> to demonstrate good HTTP API design. At the time, nothing like <a href="https://www.openapis.org/">OpenAPI</a> existed. PokeAPI was supposed to be a &quot;pure&quot; HTTP API with hyperlinks to other resources.</p>
 <p>However, it got more popular due to the subject of it's data - Pokemon. It now has well over <strong>10 billion</strong> API calls a month. I'm not kidding! Over the years the project has grown and a whole community of volunteers help keep it up to date.</p>
+<p>Try it yourself:</p>
+<div class="html-embed"><div class="html-embed-bar"><span class="html-embed-label">Try PokeAPI</span></div><div class="html-embed-body"><style>
+  .poke-body { max-height: 24rem; overflow: auto; margin: 0.75rem 0 0.5rem; font-size: 0.8rem; }
+  .poke-sprite { float: right; width: 96px; image-rendering: pixelated; }
+</style>
+
+<div id="poke">
+  <form id="poke-form">
+    <label for="poke-path">Make a GET request</label>
+    <div class="row">
+      <span>pokeapi.co/api/v2/</span>
+      <input id="poke-path" value="pokemon/rotom" spellcheck="false" autocomplete="off" autocapitalize="off" required>
+      <button>Send</button>
+    </div>
+  </form>
+
+  <div class="panel" id="poke-result" hidden>
+    <img class="poke-sprite" id="poke-sprite" alt="" hidden>
+    <p><output id="poke-status"></output> <small id="poke-meta"></small></p>
+    <pre class="poke-body"><code id="poke-body"></code></pre>
+    <small>Every resource links to others. Click any URL to follow it.</small>
+  </div>
+  <p class="error" id="poke-error" hidden></p>
+</div>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const API = "https://pokeapi.co/api/v2/";
+  // Leave quotes alone so the URL pattern below stops at the end of each JSON string
+  const escapeHtml = (text) => text.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c]);
+
+  async function send(path) {
+    path = path.trim().replace(API, "").replace(/^\/+/, "");
+    $("poke-path").value = path;
+    $("poke-error").hidden = true;
+    const started = performance.now();
+    try {
+      const response = await fetch(API + path);
+      const text = await response.text();
+      const ms = Math.round(performance.now() - started);
+      let body = text;
+      let sprite = null;
+      try {
+        const json = JSON.parse(text);
+        body = JSON.stringify(json, null, 2);
+        sprite = json.sprites?.front_default;
+      } catch {} // a 404 comes back as plain text
+
+      $("poke-status").value = `HTTP ${response.status}`;
+      $("poke-meta").textContent = `${ms} ms · ${(text.length / 1024).toFixed(1)} kB · ${response.headers.get("content-type")}`;
+      $("poke-sprite").hidden = !sprite;
+      if (sprite) $("poke-sprite").src = sprite;
+      $("poke-body").innerHTML = escapeHtml(body).replace(
+        /https:\/\/pokeapi\.co\/api\/v2\/[^"\s]+/g,
+        (url) => `<a href="${url}" data-path="${url.slice(API.length)}">${url}</a>`
+      );
+      $("poke-body").parentElement.scrollTop = 0;
+      $("poke-result").hidden = false;
+    } catch (error) {
+      $("poke-error").textContent = `Couldn't reach PokeAPI (${error.message}).`;
+      $("poke-error").hidden = false;
+    }
+  }
+
+  $("poke-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    send($("poke-path").value);
+  });
+  $("poke").addEventListener("click", (e) => {
+    const target = e.target.closest("[data-path]");
+    if (!target) return;
+    e.preventDefault();
+    send(target.dataset.path);
+  });
+})();
+</script>
+</div></div>
 <h4>Other projects</h4>
-<ul>
-<li><a href="https://github.com/phalt/paulblish">Paulblish</a> transforms my markdown files into this website.</li>
-<li><a href="https://docs.rundot.dev">Rundot</a> executes markdown files, turning them into runbooks.</li>
-<li><a href="https://github.com/phalt/zoetty">Zoetty</a> lets you write little SVG terminal demos for your projects.</li>
-<li><a href="https://paulwrites.software/articles/paulias/">Paulias</a> turns a single markdown file into a full URL shortener website that can be hosted on Github Pages.</li>
-<li><a href="https://paulwrites.software/articles/gb-eng-cli/">GB Eng</a> is a tiny CLI tool for displaying live statistics about the UK Energy grid.</li>
-<li><a href="https://github.com/phalt/calcifer">Calcifer</a> is a minimalist Raspberry Pi-based temperature sensor network that can operate with many nodes around a local network (such as your own home).</li>
-</ul>
+<div class="html-embed"><div class="html-embed-bar"><span class="html-embed-label">Pinned</span></div><div class="html-embed-body"><style>
+  .pins { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 1rem; }
+  .pin { display: flex; flex-direction: column; gap: 0.5rem; padding: 1rem; background: var(--bg); border: 2px solid var(--pad-edge); border-radius: 6px; }
+  .pin:hover { border-color: var(--accent-teal); }
+  .pin h4 { margin: 0; font-size: 1rem; }
+  .pin h4::before { content: "▣ "; color: var(--accent-amber); }
+  .pin p { margin: 0; flex: 1; font-size: 0.9rem; }
+  .pin small { display: flex; gap: 1rem; margin: 0; }
+  .pin .lang::before { content: "●"; color: #3572a5; margin-right: 0.3em; }
+</style>
+
+<div class="pins">
+  <div class="pin">
+    <h4><a href="https://github.com/phalt/paulblish">Paulblish</a></h4>
+    <p>Transforms my markdown files into this website.</p>
+    <small><span class="lang">Python</span><span data-repo="phalt/paulblish"></span></small>
+  </div>
+  <div class="pin">
+    <h4><a href="https://github.com/phalt/rundot">Rundot</a></h4>
+    <p>Executes markdown files, turning them into runbooks.</p>
+    <small><span class="lang">Python</span><span data-repo="phalt/rundot"></span><a href="https://docs.rundot.dev">Docs</a></small>
+  </div>
+  <div class="pin">
+    <h4><a href="https://github.com/phalt/zoetty">Zoetty</a></h4>
+    <p>Lets you write little SVG terminal demos for your projects.</p>
+    <small><span class="lang">Python</span><span data-repo="phalt/zoetty"></span></small>
+  </div>
+  <div class="pin">
+    <h4><a href="https://github.com/phalt/paulias">Paulias</a></h4>
+    <p>Turns a single markdown file into a URL shortener hosted on GitHub Pages.</p>
+    <small><span class="lang">Python</span><span data-repo="phalt/paulias"></span><a href="https://paulwrites.software/articles/paulias/">Write-up</a></small>
+  </div>
+  <div class="pin">
+    <h4><a href="https://github.com/phalt/gb-energy-mix-cli">GB Eng</a></h4>
+    <p>A tiny CLI tool for live statistics about the UK energy grid.</p>
+    <small><span class="lang">Python</span><span data-repo="phalt/gb-energy-mix-cli"></span><a href="https://paulwrites.software/articles/gb-eng-cli/">Write-up</a></small>
+  </div>
+  <div class="pin">
+    <h4><a href="https://github.com/phalt/calcifer">Calcifer</a></h4>
+    <p>A minimalist Raspberry Pi temperature sensor network for your home.</p>
+    <small><span class="lang">Python</span><span data-repo="phalt/calcifer"></span></small>
+  </div>
+</div>
+
+<script>
+(() => {
+  fetch("https://api.github.com/users/phalt/repos?per_page=100")
+    .then((response) => (response.ok ? response.json() : []))
+    .then((repos) => {
+      const stars = new Map(repos.map((r) => [r.full_name, r.stargazers_count]));
+      document.querySelectorAll(".pin [data-repo]").forEach((el) => {
+        if (stars.has(el.dataset.repo)) el.textContent = `★ ${stars.get(el.dataset.repo)}`;
+      });
+    })
+    .catch(() => {}); // the cards read fine without star counts
+})();
+</script>
+</div></div>
+<h2>Game dev</h2>
+<p>I'm making a game! <a href="https://minimmo.life">MiniMMOLife</a> is a nostalgic RPG adventure for you and your friends. It's the fun of old skool RuneScape, the battles of old Final Fantasy, and the dark world design of Elden Ring, all in your browser and free to play. Read about <a href="https://paulwrites.software/articles/gamedev/">how I'm building it</a>.</p>
+<div class="html-embed"><div class="html-embed-bar"><span class="html-embed-label">MiniMMOLife</span></div><div class="html-embed-body"><style>
+  .video-frame { aspect-ratio: 16 / 9; background: var(--bg); }
+  .video-frame iframe { display: block; width: 100%; height: 100%; border: 0; }
+</style>
+<div class="video-frame">
+  <iframe
+    src="https://www.youtube-nocookie.com/embed/0KyX-r8r9Vk"
+    title="MiniMMOLife gameplay"
+    loading="lazy"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen></iframe>
+</div>
+<p><a href="https://minimmo.life">Play it free in your browser →</a></p>
+</div></div>
 <h2>Photography</h2>
 <p>I also take photographs. I would consider myself an amateur photographer. I like to use old <a href="https://en.wikipedia.org/wiki/Olympus_Pen_F">analog</a> <a href="https://en.wikipedia.org/wiki/Leica_M6">film</a> cameras. And <a href="https://paulwrites.software/photography/toy-cameras/">Toy Cameras</a> too.</p>
 <p>My avatar is shot on an analogue camera! <sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup></p>
-<p><img src="https://ik.imagekit.io/paulwritessoftware/portfolio/2025-06-25-2-kodak-gold-18.jpg" alt="https://ik.imagekit.io/paulwritessoftware/portfolio/2025-06-25-2-kodak-gold-18.jpg" /></p>
-<p><img src="https://ik.imagekit.io/paulwritessoftware/portfolio/PH10040_PH10040-R1-018-7A.jpg" alt="https://ik.imagekit.io/paulwritessoftware/portfolio/PH10040_PH10040-R1-018-7A.jpg" /></p>
-<p><img src="https://ik.imagekit.io/paulwritessoftware/portfolio/IMG_0308.JPG" alt="https://ik.imagekit.io/paulwritessoftware/portfolio/IMG_0308.JPG" /></p>
-<p><img src="https://ik.imagekit.io/paulwritessoftware/portfolio/0010-e7d5f.jpg" alt="https://ik.imagekit.io/paulwritessoftware/portfolio/0010-e7d5f.jpg" /></p>
+<div class="html-embed"><div class="html-embed-bar"><span class="html-embed-label">Photographs</span></div><div class="html-embed-body"><style>
+  .photos {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    padding-bottom: 0.75rem;
+    scrollbar-color: var(--accent-amber) transparent;
+  }
+  .photos img {
+    flex: none;
+    height: min(26rem, 60vh);
+    max-width: 85%;
+    object-fit: contain;
+    scroll-snap-align: start;
+  }
+</style>
+<div class="photos" tabindex="0" role="region" aria-label="Photographs, scroll sideways for more">
+  <img src="https://ik.imagekit.io/paulwritessoftware/portfolio/2025-06-25-2-kodak-gold-18.jpg?tr=h-1000" alt="">
+  <img src="https://ik.imagekit.io/paulwritessoftware/portfolio/PH10040_PH10040-R1-018-7A.jpg?tr=h-1000" alt="">
+  <img src="https://ik.imagekit.io/paulwritessoftware/portfolio/IMG_0308.JPG?tr=h-1000" alt="">
+  <img src="https://ik.imagekit.io/paulwritessoftware/portfolio/0010-e7d5f.jpg?tr=h-1000" alt="">
+</div>
+<small>Swipe or scroll sideways for more.</small>
+</div></div>
 <p>You can view some of my favourite photographs on this website.</p>
 <h2>Drumming 🥁</h2>
 <p>I play the drums.</p>
@@ -243,6 +508,74 @@
       <a href="https://paulwrites.software/sitemap.xml">Sitemap</a>
     </p>
   </footer>
+  
+  <script>
+  // Wiring for tool widgets (style.css, "Tool widgets"). Delegated from document so widgets
+  // a tool adds later work too. Tool scripts that set a value should dispatch an "input" event.
+  (function() {
+    var SWEEP = 270, START = 225; // knob arc in degrees clockwise from 12 o'clock; matches the CSS
+    function inTool(el) { return el instanceof HTMLElement && el.closest('.html-embed-body'); }
+
+    function sync(el) {
+      if (el.type === 'range') {
+        var min = +el.min || 0, max = el.max === '' ? 100 : +el.max;
+        el.style.setProperty('--value', max > min ? (el.value - min) / (max - min) * 100 : 0);
+      }
+      if (!el.id) return;
+      document.querySelectorAll('.html-embed-body output.live').forEach(function(out) {
+        if (out.htmlFor.contains(el.id)) out.value = el.value;
+      });
+    }
+
+    function syncAll(root) { root.querySelectorAll('input, select, textarea').forEach(sync); }
+
+    document.addEventListener('input', function(e) { if (inTool(e.target)) sync(e.target); });
+    document.addEventListener('change', function(e) { if (inTool(e.target)) sync(e.target); });
+    // Reset changes values without firing input events
+    document.addEventListener('reset', function(e) {
+      if (inTool(e.target)) setTimeout(function() { syncAll(e.target); });
+    });
+
+    function turn(knob, e) {
+      var box = knob.getBoundingClientRect();
+      var angle = Math.atan2(e.clientX - box.left - box.width / 2, box.top + box.height / 2 - e.clientY) * 180 / Math.PI;
+      var along = ((angle - START) % 360 + 360) % 360;
+      if (along > SWEEP) along = along > (SWEEP + 360) / 2 ? 0 : SWEEP; // dead zone: snap to nearest end
+      var min = +knob.min || 0, max = knob.max === '' ? 100 : +knob.max;
+      knob.value = min + along / SWEEP * (max - min); // the browser snaps this to step
+      knob.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+
+    function knobOf(e) { return inTool(e.target) && e.target.closest('input.knob'); }
+
+    // A knob is still a native range input underneath, which would treat the drag as a
+    // horizontal slide. Arrow keys still work natively.
+    ['mousedown', 'touchstart'].forEach(function(type) {
+      document.addEventListener(type, function(e) { if (knobOf(e)) e.preventDefault(); }, { passive: false });
+    });
+
+    document.addEventListener('pointerdown', function(e) {
+      var knob = knobOf(e);
+      if (!knob) return;
+      e.preventDefault();
+      knob.focus();
+      knob.setPointerCapture(e.pointerId);
+      turn(knob, e);
+      function move(ev) { turn(knob, ev); }
+      function end() {
+        knob.removeEventListener('pointermove', move);
+        knob.removeEventListener('pointerup', end);
+        knob.removeEventListener('pointercancel', end);
+        knob.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+      knob.addEventListener('pointermove', move);
+      knob.addEventListener('pointerup', end);
+      knob.addEventListener('pointercancel', end);
+    });
+
+    document.querySelectorAll('.html-embed-body').forEach(syncAll);
+  })();
+</script>
   
 </body>
 </html>
