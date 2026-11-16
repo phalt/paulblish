@@ -29,6 +29,10 @@
     <lastmod>2023-10-25</lastmod>
   </url>
   <url>
+    <loc>https://paulwrites.software/articles/gamedev/</loc>
+    <lastmod>2026-11-15</lastmod>
+  </url>
+  <url>
     <loc>https://paulwrites.software/articles/lessons-from-10-hours-of-flight-training/</loc>
     <lastmod>2023-10-30</lastmod>
   </url>
@@ -146,7 +150,7 @@
   </url>
   <url>
     <loc>https://paulwrites.software/all/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-15</lastmod>
   </url>
   <url>
     <loc>https://paulwrites.software/tags/Cyberpunk/</loc>
@@ -170,11 +174,15 @@
   </url>
   <url>
     <loc>https://paulwrites.software/tags/Software/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-15</lastmod>
   </url>
   <url>
     <loc>https://paulwrites.software/tags/Tools/</loc>
     <lastmod>2026-10-26</lastmod>
+  </url>
+  <url>
+    <loc>https://paulwrites.software/tags/Videogames/</loc>
+    <lastmod>2026-11-15</lastmod>
   </url>
   <url>
     <loc>https://paulwrites.software/tags/games/</loc>

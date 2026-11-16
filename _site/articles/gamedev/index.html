@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>I'm making a game! — Paul Writes Software</title>
+  
+  <!-- Open Graph -->
+  <meta property="og:type"        content="article">
+  <meta property="og:site_name"   content="Paul Writes Software">
+  <meta property="og:title"       content="I'm making a game!">
+  <meta property="og:description" content="Paul Hallett is a software engineer with 15+ years experience working in tech. He builds tools with Python and HTTP. He loves file-over-app, local-first, and smallweb software. He blogs way too much.">
+  <meta property="og:url"         content="https://paulwrites.software/articles/gamedev/">
+  
+  <meta property="og:image"       content="https://paulwrites.software/assets/site-logo.jpeg">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary">
+  <meta name="twitter:title"       content="I'm making a game!">
+  <meta name="twitter:description" content="Paul Hallett is a software engineer with 15+ years experience working in tech. He builds tools with Python and HTTP. He loves file-over-app, local-first, and smallweb software. He blogs way too much.">
+  
+  <meta name="twitter:image"       content="https://paulwrites.software/assets/site-logo.jpeg">
+  
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👨🏻‍💻</text></svg>">
+  
+  <link rel="stylesheet" href="https://paulwrites.software/static/style.4f5b2dfd.css">
+  <link rel="alternate" type="application/rss+xml" title="Paul Writes Software" href="https://paulwrites.software/feed.xml">
+  
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="https://paulwrites.software/" class="nav-title">Paul Writes Software</a>
+<input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+<div class="nav-links">
+  <a href="https://paulwrites.software/articles/">Articles</a>
+  <a href="https://paulwrites.software/tools/">Tools</a>
+  <a href="https://paulwrites.software/all/">All Pages</a>
+</div>
+
+<div class="social-icons">
+  
+  <a href="https://github.com/phalt" class="social-icon" aria-label="GitHub" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M10.226 17.284c-2.965-.36-5.054-2.493-5.054-5.256 0-1.123.404-2.336 1.078-3.144-.292-.741-.247-2.314.09-2.965.898-.112 2.111.36 2.83 1.01.853-.269 1.752-.404 2.853-.404 1.1 0 1.999.135 2.807.382.696-.629 1.932-1.1 2.83-.988.315.606.36 2.179.067 2.942.72.854 1.101 2 1.101 3.167 0 2.763-2.089 4.852-5.098 5.234.763.494 1.28 1.572 1.28 2.807v2.336c0 .674.561 1.056 1.235.786 4.066-1.55 7.255-5.615 7.255-10.646C23.5 6.188 18.334 1 11.978 1 5.62 1 .5 6.188.5 12.545c0 4.986 3.167 9.12 7.435 10.669.606.225 1.19-.18 1.19-.786V20.63a2.9 2.9 0 0 1-1.078.224c-1.483 0-2.359-.808-2.987-2.313-.247-.607-.517-.966-1.034-1.033-.27-.023-.359-.135-.359-.27 0-.27.45-.471.898-.471.652 0 1.213.404 1.797 1.235.45.651.921.943 1.483.943.561 0 .92-.202 1.437-.719.382-.381.674-.718.944-.943"/>
+    </svg>
+  </a>
+  
+  
+  <a href="https://bsky.app/profile/paulwrites.software" class="social-icon" aria-label="Bluesky" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M5.202 2.857C7.954 4.922 10.913 9.11 12 11.358c1.087-2.247 4.046-6.436 6.798-8.501C20.783 1.366 24 .213 24 3.883c0 .732-.42 6.156-.667 7.037-.856 3.061-3.978 3.842-6.755 3.37 4.854.826 6.089 3.562 3.422 6.299-5.065 5.196-7.28-1.304-7.847-2.97-.104-.305-.152-.448-.153-.327 0-.121-.05.022-.153.327-.568 1.666-2.782 8.166-7.847 2.97-2.667-2.737-1.432-5.473 3.422-6.3-2.777.473-5.899-.308-6.755-3.369C.42 10.04 0 4.615 0 3.883c0-3.67 3.217-2.517 5.202-1.026"/>
+    </svg>
+  </a>
+  
+  
+  <a href="mailto:case@hey.com" class="social-icon" aria-label="Email">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+    </svg>
+  </a>
+  
+  
+  <a href="https://ko-fi.com/A6W12AL86B" class="social-icon" aria-label="Ko-fi" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M18 8h-1V6H3v9a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4v-1h1a3 3 0 0 0 0-6zm0 4h-1v-2h1a1 1 0 0 1 0 2zM5 2h2v3H5zm4 0h2v3H9zm4 0h2v3h-2zM2 20h17v2H2z"/>
+    </svg>
+  </a>
+  
+</div>
+
+<label for="nav-toggle" class="nav-toggle-label" aria-label="Toggle navigation">
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+    <rect y="3" width="20" height="2" rx="1"/>
+    <rect y="9" width="20" height="2" rx="1"/>
+    <rect y="15" width="20" height="2" rx="1"/>
+  </svg>
+</label>
+  </nav>
+
+  <main>
+    
+<article>
+  <header class="article-meta">
+    <h1>
+      I'm making a game!
+      <button class="copy-url-btn" title="Copy URL to article" aria-label="Copy URL to article">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+        </svg>
+      </button>
+    </h1>
+    <script>
+      document.querySelector('.copy-url-btn').addEventListener('click', function() {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+          this.classList.add('copied');
+          setTimeout(() => this.classList.remove('copied'), 2000);
+        });
+      });
+    </script>
+    <time datetime="2026-11-15T00:00:00">15 November 2026</time>
+    <span class="reading-time">9 min read</span>
+    
+    <div class="tags">
+      
+        <a href="https://paulwrites.software/tags/Software/" class="tag">Software</a>
+      
+        <a href="https://paulwrites.software/tags/Videogames/" class="tag">Videogames</a>
+      
+    </div>
+    
+    
+  </header>
+
+  
+  <div class="article-body">
+    <p><img src="https://ik.imagekit.io/paulwritessoftware/screenshots/Screenshot%202026-11-15%20at%2016.15.42.png" alt="current_game" /></p>
+<p>I have played video games my whole life.</p>
+<p>Some of my fondest memories are from the virtual places in the games I love to play, like:</p>
+<ul>
+<li>Balamb garden in Final Fantasy VIII</li>
+<li>Vagrant Story and its awesome graphics.</li>
+<li>RuneScape, way back in 2004, on dial up internet.</li>
+<li>Zelda: The Wind Waker, especially exploring new islands.</li>
+<li>Final Fantasy XIV and its epic story.</li>
+<li>Elden Ring; the world, the difficulty, the satisfaction.</li>
+<li>Fantasy Life; mini but mighty adventure on the 3DS.</li>
+<li>Minecraft and all the random fun I had in it with friends.</li>
+</ul>
+<p>As I got older, I started playing games less and discussing games more.</p>
+<p>Specifically: game design and how games are made, what mechanics work and don’t work, and the difficulty of getting it right. I subscribe to <a href="https://www.gamesradar.com/uk/edge/">Edge magazine</a> and <a href="https://www.magazinesdirect.com/uk/retro-gamer-subscription/dp/fe2efd7d">Retro gamer</a>.</p>
+<p>I’m a software engineer by trade, and I love writing software applications, but I’ve never made software games before. It’s a totally different paradigm, but one that always teased me and kept me curious. And everything I read about the industry is that it is tough, way tougher than normal software jobs, so I was always put off transitioning into game dev as a career.</p>
+<h2>Game dev for fun</h2>
+<p>Now obviously, with the advent of LLMs. I figured I could actually learn how to build game engines, express my favourite game designs and mechanics, and actually build some prototype things, much quicker than if I was just on my own with a bunch of text books, how-to guides, and stuff.</p>
+<p>So for the past month or so I've used LLMs to teach me how to make web browser game engines. Starting with simple geometric objects, game loops, etc. And then working to build reusable game components and more complex 3D models.</p>
+<div class="callout callout-tip" data-callout="tip">
+<div class="callout-title">Using LLMs a different way...</div>
+<div class="callout-body">
+<p>My application of LLMs here was very different from how I use it at work. At work I know what I want, and I understand the technology stack, so I’m usually asking “build X for me…” whereas with learning game dev I am instead asking “teach me how to build X…”. It helps that I already have deep technical fundamentals I guess. But I really enjoyed this tutoring approach.</p>
+</div>
+</div>
+<p>The first game I built was an entirely stateless, in-browser space trading game.</p>
+<p>You can play it here: <a href="https://phalt.github.io/TransferWindow/">https://phalt.github.io/TransferWindow/</a>.</p>
+<p><img src="https://ik.imagekit.io/paulwritessoftware/screenshots/Screenshot%202026-10-27%20at%2009.22.16.png" alt="lightlag" /></p>
+<p>This game taught me a lot about game engines and web programming. But ultimately it was a bit naff, and not really the game I wanted to play.</p>
+<p>I learned very quickly that making a game fun is the hard part, not the programming!</p>
+<h2>Second attempt…</h2>
+<p>With a stronger grasp of game engines than I had before, I decided to make an ambitious leap and design my “ultimate” game.</p>
+<p>I’ve always loved the late 90’s and early 00’s era of video games. The graphics, the design, the ingenuity, the daring to try new ideas. I wanted to replicate that feeling of a small unknown world, without any hand-holding, with cute graphics, and things to explore and discover.</p>
+<p>But I also knew that if I combined a lot of modern ideas I could make the game fun in ways that didn’t exist easily back in that era. Things like sophisticated story quests, social elements, and a dark aesthetic from Dark Souls…</p>
+<p>So I worked heavily on those game design aspects, voice dictating a set of design documents to confirm how the game would work, but not actually building it until I felt like I had a good basis.</p>
+<div class="callout callout-tip" data-callout="tip">
+<div class="callout-title">Isn't that just SDD?</div>
+<div class="callout-body">
+<p>Side note: this was the same time I was learning about spec driven development at work, and I now realise afterwards they I was basically doing the same thing but with game design docs.</p>
+</div>
+</div>
+<p>Once I had my design down, I took my game engine from the previous attempt and adapted it, slowly building up model designs and core game features.</p>
+<h2>Early versions</h2>
+<p>The first version of the game was completely stateless like Lightlag. It would take a random seed and generate a random RPG-style world with quests and 2D graphics. That was basically the same game engine that I built with Lightlag, but changing all the graphics and the colour pallet to be fantasy style with a bit of a Dark Souls aesthetic.</p>
+<p><img src="https://ik.imagekit.io/paulwritessoftware/screenshots/Screenshot%202026-11-16%20at%2008.52.37.png" alt="first_version" /></p>
+<p>I quickly found that what I really wanted to do was express some sort of multiplayer aspect, and this was really easy for me to implement because it was pretty much just WebSockets and an application server, which for me is bread and butter feature development from my day job. So that was dead easy to build.</p>
+<p><img src="https://ik.imagekit.io/paulwritessoftware/screenshots/Screenshot%202026-11-16%20at%2008.52.14.png" alt="old_login" /></p>
+<p>After they I very quickly took it from being a randomly generated world to just randomly generating things like resources that you could collect, but the maps would be static and exactly the same for everyone. To do this I introduced a new way for me to create maps as well, which basically involves me writing out string characters in Python to make a map, and then converting that at runtime into 2D tiles.</p>
+<p><img src="https://ik.imagekit.io/paulwritessoftware/screenshots/Screenshot%202026-11-02%20at%2020.46.24.png" alt="old_battle" /></p>
+<h2>Going 3D</h2>
+<p>And then I took the most ambitious leap I think I've ever taken with the game, which I did lean on LLMs more than I had in the past, and that was going from a 2D game to a 3D game.</p>
+<p>I figured I had all the tiles in place and various aspects of the engine. I just wanted to bring it into the 3D world, and I wanted to incorporate PlayStation 1 style graphics into it. And I also took a fidelity leap at this point as well, as I doubled the resolution of all the graphics. This was a huge leap, and it really made me feel like I was onto something that was visually exciting and nostalgic.</p>
+<p><img src="https://ik.imagekit.io/paulwritessoftware/screenshots/people-emotes-desktop-BPOm2Moh.png" alt="3d" /></p>
+<p>But effectively it was still the same tile-based engine, and it wasn't until I added height to maps that things started to drift away from that original engine.</p>
+<h2>Battles, progression, and quests</h2>
+<p>This was the point that I decided to actually move entirely away from stateless and introduce state, purely just a database which would load stuff in memory and sync stuff, and a lot of the game engine aspects moved out of the front end into this application server as the source of truth, mostly because otherwise it's really difficult to figure out which user is the source of truth for certain calculations. This allowed me to basically build a game where you could create a world, store your character, come back later, share the link with friends, and actually start to offer a real MMO RPG style game.</p>
+<p><img src="https://ik.imagekit.io/paulwritessoftware/screenshots/battle-day-desktop-DPWqP-s7.png" alt="battles" /></p>
+<p>It meant I could do stuff like add quests and a world “tick” - which defined what point in the world story you were at, and then I could tie certain zones to those ticks so that they would only unlock after certain actions. And again, this was all stateful, and people's character progression could also be stateful. Skills could be stored, battles could be tracked.</p>
+<p>It unlocked a whole lot more for me.</p>
+<h2>Where we are now</h2>
+<p><img src="https://minimmo.life/screenshots/marches-bridge-mended.png" alt="bridge" /></p>
+<p>Because I got more and more confident with how the core engine worked, I could spend less time focusing on building and more time creating, through the use of game design documents, new features and zones and quests that I wanted to add, knowing that I had built an engine in a way that an LLM could easily work on it.</p>
+<p>The <a href="https://minimmo.life/news/">whole new expansion</a> which I launched recently called The Marches, introduces a new big zone and a new town, as well as some stateful world progression things that I call “world works”, which are kind of like quests, but they change objects in the world.</p>
+<p><img src="https://minimmo.life/screenshots/marches-chapel.png" alt="chapel" /></p>
+<p>So you can help to rebuild a chapel. And a lot of that I was able to voice dictate and then supervise and build. And I absolutely love the creative flow that I get from this. I feel like I'm able to progress those game design ambitions I have, and really enjoy the hobby of game development and putting my ideas into practice.</p>
+<h2>Testing and playing</h2>
+<p>I spent most of the last weekends playing my own game and actually enjoying being able to play a game that I've always wanted to have.</p>
+<p><img src="https://ik.imagekit.io/paulwritessoftware/screenshots/Screenshot%202026-11-15%20at%2016.15.42.png" alt="now" /></p>
+<p>The screenshot above was the first moment I stopped and felt &quot;Wow, this game is actually fun, and it's something I made!&quot;. It just felt so cosy and nostalgic.</p>
+<p>I really love being able to play the game, log bugs in the game (a feature that I built into it) and then triage them with the help of an LLM and figure out what needs to be changed. Either I'll change it myself if it's an opportunity for me to learn, or I'll basically dispatch an LLM to produce a fix that would work.</p>
+<p>It's a good symbiotic creative relationship that probably a lot of people in the game dev industry will scorn me for, but I'm very new to the industry and I'm doing this for fun, and I don't intend to make money or completely overtake the industry or just let an LLM churn out slop for slop sake.</p>
+<p>I'm now able to express, participate in, and enjoy a hobby and a genre of art that I've always really appreciated.</p>
+<h2>Give it a go</h2>
+<p>MiniMMOLife is a nostalgic RPG adventure for you and your friends. It’s the fun of old skool RuneScape, the battles of old Final Fantasy, the dark world design of Elden Ring, and it’s all in your browser and free to play.</p>
+<p><img src="https://ik.imagekit.io/paulwritessoftware/screenshots/Screenshot%202026-11-15%20at%2010.24.49.png?updatedAt=1794818996105" alt="minommo" /></p>
+<p>👉 <a href="https://minimmo.life">https://minimmo.life</a> 👈</p>
+
+  </div>
+
+  <nav class="article-nav">
+    <div class="article-nav-prev">
+      
+      <a href="https://paulwrites.software/articles/zoetty/">← Older: My Terminal demos are real now</a>
+      
+    </div>
+    <div class="article-nav-next">
+      
+    </div>
+  </nav>
+</article>
+
+
+  </main>
+
+  <footer class="site-footer">
+    <p>Paul Writes Software — built with <a href="https://github.com/phalt/paulblish">Paulblish</a></p>
+    
+<div class="social-icons">
+  
+  <a href="https://github.com/phalt" class="social-icon" aria-label="GitHub" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M10.226 17.284c-2.965-.36-5.054-2.493-5.054-5.256 0-1.123.404-2.336 1.078-3.144-.292-.741-.247-2.314.09-2.965.898-.112 2.111.36 2.83 1.01.853-.269 1.752-.404 2.853-.404 1.1 0 1.999.135 2.807.382.696-.629 1.932-1.1 2.83-.988.315.606.36 2.179.067 2.942.72.854 1.101 2 1.101 3.167 0 2.763-2.089 4.852-5.098 5.234.763.494 1.28 1.572 1.28 2.807v2.336c0 .674.561 1.056 1.235.786 4.066-1.55 7.255-5.615 7.255-10.646C23.5 6.188 18.334 1 11.978 1 5.62 1 .5 6.188.5 12.545c0 4.986 3.167 9.12 7.435 10.669.606.225 1.19-.18 1.19-.786V20.63a2.9 2.9 0 0 1-1.078.224c-1.483 0-2.359-.808-2.987-2.313-.247-.607-.517-.966-1.034-1.033-.27-.023-.359-.135-.359-.27 0-.27.45-.471.898-.471.652 0 1.213.404 1.797 1.235.45.651.921.943 1.483.943.561 0 .92-.202 1.437-.719.382-.381.674-.718.944-.943"/>
+    </svg>
+  </a>
+  
+  
+  <a href="https://bsky.app/profile/paulwrites.software" class="social-icon" aria-label="Bluesky" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M5.202 2.857C7.954 4.922 10.913 9.11 12 11.358c1.087-2.247 4.046-6.436 6.798-8.501C20.783 1.366 24 .213 24 3.883c0 .732-.42 6.156-.667 7.037-.856 3.061-3.978 3.842-6.755 3.37 4.854.826 6.089 3.562 3.422 6.299-5.065 5.196-7.28-1.304-7.847-2.97-.104-.305-.152-.448-.153-.327 0-.121-.05.022-.153.327-.568 1.666-2.782 8.166-7.847 2.97-2.667-2.737-1.432-5.473 3.422-6.3-2.777.473-5.899-.308-6.755-3.369C.42 10.04 0 4.615 0 3.883c0-3.67 3.217-2.517 5.202-1.026"/>
+    </svg>
+  </a>
+  
+  
+  <a href="mailto:case@hey.com" class="social-icon" aria-label="Email">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+    </svg>
+  </a>
+  
+  
+  <a href="https://ko-fi.com/A6W12AL86B" class="social-icon" aria-label="Ko-fi" rel="noopener noreferrer" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      
+      <path d="M18 8h-1V6H3v9a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4v-1h1a3 3 0 0 0 0-6zm0 4h-1v-2h1a1 1 0 0 1 0 2zM5 2h2v3H5zm4 0h2v3H9zm4 0h2v3h-2zM2 20h17v2H2z"/>
+    </svg>
+  </a>
+  
+</div>
+
+    
+    <p class="kofi">
+      <a href="https://ko-fi.com/A6W12AL86B" class="kofi-button" rel="noopener noreferrer" target="_blank">Support me on Ko-fi</a>
+    </p>
+    
+    <p class="footer-links">
+      <a href="https://paulwrites.software/feed.xml">RSS</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://paulwrites.software/sitemap.xml">Sitemap</a>
+    </p>
+  </footer>
+  
+</body>
+</html>

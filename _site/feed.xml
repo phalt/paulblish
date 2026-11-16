@@ -4,7 +4,14 @@
     <title>Paul Writes Software</title>
     <link>https://paulwrites.software</link>
     <description>Paul Hallett is a software engineer with 15+ years experience working in tech. He builds tools with Python and HTTP. He loves file-over-app, local-first, and smallweb software. He blogs way too much.</description>
-    <lastBuildDate>Thu, 05 Nov 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Nov 2026 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>I'm making a game!</title>
+      <link>https://paulwrites.software/articles/gamedev/</link>
+      <guid>https://paulwrites.software/articles/gamedev/</guid>
+      <pubDate>Sun, 15 Nov 2026 00:00:00 +0000</pubDate>
+      <description>I have played video games my whole life. Some of my fondest memories are from the virtual places in the games I love to play, like: Balamb garden in Final Fantasy VIII Vagrant Story and its awesome…</description>
+    </item>
     <item>
       <title>My Terminal demos are real now</title>
       <link>https://paulwrites.software/articles/zoetty/</link>
