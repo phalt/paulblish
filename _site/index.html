@@ -129,8 +129,6 @@
 <p>Hello, I am Paul 👋</p>
 <p>I live in Norwich, UK. I have also lived in London and New Zealand.</p>
 <p>I'm a software engineer, amateur analogue photographer, drum player, Pokémon fan, and prolific note taker.</p>
-<h2>What am I up to right now?</h2>
-<p>Find out on my <a href="https://paulwrites.software/now">Now page</a>.</p>
 <h2>Software</h2>
 <p>I write software. Almost entirely in <a href="https://www.python.org/">Python</a>.</p>
 <p>My favourite technology is probably <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP">HTTP</a>.  I like to explore how we use it with <a href="https://hypermedia.systems/">Hypermedia</a>, to build brilliant web services, particularly APIs. I think HTTP is a technology that we often forget about because of too many abstractions.</p>
@@ -138,17 +136,25 @@
 <p>My career has mostly focused on <em>internal customer tools</em> - the “back office” functions that aren’t always seen by the average consumer. I’ve developed a knack for befriending and building trust with internal customers and teasing requirements out of them.</p>
 <p>I'm currently a Lead Software Engineer at <a href="https://kraken.tech">Kraken Tech</a>, the technology behind <a href="https://octopus.energy/">Octopus Energy</a> and other major energy utilities.</p>
 <h3>On GitHub</h3>
-<div class="html-embed"><div class="html-embed-bar"><span class="html-embed-label">Live from GitHub</span></div><div class="html-embed-body"><div class="stats">
-  <div><strong id="gh-repos">–</strong> public repos</div>
+<div class="html-embed"><div class="html-embed-bar"><span class="html-embed-label">Live from GitHub</span></div><div class="html-embed-body"><style>
+  .contrib { overflow-x: auto; padding-bottom: 0.25rem; }
+  .contrib-grid { display: grid; grid-template-rows: repeat(7, auto); grid-auto-flow: column; gap: 2px; min-width: max-content; }
+  .contrib-grid i { aspect-ratio: 1; border-radius: 2px; }
+  .contrib-grid [data-level="0"] { background: var(--pad-edge); }
+  .contrib-grid [data-level="1"] { background: #0e4429; }
+  .contrib-grid [data-level="2"] { background: #006d32; }
+  .contrib-grid [data-level="3"] { background: #26a641; }
+  .contrib-grid [data-level="4"] { background: #39d353; }
+</style>
+
+<div class="stats">
+  <div><strong id="gh-contribs">–</strong> contributions in the last year</div>
   <div><strong id="gh-stars">–</strong> stars on my repos</div>
   <div><strong id="gh-followers">–</strong> followers</div>
-  <div><strong id="gh-years">–</strong> years on GitHub</div>
 </div>
-
-<p>Where I've been busy lately:</p>
-<dl class="bars" id="gh-busy"></dl>
-<ul id="gh-feed"></ul>
-<small id="gh-when"></small>
+<div class="contrib">
+  <div class="contrib-grid" id="gh-graph" role="img" aria-label="My GitHub contributions over the last year"></div>
+</div>
 <p class="error" id="gh-error" hidden></p>
 
 <script>
@@ -156,92 +162,63 @@
   const $ = (id) => document.getElementById(id);
   const USER = "phalt";
 
-  // Unauthenticated: 60 requests an hour per visitor, so cache for the browser session
-  async function get(path) {
-    const key = `gh:${path}`;
-    const cached = sessionStorage.getItem(key);
+  // GitHub allows 60 unauthenticated requests an hour per visitor, so cache for the session
+  async function get(url) {
+    const cached = sessionStorage.getItem(url);
     if (cached) return JSON.parse(cached);
-    const response = await fetch(`https://api.github.com/${path}`);
+    const response = await fetch(url);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
-    try { sessionStorage.setItem(key, JSON.stringify(data)); } catch {}
+    try { sessionStorage.setItem(url, JSON.stringify(data)); } catch {}
     return data;
   }
 
-  const rtf = new Intl.RelativeTimeFormat("en-GB", { numeric: "auto" });
-  function ago(date) {
-    const minutes = Math.round((new Date(date) - Date.now()) / 60000);
-    if (minutes > -60) return rtf.format(minutes, "minute");
-    if (minutes > -1440) return rtf.format(Math.round(minutes / 60), "hour");
-    return rtf.format(Math.round(minutes / 1440), "day");
+  function fail(source, error) {
+    $("gh-error").textContent = `Couldn't reach ${source} (${error.message}). Try again later.`;
+    $("gh-error").hidden = false;
   }
 
-  const link = (path, text) => `<a href="https://github.com/${path}">${text}</a>`;
-
-  // The events API no longer includes commit lists or PR titles, so describe events by repo and PR number
-  function describe({ type, repo, payload }) {
-    if (type === "PushEvent") return `Pushed to ${link(repo.name, repo.name)}`;
-    if (type === "PullRequestEvent") {
-      const action = payload.action[0].toUpperCase() + payload.action.slice(1);
-      return `${action} ${link(`${repo.name}/pull/${payload.number}`, `#${payload.number}`)} in ${link(repo.name, repo.name)}`;
-    }
-    if (type === "CreateEvent" && payload.ref_type === "repository") return `Created ${link(repo.name, repo.name)}`;
-    return null;
-  }
-
-  async function load() {
-    try {
-      const [user, repos, events] = await Promise.all([
-        get(`users/${USER}`),
-        get(`users/${USER}/repos?per_page=100`),
-        get(`users/${USER}/events/public?per_page=100`),
-      ]);
-
-      $("gh-repos").textContent = user.public_repos;
+  Promise.all([
+    get(`https://api.github.com/users/${USER}`),
+    get(`https://api.github.com/users/${USER}/repos?per_page=100`),
+  ])
+    .then(([user, repos]) => {
       $("gh-followers").textContent = user.followers.toLocaleString("en-GB");
-      $("gh-years").textContent = new Date().getFullYear() - new Date(user.created_at).getFullYear();
       $("gh-stars").textContent = repos
         .filter((r) => !r.fork)
         .reduce((sum, r) => sum + r.stargazers_count, 0)
         .toLocaleString("en-GB");
+    })
+    .catch((error) => fail("GitHub", error));
 
-      const counts = {};
-      for (const e of events) counts[e.repo.name] = (counts[e.repo.name] ?? 0) + 1;
-      const busiest = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 5);
-      $("gh-busy").replaceChildren(...busiest.flatMap(([name, n]) => {
-        const dt = document.createElement("dt");
-        dt.textContent = name.replace(`${USER}/`, "");
-        const dd = document.createElement("dd");
-        dd.style.setProperty("--value", (n / busiest[0][1]) * 100);
-        dd.textContent = `${n} events`;
-        return [dt, dd];
-      }));
+  // GitHub's own calendar needs a token or blocks cross-site requests; this unofficial API reads it for us
+  get(`https://github-contributions-api.jogruber.de/v4/${USER}?y=last`)
+    .then(({ total, contributions }) => {
+      $("gh-contribs").textContent = total.lastYear.toLocaleString("en-GB");
 
-      $("gh-feed").innerHTML = events
-        .map((e) => [describe(e), e.created_at])
-        .filter(([text]) => text)
-        .slice(0, 5)
-        .map(([text, when]) => `<li>${text} <small>${ago(when)}</small></li>`)
-        .join("");
-
-      if (events.length) {
-        const since = new Date(events.at(-1).created_at).toLocaleDateString("en-GB", { day: "numeric", month: "long" });
-        $("gh-when").textContent = `My last ${events.length} public events on GitHub, back to ${since}.`;
+      // Columns are weeks starting on Sunday, like GitHub's, so pad the first one
+      const offset = new Date(contributions[0].date).getUTCDay();
+      const cells = Array.from({ length: offset }, () => document.createElement("i"));
+      for (const { date, count, level } of contributions) {
+        const cell = document.createElement("i");
+        cell.dataset.level = level;
+        const day = new Date(date).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
+        cell.title = `${count} contributions on ${day}`;
+        cells.push(cell);
       }
-    } catch (error) {
-      $("gh-error").textContent = `Couldn't reach GitHub (${error.message}). Try again later.`;
-      $("gh-error").hidden = false;
-    }
-  }
 
-  load();
+      const grid = $("gh-graph");
+      grid.style.gridTemplateColumns = `repeat(${Math.ceil(cells.length / 7)}, minmax(8px, 1fr))`;
+      grid.replaceChildren(...cells);
+      grid.parentElement.scrollLeft = grid.parentElement.scrollWidth; // on phones, start at the latest weeks
+    })
+    .catch((error) => fail("the contributions API", error));
 })();
 </script>
 </div></div>
 <h3>Software projects</h3>
 <h4>Hyper Personal Software</h4>
-<p>I build a lot of tools tailored just for me, following a personal manifesto.  I call this type of software <em>hyper personal software</em>. HYPS, or <em>”hyps”</em>. If it was an emoji it would be 🦛 You can read the manifesto on the <a href="https://paulwrites.software/articles/hyps/">Hyper Personal Software</a> article.</p>
-<h4>PokeAPI</h4>
+<p>I build a lot of tools tailored just for me, following a personal manifesto.  I call this type of software <em>hyper personal software</em>. HYPS, or <em>”hyps”</em>. If it was an emoji it would be 🦛. You can read the manifesto on the <a href="https://paulwrites.software/articles/hyps/">Hyper Personal Software</a> article.</p>
 <p><img src="https://raw.githubusercontent.com/PokeAPI/pokeapi.co/refs/heads/master/src/images/pokeapi_256.png" alt="PokeAPI logo" /></p>
 <p>In 2014 I created <a href="https://pokeapi.co/">PokeAPI</a> to demonstrate good HTTP API design. At the time, nothing like <a href="https://www.openapis.org/">OpenAPI</a> existed. PokeAPI was supposed to be a &quot;pure&quot; HTTP API with hyperlinks to other resources.</p>
 <p>However, it got more popular due to the subject of it's data - Pokemon. It now has well over <strong>10 billion</strong> API calls a month. I'm not kidding! Over the years the project has grown and a whole community of volunteers help keep it up to date.</p>
@@ -336,35 +313,35 @@
 </style>
 
 <div class="pins">
-  <div class="pin">
+  <div class="pin" data-repo="phalt/clientele">
+    <h4><a href="https://github.com/phalt/clientele">Clientele</a></h4>
+    <p>A framework for building and maintaining Python API clients.</p>
+    <small><span class="lang">Python</span><span class="stars"></span></small>
+  </div>
+  <div class="pin" data-repo="phalt/paulblish">
     <h4><a href="https://github.com/phalt/paulblish">Paulblish</a></h4>
     <p>Transforms my markdown files into this website.</p>
-    <small><span class="lang">Python</span><span data-repo="phalt/paulblish"></span></small>
+    <small><span class="lang">Python</span><span class="stars"></span></small>
   </div>
-  <div class="pin">
-    <h4><a href="https://github.com/phalt/rundot">Rundot</a></h4>
-    <p>Executes markdown files, turning them into runbooks.</p>
-    <small><span class="lang">Python</span><span data-repo="phalt/rundot"></span><a href="https://docs.rundot.dev">Docs</a></small>
-  </div>
-  <div class="pin">
+  <div class="pin" data-repo="phalt/zoetty">
     <h4><a href="https://github.com/phalt/zoetty">Zoetty</a></h4>
     <p>Lets you write little SVG terminal demos for your projects.</p>
-    <small><span class="lang">Python</span><span data-repo="phalt/zoetty"></span></small>
+    <small><span class="lang">Python</span><span class="stars"></span></small>
   </div>
-  <div class="pin">
+  <div class="pin" data-repo="phalt/paulias">
     <h4><a href="https://github.com/phalt/paulias">Paulias</a></h4>
     <p>Turns a single markdown file into a URL shortener hosted on GitHub Pages.</p>
-    <small><span class="lang">Python</span><span data-repo="phalt/paulias"></span><a href="https://paulwrites.software/articles/paulias/">Write-up</a></small>
+    <small><span class="lang">Python</span><span class="stars"></span><a href="https://paulwrites.software/articles/paulias/">Write-up</a></small>
   </div>
-  <div class="pin">
+  <div class="pin" data-repo="phalt/gb-energy-mix-cli">
     <h4><a href="https://github.com/phalt/gb-energy-mix-cli">GB Eng</a></h4>
     <p>A tiny CLI tool for live statistics about the UK energy grid.</p>
-    <small><span class="lang">Python</span><span data-repo="phalt/gb-energy-mix-cli"></span><a href="https://paulwrites.software/articles/gb-eng-cli/">Write-up</a></small>
+    <small><span class="lang">Python</span><span class="stars"></span><a href="https://paulwrites.software/articles/gb-eng-cli/">Write-up</a></small>
   </div>
-  <div class="pin">
-    <h4><a href="https://github.com/phalt/calcifer">Calcifer</a></h4>
-    <p>A minimalist Raspberry Pi temperature sensor network for your home.</p>
-    <small><span class="lang">Python</span><span data-repo="phalt/calcifer"></span></small>
+  <div class="pin" data-repo="phalt/rundot">
+    <h4><a href="https://github.com/phalt/rundot">Rundot</a></h4>
+    <p>Executes markdown files, turning them into runbooks.</p>
+    <small><span class="lang">Python</span><span class="stars"></span><a href="https://docs.rundot.dev">Docs</a></small>
   </div>
 </div>
 
@@ -374,9 +351,14 @@
     .then((response) => (response.ok ? response.json() : []))
     .then((repos) => {
       const stars = new Map(repos.map((r) => [r.full_name, r.stargazers_count]));
-      document.querySelectorAll(".pin [data-repo]").forEach((el) => {
-        if (stars.has(el.dataset.repo)) el.textContent = `★ ${stars.get(el.dataset.repo)}`;
-      });
+      const pins = document.querySelector(".pins");
+      const cards = [...pins.children];
+      const count = (card) => stars.get(card.dataset.repo) ?? -1;
+      for (const card of cards) {
+        if (stars.has(card.dataset.repo)) card.querySelector(".stars").textContent = `★ ${count(card)}`;
+      }
+      // Sort is stable, so cards with equal stars keep the order above
+      pins.append(...cards.sort((a, b) => count(b) - count(a)));
     })
     .catch(() => {}); // the cards read fine without star counts
 })();
