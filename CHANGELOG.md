@@ -13,10 +13,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- Theme palette tidied and nudged towards [rundot.dev](https://rundot.dev): cooler neutral greys, slightly brighter teal and amber. Every colour in `style.css` now comes from a `:root` variable.
+- Embedded tools now match the rest of the site: framed like code blocks (1px border, same header strip), teal controls instead of amber, no offset drop shadows or punched holes. The graph paper stays. Amber is kept for tool results, as with tags.
 - `pb build`, `pb clean` and `pb serve` output is coloured with [Rich](https://github.com/Textualize/rich): green ✓, red ✗, yellow warnings, red errors. Piped output and `NO_COLOR` stay plain text.
 
 ### Fixed
 
+- Danger and caution callouts had no colour (`--accent-pink` was never defined).
+- Dead wikilinks and numbers in code blocks were too dark to read; they now use `--accent-pink`.
 - RSS excerpts no longer include JavaScript or CSS source from embedded tools.
 - Wikilinks resolve by filename as well as frontmatter `title`, so `[[Tools Widgets]]` finds a note titled "Tool widgets". Links between articles and tools now work in both directions.
 

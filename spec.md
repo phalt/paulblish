@@ -210,17 +210,24 @@ The site uses a **cyberpunk / brutalist web 2.0** aesthetic inspired by the mute
 
 **Colour palette:**
 
-| Role | Colour | Hex | Usage |
+| Role | Variable | Hex | Usage |
 |---|---|---|---|
-| Background | Near-black, cool-tinted | `#0a0a0f` | Page background |
-| Surface | Dark charcoal | `#14141f` | Code blocks, callout backgrounds, card surfaces |
-| Primary text | Soft cool grey | `#b8b8c0` | Body text, readable at length |
-| Bright text | Off-white | `#e0dfd5` | Headings, article titles, emphasis |
-| Muted teal | Desaturated cyan | `#5e9e91` | Links, primary accent, nav highlights |
-| Muted amber | Dusty gold | `#b89c4a` | Tags, secondary accent, hover states |
-| Muted rose | Dark crimson | `#7a3b4e` | Dead wikilinks, warnings, error states |
-| Border | Dark steel | `#2a2a35` | Dividers, borders, grid lines |
-| Subtle highlight | Deep teal | `#1a2a28` | Hover backgrounds, active states |
+| Background | `--bg` | `#0a0b0e` | Page background |
+| Surface | `--surface` | `#13151a` | Code blocks, callout backgrounds, tool pads |
+| Border | `--border` | `#262a31` | Dividers, borders |
+| Strong border | `--border-strong` | `#353a44` | Form control edges inside tools |
+| Primary text | `--text` | `#b4b9c1` | Body text, readable at length |
+| Bright text | `--text-bright` | `#e6e8ea` | Headings, article titles, emphasis |
+| Dim text | `--text-dim` | `#6b717c` | Code comments |
+| Teal | `--accent-teal` | `#5fb39a` | Primary accent: links, nav highlights, tool controls |
+| Amber | `--accent-amber` | `#cfa94e` | Secondary accent: tags, tool results |
+| Pink | `--accent-pink` | `#d0607a` | Dead wikilinks, errors, danger callouts |
+| Rose | `--accent-rose` | `#7a3b4e` | Decorative only: too dark for text |
+| Green | `--accent-green` | `#6bcb77` | Tip/success callouts |
+| Yellow | `--accent-yellow` | `#f5c451` | Warning callouts, highlights |
+| Subtle highlight | `--highlight` | `#14241f` | Hover backgrounds, active states |
+
+Every colour in `style.css` comes from these variables, including the styles for embedded tools. The neutrals and the brighter teal and amber lean slightly towards the [rundot.dev](https://rundot.dev) palette.
 
 Accent colours are used sparingly for interactive elements and structural markers — never for body text. The overall feel should evoke dusty neon signage seen through rain, not a rave.
 
@@ -231,17 +238,17 @@ Accent colours are used sparingly for interactive elements and structural marker
 
 **Layout:**
 
-- Brutalist grid sensibility. Visible borders, sharp corners (no border-radius). Generous use of whitespace.
+- Brutalist grid sensibility. Visible 1px borders. Boxes (code blocks, tools, callouts) use `--radius` / `--radius-sm`; tags and the avatar stay square. Generous use of whitespace.
 - Max content width ~720px for article text.
 
 **Component styles:**
 
-- **Links:** Muted teal (`#5e9e91`), no underline by default, underline on hover. Visited links use a slightly desaturated variant.
-- **Code blocks:** Surface background (`#14141f`), monospace text. Syntax highlighting via Pygments using a palette-aligned theme (e.g. `monokai` with adjusted token colours).
-- **Tags:** Small bordered pills with muted amber text and border (`#b89c4a`).
+- **Links:** Teal (`--accent-teal`), no underline by default, underline on hover. Visited links use a slightly desaturated variant.
+- **Code blocks:** Surface background (`--surface`), monospace text. Syntax highlighting via Pygments using a palette-aligned theme (e.g. `monokai` with adjusted token colours).
+- **Tags:** Small bordered pills with amber text and border (`--accent-amber`).
 - **Callouts:** Surface-coloured boxes with a muted teal left border.
 - **Article metadata block:** Clearly separated from body text with a border-top or distinct surface background.
-- **Dead wikilinks:** Muted rose (`#7a3b4e`), dashed underline, to indicate a broken link without being distracting.
+- **Dead wikilinks:** Pink (`--accent-pink`), dashed underline, to indicate a broken link without being distracting.
 
 The design must remain **readable first**. The cyberpunk aesthetic is expressed through colour choices, typography, and structural elements — not through illegibility, excessive animation, or visual noise.
 

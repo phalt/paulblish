@@ -52,6 +52,18 @@ class TestWidgetCss:
         css = re.sub(r"/\*.*?\*/", "", CSS, flags=re.S)
         assert css.count("{") == css.count("}")
 
+    def test_every_variable_used_is_defined(self):
+        # A var() with no fallback and no definition silently drops the declaration
+        css = re.sub(r"/\*.*?\*/", "", CSS, flags=re.S)
+        defined = set(re.findall(r"(--[\w-]+)\s*:", css))
+        used = set(re.findall(r"var\((--[\w-]+)\)", css))
+        assert used <= defined, sorted(used - defined)
+
+    def test_tools_share_the_site_palette(self):
+        # Tool styles take every colour from the :root palette, never a literal
+        tools = CSS[CSS.index("/* === HTML embeds") :]
+        assert not re.findall(r"#[0-9a-fA-F]{3,8}\b", tools)
+
     def test_every_widget_class_is_styled(self):
         for cls in set(WIDGET_CLASSES) - SCRIPT_ONLY_CLASSES:
             assert _rules_for(f".{cls}"), cls
