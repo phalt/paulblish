@@ -2,15 +2,24 @@
 
 /* === Palette === */
 :root {
-    --bg: #0a0a0f;
-    --surface: #14141f;
-    --text: #b8b8c0;
-    --text-bright: #e0dfd5;
-    --accent-teal: #5e9e91;
-    --accent-amber: #b89c4a;
-    --accent-rose: #7a3b4e;
-    --border: #2a2a35;
-    --highlight: #1a2a28;
+    /* Neutrals: cool near-blacks and greys */
+    --bg: #0a0b0e;
+    --surface: #13151a;
+    --border: #262a31;
+    --border-strong: #353a44;
+    --text: #b4b9c1;
+    --text-bright: #e6e8ea;
+    --text-dim: #6b717c;
+    /* Accents: teal is the primary (links, controls), amber the secondary (tags, results) */
+    --accent-teal: #5fb39a;
+    --accent-amber: #cfa94e;
+    --accent-rose: #7a3b4e; /* too dark for text on --bg: use --accent-pink */
+    --accent-pink: #d0607a;
+    --accent-green: #6bcb77;
+    --accent-yellow: #f5c451;
+    --highlight: #14241f;
+    --radius: 6px;
+    --radius-sm: 4px;
     --font-heading: "JetBrains Mono", "Fira Code", "Courier New", monospace;
     --font-body: "Inter", "system-ui", sans-serif;
 }
@@ -86,12 +95,12 @@ a:hover {
 }
 
 a:visited {
-    color: #4e8a7e;
+    color: color-mix(in srgb, var(--accent-teal) 80%, var(--bg));
 }
 
 /* === Dead wikilinks === */
 .wikilink-dead {
-    color: var(--accent-rose);
+    color: var(--accent-pink);
     text-decoration: underline;
     text-decoration-style: dashed;
 }
@@ -144,7 +153,7 @@ a:visited {
     border: none;
     padding: 0;
     cursor: pointer;
-    color: #fff;
+    color: var(--text-bright);
     opacity: 0.35;
     transition: opacity 0.15s;
     flex-shrink: 0;
@@ -155,20 +164,18 @@ a:visited {
     opacity: 0.9;
 }
 
-.article-meta time {
-    display: block;
+.article-meta time,
+.reading-time {
+    display: inline-block;
     font-family: var(--font-heading);
     font-size: 0.85rem;
     color: var(--text);
     margin-top: 0.25rem;
 }
 
-.reading-time {
-    display: inline-block;
-    font-family: var(--font-heading);
-    font-size: 0.85rem;
-    color: var(--text);
-    margin-left: 0.75rem;
+.reading-time::before {
+    content: "·";
+    margin: 0 0.5rem;
 }
 
 .article-meta .description {
@@ -226,8 +233,7 @@ a:visited {
 
 .article-body blockquote {
     border-left: 3px solid var(--accent-teal);
-    padding-left: 1em;
-    margin: 1em 0;
+    margin: 1.5rem 0;
     color: var(--text);
     background: var(--surface);
     padding: 0.75em 1em;
@@ -241,7 +247,7 @@ a:visited {
 .article-body table {
     width: 100%;
     border-collapse: collapse;
-    margin: 1em 0;
+    margin: 1.5rem 0;
 }
 
 .article-body th,
@@ -258,18 +264,41 @@ a:visited {
     font-size: 0.85rem;
 }
 
+/* === Rules and footnotes === */
+hr {
+    border: 0;
+    border-top: 1px solid var(--border);
+    margin: 2rem 0;
+}
+
+/* An article that ends on its own rule shouldn't get a second one above the footnotes */
+hr + .footnotes-sep {
+    display: none;
+}
+
+.footnotes {
+    font-size: 0.9rem;
+}
+
+.footnote-ref a,
+.footnote-backref {
+    font-family: var(--font-heading);
+}
+
 /* === Inline code === */
 code {
     font-family: var(--font-heading);
     font-size: 0.9em;
     background: var(--surface);
     padding: 0.15em 0.35em;
+    border-radius: var(--radius-sm);
 }
 
 /* Plain pre/code blocks (no language specified) */
 pre {
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
     padding: 1em;
     overflow-x: auto;
     margin: 1.5rem 0;
@@ -291,7 +320,7 @@ pre code {
     --pele-surface-alt: var(--highlight);
     --pele-border: var(--accent-teal);
     --pele-accent: var(--accent-amber);
-    --pele-critical: var(--accent-rose);
+    --pele-critical: var(--accent-pink);
     --pele-font: var(--font-heading);
     --pele-font-mono: var(--font-heading);
     --pele-radius: 0;
@@ -315,7 +344,7 @@ pre code {
 /* === Fenced code block wrapper (language-highlighted blocks) === */
 .code-block {
     border: 1px solid var(--border);
-    border-radius: 6px;
+    border-radius: var(--radius);
     overflow: hidden;
     margin: 1.5rem 0;
     background: var(--surface);
@@ -344,7 +373,7 @@ pre code {
     border: none;
     padding: 0;
     cursor: pointer;
-    color: #fff;
+    color: var(--text-bright);
     opacity: 0.35;
     transition: opacity 0.15s;
 }
@@ -372,12 +401,19 @@ pre code {
 }
 
 /* === Line numbers (Pygments linenos="table") === */
-.highlighttable {
+/* .article-body prefix outranks the article table rules, which would box every cell */
+.article-body .highlighttable {
     width: 100%;
     border-collapse: collapse;
+    margin: 0;
 }
 
-.highlighttable .linenos {
+.article-body .highlighttable td {
+    border: 0;
+    padding: 0;
+}
+
+.article-body .highlighttable td.linenos {
     user-select: none;
     padding: 1em 0.75em 1em 1em;
     text-align: right;
@@ -396,13 +432,14 @@ pre code {
     opacity: 0.35;
 }
 
-.highlighttable .code {
+/* The gutter rule runs the full height, so the cells carry the padding, not the wrapper */
+.code-block .highlight:has(.highlighttable) {
     padding: 0;
-    width: 100%;
 }
 
-.highlighttable .code .highlight {
+.article-body .highlighttable td.code {
     padding: 1em;
+    width: 100%;
 }
 
 /* === Pygments token colours (CP2077-aligned) === */
@@ -421,7 +458,7 @@ pre code {
 .highlight .c,
 .highlight .c1,
 .highlight .cm {
-    color: #555566;
+    color: var(--text-dim);
     font-style: italic;
 } /* comments */
 .highlight .n {
@@ -437,7 +474,7 @@ pre code {
 } /* operators, punctuation */
 .highlight .mi,
 .highlight .mf {
-    color: var(--accent-rose);
+    color: var(--accent-pink);
 } /* numbers */
 .highlight .nn {
     color: var(--accent-teal);
@@ -636,7 +673,7 @@ pre code {
     display: inline-block;
     padding: 0.4rem 0.9rem;
     border: 1px solid var(--accent-amber);
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     color: var(--accent-amber);
 }
 
@@ -654,24 +691,27 @@ pre code {
 }
 
 /* === Callouts === */
+/* Same frame and header strip as .code-block and .html-embed; --callout colours the title */
 .callout {
-    border-left: 4px solid var(--accent-teal);
-    background: color-mix(in srgb, var(--accent-teal) 8%, var(--surface));
-    border-radius: 0 4px 4px 0;
+    --callout: var(--accent-teal);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
     margin: 1.5rem 0;
     padding: 0;
     overflow: hidden;
 }
 
 .callout-title {
-    padding: 0.5rem 1rem;
+    padding: 0.35rem 0.75rem;
     font-family: var(--font-heading);
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    background: color-mix(in srgb, var(--accent-teal) 15%, var(--surface));
-    color: var(--accent-teal);
+    background: color-mix(in srgb, var(--surface) 50%, var(--border));
+    border-bottom: 1px solid var(--border);
+    color: var(--callout);
 }
 
 .callout-body {
@@ -686,31 +726,17 @@ pre code {
 }
 
 .callout-warning {
-    border-left-color: #f0c040;
-}
-.callout-warning .callout-title {
-    background: color-mix(in srgb, #f0c040 15%, var(--surface));
-    color: #f0c040;
+    --callout: var(--accent-yellow);
 }
 
 .callout-danger,
 .callout-caution {
-    border-left-color: var(--accent-pink);
-}
-.callout-danger .callout-title,
-.callout-caution .callout-title {
-    background: color-mix(in srgb, var(--accent-pink) 15%, var(--surface));
-    color: var(--accent-pink);
+    --callout: var(--accent-pink);
 }
 
 .callout-tip,
 .callout-success {
-    border-left-color: #6bcb77;
-}
-.callout-tip .callout-title,
-.callout-success .callout-title {
-    background: color-mix(in srgb, #6bcb77 15%, var(--surface));
-    color: #6bcb77;
+    --callout: var(--accent-green);
 }
 
 /* === Collapsible callouts === */
@@ -725,7 +751,12 @@ pre code {
     list-style: none; /* Firefox */
     display: flex;
     align-items: center;
-    gap: 0.4em;
+    gap: 0.6em;
+}
+
+/* A closed callout is just its header strip */
+.callout-collapsible details:not([open]) > summary.callout-title {
+    border-bottom: 0;
 }
 
 /* Remove the default disclosure triangle in all browsers */
@@ -755,22 +786,21 @@ pre code {
 
 /* === Highlights === */
 mark {
-    background: color-mix(in srgb, #f0c040 35%, transparent);
+    background: color-mix(in srgb, var(--accent-yellow) 35%, transparent);
     color: inherit;
     border-radius: 2px;
     padding: 0 2px;
 }
 
 /* === HTML embeds (```html embed): a sketch pad for little tools === */
+/* Framed like .code-block; the graph paper is what marks it as a tool. */
 .html-embed {
-    --pad-line: color-mix(in srgb, var(--accent-teal) 10%, transparent);
-    --pad-edge: #3a3a48;
-    --pad-shadow: color-mix(in srgb, var(--accent-amber) 40%, transparent);
-    /* --accent-rose is too dark to read on --bg */
-    --pad-error: #d0607a;
-    margin: 2rem 0;
-    border: 2px solid var(--pad-edge);
-    border-radius: 6px;
+    --pad-line: color-mix(in srgb, var(--accent-teal) 8%, transparent);
+    --pad-edge: var(--border-strong);
+    --pad-error: var(--accent-pink);
+    margin: 1.5rem 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
     background-color: var(--surface);
     /* graph paper */
     background-image:
@@ -778,26 +808,15 @@ mark {
         linear-gradient(90deg, var(--pad-line) 1px, transparent 1px);
     background-size: 22px 22px;
     background-position: -1px -1px;
-    box-shadow: 6px 6px 0 var(--pad-shadow);
     overflow: hidden;
 }
 
-/* Binding strip: label on the left, punched holes filling the rest */
 .html-embed-bar {
     display: flex;
-    align-items: stretch;
-    gap: 0.5rem;
-    min-height: 2.25rem;
-    padding: 0 0.75rem;
-    background: color-mix(in srgb, var(--surface) 55%, var(--pad-edge));
-    border-bottom: 2px solid var(--pad-edge);
-}
-
-.html-embed-bar::after {
-    content: "";
-    flex: 1;
-    /* "space" only ever draws whole holes, so none get clipped at the edges */
-    background: radial-gradient(circle, var(--bg) 0 4px, transparent 5px) 0 50% / 26px 100% space no-repeat;
+    align-items: center;
+    padding: 0.35rem 0.75rem;
+    background: color-mix(in srgb, var(--surface) 50%, var(--border));
+    border-bottom: 1px solid var(--border);
 }
 
 .html-embed-label {
@@ -805,7 +824,7 @@ mark {
     align-items: center;
     gap: 0.4rem;
     font-family: var(--font-heading);
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: var(--accent-amber);
 }
 
@@ -848,15 +867,15 @@ mark {
     display: block;
     width: 100%;
     max-width: 22rem;
-    min-height: 3.25rem;
+    min-height: 2.75rem;
     margin: 0.4rem 0;
-    padding: 0.6rem 0.9rem;
+    padding: 0.5rem 0.75rem;
     font-family: var(--font-heading);
-    font-size: 1.15rem; /* >= 16px so iOS doesn't zoom on focus */
+    font-size: 1rem; /* >= 16px so iOS doesn't zoom on focus */
     color: var(--text-bright);
     background: var(--bg);
-    border: 2px solid var(--pad-edge);
-    border-radius: 4px;
+    border: 1px solid var(--pad-edge);
+    border-radius: var(--radius-sm);
 }
 
 .html-embed-body :where(input, select, textarea)::placeholder {
@@ -865,15 +884,15 @@ mark {
 }
 
 .html-embed-body :where(input, select, textarea):focus-visible {
-    outline: 3px solid var(--accent-amber);
+    outline: 2px solid var(--accent-teal);
     outline-offset: 2px;
-    border-color: var(--accent-amber);
+    border-color: var(--accent-teal);
 }
 
 .html-embed-body :where(input[type="checkbox"], input[type="radio"]) {
     width: 1.4rem;
     height: 1.4rem;
-    accent-color: var(--accent-amber);
+    accent-color: var(--accent-teal);
     vertical-align: middle;
 }
 
@@ -893,15 +912,15 @@ mark {
 .html-embed-body :where(input[type="range"])::-webkit-slider-runnable-track {
     height: 0.75rem;
     border-radius: 2px;
-    background: linear-gradient(to right, var(--accent-amber) calc(var(--value, 0) * 1%), var(--bg) 0);
-    box-shadow: inset 0 0 0 2px var(--pad-edge);
+    background: linear-gradient(to right, var(--accent-teal) calc(var(--value, 0) * 1%), var(--bg) 0);
+    box-shadow: inset 0 0 0 1px var(--pad-edge);
 }
 
 .html-embed-body :where(input[type="range"])::-moz-range-track {
     height: 0.75rem;
     border-radius: 2px;
-    background: linear-gradient(to right, var(--accent-amber) calc(var(--value, 0) * 1%), var(--bg) 0);
-    box-shadow: inset 0 0 0 2px var(--pad-edge);
+    background: linear-gradient(to right, var(--accent-teal) calc(var(--value, 0) * 1%), var(--bg) 0);
+    box-shadow: inset 0 0 0 1px var(--pad-edge);
 }
 
 .html-embed-body :where(input[type="range"])::-webkit-slider-thumb {
@@ -909,34 +928,31 @@ mark {
     width: 1.25rem;
     height: 2rem;
     margin-top: -0.625rem;
-    background: var(--accent-amber);
+    background: var(--accent-teal);
     border: 2px solid var(--bg);
     border-radius: 2px;
-    box-shadow: 3px 3px 0 var(--accent-rose);
 }
 
 .html-embed-body :where(input[type="range"])::-moz-range-thumb {
     width: 1.25rem;
     height: 2rem;
-    background: var(--accent-amber);
+    background: var(--accent-teal);
     border: 2px solid var(--bg);
     border-radius: 2px;
-    box-shadow: 3px 3px 0 var(--accent-rose);
 }
 
 .html-embed-body :where(button, input[type="button"], input[type="submit"], input[type="reset"]) {
-    min-height: 3.25rem;
-    min-width: 10rem;
+    min-height: 2.75rem;
+    min-width: 8rem;
     margin: 1rem 0.5rem 1rem 0;
-    padding: 0.75rem 1.5rem;
+    padding: 0.5rem 1.25rem;
     font-family: var(--font-heading);
-    font-size: 1.05rem;
+    font-size: 0.95rem;
     font-weight: bold;
     color: var(--bg);
-    background: var(--accent-amber);
-    border: 2px solid var(--accent-amber);
-    border-radius: 4px;
-    box-shadow: 4px 4px 0 var(--accent-rose);
+    background: var(--accent-teal);
+    border: 2px solid var(--accent-teal);
+    border-radius: var(--radius-sm);
     cursor: pointer;
     touch-action: manipulation; /* no double-tap zoom delay */
 }
@@ -946,20 +962,18 @@ mark {
 }
 
 .html-embed-body :where(button, input[type="button"], input[type="submit"], input[type="reset"]):active {
-    transform: translate(3px, 3px);
-    box-shadow: 1px 1px 0 var(--accent-rose);
+    transform: translateY(1px);
+    filter: brightness(0.92);
 }
 
 .html-embed-body :where(button, input[type="button"], input[type="submit"], input[type="reset"]):focus-visible {
-    outline: 3px solid var(--text-bright);
-    outline-offset: 3px;
+    outline: 2px solid var(--text-bright);
+    outline-offset: 2px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
     .html-embed-body :where(button, input[type="button"], input[type="submit"], input[type="reset"]) {
-        transition:
-            transform 0.08s ease-out,
-            box-shadow 0.08s ease-out;
+        transition: transform 0.08s ease-out;
     }
 }
 
@@ -991,8 +1005,8 @@ mark {
 .html-embed-body :where(fieldset) {
     margin: 1rem 0;
     padding: 0.75rem 1rem 1rem;
-    border: 2px solid var(--pad-edge);
-    border-radius: 4px;
+    border: 1px solid var(--pad-edge);
+    border-radius: var(--radius-sm);
 }
 
 .html-embed-body :where(legend) {
@@ -1028,7 +1042,6 @@ mark {
 .html-embed-body :where(button, input[type="button"], input[type="submit"], input[type="reset"]):disabled {
     filter: none;
     transform: none;
-    box-shadow: none;
 }
 
 /* .row: controls side by side, e.g. a number and its unit select */
@@ -1079,7 +1092,8 @@ mark {
     margin: 1rem 0;
     padding: 0.85rem 1rem;
     background: var(--bg);
-    border-left: 4px solid var(--accent-amber);
+    border: 1px solid var(--pad-edge);
+    border-radius: var(--radius-sm);
 }
 
 .html-embed-body :where(.panel) > :where(:last-child) {
@@ -1095,7 +1109,7 @@ mark {
     height: 1.75rem;
     margin: 0;
     background: var(--bg);
-    border: 2px solid var(--pad-edge);
+    border: 1px solid var(--pad-edge);
     border-radius: 2px;
     cursor: pointer;
 }
@@ -1112,13 +1126,13 @@ mark {
 }
 
 .html-embed-body :where(input.switch:checked) {
-    background: color-mix(in srgb, var(--accent-amber) 25%, var(--bg));
-    border-color: var(--accent-amber);
+    background: color-mix(in srgb, var(--accent-teal) 25%, var(--bg));
+    border-color: var(--accent-teal);
 }
 
 .html-embed-body :where(input.switch:checked)::before {
     left: calc(100% - 1.25rem - 2px);
-    background: var(--accent-amber);
+    background: var(--accent-teal);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -1146,11 +1160,11 @@ mark {
     flex: 1 1 auto;
     position: relative;
     display: block;
-    margin: 0 0 0 -2px;
+    margin: 0 0 0 -1px;
     padding: 0.6rem 1rem;
     text-align: center;
     background: var(--bg);
-    border: 2px solid var(--pad-edge);
+    border: 1px solid var(--pad-edge);
 }
 
 .html-embed-body :where(fieldset.segmented) > :where(label:first-of-type) {
@@ -1164,17 +1178,17 @@ mark {
     height: 1px;
 }
 
-/* z-index lifts the highlight over the neighbour it overlaps by 2px */
+/* z-index lifts the highlight over the neighbour it overlaps by 1px */
 .html-embed-body :where(fieldset.segmented) > :where(label:has(:checked)) {
     z-index: 1;
     color: var(--bg);
-    background: var(--accent-amber);
-    border-color: var(--accent-amber);
+    background: var(--accent-teal);
+    border-color: var(--accent-teal);
 }
 
 .html-embed-body :where(fieldset.segmented) > :where(label:has(:focus-visible)) {
     z-index: 2;
-    outline: 3px solid var(--text-bright);
+    outline: 2px solid var(--text-bright);
     outline-offset: 2px;
 }
 
@@ -1190,11 +1204,11 @@ mark {
         radial-gradient(circle closest-side, var(--surface) 0 66%, transparent 67%),
         conic-gradient(
             from 225deg,
-            var(--accent-amber) calc(var(--value, 0) * 2.7deg),
+            var(--accent-teal) calc(var(--value, 0) * 2.7deg),
             var(--bg) 0 270deg,
             transparent 0
         );
-    box-shadow: 0 0 0 2px var(--pad-edge);
+    box-shadow: 0 0 0 1px var(--pad-edge);
     cursor: grab;
     touch-action: none; /* dragging the dial must not scroll the page */
 }
@@ -1231,7 +1245,7 @@ mark {
     height: 0.9rem;
     margin: 0.4rem 0;
     background: var(--bg);
-    border: 2px solid var(--pad-edge);
+    border: 1px solid var(--pad-edge);
     border-radius: 2px;
 }
 
@@ -1271,11 +1285,11 @@ mark {
 }
 
 .html-embed-body :where(progress)::-webkit-progress-value {
-    background: var(--accent-amber);
+    background: var(--accent-teal);
 }
 
 .html-embed-body :where(progress)::-moz-progress-bar {
-    background: var(--accent-amber);
+    background: var(--accent-teal);
 }
 
 /* .gauge: a read-only dial. Text inside is the value; set style="--value: 0-100" */
@@ -1290,7 +1304,7 @@ mark {
         radial-gradient(circle closest-side, var(--surface) 0 76%, transparent 77%),
         conic-gradient(
             from 225deg,
-            var(--accent-amber) calc(var(--value, 0) * 2.7deg),
+            var(--accent-teal) calc(var(--value, 0) * 2.7deg),
             var(--bg) 0 270deg,
             transparent 0
         );
@@ -1331,7 +1345,7 @@ mark {
     flex: none;
     width: calc(var(--value, 0) * (100% - 5rem) / 100);
     height: 1.1rem;
-    background: var(--accent-amber);
+    background: var(--accent-teal);
     border-radius: 0 4px 4px 0;
 }
 
@@ -1347,7 +1361,8 @@ mark {
     margin: 0;
     padding: 0.75rem 1rem;
     background: var(--bg);
-    border: 2px solid var(--pad-edge);
+    border: 1px solid var(--pad-edge);
+    border-radius: var(--radius-sm);
     font-size: 0.85rem;
 }
 
@@ -1362,7 +1377,6 @@ mark {
 @media (max-width: 640px) {
     .html-embed {
         margin: 1.5rem 0;
-        box-shadow: 4px 4px 0 var(--pad-shadow);
     }
 
     .html-embed-body {
