@@ -15,12 +15,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - Theme palette tidied and nudged towards [rundot.dev](https://rundot.dev): cooler neutral greys, slightly brighter teal and amber. Every colour in `style.css` now comes from a `:root` variable.
 - Embedded tools now match the rest of the site: framed like code blocks (1px border, same header strip), teal controls instead of amber, no offset drop shadows or punched holes. The graph paper stays. Amber is kept for tool results, as with tags.
+- Callouts and plain code blocks use the same frame as highlighted code blocks and tools (1px border, rounded corners, header strip). The callout type now colours only its title.
+- The article date and reading time sit on one line.
 - `pb build`, `pb clean` and `pb serve` output is coloured with [Rich](https://github.com/Textualize/rich): green ✓, red ✗, yellow warnings, red errors. Piped output and `NO_COLOR` stay plain text.
 
 ### Fixed
 
 - Danger and caution callouts had no colour (`--accent-pink` was never defined).
 - Dead wikilinks and numbers in code blocks were too dark to read; they now use `--accent-pink`.
+- `---` rules and the footnote separator were unstyled (bright browser default); they are now a 1px border line.
+- Code blocks with line numbers no longer draw a table border around the code.
 - RSS excerpts no longer include JavaScript or CSS source from embedded tools.
 - Wikilinks resolve by filename as well as frontmatter `title`, so `[[Tools Widgets]]` finds a note titled "Tool widgets". Links between articles and tools now work in both directions.
 

@@ -64,6 +64,17 @@ class TestWidgetCss:
         tools = CSS[CSS.index("/* === HTML embeds") :]
         assert not re.findall(r"#[0-9a-fA-F]{3,8}\b", tools)
 
+    def test_boxes_share_one_frame(self):
+        # Code blocks, tools, callouts and plain <pre> are all drawn with the same border
+        css = re.sub(r"/\*.*?\*/", "", CSS, flags=re.S)
+        for selector in (".code-block", ".html-embed", ".callout", "pre"):
+            body = re.search(rf"(?:^|\}})\s*{re.escape(selector)} \{{([^}}]*)\}}", css).group(1)
+            assert "border: 1px solid var(--border);" in body, selector
+            assert "border-radius: var(--radius);" in body, selector
+
+    def test_horizontal_rules_are_styled(self):
+        assert re.search(r"^hr \{", CSS, flags=re.M)
+
     def test_every_widget_class_is_styled(self):
         for cls in set(WIDGET_CLASSES) - SCRIPT_ONLY_CLASSES:
             assert _rules_for(f".{cls}"), cls
