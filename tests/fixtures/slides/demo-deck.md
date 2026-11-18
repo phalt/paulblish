@@ -6,8 +6,6 @@ description: "Every Advanced Slides feature Paulblish supports, in one deck."
 theme: night
 highlightTheme: monokai
 transition: fade
-enableMenu: true
-enableChalkboard: true
 enableOverview: true
 ---
 

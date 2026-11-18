@@ -65,10 +65,11 @@ Key modules:
 - `manifest.py` — incremental build manifest (load/save `.pb-manifest.json`)
 - `slides/` — slide decks in the Obsidian Advanced Slides format (see spec 8.13): a line-for-line port of the plugin's
   markdown processors (`preprocessor.py`, `processors.py`, `properties.py`, `jsre.py`), reveal.js `slidify`
-  (`slidify.py`) and the deck build (`build.py`). `templates/deck.html` + vendored runtime in `templates/reveal/`.
+  (`slidify.py`), the deck build (`build.py`) and CDN pins (`runtime.py`). `templates/deck.html` + `templates/reveal/`.
 
 ## Slide Decks
 
 - The port must stay output-identical to Advanced Slides: `tests/test_slides_parity.py` replays the plugin's jest
   snapshots. Keep JavaScript semantics (`jsre.py`) when touching processors, even where upstream looks buggy.
-- `templates/reveal/` is vendored as-is from the plugin release bundle; don't edit those files (see its `VENDOR.md`).
+- The runtime loads from pinned jsDelivr URLs with SRI hashes (`paulblish/slides/runtime.py`); `templates/reveal/`
+  vendors only the plugin's own themes and `layout.css`. Don't edit vendored files (see its `VENDOR.md`).

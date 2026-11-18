@@ -31,6 +31,7 @@ from paulblish.slides.preprocessor import (
     slide_options,
     template_settings,
 )
+from paulblish.slides.runtime import CDN, HIGHLIGHT_THEMES, MATHJAX_URL
 from paulblish.slides.slidify import slidify
 
 DEFAULT_TEMPLATES = Path(__file__).parent.parent.parent / "templates"
@@ -302,8 +303,8 @@ class DeckResolver:
             return value
         if kind == "theme" and (RUNTIME_DIR / "dist" / "theme" / f"{value}.css").is_file():
             return f"{runtime}dist/theme/{value}.css"
-        if kind == "highlight" and (RUNTIME_DIR / "plugin" / "highlight" / f"{value}.css").is_file():
-            return f"{runtime}plugin/highlight/{value}.css"
+        if kind == "highlight" and value.lstrip("/") in HIGHLIGHT_THEMES:
+            return HIGHLIGHT_THEMES[value.lstrip("/")].url
         bundled = value.lstrip("/")
         if bundled and (RUNTIME_DIR / bundled).is_file():
             return runtime + bundled
@@ -375,17 +376,20 @@ def render_deck(
         css_urls=css_urls,
         slides=slides,
         reveal_options_json=json.dumps(reveal, default=str),
+        cdn=CDN,
+        highlight_integrity=_highlight_integrity(options.get("highlightTheme", "zenburn")),
+        mathjax_url=MATHJAX_URL,
         enable_custom_controls=bool(options.get("enableCustomControls")),
         enable_overview=bool(settings.get("enableOverview")),
-        enable_chalkboard=bool(settings.get("enableChalkboard")),
-        enable_menu=bool(settings.get("enableMenu")),
-        enable_pointer=bool(settings.get("enablePointer")),
-        enable_time_bar=bool(settings.get("enableTimeBar")),
-        time_for_presentation=options.get("timeForPresentation"),
         has_mermaid='class="mermaid"' in slides,
         pele_url=pele_url,
     )
     return resolver.warnings
+
+
+def _highlight_integrity(value) -> str:
+    theme = HIGHLIGHT_THEMES.get(str(value).strip().lstrip("/"))
+    return theme.integrity if theme else ""
 
 
 def deck_output_path(deck: Deck, output_dir: Path) -> Path:
@@ -393,7 +397,7 @@ def deck_output_path(deck: Deck, output_dir: Path) -> Path:
 
 
 def copy_runtime(output_dir: Path) -> Path:
-    """Copy the vendored reveal.js runtime to ``output/static/reveal/``."""
+    """Copy the vendored Advanced Slides themes and layout CSS to ``output/static/reveal/``."""
     target = output_dir / RUNTIME_URL_PATH.strip("/")
     if target.exists():
         shutil.rmtree(target)
