@@ -536,6 +536,18 @@ pre code {
     margin-left: 1rem;
 }
 
+/* Slide deck index: a description line under each deck */
+.deck-list li {
+    flex-wrap: wrap;
+}
+
+.deck-description {
+    flex-basis: 100%;
+    margin: 0.2em 0 0;
+    font-size: 0.9rem;
+    color: var(--text);
+}
+
 /* === Article prev/next nav === */
 .article-nav {
     display: flex;

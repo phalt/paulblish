@@ -3,6 +3,7 @@
 <div class="nav-links">
   <a href="{{ site.base_url }}/articles/">Articles</a>
   <a href="{{ site.base_url }}/tools/">Tools</a>
+  {% if site.slides_url %}<a href="{{ site.base_url }}{{ site.slides_url }}">Slides</a>{% endif %}
   <a href="{{ site.base_url }}/all/">All Pages</a>
 </div>
 {% include "_social.html" %}

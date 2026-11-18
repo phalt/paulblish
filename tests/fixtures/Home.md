@@ -3,6 +3,8 @@ publish: true
 title: "Home"
 slug: "home"
 description: "Welcome to the test blog."
+slides_directory: "slides"
+slides_css: "slides/theme.css"
 ---
 
 # Welcome

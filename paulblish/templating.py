@@ -88,6 +88,27 @@ def render_section_listing(
     return template.render(title=title, articles=sorted_articles, site=site, **_og_context(site))
 
 
+def render_slides_index(
+    decks: list,
+    site: SiteConfig,
+    templates_dir: Path | None = None,
+    static_files: dict[str, str] | None = None,
+) -> str:
+    """Render the slide deck index (/slides/), newest first.
+
+    Custom template directories made before slide decks existed fall back to the default template.
+    """
+    if templates_dir is not None and not (templates_dir / "slides.html").is_file():
+        templates_dir = None
+    env = _create_env(templates_dir, static_files=static_files)
+    template = env.get_template("slides.html")
+    ordered = sorted(decks, key=lambda d: (d.date, d.url_path), reverse=True)
+    context = _og_context(site)
+    context["page_title"] = f"Slides — {site.title}"
+    context["page_url"] = site.base_url + site.slides_url
+    return template.render(title="Slides", decks=ordered, site=site, **context)
+
+
 def render_404(
     site: SiteConfig,
     templates_dir: Path | None = None,

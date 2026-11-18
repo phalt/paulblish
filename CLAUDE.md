@@ -49,7 +49,7 @@ After completing each phase action, check it off in `spec.md` (change `- [ ]` to
 
 ## Architecture
 
-Build pipeline sequence: validate source -> validate config -> load config -> scan -> report scan -> build path map -> render -> collect assets -> copy assets -> template -> generate listings -> generate CNAME -> write -> report.
+Build pipeline sequence: validate source -> validate config -> load config -> scan (articles + decks) -> report scan -> build path map -> render -> collect assets -> render decks -> copy assets -> template -> generate listings -> generate CNAME -> write -> report.
 
 Key modules:
 
@@ -63,3 +63,12 @@ Key modules:
 - `templating.py` — Jinja2 environment setup + render
 - `writer.py` — output directory creation + file writing
 - `manifest.py` — incremental build manifest (load/save `.pb-manifest.json`)
+- `slides/` — slide decks in the Obsidian Advanced Slides format (see spec 8.13): a line-for-line port of the plugin's
+  markdown processors (`preprocessor.py`, `processors.py`, `properties.py`, `jsre.py`), reveal.js `slidify`
+  (`slidify.py`) and the deck build (`build.py`). `templates/deck.html` + vendored runtime in `templates/reveal/`.
+
+## Slide Decks
+
+- The port must stay output-identical to Advanced Slides: `tests/test_slides_parity.py` replays the plugin's jest
+  snapshots. Keep JavaScript semantics (`jsre.py`) when touching processors, even where upstream looks buggy.
+- `templates/reveal/` is vendored as-is from the plugin release bundle; don't edit those files (see its `VENDOR.md`).

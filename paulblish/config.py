@@ -71,7 +71,37 @@ def _validate_and_build(site: dict, source_label: str, **overrides: str) -> Site
         email=site.get("email", ""),
         kofi=site.get("kofi", ""),
         emoji_favicon=site.get("emoji_favicon", ""),
+        slides_directory=_slides_directory(site.get("slides_directory")),
+        slides_css=_slides_css(site.get("slides_css")),
     )
+
+
+def _slides_directory(value) -> str:
+    if value is None or str(value).strip() == "":
+        return "slides"
+    return str(value).strip().strip("/")
+
+
+def _slides_css(value) -> list[str]:
+    """slides_css may be one path, a comma-separated string, or a YAML/TOML list."""
+    if not value:
+        return []
+    items = value if isinstance(value, list) else str(value).split(",")
+    return [str(item).strip() for item in items if str(item).strip()]
+
+
+SLIDES_KEYS = ("slides_directory", "slides_css")
+
+
+def _home_slides_settings(home_path: Path | None) -> dict:
+    """Slide settings always come from Home.md frontmatter when present, even with a site.toml."""
+    if home_path is None:
+        return {}
+    try:
+        metadata = fm.load(home_path).metadata
+    except Exception:
+        return {}
+    return {key: metadata[key] for key in SLIDES_KEYS if key in metadata}
 
 
 def load_config(source_dir: Path, **overrides: str | None) -> tuple[SiteConfig, str]:
@@ -86,7 +116,7 @@ def load_config(source_dir: Path, **overrides: str | None) -> tuple[SiteConfig, 
     home_path = _find_home(source_dir)
 
     if toml_path.exists():
-        site = _load_from_toml(toml_path)
+        site = {**_load_from_toml(toml_path), **_home_slides_settings(home_path)}
         return _validate_and_build(site, str(toml_path), **overrides), "site.toml"
 
     if home_path is not None:

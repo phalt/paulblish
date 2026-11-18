@@ -55,11 +55,14 @@ def _is_home(file_path: Path, source_dir: Path) -> bool:
     return file_path.parent == source_dir and file_path.stem.lower() == "home"
 
 
-def scan(source_dir: Path, include_drafts: bool = False) -> tuple[list[Article], list[SkippedFile]]:
+def scan(
+    source_dir: Path, include_drafts: bool = False, exclude_dir: Path | None = None
+) -> tuple[list[Article], list[SkippedFile]]:
     """Scan source directory for publishable markdown files.
 
     Returns (articles, skipped) where articles are valid Article instances
     and skipped contains files that were found but not included, with reasons.
+    Files under *exclude_dir* (the slides directory) are left to the deck scanner.
     """
     articles: list[Article] = []
     skipped: list[SkippedFile] = []
@@ -67,6 +70,8 @@ def scan(source_dir: Path, include_drafts: bool = False) -> tuple[list[Article],
     md_files = sorted(source_dir.rglob("*.md"))
 
     for file_path in md_files:
+        if exclude_dir is not None and file_path.is_relative_to(exclude_dir):
+            continue
         relative_path = file_path.relative_to(source_dir)
 
         # Parse frontmatter

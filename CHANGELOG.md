@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Slide decks in the Obsidian [Advanced Slides](https://github.com/MSzturc/obsidian-advanced-slides) format. Every `publish: true` file in `slides/` becomes a reveal.js presentation at `/slides/<slug>/`, listed on a `/slides/` index page and in the sitemap (not the feed or article listings). The plugin's markdown processing is ported to Python and checked against all of its own test snapshots, and its reveal.js 4.3.1 runtime (themes, layout CSS, notes, highlight, maths, charts, chalkboard, menu) is vendored in `templates/reveal/`, so decks look the same as in Obsidian. Mermaid diagrams use Pele, wikilinks link to published pages, and images follow the article asset rules. Set `slides_directory` and `slides_css` (site-wide deck stylesheets) in `Home.md` frontmatter.
+
 - `kofi` site config field. Set it to your Ko-fi page ID to add a coffee icon to the social links (nav and footer) and a "Support me on Ko-fi" button to the footer of every page. Plain links, no Ko-fi widget script.
 - Tool widgets for ` ```html embed ` blocks: styled form controls, sliders, meters and progress bars with no classes, plus one-class widgets (`row`, `fields`, `panel`, `switch`, `segmented`, `knob`, `gauge`, `bars`, `stats`, `error`, `live`). Pages with an embed load a small helper script that fills slider tracks, updates `output.live` readouts and makes `knob` dials draggable. See `tests/fixtures/tool_widgets.md` for every widget and the HTML to write. Embeds and widgets work in any markdown file, including `Home.md`.
 

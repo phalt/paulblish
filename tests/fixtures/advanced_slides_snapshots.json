@@ -1,0 +1,725 @@
+[
+ {
+  "id": "basicSyntax: Basic Markdown Syntax > Headers 1",
+  "input": "# This is a heading 1\n## This is a heading 2\n### This is a heading 3 \n#### This is a heading 4\n##### This is a heading 5\n###### This is a heading 6",
+  "extra": {},
+  "find_file": {},
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n# This is a heading 1\n## This is a heading 2\n### This is a heading 3 \n#### This is a heading 4\n##### This is a heading 5\n###### This is a heading 6\n</div>"
+ },
+ {
+  "id": "basicSyntax: Basic Markdown Syntax > Text style 1",
+  "input": "*This text will be italic*\n\n_This will also be italic_\n\n**This text will be bold**\n\n__This will also be bold__\n\n%%This is a Comment(Can't see it)%%\n\n_You **can** combine them_\n\n---\n\nAny word wrapped with two tildes (like ~~this~~) will appear crossed out.\n\nAny word wrapped with two equal signs (like ==this==) will appear as highlighted.",
+  "extra": {},
+  "find_file": {},
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n*This text will be italic*\n\n_This will also be italic_\n\n**This text will be bold**\n\n**This will also be bold**\n\n\n\n_You **can** combine them_\n</div>\n---\n<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\nAny word wrapped with two tildes (like ~~this~~) will appear crossed out.\n\nAny word wrapped with two equal signs (like <mark>this</mark>) will appear as highlighted.\n</div>"
+ },
+ {
+  "id": "basicSyntax: Basic Markdown Syntax > Lists 1",
+  "input": "- Item 1\n- Item 2\n\t- Item 2a\n\t- Item 2b\n\n---\n\n1. Item 1\n1. Item 2\n1. Item 3\n   1. Item 3a\n   1. Item 3b\n",
+  "extra": {},
+  "find_file": {},
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n- Item 1\n- Item 2\n\t- Item 2a\n\t- Item 2b\n</div>\n---\n<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n1. Item 1\n1. Item 2\n1. Item 3\n   1. Item 3a\n   1. Item 3b\n</div>"
+ },
+ {
+  "id": "basicSyntax: Basic Markdown Syntax > Images 1",
+  "input": "\nInsert image with standard markdown syntax\n\n![Image](https://picsum.photos/id/1006/500/300)\n\n---\n\nInsert image that lies outside of your vault\n\n![Image](file:///Users/testUser/Desktop/howToUse.png)\n\n---\n\nInsert image with obsidian markdown syntax\n\n![[Image.jpg]]\n\n---\n\nScale image to a width of 100 px\n\n![[Image.jpg|100]]\n\n---\n\nScale image to a width of 300x100 px\n\n![[Image.jpg|300x100]] <!-- element style=\"object-fit: cover\" -->\n\n",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\nInsert image with standard markdown syntax\n\n<img src=\"https://picsum.photos/id/1006/500/300\" alt=\"Image\" style=\"object-fit: scale-down\">\n</div>\n---\n<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\nInsert image that lies outside of your vault\n\n<img src=\"/localFileSlash/Users/testUser/Desktop/howToUse.png\" alt=\"Image\" style=\"object-fit: scale-down\">\n</div>\n---\n<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\nInsert image with obsidian markdown syntax\n\n<img src=\"/documentation/Image.jpg\" alt=\"\" style=\"object-fit: scale-down\">\n</div>\n---\n<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\nScale image to a width of 100 px\n\n<img src=\"/documentation/Image.jpg\" alt=\"\" style=\"width: 100px; object-fit: fill\">\n</div>\n---\n<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\nScale image to a width of 300x100 px\n\n<img src=\"/documentation/Image.jpg\" alt=\"\" style=\"object-fit: fill; width: 300px; height: 100px\">\n</div>"
+ },
+ {
+  "id": "basicSyntax: Basic Markdown Syntax > Links 1",
+  "input": "External Links\n\nhttp://obsidian.md - automatic!\n\n[Obsidian](http://obsidian.md)\n\n---\n\nObsidian URI links\n\n[Link to note](obsidian://open?path=D:%2Fpath%2Fto%2Ffile.md)\n\n[Link to note](obsidian://open?vault=MainVault&file=MyNote.md)\n\n---\n\nInternal Links\n\nThis [[Internal link]] will be displayed as normal text\n\nThis [[Internal link|Link]] will use its alias for displaying\n\n",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\nExternal Links\n\nhttp://obsidian.md - automatic!\n\n[Obsidian](http://obsidian.md)\n</div>\n---\n<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\nObsidian URI links\n\n[Link to note](obsidian://open?path=D:%2Fpath%2Fto%2Ffile.md)\n\n[Link to note](obsidian://open?vault=MainVault&file=MyNote.md)\n</div>\n---\n<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\nInternal Links\n\nThis Internal link will be displayed as normal text\n\nThis Link will use its alias for displaying\n</div>"
+ },
+ {
+  "id": "basicSyntax: Basic Markdown Syntax > Links 2",
+  "input": "---\nenableLinks: true\n---\n\nInternal Links\n\nThis [[Internal link]] will be displayed as normal text\n\nThis [[Internal link|Link]] will use its alias for displaying\n\n",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\nInternal Links\n\nThis [Internal link](obsidian://open?vault=test-vault&file=Internal%20link) will be displayed as normal text\n\nThis [Link](obsidian://open?vault=test-vault&file=Internal%20link) will use its alias for displaying\n</div>"
+ },
+ {
+  "id": "basicSyntax: Basic Markdown Syntax > Embeds 1",
+  "input": "![[Obsidian]]\n\n---\n\n![[Obsidian#Link]]\n",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {
+   "Obsidian.md#Link": "Link to Obsidian Homepage: http://obsidian.md",
+   "Obsidian.md": "# Notes about Obsidian\nA knowledge base that works on local Markdown files\n\n# Link\nLink to Obsidian Homepage: http://obsidian.md"
+  },
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n# Notes about Obsidian\nA knowledge base that works on local Markdown files\n\n# Link<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\nLink to Obsidian Homepage: http://obsidian.md\n</div></div>\n---\n\nLink to Obsidian Homepage: http://obsidian.md\n"
+ },
+ {
+  "id": "basicSyntax: Basic Markdown Syntax > Blockquotes 1",
+  "input": "> Human beings face ever more complex and urgent problems, and their effectiveness in dealing with these problems is a matter that is critical to the stability and continued progress of society.\n\n- Doug Engelbart, 1961\n",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {
+   "Obsidian.md#Link": "Link to Obsidian Homepage: http://obsidian.md",
+   "Obsidian.md": "# Notes about Obsidian\nA knowledge base that works on local Markdown files\n\n# Link\nLink to Obsidian Homepage: http://obsidian.md"
+  },
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n> Human beings face ever more complex and urgent problems, and their effectiveness in dealing with these problems is a matter that is critical to the stability and continued progress of society.\n\n- Doug Engelbart, 1961\n</div>"
+ },
+ {
+  "id": "basicSyntax: Basic Markdown Syntax > Inline Code 1",
+  "input": "### Text inside `backticks` on a line will be formatted like code.\n",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {
+   "Obsidian.md#Link": "Link to Obsidian Homepage: http://obsidian.md",
+   "Obsidian.md": "# Notes about Obsidian\nA knowledge base that works on local Markdown files\n\n# Link\nLink to Obsidian Homepage: http://obsidian.md"
+  },
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n### Text inside `backticks` on a line will be formatted like code.\n</div>"
+ },
+ {
+  "id": "basicSyntax: Basic Markdown Syntax > Tables 1",
+  "input": "First Header | Second Header\n------------ | ------------\nContent from cell 1 | Content from cell 2\nContent in the first column | Content in the second column\n",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {
+   "Obsidian.md#Link": "Link to Obsidian Homepage: http://obsidian.md",
+   "Obsidian.md": "# Notes about Obsidian\nA knowledge base that works on local Markdown files\n\n# Link\nLink to Obsidian Homepage: http://obsidian.md"
+  },
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\nFirst Header | Second Header\n------------ | ------------\nContent from cell 1 | Content from cell 2\nContent in the first column | Content in the second column\n</div>"
+ },
+ {
+  "id": "basicSyntax: Basic Markdown Syntax > Footnotes 1",
+  "input": "Here's a simple footnote[^1]\n\n[^1]: meaningful!\n\n",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {
+   "Obsidian.md#Link": "Link to Obsidian Homepage: http://obsidian.md",
+   "Obsidian.md": "# Notes about Obsidian\nA knowledge base that works on local Markdown files\n\n# Link\nLink to Obsidian Homepage: http://obsidian.md"
+  },
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\nHere's a simple footnote<sup id=\"fnref:1\" role=\"doc-noteref\">1</sup>\n\n\n\n\n<div class=\"footnotes\" role=\"doc-endnotes\">\n<ol>\n<li id=\"fn:1\" role=\"doc-endnote\" class=\"footnote\"><p>\n\nmeaningful!\n\n</p></li></ol>\n</div>\n</div>"
+ },
+ {
+  "id": "basicSyntax: Basic Markdown Syntax > Footnotes in Tables 1",
+  "input": "| Table     | Col 1 | Col 2 | Col 3 |\n\t| --------- | ----- | ----- | ----- |\n\t| Footnotes | [^1]  | [^2]  | [^3]  | \n\t\n\t[^1]: fn1\n\t[^2]: fn2\n\t[^3]: fn3\n",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {
+   "Obsidian.md#Link": "Link to Obsidian Homepage: http://obsidian.md",
+   "Obsidian.md": "# Notes about Obsidian\nA knowledge base that works on local Markdown files\n\n# Link\nLink to Obsidian Homepage: http://obsidian.md"
+  },
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n| Table     | Col 1 | Col 2 | Col 3 |\n\t| --------- | ----- | ----- | ----- |\n| Footnotes |<sup id=\"fnref:1\" role=\"doc-noteref\">1</sup>|<sup id=\"fnref:2\" role=\"doc-noteref\">2</sup>|<sup id=\"fnref:3\" role=\"doc-noteref\">3</sup>|\n\t\n\n\n\n\n<div class=\"footnotes\" role=\"doc-endnotes\">\n<ol>\n<li id=\"fn:1\" role=\"doc-endnote\" class=\"footnote\"><p>\n\nfn1\n\n</p></li><li id=\"fn:2\" role=\"doc-endnote\" class=\"footnote\"><p>\n\nfn2\n\n</p></li><li id=\"fn:3\" role=\"doc-endnote\" class=\"footnote\"><p>\n\nfn3\n\n</p></li></ol>\n</div>\n</div>"
+ },
+ {
+  "id": "basicSyntax: Basic Markdown Syntax > Math 1",
+  "input": "$$\begin{vmatrix}a & b\\\nc & d\nend{vmatrix}=ad-bc$$\n\nYou can also do inline math like $s^{-2}_{n}sum_{i=1}^{n}$",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {
+   "Obsidian.md#Link": "Link to Obsidian Homepage: http://obsidian.md",
+   "Obsidian.md": "# Notes about Obsidian\nA knowledge base that works on local Markdown files\n\n# Link\nLink to Obsidian Homepage: http://obsidian.md"
+  },
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n$\begin{vmatrix}a & b\\\nc & d\nend{vmatrix}=ad-bc$\n\nYou can also do inline math like `$s^{-2}_{n}sum_{i=1}^{n}$`\n</div>"
+ },
+ {
+  "id": "basicSyntax: Basic Markdown Syntax > Mermaid 1",
+  "input": "---\ntheme: beige\nhighlightTheme: css/vs2015.css\n\n---\n\n```mermaid\nsequenceDiagram\n    Alice->>+John: Hello John, how are you?\n    Alice->>+John: John, can you hear me?\n    John-->>-Alice: Hi Alice, I can hear you!\n    John-->>-Alice: I feel great!\n```",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {
+   "Obsidian.md#Link": "Link to Obsidian Homepage: http://obsidian.md",
+   "Obsidian.md": "# Notes about Obsidian\nA knowledge base that works on local Markdown files\n\n# Link\nLink to Obsidian Homepage: http://obsidian.md"
+  },
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"mermaid\">\nsequenceDiagram\n    Alice->>+John: Hello John, how are you?\n    Alice->>+John: John, can you hear me?\n    John-->>-Alice: Hi Alice, I can hear you!\n    John-->>-Alice: I feel great!\n\n</div>\n</div>"
+ },
+ {
+  "id": "basicSyntax: Basic Markdown Syntax > Callouts 1",
+  "input": "> [!tip] This tip has a custom Header\n\t> This is an Tip with a custom Title\n\t<!-- element style=\"width:40%\"-->\n\t\n\t> [!warning] \n\t> This warning is aligned left\n\t<!-- element style=\"width:20%;font-size:24px\" align=\"left\"-->\n\t\n\t<br>\n\t\n\t> [!error] \n\t> Callouts support manipulation through annotations\n\t<!-- element style=\"width:20%;font-size:24px\" rotate=\"15\"-->\n\t\n\t<grid drag=\"30 30\" drop=\"11 68\" style=\"font-size:36px\">\n\t> [!example]\n\t> Here is an Example for an Callout in a Slide. Callouts support dark and white backgrounds and could be sized by annotations\n\t</grid>\n\t\n\t<grid drag=\"50 100\" drop=\"50 0\" bg=\"white\" pad=\"50px\" style=\"font-size:36px\">\n\t> [!cite]\n\t> Here is an Cite for an Callout in a Slide. Callouts support dark and white backgrounds and could be sized by annotations\n\t</grid>",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {
+   "Obsidian.md#Link": "Link to Obsidian Homepage: http://obsidian.md",
+   "Obsidian.md": "# Notes about Obsidian\nA knowledge base that works on local Markdown files\n\n# Link\nLink to Obsidian Homepage: http://obsidian.md"
+  },
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"callout callout-color2\">\n<div class=\"callout-title\">\n<div class=\"callout-icon\">\n\n<i class=\"fas fa-fire-alt\" ></i>\n\n\n</div>\n<div class=\"callout-title-inner\">\n\nThis tip has a custom Header\n\n</div>\n</div>\n<div class=\"callout-content\">\n\nThis is an Tip with a custom Title\n\n</div>\n</div>\n\t<!-- .element: style=\"width: 40%\" -->\n\t\n<div class=\"callout callout-color5\">\n<div class=\"callout-title\">\n<div class=\"callout-icon\">\n\n<i class=\"fas fa-exclamation-triangle\" ></i>\n\n\n</div>\n<div class=\"callout-title-inner\">\n\nWarning\n\n</div>\n</div>\n<div class=\"callout-content\">\n\nThis warning is aligned left\n\n</div>\n</div>\n\t<!-- .element: style=\"width: 20%; font-size: 24px; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-evenly\" align=\"left\" -->\n\t\n\t<br>\n\t\n<div class=\"callout callout-color7\">\n<div class=\"callout-title\">\n<div class=\"callout-icon\">\n\n<i class=\"fas fa-bolt\" ></i>\n\n\n</div>\n<div class=\"callout-title-inner\">\n\nError\n\n</div>\n</div>\n<div class=\"callout-content\">\n\nCallouts support manipulation through annotations\n\n</div>\n</div>\n\t<!-- .element: style=\"width: 20%; font-size: 24px; transform: rotate(15deg)\" -->\n\t\n\t<div class=\"\" style=\"font-size: 36px; position: absolute; left: 11%; top: 68%; height: 30%; width: 30%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n\n<div class=\"callout callout-color8\">\n<div class=\"callout-title\">\n<div class=\"callout-icon\">\n\n<i class=\"fas fa-list\" ></i>\n\n\n</div>\n<div class=\"callout-title-inner\">\n\nExample\n\n</div>\n</div>\n<div class=\"callout-content\">\n\nHere is an Example for an Callout in a Slide. Callouts support dark and white backgrounds and could be sized by annotations\n\n</div>\n</div>\n\t</div>\n\t\n\t<div class=\"has-light-background\" style=\"font-size: 36px; background-color: white; padding: 50px; box-sizing: border-box; position: absolute; left: 50%; top: 0%; height: 100%; width: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n\n<div class=\"callout callout-color9\">\n<div class=\"callout-title\">\n<div class=\"callout-icon\">\n\n<i class=\"fas fa-quote-left\" ></i>\n\n\n</div>\n<div class=\"callout-title-inner\">\n\nCite\n\n</div>\n</div>\n<div class=\"callout-content\">\n\nHere is an Cite for an Callout in a Slide. Callouts support dark and white backgrounds and could be sized by annotations\n\n</div>\n</div>\n\t</div>\n</div>"
+ },
+ {
+  "id": "extendedSyntax: Extended Markdown Syntax > Horizontal / Vertical Slides 1",
+  "input": "# Slide 1\n\n---\n\n# Slide 2.1\n\n--\n\n# Slide 2.2\n",
+  "extra": {},
+  "find_file": {},
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n# Slide 1\n</div>\n---\n<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n# Slide 2.1\n</div>\n--\n<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n# Slide 2.2\n</div>"
+ },
+ {
+  "id": "extendedSyntax: Extended Markdown Syntax >  Element Annotations 1",
+  "input": "text with border <!-- element class=\"with-border\" -->\n\ntext with background <!-- element style=\"background:blue\" -->\n\ntext with attribute <!-- element data-toggle=\"modal\" -->\n",
+  "extra": {},
+  "find_file": {},
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\ntext with border <!-- .element: class=\"with-border\" -->\n\ntext with background <!-- .element: style=\"background: blue\" -->\n\ntext with attribute <!-- .element: data-toggle=\"modal\" -->\n</div>"
+ },
+ {
+  "id": "extendedSyntax: Extended Markdown Syntax >  Slide Annotations 1",
+  "input": "<!-- slide style=\"background-color: coral;\" -->\n\n# Header with coral background color\n\nParagraph has coral background color, too!\n\n---\n\n<!-- slide style=\"background-color: green;\" -->\n\n- All Bullet points\n- have green\n- background color\n",
+  "extra": {},
+  "find_file": {},
+  "parse_file": {},
+  "expected": "<!-- .slide: style=\"background-color: coral\" class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n# Header with coral background color\n\nParagraph has coral background color, too!\n</div>\n---\n<!-- .slide: style=\"background-color: green\" class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n- All Bullet points\n- have green\n- background color\n</div>"
+ },
+ {
+  "id": "extendedSyntax: Extended Markdown Syntax >  Block Comments 1",
+  "input": "::: block\n\n#### Header\n_and_\nParagraph content\n*in same block*\n\n:::\n\n---\n\nno color\n\n::: block <!-- element style=\"background-color: red;\" -->\n\neverything inside this block has red background color\n\n::: block <!-- element style=\"background-color: blue;\" -->\n\nblue\n\n:::\n\nred\n\n:::\n\nno color\n",
+  "extra": {},
+  "find_file": {},
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"block\">\n\n#### Header\n_and_\nParagraph content\n*in same block*\n\n</div>\n</div>\n---\n<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\nno color\n\n<div class=\"block\">\n\n<!-- .element: style=\"background-color: red\" -->\n\neverything inside this block has red background color\n\n<div class=\"block\">\n\n<!-- .element: style=\"background-color: blue\" -->\n\nblue\n\n</div>\n\n\n\nred\n\n</div>\n\n\n\nno color\n</div>"
+ },
+ {
+  "id": "extendedSyntax: Extended Markdown Syntax >  Fragments 1",
+  "input": "Fade in <!-- element class=\"fragment\" -->\n\nFade out <!-- element class=\"fragment fade-out\" -->\n\nHighlight red <!-- element class=\"fragment highlight-red\" -->\n\nFade in, then out <!-- element class=\"fragment fade-in-then-out\" -->\n\nSlide up while fading in <!-- element class=\"fragment fade-up\" -->\n\n---\n\n- Permanent item\n- Appear Fourth <!-- element class=\"fragment\" data-fragment-index=\"4\" -->\n- Appear Third <!-- element class=\"fragment\" data-fragment-index=\"3\" -->\n- Appear Second <!-- element class=\"fragment\" data-fragment-index=\"2\" -->\n- Appear First <!-- element class=\"fragment\" data-fragment-index=\"1\" -->\n",
+  "extra": {},
+  "find_file": {},
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\nFade in <!-- .element: class=\"fragment\" -->\n\nFade out <!-- .element: class=\"fragment fade-out\" -->\n\nHighlight red <!-- .element: class=\"fragment highlight-red\" -->\n\nFade in, then out <!-- .element: class=\"fragment fade-in-then-out\" -->\n\nSlide up while fading in <!-- .element: class=\"fragment fade-up\" -->\n</div>\n---\n<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n- Permanent item\n- Appear Fourth <!-- .element: class=\"fragment\" data-fragment-index=\"4\" -->\n- Appear Third <!-- .element: class=\"fragment\" data-fragment-index=\"3\" -->\n- Appear Second <!-- .element: class=\"fragment\" data-fragment-index=\"2\" -->\n- Appear First <!-- .element: class=\"fragment\" data-fragment-index=\"1\" -->\n</div>"
+ },
+ {
+  "id": "extendedSyntax: Extended Markdown Syntax >  Inline Styling 1",
+  "input": "<style>\n.with-border{\n\tborder: 1px solid red;\n}\n</style>\n\nstyled text <!-- element class=\"with-border\" -->\n",
+  "extra": {},
+  "find_file": {},
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<style>\n.with-border{\n\tborder: 1px solid red;\n}\n</style>\n\nstyled text <!-- .element: class=\"with-border\" -->\n</div>"
+ },
+ {
+  "id": "extendedSyntax: Extended Markdown Syntax >  Slide Backgrounds 1",
+  "input": "<!-- slide data-background=\"aquamarine\" -->\n## Slide with text based background\n---\n\n<!-- slide data-background=\"#ff0000\" -->\n## Slide with hex based background\n\n---\n\n<!-- slide data-background=\"rgb(70, 70, 255)\" -->\n## Slide with rgb based background\n\n---\n\n<!-- slide data-background=\"hsla(315, 100%, 50%, 1)\" -->\n## Slide with hsl based background\n\n---\n\n# Slide without background\n\n---\n\n<!-- slide data-background-image=\"https://picsum.photos/seed/picsum/800/600\" -->\n## Slide with image background\n\n---\n\n<!-- slide bg=\"[[Image.jpg]]\" -->\n## Slide with image background #2\n\n---\n\n<!-- slide data-background-image=\"https://picsum.photos/seed/picsum/800/600\" data-background-opacity=\"0.5\" -->\n## with opacity\n\n0.5 ≙ 50% opacity\n\n---\n\n## More options:\n\nSee [reveal backgrounds](https://revealjs.com/backgrounds/)\n",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" data-background=\"aquamarine\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n## Slide with text based background\n</div>\n---\n<!-- .slide: class=\"drop\" data-background=\"#ff0000\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n## Slide with hex based background\n</div>\n---\n<!-- .slide: class=\"drop\" data-background=\"rgb(70, 70, 255)\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n## Slide with rgb based background\n</div>\n---\n<!-- .slide: class=\"drop\" data-background=\"hsla(315, 100%, 50%, 1)\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n## Slide with hsl based background\n</div>\n---\n<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n# Slide without background\n</div>\n---\n<!-- .slide: class=\"drop\" data-background-image=\"https://picsum.photos/seed/picsum/800/600\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n## Slide with image background\n</div>\n---\n<!-- .slide: class=\"drop\" data-background-image=\"/documentation/Image.jpg\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n## Slide with image background #2\n</div>\n---\n<!-- .slide: class=\"drop\" data-background-image=\"https://picsum.photos/seed/picsum/800/600\" data-background-opacity=\"0.5\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n## with opacity\n\n0.5 ≙ 50% opacity\n</div>\n---\n<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n## More options:\n\nSee [reveal backgrounds](https://revealjs.com/backgrounds/)\n</div>"
+ },
+ {
+  "id": "extendedSyntax: Extended Markdown Syntax >  Default Background 1",
+  "input": "\n## Slide with default Background\n\n---\n\n<!-- slide bg=\"[[Slide.jpg]]\" -->\n\n## Slide with overloaded Background\n\n---\n\n<!-- slide class=\"titleSlide\" -->\n\n## Slide without overloaded Background\n\n",
+  "extra": {
+   "bg": "[[Image.jpg]]"
+  },
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg",
+   "Slide.jpg": "/documentation/Slide.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" data-background-image=\"/documentation/Image.jpg\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n## Slide with default Background\n</div>\n---\n<!-- .slide: class=\"drop\" data-background-image=\"/documentation/Slide.jpg\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n## Slide with overloaded Background\n</div>\n---\n<!-- .slide: class=\"titleSlide drop\" data-background-image=\"/documentation/Image.jpg\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n## Slide without overloaded Background\n</div>"
+ },
+ {
+  "id": "extendedSyntax: Extended Markdown Syntax >  Speaker Notes 1",
+  "input": "## My Slide\n\nThis is part of my Presentation\n\n\nnote: this is not! Only the speaker might see this text.\n\n- and this bulletpoint\n- or this picture\n\n![](https://picsum.photos/id/1005/250/250)\n",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg",
+   "Slide.jpg": "/documentation/Slide.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n## My Slide\n\nThis is part of my Presentation\n</div>\n\nnote: this is not! Only the speaker might see this text.\n\n- and this bulletpoint\n- or this picture\n\n<img src=\"https://picsum.photos/id/1005/250/250\" alt=\"\" style=\"object-fit: scale-down\">\n\n"
+ },
+ {
+  "id": "extendedSyntax: Extended Markdown Syntax >  Fragmented list 1",
+  "input": "# Unordered list\n\n- First\n- Second\n- Third\n\n---\n\n# Fragmented unordered list\n\n- Permanent\n+ First\n+ Second\n+ Third\n\n---\n\n# Fragmented unordered list with ignored code block\n\n- First\n+ Second\n\n```diff\n- ignored block text 1\n+ ignored block text 2\n```\n\n---\n\n# Ordered list\n\n1. First\n2. Second\n3. Third\n\n---\n\n# Fragmented ordered list\n\n1. Permanent\n2) Second\n3) Third\n4) Fourth\n",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg",
+   "Slide.jpg": "/documentation/Slide.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n# Unordered list\n\n- First\n- Second\n- Third\n</div>\n---\n<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n# Fragmented unordered list\n\n- Permanent\n- &shy;<!-- .element: class=\"fragment\" data-fragment-index=\"1\" -->First\n- &shy;<!-- .element: class=\"fragment\" data-fragment-index=\"2\" -->Second\n- &shy;<!-- .element: class=\"fragment\" data-fragment-index=\"3\" -->Third\n</div>\n---\n<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n# Fragmented unordered list with ignored code block\n\n- First\n- &shy;<!-- .element: class=\"fragment\" data-fragment-index=\"1\" -->Second\n\n```diff\n- ignored block text 1\n+ ignored block text 2\n```\n</div>\n---\n<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n# Ordered list\n\n1. First\n2. Second\n3. Third\n</div>\n---\n<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n# Fragmented ordered list\n\n1. Permanent\n1. &shy;<!-- .element: class=\"fragment\" data-fragment-index=\"1\" -->Second\n1. &shy;<!-- .element: class=\"fragment\" data-fragment-index=\"2\" -->Third\n1. &shy;<!-- .element: class=\"fragment\" data-fragment-index=\"3\" -->Fourth\n</div>"
+ },
+ {
+  "id": "extendedSyntax: Extended Markdown Syntax >  Excalidraw support 1",
+  "input": "#### Excalidraw support\n\n![[Sample.excalidraw|100]]\n\n![[Sample.excalidraw]] <!-- element style=\"width:300px; height:400px\" -->",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg",
+   "Slide.jpg": "/documentation/Slide.jpg",
+   "Sample.excalidraw": "Sample.excalidraw.svg",
+   "Sample.excalidraw.svg": "path/to/Sample.excalidraw.svg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n#### Excalidraw support\n\n<img src=\"path/to/Sample.excalidraw.svg\" alt=\"\" style=\"width: 100px; object-fit: fill\">\n\n\n<img src=\"path/to/Sample.excalidraw.svg\" alt=\"\" style=\"width: 300px; height: 400px; object-fit: fill\">\n</div>"
+ },
+ {
+  "id": "extendedSyntax: Extended Markdown Syntax >  Chart support 1",
+  "input": "\n\t\n\t```chart\n    type: bar\n    labels: [Monday,Tuesday,Wednesday,Thursday,Friday, Saturday, Sunday, \"next Week\", \"next Month\"]\n    series:\n      - title: Title 1\n        data: [1,2,3,4,5,6,7,8,9]\n      - title: Title 2\n        data: [5,4,3,2,1,0,-1,-2,-3]\n```\n\n\t",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg",
+   "Slide.jpg": "/documentation/Slide.jpg",
+   "Sample.excalidraw": "Sample.excalidraw.svg",
+   "Sample.excalidraw.svg": "path/to/Sample.excalidraw.svg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n<canvas style=\"max-height:700px\" data-chart=\"bar\" >\n<!--\n{\"data\":{\"datasets\":[{\"data\":[1,2,3,4,5,6,7,8,9],\"label\":\"Title 1\",\"backgroundColor\":\"#4285f4\"},{\"data\":[5,4,3,2,1,0,-1,-2,-3],\"label\":\"Title 2\",\"backgroundColor\":\"#ea4335\"}],\"labels\":[\"Monday\",\"Tuesday\",\"Wednesday\",\"Thursday\",\"Friday\",\"Saturday\",\"Sunday\",\"next Week\",\"next Month\"]},\"options\":{\"elements\":{\"bar\":{}}}}-->\n</canvas>\n</div>"
+ },
+ {
+  "id": "extendedSyntax: Extended Markdown Syntax >  Chart support > Illegal Input 1",
+  "input": "\n\t\n\t```chart\n    type: bar\n    labels: [Monday,Tuesday,Wednesday,Thursday,Friday, Saturday, Sunday, \"next Week\", \"next Month\"]\n    series:\n      - title: Title 1\n        data: [1,2,3,4,5,6,7,8,9]\n      - title: Title 2\n        data: [5,4,3,2,1,0,-1,-2,-3]\n`\n\n\t",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg",
+   "Slide.jpg": "/documentation/Slide.jpg",
+   "Sample.excalidraw": "Sample.excalidraw.svg",
+   "Sample.excalidraw.svg": "path/to/Sample.excalidraw.svg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n```chart\n    type: bar\n    labels: [Monday,Tuesday,Wednesday,Thursday,Friday, Saturday, Sunday, \"next Week\", \"next Month\"]\n    series:\n      - title: Title 1\n        data: [1,2,3,4,5,6,7,8,9]\n      - title: Title 2\n        data: [5,4,3,2,1,0,-1,-2,-3]\n`\n</div>"
+ },
+ {
+  "id": "extendedSyntax: Extended Markdown Syntax >  Chart support > Extended Settings 1",
+  "input": "\n\t\n\t```chart\n    type: bar\n    labels: [Monday,Tuesday,Wednesday,Thursday,Friday, Saturday, Sunday, \"next Week\", \"next Month\"]\n    series:\n      - title: Title 1\n        data: [1,2,3,4,5,6,7,8,9]\n      - title: Title 2\n        data: [5,4,3,2,1,0,-1,-2,-3]\n\tspanGaps: true\n\ttension: 0.5\n\tbeginAtZero: true\n\tlegend: false\n\tlegendPosition: left\n\tstacked: true\n```\n\n\t",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg",
+   "Slide.jpg": "/documentation/Slide.jpg",
+   "Sample.excalidraw": "Sample.excalidraw.svg",
+   "Sample.excalidraw.svg": "path/to/Sample.excalidraw.svg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n<canvas style=\"max-height:700px\" data-chart=\"bar\" >\n<!--\n{\"data\":{\"datasets\":[{\"data\":[1,2,3,4,5,6,7,8,9],\"label\":\"Title 1\",\"backgroundColor\":\"#4285f4\"},{\"data\":[5,4,3,2,1,0,-1,-2,-3],\"label\":\"Title 2\",\"backgroundColor\":\"#ea4335\"}],\"labels\":[\"Monday\",\"Tuesday\",\"Wednesday\",\"Thursday\",\"Friday\",\"Saturday\",\"Sunday\",\"next Week\",\"next Month\"]},\"options\":{\"elements\":{\"bar\":{\"spanGaps\":true,\"tension\":0.5}},\"scales\":{\"y\":{\"beginAtZero\":true,\"stacked\":true},\"x\":{\"stacked\":true}},\"plugins\":{\"legend\":{\"display\":false,\"position\":\"left\"}}}}-->\n</canvas>\n</div>"
+ },
+ {
+  "id": "extendedSyntax: Advanced Slides Feature >  Show Debug Grid 1",
+  "input": "## My Slide\n\nThis slide shows the debug view feature\n\n",
+  "extra": {
+   "showGrid": true
+  },
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg",
+   "Slide.jpg": "/documentation/Slide.jpg",
+   "Sample.excalidraw": "Sample.excalidraw.svg",
+   "Sample.excalidraw.svg": "path/to/Sample.excalidraw.svg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n## My Slide\n\nThis slide shows the debug view feature\n\n\n<div class=\"\" style=\"border: thin dotted blue; box-sizing: border-box; position: absolute; left: 0%; top: 0%; height: 10%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n</div>\n<div class=\"\" style=\"border: thin dotted blue; box-sizing: border-box; position: absolute; left: 0%; top: 10%; height: 10%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n</div>\n<div class=\"\" style=\"border: thin dotted blue; box-sizing: border-box; position: absolute; left: 0%; top: 20%; height: 10%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n</div>\n<div class=\"\" style=\"border: thin dotted blue; box-sizing: border-box; position: absolute; left: 0%; top: 30%; height: 10%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n</div>\n<div class=\"\" style=\"border: thin dotted blue; box-sizing: border-box; position: absolute; left: 0%; top: 40%; height: 10%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n</div>\n<div class=\"\" style=\"border: thin dotted blue; box-sizing: border-box; position: absolute; left: 0%; top: 50%; height: 10%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n</div>\n<div class=\"\" style=\"border: thin dotted blue; box-sizing: border-box; position: absolute; left: 0%; top: 60%; height: 10%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n</div>\n<div class=\"\" style=\"border: thin dotted blue; box-sizing: border-box; position: absolute; left: 0%; top: 70%; height: 10%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n</div>\n<div class=\"\" style=\"border: thin dotted blue; box-sizing: border-box; position: absolute; left: 0%; top: 80%; height: 10%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n</div>\n<div class=\"\" style=\"border: thin dotted blue; box-sizing: border-box; position: absolute; left: 0%; top: 90%; height: 10%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n</div>\n<div class=\"\" style=\"border: thin dotted blue; box-sizing: border-box; position: absolute; left: 0%; top: 0%; height: 100%; width: 10%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n</div>\n<div class=\"\" style=\"border: thin dotted blue; box-sizing: border-box; position: absolute; left: 10%; top: 0%; height: 100%; width: 10%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n</div>\n<div class=\"\" style=\"border: thin dotted blue; box-sizing: border-box; position: absolute; left: 20%; top: 0%; height: 100%; width: 10%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n</div>\n<div class=\"\" style=\"border: thin dotted blue; box-sizing: border-box; position: absolute; left: 30%; top: 0%; height: 100%; width: 10%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n</div>\n<div class=\"\" style=\"border: thin dotted blue; box-sizing: border-box; position: absolute; left: 40%; top: 0%; height: 100%; width: 10%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n</div>\n<div class=\"\" style=\"border: thin dotted blue; box-sizing: border-box; position: absolute; left: 50%; top: 0%; height: 100%; width: 10%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n</div>\n<div class=\"\" style=\"border: thin dotted blue; box-sizing: border-box; position: absolute; left: 60%; top: 0%; height: 100%; width: 10%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n</div>\n<div class=\"\" style=\"border: thin dotted blue; box-sizing: border-box; position: absolute; left: 70%; top: 0%; height: 100%; width: 10%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n</div>\n<div class=\"\" style=\"border: thin dotted blue; box-sizing: border-box; position: absolute; left: 80%; top: 0%; height: 100%; width: 10%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n</div>\n<div class=\"\" style=\"border: thin dotted blue; box-sizing: border-box; position: absolute; left: 90%; top: 0%; height: 100%; width: 10%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n</div>\n</div>"
+ },
+ {
+  "id": "gridComponent: Grid Component > Basic Syntax 1",
+  "input": "<grid drag=\"60 55\" drop=\"5 10\" style=\"background-color: coral;\">\n### Left\n</grid>\n\n<grid drag=\"25 55\" drop=\"70 10\" style=\"background-color: coral;\">\n### Right\n</grid>\n\n<grid drag=\"90 20\" drop=\"5 70\" style=\"background-color: coral;\">\n### Bottom\n</grid>",
+  "extra": {},
+  "find_file": {},
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"\" style=\"background-color: coral; position: absolute; left: 5%; top: 10%; height: 55%; width: 60%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n\n### Left\n</div>\n\n<div class=\"\" style=\"background-color: coral; position: absolute; left: 70%; top: 10%; height: 55%; width: 25%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n\n### Right\n</div>\n\n<div class=\"\" style=\"background-color: coral; position: absolute; left: 5%; top: 70%; height: 20%; width: 90%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n\n### Bottom\n</div>\n</div>"
+ },
+ {
+  "id": "gridComponent: Grid Component > Basic Syntax 2",
+  "input": "<grid drag=\"60 55\" drop=\"5 10\" style=\"background-color: coral;\">\n### Left\n</grid>\n\n<grid drag=\"25 55\" drop=\"-5 10\" style=\"background-color: coral;\">\n### Right\n</grid>\n\n<grid drag=\"90 20\" drop=\"5 -10\" style=\"background-color: coral;\">\n### Bottom\n</grid>",
+  "extra": {},
+  "find_file": {},
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"\" style=\"background-color: coral; position: absolute; left: 5%; top: 10%; height: 55%; width: 60%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n\n### Left\n</div>\n\n<div class=\"\" style=\"background-color: coral; position: absolute; left: 70%; top: 10%; height: 55%; width: 25%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n\n### Right\n</div>\n\n<div class=\"\" style=\"background-color: coral; position: absolute; left: 5%; top: 70%; height: 20%; width: 90%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n\n### Bottom\n</div>\n</div>"
+ },
+ {
+  "id": "gridComponent: Grid Component > Position by Name 1",
+  "input": "<grid drag=\"40 30\" drop=\"topleft\" style=\"background-color: red;\">\n### Top Left\n</grid>\n\n<grid drop=\"right\" style=\"background-color: green;\">\n### Right Default Size\n</grid>\n\n<grid drag=\"80 30\" drop=\"bottom\" style=\"background-color: coral;\">\n### Bottom\n</grid>",
+  "extra": {},
+  "find_file": {},
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"\" style=\"background-color: red; position: absolute; left: 0%; top: 0%; height: 30%; width: 40%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n\n### Top Left\n</div>\n\n<div class=\"\" style=\"background-color: green; position: absolute; left: 50%; top: 0%; height: 100%; width: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n\n### Right Default Size\n</div>\n\n<div class=\"\" style=\"background-color: coral; position: absolute; left: 10%; top: 70%; height: 30%; width: 80%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n\n### Bottom\n</div>\n</div>"
+ },
+ {
+  "id": "gridComponent: Grid Component > Position Coordinates 1",
+  "input": "<grid drag=\"40 50\" drop=\"10 15\" style=\"background-color: orange;\">\n### Positive X, Y\n</grid>\n\n<grid drag=\"30 30\" drop=\"-40px 40px\" style=\"background-color: red;\">\n### Negative X, Positive Y\n</grid>\n\n<grid drag=\"40 40\" drop=\"-5 -20\" style=\"background-color: blue;\">\n### Negative X, Y\n</grid>\n\n<grid drag=\"100 10\" drop=\"0 -5\" style=\"background-color: green;\">\n### Positive X, Negative Y\n</grid>",
+  "extra": {},
+  "find_file": {},
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"\" style=\"background-color: orange; position: absolute; left: 10%; top: 15%; height: 50%; width: 40%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n\n### Positive X, Y\n</div>\n\n<div class=\"\" style=\"background-color: red; position: absolute; left: 65.83333333333333%; top: 5.714285714285714%; height: 30%; width: 30%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n\n### Negative X, Positive Y\n</div>\n\n<div class=\"\" style=\"background-color: blue; position: absolute; left: 55%; top: 40%; height: 40%; width: 40%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n\n### Negative X, Y\n</div>\n\n<div class=\"\" style=\"background-color: green; position: absolute; left: 0%; top: 85%; height: 10%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n\n### Positive X, Negative Y\n</div>\n</div>"
+ },
+ {
+  "id": "gridComponent: Grid Component > Column Flow 1",
+  "input": "<grid  drag=\"40 100\" drop=\"center\" style=\"background-color: coral;\" flow=\"col\">\n### Lorem\n![[Image.jpg]]\n### Ipsum\n</grid>",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"\" style=\"background-color: coral; position: absolute; left: 30%; top: 0%; height: 100%; width: 40%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n\n### Lorem\n<img src=\"/documentation/Image.jpg\" alt=\"\" style=\"object-fit: scale-down\">\n\n### Ipsum\n</div>\n</div>"
+ },
+ {
+  "id": "gridComponent: Grid Component > Row Flow 1",
+  "input": "<grid  drag=\"100 40\" drop=\"center\" style=\"background-color: coral;\" flow=\"row\">\n### Lorem\n![[Image.jpg]]\n### Ipsum\n</grid>",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"flex-even\" style=\"background-color: coral; position: absolute; left: 0%; top: 30%; height: 40%; width: 100%; display: flex; flex-direction: row; align-items: center; justify-content: center\" >\n\n### Lorem\n<img src=\"/documentation/Image.jpg\" alt=\"\" style=\"object-fit: scale-down\">\n\n### Ipsum\n</div>\n</div>"
+ },
+ {
+  "id": "gridComponent: Grid Component > Attributes > Background 1",
+  "input": "<grid  drag=\"55 50\" drop=\"topright\" bg=\"orange\">\n### Make\n</grid>\n\n<grid  drag=\"55 50\" drop=\"bottomleft\" bg=\"rgb(0,0,0)\">\n### Noise\n</grid>\n\n<grid  drag=\"25 20\" drop=\"center\" bg=\"green\" rotate=\"-15\">\n### some\n</grid>",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"has-light-background\" style=\"background-color: orange; position: absolute; left: 45%; top: 0%; height: 50%; width: 55%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n\n### Make\n</div>\n\n<div class=\"has-dark-background\" style=\"background-color: rgb(0,0,0); position: absolute; left: 0%; top: 50%; height: 50%; width: 55%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n\n### Noise\n</div>\n\n<div class=\"has-dark-background\" style=\"background-color: green; transform: rotate(-15deg); position: absolute; left: 37.5%; top: 40%; height: 20%; width: 25%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n\n### some\n</div>\n</div>"
+ },
+ {
+  "id": "gridComponent: Grid Component > Attributes > Border 1",
+  "input": "<grid  drag=\"30 25\" drop=\"left\" border=\"thick dotted blue\">\nthick dotted blue\n</grid>\n\n<grid  drag=\"30 25\" drop=\"center\" border=\"4px solid white\">\n20px solid white\n</grid>\n\n<grid  drag=\"30 25\" drop=\"right\" border=\"medium dashed red\">\nthick dotted blue\n</grid>",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"\" style=\"border: thick dotted blue; box-sizing: border-box; position: absolute; left: 0%; top: 37.5%; height: 25%; width: 30%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n\nthick dotted blue\n</div>\n\n<div class=\"\" style=\"border: 4px solid white; box-sizing: border-box; position: absolute; left: 35%; top: 37.5%; height: 25%; width: 30%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n\n20px solid white\n</div>\n\n<div class=\"\" style=\"border: medium dashed red; box-sizing: border-box; position: absolute; left: 70%; top: 37.5%; height: 25%; width: 30%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n\nthick dotted blue\n</div>\n</div>"
+ },
+ {
+  "id": "gridComponent: Grid Component > Attributes > Filter 1",
+  "input": "<grid  drag=\"30 25\" drop=\"5 15\" bg=\"#B565A7\" filter=\"blur(10px)\">\nText is too blurry\n</grid>\n\n<grid  drag=\"50 50\" drop=\"-12 -25\" bg=\"white\" filter=\"grayscale()\">\n![[Image.jpg]]\n</grid>",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"has-dark-background\" style=\"background-color: #B565A7; filter: blur(10px); position: absolute; left: 5%; top: 15%; height: 25%; width: 30%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n\nText is too blurry\n</div>\n\n<div class=\"has-light-background\" style=\"background-color: white; filter: grayscale(); position: absolute; left: 38%; top: 25%; height: 50%; width: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n\n<img src=\"/documentation/Image.jpg\" alt=\"\" style=\"object-fit: scale-down\">\n\n</div>\n</div>"
+ },
+ {
+  "id": "gridComponent: Grid Component > Attributes > Rotate 1",
+  "input": "<grid  drag=\"30 25\" drop=\"top\" bg=\"#B565A7\" rotate=\"-10\">\nHello\n</grid>\n\n<grid  drag=\"40 25\" drop=\"bottomright\" bg=\"#D65076\" rotate=\"40\">\nWorld!\n</grid>",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"has-dark-background\" style=\"background-color: #B565A7; transform: rotate(-10deg); position: absolute; left: 35%; top: 0%; height: 25%; width: 30%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n\nHello\n</div>\n\n<div class=\"has-dark-background\" style=\"background-color: #D65076; transform: rotate(40deg); position: absolute; left: 60%; top: 75%; height: 25%; width: 40%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n\nWorld!\n</div>\n</div>"
+ },
+ {
+  "id": "gridComponent: Grid Component > Attributes > Padding 1",
+  "input": "<grid  drag=\"50 50\" drop=\"topleft\" bg=\"orange\" pad=\"0 50px\">\n###### Lorem Ipsum wasnt simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book here there\n</grid>\n\n<grid  drag=\"50 50\" drop=\"bottomright\" bg=\"orange\" pad=\"20px\">\n![[Image.jpg|800]]\n</grid>",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"has-light-background\" style=\"background-color: orange; padding: 0 50px; box-sizing: border-box; position: absolute; left: 0%; top: 0%; height: 50%; width: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n\n###### Lorem Ipsum wasnt simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book here there\n</div>\n\n<div class=\"has-light-background\" style=\"background-color: orange; padding: 20px; box-sizing: border-box; position: absolute; left: 50%; top: 50%; height: 50%; width: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n\n<img src=\"/documentation/Image.jpg\" alt=\"\" style=\"width: 800px; object-fit: fill\">\n\n</div>\n</div>"
+ },
+ {
+  "id": "gridComponent: Grid Component > Attributes > Padding 2",
+  "input": "<grid drag=\"60 55\" drop=\"5 10\" bg=\"red\">\n### Fragments:\n+ Right\n+ Bottom\n</grid>\n\n<grid drag=\"25 55\" drop=\"-5 10\" bg=\"green\" frag=\"1\">\nRight Grid\n</grid>\n\n<grid drag=\"90 20\" drop=\"5 -10\" bg=\"gray\" frag=\"2\">\nBottom Grid\n</grid>",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"has-dark-background\" style=\"background-color: red; position: absolute; left: 5%; top: 10%; height: 55%; width: 60%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n\n### Fragments:\n- &shy;<!-- .element: class=\"fragment\" data-fragment-index=\"1\" -->Right\n- &shy;<!-- .element: class=\"fragment\" data-fragment-index=\"2\" -->Bottom\n</div>\n\n<div class=\"has-dark-background fragment\" style=\"background-color: green; position: absolute; left: 70%; top: 10%; height: 55%; width: 25%; display: flex; flex-direction: column; align-items: center; justify-content: center\" data-fragment-index=\"1\">\n\nRight Grid\n</div>\n\n<div class=\"has-light-background fragment\" style=\"background-color: gray; position: absolute; left: 5%; top: 70%; height: 20%; width: 90%; display: flex; flex-direction: column; align-items: center; justify-content: center\" data-fragment-index=\"2\">\n\nBottom Grid\n</div>\n</div>"
+ },
+ {
+  "id": "gridComponent: Grid Component > Attributes > Alignment 1",
+  "input": "<grid drag=\"100 70\" drop=\"0 30\" bg=\"#EEB73F\" flow=\"row\" pad=\"0 50px\" align=\"left\">\n![](https://picsum.photos/id/978/150/200)\n![](https://picsum.photos/id/996/150/200)\n![](https://picsum.photos/id/1011/150/200)\n</grid>",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"has-light-background flex-even\" style=\"background-color: #EEB73F; padding: 0 50px; box-sizing: border-box; position: absolute; left: 0%; top: 30%; height: 70%; width: 100%; display: flex; flex-direction: row; align-items: center; justify-content: space-evenly\" align=\"left\">\n\n<img src=\"https://picsum.photos/id/978/150/200\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/996/150/200\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/1011/150/200\" alt=\"\" style=\"object-fit: scale-down\">\n\n</div>\n</div>"
+ },
+ {
+  "id": "gridComponent: Grid Component > Attributes > Alignment 2",
+  "input": "<grid drag=\"100 70\" drop=\"0 30\" bg=\"#EEB73F\" flow=\"col\" pad=\"0 50px\" align=\"left\">\n![](https://picsum.photos/id/978/150/200)\n![](https://picsum.photos/id/996/150/200)\n![](https://picsum.photos/id/1011/150/200)\n</grid>",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"has-light-background\" style=\"background-color: #EEB73F; padding: 0 50px; box-sizing: border-box; position: absolute; left: 0%; top: 30%; height: 70%; width: 100%; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-evenly\" align=\"left\">\n\n<img src=\"https://picsum.photos/id/978/150/200\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/996/150/200\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/1011/150/200\" alt=\"\" style=\"object-fit: scale-down\">\n\n</div>\n</div>"
+ },
+ {
+  "id": "gridComponent: Grid Component > Attributes > Alignment 3",
+  "input": "<grid drag=\"100 70\" drop=\"0 30\" bg=\"#EEB73F\" flow=\"row\" pad=\"0 50px\" align=\"right\">\n![](https://picsum.photos/id/978/150/200)\n![](https://picsum.photos/id/996/150/200)\n![](https://picsum.photos/id/1011/150/200)\n</grid>",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"has-light-background flex-even\" style=\"background-color: #EEB73F; padding: 0 50px; box-sizing: border-box; position: absolute; left: 0%; top: 30%; height: 70%; width: 100%; display: flex; flex-direction: row; align-items: center; justify-content: space-evenly\" align=\"right\">\n\n<img src=\"https://picsum.photos/id/978/150/200\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/996/150/200\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/1011/150/200\" alt=\"\" style=\"object-fit: scale-down\">\n\n</div>\n</div>"
+ },
+ {
+  "id": "gridComponent: Grid Component > Attributes > Alignment 4",
+  "input": "<grid drag=\"100 70\" drop=\"0 30\" bg=\"#EEB73F\" flow=\"col\" pad=\"0 50px\" align=\"right\">\n![](https://picsum.photos/id/978/150/200)\n![](https://picsum.photos/id/996/150/200)\n![](https://picsum.photos/id/1011/150/200)\n</grid>",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"has-light-background\" style=\"background-color: #EEB73F; padding: 0 50px; box-sizing: border-box; position: absolute; left: 0%; top: 30%; height: 70%; width: 100%; display: flex; flex-direction: column; align-items: flex-end; justify-content: space-evenly\" align=\"right\">\n\n<img src=\"https://picsum.photos/id/978/150/200\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/996/150/200\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/1011/150/200\" alt=\"\" style=\"object-fit: scale-down\">\n\n</div>\n</div>"
+ },
+ {
+  "id": "gridComponent: Grid Component > Attributes > Alignment 5",
+  "input": "<grid drag=\"100 100\" drop=\"0 0\" bg=\"#EEB73F\" flow=\"col\" pad=\"50px\" align=\"top\">\n![](https://picsum.photos/id/978/150/150)\n![](https://picsum.photos/id/996/150/150)\n![](https://picsum.photos/id/1011/150/150)\n</grid>",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"has-light-background\" style=\"background-color: #EEB73F; padding: 50px; box-sizing: border-box; position: absolute; left: 0%; top: 0%; height: 100%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-start\" align=\"top\">\n\n<img src=\"https://picsum.photos/id/978/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/996/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/1011/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n</div>\n</div>"
+ },
+ {
+  "id": "gridComponent: Grid Component > Attributes > Alignment 6",
+  "input": "<grid drag=\"100 100\" drop=\"0 0\" bg=\"#EEB73F\" flow=\"row\" pad=\"50px\" align=\"top\">\n![](https://picsum.photos/id/978/150/150)\n![](https://picsum.photos/id/996/150/150)\n![](https://picsum.photos/id/1011/150/150)\n</grid>",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"has-light-background flex-even\" style=\"background-color: #EEB73F; padding: 50px; box-sizing: border-box; position: absolute; left: 0%; top: 0%; height: 100%; width: 100%; display: flex; flex-direction: row; align-items: flex-start; justify-content: space-evenly\" align=\"top\">\n\n<img src=\"https://picsum.photos/id/978/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/996/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/1011/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n</div>\n</div>"
+ },
+ {
+  "id": "gridComponent: Grid Component > Attributes > Alignment 7",
+  "input": "<grid drag=\"100 100\" drop=\"0 0\" bg=\"#EEB73F\" flow=\"col\" pad=\"50px\" align=\"bottom\">\n![](https://picsum.photos/id/978/150/150)\n![](https://picsum.photos/id/996/150/150)\n![](https://picsum.photos/id/1011/150/150)\n</grid>",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"has-light-background\" style=\"background-color: #EEB73F; padding: 50px; box-sizing: border-box; position: absolute; left: 0%; top: 0%; height: 100%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end\" align=\"bottom\">\n\n<img src=\"https://picsum.photos/id/978/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/996/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/1011/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n</div>\n</div>"
+ },
+ {
+  "id": "gridComponent: Grid Component > Attributes > Alignment 8",
+  "input": "<grid drag=\"100 100\" drop=\"0 0\" bg=\"#EEB73F\" flow=\"row\" pad=\"50px\" align=\"bottom\">\n![](https://picsum.photos/id/978/150/150)\n![](https://picsum.photos/id/996/150/150)\n![](https://picsum.photos/id/1011/150/150)\n</grid>",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"has-light-background flex-even\" style=\"background-color: #EEB73F; padding: 50px; box-sizing: border-box; position: absolute; left: 0%; top: 0%; height: 100%; width: 100%; display: flex; flex-direction: row; align-items: flex-end; justify-content: space-evenly\" align=\"bottom\">\n\n<img src=\"https://picsum.photos/id/978/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/996/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/1011/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n</div>\n</div>"
+ },
+ {
+  "id": "gridComponent: Grid Component > Attributes > Alignment 9",
+  "input": "<grid drag=\"100 100\" drop=\"0 0\" bg=\"#EEB73F\" flow=\"col\" pad=\"50px\" align=\"center\">\n![](https://picsum.photos/id/978/150/150)\n![](https://picsum.photos/id/996/150/150)\n![](https://picsum.photos/id/1011/150/150)\n</grid>",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"has-light-background\" style=\"background-color: #EEB73F; padding: 50px; box-sizing: border-box; position: absolute; left: 0%; top: 0%; height: 100%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center\" align=\"center\">\n\n<img src=\"https://picsum.photos/id/978/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/996/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/1011/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n</div>\n</div>"
+ },
+ {
+  "id": "gridComponent: Grid Component > Attributes > Alignment 10",
+  "input": "<grid drag=\"100 100\" drop=\"0 0\" bg=\"#EEB73F\" flow=\"row\" pad=\"50px\" align=\"center\">\n![](https://picsum.photos/id/978/150/150)\n![](https://picsum.photos/id/996/150/150)\n![](https://picsum.photos/id/1011/150/150)\n</grid>",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"has-light-background flex-even\" style=\"background-color: #EEB73F; padding: 50px; box-sizing: border-box; position: absolute; left: 0%; top: 0%; height: 100%; width: 100%; display: flex; flex-direction: row; align-items: center; justify-content: center\" align=\"center\">\n\n<img src=\"https://picsum.photos/id/978/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/996/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/1011/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n</div>\n</div>"
+ },
+ {
+  "id": "gridComponent: Grid Component > Attributes > Alignment 11",
+  "input": "<grid drag=\"100 100\" drop=\"0 0\" bg=\"#EEB73F\" flow=\"col\" pad=\"50px\" align=\"topleft\">\n![](https://picsum.photos/id/978/150/150)\n![](https://picsum.photos/id/996/150/150)\n![](https://picsum.photos/id/1011/150/150)\n</grid>",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"has-light-background\" style=\"background-color: #EEB73F; padding: 50px; box-sizing: border-box; position: absolute; left: 0%; top: 0%; height: 100%; width: 100%; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start\" align=\"left\">\n\n<img src=\"https://picsum.photos/id/978/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/996/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/1011/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n</div>\n</div>"
+ },
+ {
+  "id": "gridComponent: Grid Component > Attributes > Alignment 12",
+  "input": "<grid drag=\"100 100\" drop=\"0 0\" bg=\"#EEB73F\" flow=\"row\" pad=\"50px\" align=\"topleft\">\n![](https://picsum.photos/id/978/150/150)\n![](https://picsum.photos/id/996/150/150)\n![](https://picsum.photos/id/1011/150/150)\n</grid>",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"has-light-background flex-even\" style=\"background-color: #EEB73F; padding: 50px; box-sizing: border-box; position: absolute; left: 0%; top: 0%; height: 100%; width: 100%; display: flex; flex-direction: row; align-items: flex-start; justify-content: space-evenly\" align=\"left\">\n\n<img src=\"https://picsum.photos/id/978/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/996/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/1011/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n</div>\n</div>"
+ },
+ {
+  "id": "gridComponent: Grid Component > Attributes > Alignment 13",
+  "input": "<grid drag=\"100 100\" drop=\"0 0\" bg=\"#EEB73F\" flow=\"col\" pad=\"50px\" align=\"topright\">\n![](https://picsum.photos/id/978/150/150)\n![](https://picsum.photos/id/996/150/150)\n![](https://picsum.photos/id/1011/150/150)\n</grid>",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"has-light-background\" style=\"background-color: #EEB73F; padding: 50px; box-sizing: border-box; position: absolute; left: 0%; top: 0%; height: 100%; width: 100%; display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-start\" align=\"right\">\n\n<img src=\"https://picsum.photos/id/978/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/996/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/1011/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n</div>\n</div>"
+ },
+ {
+  "id": "gridComponent: Grid Component > Attributes > Alignment 14",
+  "input": "<grid drag=\"100 100\" drop=\"0 0\" bg=\"#EEB73F\" flow=\"row\" pad=\"50px\" align=\"topright\">\n![](https://picsum.photos/id/978/150/150)\n![](https://picsum.photos/id/996/150/150)\n![](https://picsum.photos/id/1011/150/150)\n</grid>",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"has-light-background flex-even\" style=\"background-color: #EEB73F; padding: 50px; box-sizing: border-box; position: absolute; left: 0%; top: 0%; height: 100%; width: 100%; display: flex; flex-direction: row; align-items: flex-start; justify-content: space-evenly\" align=\"right\">\n\n<img src=\"https://picsum.photos/id/978/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/996/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/1011/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n</div>\n</div>"
+ },
+ {
+  "id": "gridComponent: Grid Component > Attributes > Alignment 15",
+  "input": "<grid drag=\"100 100\" drop=\"0 0\" bg=\"#EEB73F\" flow=\"col\" pad=\"50px\" align=\"bottomright\">\n![](https://picsum.photos/id/978/150/150)\n![](https://picsum.photos/id/996/150/150)\n![](https://picsum.photos/id/1011/150/150)\n</grid>",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"has-light-background\" style=\"background-color: #EEB73F; padding: 50px; box-sizing: border-box; position: absolute; left: 0%; top: 0%; height: 100%; width: 100%; display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-end\" align=\"right\">\n\n<img src=\"https://picsum.photos/id/978/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/996/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/1011/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n</div>\n</div>"
+ },
+ {
+  "id": "gridComponent: Grid Component > Attributes > Alignment 16",
+  "input": "<grid drag=\"100 100\" drop=\"0 0\" bg=\"#EEB73F\" flow=\"row\" pad=\"50px\" align=\"bottomright\">\n![](https://picsum.photos/id/978/150/150)\n![](https://picsum.photos/id/996/150/150)\n![](https://picsum.photos/id/1011/150/150)\n</grid>",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"has-light-background flex-even\" style=\"background-color: #EEB73F; padding: 50px; box-sizing: border-box; position: absolute; left: 0%; top: 0%; height: 100%; width: 100%; display: flex; flex-direction: row; align-items: flex-end; justify-content: space-evenly\" align=\"right\">\n\n<img src=\"https://picsum.photos/id/978/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/996/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/1011/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n</div>\n</div>"
+ },
+ {
+  "id": "gridComponent: Grid Component > Attributes > Alignment 17",
+  "input": "<grid drag=\"100 100\" drop=\"0 0\" bg=\"#EEB73F\" flow=\"col\" pad=\"50px\" align=\"bottomleft\">\n![](https://picsum.photos/id/978/150/150)\n![](https://picsum.photos/id/996/150/150)\n![](https://picsum.photos/id/1011/150/150)\n</grid>",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"has-light-background\" style=\"background-color: #EEB73F; padding: 50px; box-sizing: border-box; position: absolute; left: 0%; top: 0%; height: 100%; width: 100%; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end\" align=\"left\">\n\n<img src=\"https://picsum.photos/id/978/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/996/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/1011/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n</div>\n</div>"
+ },
+ {
+  "id": "gridComponent: Grid Component > Attributes > Alignment 18",
+  "input": "<grid drag=\"100 100\" drop=\"0 0\" bg=\"#EEB73F\" flow=\"row\" pad=\"50px\" align=\"bottomleft\">\n![](https://picsum.photos/id/978/150/150)\n![](https://picsum.photos/id/996/150/150)\n![](https://picsum.photos/id/1011/150/150)\n</grid>",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"has-light-background flex-even\" style=\"background-color: #EEB73F; padding: 50px; box-sizing: border-box; position: absolute; left: 0%; top: 0%; height: 100%; width: 100%; display: flex; flex-direction: row; align-items: flex-end; justify-content: space-evenly\" align=\"left\">\n\n<img src=\"https://picsum.photos/id/978/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/996/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/1011/150/150\" alt=\"\" style=\"object-fit: scale-down\">\n\n</div>\n</div>"
+ },
+ {
+  "id": "gridComponent: Grid Component > Attributes > Alignment > Stretch > Row 1",
+  "input": "<grid drag=\"100 45\" drop=\"top\" flow=\"row\" align=\"stretch\">\n\t![](https://picsum.photos/id/978/150/150)\n\t![](https://picsum.photos/id/978/150/150)\n\t![](https://picsum.photos/id/978/150/150)\n\t</grid>",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"stretch-row flex-even\" style=\"position: absolute; left: 0%; top: 0%; height: 45%; width: 100%; display: flex; flex-direction: row; align-items: center; justify-content: space-evenly\" align=\"stretch\">\n\n\t![](https://picsum.photos/id/978/150/150)\n\t![](https://picsum.photos/id/978/150/150)\n\t![](https://picsum.photos/id/978/150/150)\n\t</div>\n</div>"
+ },
+ {
+  "id": "gridComponent: Grid Component > Attributes > Alignment > Stretch > Col 1",
+  "input": "<grid drag=\"100 55\" drop=\"bottom\" flow=\"col\" align=\"stretch\">\n\t![](https://picsum.photos/id/978/150/150)\n\t![](https://picsum.photos/id/978/150/150)\n\t</grid>",
+  "extra": {},
+  "find_file": {
+   "Image.jpg": "/documentation/Image.jpg"
+  },
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<div class=\"stretch-column\" style=\"position: absolute; left: 0%; top: 45%; height: 55%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: space-evenly\" align=\"stretch\">\n\n\t![](https://picsum.photos/id/978/150/150)\n\t![](https://picsum.photos/id/978/150/150)\n\t</div>\n</div>"
+ },
+ {
+  "id": "splitComponent: Split Component > even 1",
+  "input": "<split even>\n\n![](https://picsum.photos/id/1005/250/250) \n![](https://picsum.photos/id/1010/250/250) \n![](https://picsum.photos/id/1025/250/250) \n</split>\n",
+  "extra": {},
+  "find_file": {},
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<split even>\n\n<img src=\"https://picsum.photos/id/1005/250/250\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/1010/250/250\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/1025/250/250\" alt=\"\" style=\"object-fit: scale-down\">\n\n</split>\n</div>"
+ },
+ {
+  "id": "splitComponent: Split Component > gap 1",
+  "input": "<split even gap=\"3\">\n\n**Lorem Ipsum** is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s\n\nwhen an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap\n\ninto electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem\n</split>\n",
+  "extra": {},
+  "find_file": {},
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<split even gap=\"3\">\n\n**Lorem Ipsum** is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s\n\nwhen an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap\n\ninto electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem\n</split>\n</div>"
+ },
+ {
+  "id": "splitComponent: Split Component > left & right 1",
+  "input": "<split left=\"2\" right=\"1\" gap=\"2\">\n\n**Lorem Ipsum** is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s\nwhen an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap\n\t\ninto electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem\n</split>\n",
+  "extra": {},
+  "find_file": {},
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<split left=\"2\" right=\"1\" gap=\"2\">\n\n**Lorem Ipsum** is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s\nwhen an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap\n\t\ninto electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem\n</split>\n</div>"
+ },
+ {
+  "id": "splitComponent: Split Component > wrap 1",
+  "input": "<split wrap=\"4\">\n\n![](https://picsum.photos/id/1010/250/250) \n\n![](https://picsum.photos/id/1011/250/250) \n\n![](https://picsum.photos/id/1012/250/250) \n\n![](https://picsum.photos/id/1013/250/250) \n\n![](https://picsum.photos/id/1014/250/250) \n\n![](https://picsum.photos/id/1015/250/250) \n</split>\n",
+  "extra": {},
+  "find_file": {},
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<split wrap=\"4\">\n\n<img src=\"https://picsum.photos/id/1010/250/250\" alt=\"\" style=\"object-fit: scale-down\">\n\n\n<img src=\"https://picsum.photos/id/1011/250/250\" alt=\"\" style=\"object-fit: scale-down\">\n\n\n<img src=\"https://picsum.photos/id/1012/250/250\" alt=\"\" style=\"object-fit: scale-down\">\n\n\n<img src=\"https://picsum.photos/id/1013/250/250\" alt=\"\" style=\"object-fit: scale-down\">\n\n\n<img src=\"https://picsum.photos/id/1014/250/250\" alt=\"\" style=\"object-fit: scale-down\">\n\n\n<img src=\"https://picsum.photos/id/1015/250/250\" alt=\"\" style=\"object-fit: scale-down\">\n\n</split>\n</div>"
+ },
+ {
+  "id": "splitComponent: Split Component > no-margin 1",
+  "input": "<split no-margin>\n\n![](https://picsum.photos/id/1001/250/250) \n![](https://picsum.photos/id/1002/250/250) \n![](https://picsum.photos/id/1003/250/250) \n![](https://picsum.photos/id/1004/250/250) \n![](https://picsum.photos/id/1005/250/250) \n![](https://picsum.photos/id/1006/250/250) \n![](https://picsum.photos/id/1009/250/250) \n![](https://picsum.photos/id/1008/250/250) \n</split>\n",
+  "extra": {},
+  "find_file": {},
+  "parse_file": {},
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n<split no-margin>\n\n<img src=\"https://picsum.photos/id/1001/250/250\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/1002/250/250\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/1003/250/250\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/1004/250/250\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/1005/250/250\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/1006/250/250\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/1009/250/250\" alt=\"\" style=\"object-fit: scale-down\">\n\n<img src=\"https://picsum.photos/id/1008/250/250\" alt=\"\" style=\"object-fit: scale-down\">\n\n</split>\n</div>"
+ },
+ {
+  "id": "template: Template only with content 1",
+  "input": "<!-- slide template=\"[[template]]\" -->\n\n\t# MyContent\n",
+  "extra": {},
+  "find_file": {},
+  "parse_file": {
+   "template.md": "\n\t\t# Before\n\t\t<% content %>\n\t\t# After\n\t\t"
+  },
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n# Before\n\t\t\n\n\t# MyContent\n\n\t\t# After\n</div>"
+ },
+ {
+  "id": "template: Template with variable not set 1",
+  "input": "<!-- slide template=\"[[template]]\" -->\n\n\t# MyContent\n",
+  "extra": {},
+  "find_file": {},
+  "parse_file": {
+   "template.md": "\n\t\t<% content %>\n\t\t# After<grid drag=\"100 6\" drop=\"bottom\">\n\t\t<% footer %>\n\t\t</grid>\n\t\t"
+  },
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n# MyContent\n\n\t\t# After<div class=\"\" style=\"position: absolute; left: 0%; top: 94%; height: 6%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n\n\t\t<% footer %>\n\t\t</div>\n</div>"
+ },
+ {
+  "id": "template: Template with invisible variable not set 1",
+  "input": "<!-- slide template=\"[[template]]\" -->\n\n\t# MyContent\n",
+  "extra": {},
+  "find_file": {},
+  "parse_file": {
+   "template.md": "\n\t\t<% content %>\n\t\t# After<grid drag=\"100 6\" drop=\"bottom\">\n\t\t<%? footer %>\n\t\t</grid>\n\t\t"
+  },
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n# MyContent\n\n\t\t# After<div class=\"\" style=\"position: absolute; left: 0%; top: 94%; height: 6%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n\n\t\t\n\t\t</div>\n</div>"
+ },
+ {
+  "id": "template: Template with variable set 1",
+  "input": "<!-- slide template=\"[[template]]\" -->\n\n# MyContent\n\n::: footer\n# Hello\n:::\n\t\n",
+  "extra": {},
+  "find_file": {},
+  "parse_file": {
+   "template.md": "\n\t\t<% content %>\n\t\t# After<grid drag=\"100 6\" drop=\"bottom\">\n\t\t<% footer %>\n\t\t</grid>\n\t\t"
+  },
+  "expected": "<!-- .slide: class=\"drop\" -->\n<div class=\"\" style=\"position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center\" absolute=\"true\">\n\n# MyContent\n\n\n\t\n\n\t\t# After<div class=\"\" style=\"position: absolute; left: 0%; top: 94%; height: 6%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center\" >\n\n\t\t<div class=\"block\">\n\n# Hello\n</div>\n\n\n\t\t</div>\n</div>"
+ }
+]

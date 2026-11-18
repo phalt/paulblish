@@ -143,6 +143,8 @@ kofi: ""     # optional
 | `bluesky` | no | Bluesky profile URL — icon in nav and footer |
 | `email` | no | Email address — `mailto:` icon in nav and footer |
 | `kofi` | no | Ko-fi page ID (the part after `ko-fi.com/`) — coffee icon in nav and footer, plus a "Support me on Ko-fi" button in the footer. No Ko-fi JavaScript is loaded. |
+| `slides_directory` | no | Folder of slide decks (default `slides`). Read from `Home.md` frontmatter even when you use `site.toml`. See [Slide Decks](#slide-decks). |
+| `slides_css` | no | Stylesheet path(s) added to every deck: one path, comma-separated, or a list. Read from `Home.md` frontmatter even when you use `site.toml`. |
 
 ## Frontmatter Schema
 
@@ -251,6 +253,27 @@ cname = "blog.example.com"
 ```
 
 This writes a `CNAME` file to `_site/CNAME` on every build. GitHub Pages reads the CNAME from the published directory root — no manual setup needed beyond pointing your DNS.
+
+## Slide Decks
+
+Presentations written for the Obsidian [Advanced Slides](https://github.com/MSzturc/obsidian-advanced-slides) plugin publish as part of the site, with the same format, themes and behaviour as the plugin's browser view.
+
+```
+vault/
+├── Home.md          # slides_directory: "slides"   slides_css: "slides/my-theme.css"
+└── slides/
+    ├── my-talk.md   # publish: true → /slides/my-talk/
+    └── my-theme.css
+```
+
+- Each file in the slides directory with `publish: true` becomes `/slides/<slug>/` (slug from `slug`/`permalink`, else the filename). `/slides/` lists every deck, and the nav gets a "Slides" link.
+- Write decks exactly as for Advanced Slides: `---` and `--` separators, `note:` speaker notes (press <kbd>S</kbd>), `<!-- slide bg="..." -->` and `<!-- element class="..." -->` annotations, `<grid drag="..." drop="...">`, `+` fragment lists, templates, callouts, maths, ` ```chart `, and any reveal.js option or `theme` / `highlightTheme` / `css` in frontmatter.
+- Images and stylesheets follow the article asset rules (found anywhere in the vault, copied to `/assets/`). `[[Wikilinks]]` link to the published article or deck.
+- Mermaid diagrams are drawn with [Pele](https://pele.run), like on article pages.
+- Speaker notes are part of the published page.
+- Decks are in `sitemap.xml`, but not in the RSS feed or article listings.
+
+The reveal.js runtime is the plugin's own release bundle, vendored in `templates/reveal/` (see `VENDOR.md` there for versions and licences) and copied to `_site/static/reveal/` when you have decks.
 
 ## Incremental Builds
 
