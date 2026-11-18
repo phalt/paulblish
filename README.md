@@ -273,7 +273,7 @@ vault/
 - Speaker notes are part of the published page.
 - Decks are in `sitemap.xml`, but not in the RSS feed or article listings.
 
-The reveal.js runtime is the plugin's own release bundle, vendored in `templates/reveal/` (see `VENDOR.md` there for versions and licences) and copied to `_site/static/reveal/` when you have decks.
+reveal.js and its plugins load from jsDelivr, pinned to the versions in the plugin's 1.20.0 release and integrity-checked. The plugin's own themes and layout CSS are vendored in `templates/reveal/` (see `VENDOR.md` there) and copied to `_site/static/reveal/` when you have decks. The chalkboard, menu, pointer and timer plugins and the `mattropolis` theme are not included.
 
 ## Incremental Builds
 

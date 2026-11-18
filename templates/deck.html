@@ -4,9 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    {#- Port of Advanced Slides 1.20.0 template/reveal.html. Differences: asset URLs point at the
-        vendored runtime, the Obsidian iframe/export hooks are gone, and mermaid.js is replaced by
-        Pele (same as article pages). -#}
+    {#- Port of Advanced Slides 1.20.0 template/reveal.html. Differences: libraries load from pinned
+        CDN URLs (cdn = paulblish/slides/runtime.py) and the plugin's themes + layout.css from the
+        vendored copy (base); the Obsidian iframe/export hooks, the chalkboard, menu, pointer and
+        elapsed-time-bar plugins are gone; mermaid.js is replaced by Pele (same as article pages). -#}
     <title>{{ title | e }}</title>
     {% if deck.description %}
     <meta name="description" content="{{ deck.description | e }}" />
@@ -19,18 +20,14 @@
     {% if site.emoji_favicon %}
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>{{ site.emoji_favicon }}</text></svg>">
     {% endif %}
-    <link rel="stylesheet" href="{{ base }}dist/reveal.css" />
+    {% macro css(file) %}<link rel="stylesheet" href="{{ file.url }}" integrity="{{ file.integrity }}" crossorigin="anonymous" />{% endmacro %}
+    {% macro js(file, defer=false) %}<script{% if defer %} defer{% endif %} src="{{ file.url }}" integrity="{{ file.integrity }}" crossorigin="anonymous"></script>{% endmacro %}
+    {{ css(cdn.reveal_css) }}
     <link rel="stylesheet" href="{{ theme_url }}" id="theme" />
-    <link rel="stylesheet" href="{{ highlight_theme_url }}" />
+    <link rel="stylesheet" href="{{ highlight_theme_url }}"{% if highlight_integrity %} integrity="{{ highlight_integrity }}" crossorigin="anonymous"{% endif %} />
     <link rel="stylesheet" href="{{ base }}css/layout.css" />
     {% if enable_custom_controls %}
-    <link rel="stylesheet" href="{{ base }}plugin/customcontrols/style.css">
-    {% endif %}
-    {% if enable_chalkboard %}
-    <link rel="stylesheet" href="{{ base }}plugin/chalkboard/style.css">
-    {% endif %}
-    {% if enable_pointer %}
-    <link rel="stylesheet" href="{{ base }}plugin/reveal-pointer/pointer.css" />
+    {{ css(cdn.customcontrols_css) }}
     {% endif %}
     {% for href in css_urls %}
     <link rel="stylesheet" href="{{ href }}" />
@@ -54,7 +51,7 @@
     </style>
     {% endif %}
 
-    <script defer src="{{ base }}dist/fontawesome/all.min.js"></script>
+    {{ js(cdn.fontawesome, defer=true) }}
 
     <script type="text/javascript">
       function fitElements() {
@@ -105,29 +102,17 @@
       <div class="slides">{{ slides }}</div>
     </div>
 
-    <script src="{{ base }}dist/reveal.js"></script>
+    {{ js(cdn.reveal_js) }}
 
-    <script src="{{ base }}plugin/markdown/markdown.js"></script>
-    <script src="{{ base }}plugin/highlight/highlight.js"></script>
-    <script src="{{ base }}plugin/zoom/zoom.js"></script>
-    <script src="{{ base }}plugin/notes/notes.js"></script>
-    <script src="{{ base }}plugin/math/math.js"></script>
-    <script src="{{ base }}plugin/chart/chart.min.js"></script>
-    <script src="{{ base }}plugin/chart/plugin.js"></script>
-    {% if enable_menu %}
-    <script src="{{ base }}plugin/menu/menu.js"></script>
-    {% endif %}
+    {{ js(cdn.markdown) }}
+    {{ js(cdn.highlight) }}
+    {{ js(cdn.zoom) }}
+    {{ js(cdn.notes) }}
+    {{ js(cdn.math) }}
+    {{ js(cdn.chartjs) }}
+    {{ js(cdn.chart) }}
     {% if enable_custom_controls %}
-    <script src="{{ base }}plugin/customcontrols/plugin.js"></script>
-    {% endif %}
-    {% if enable_chalkboard %}
-    <script src="{{ base }}plugin/chalkboard/plugin.js"></script>
-    {% endif %}
-    {% if enable_pointer %}
-    <script src="{{ base }}plugin/reveal-pointer/pointer.js"></script>
-    {% endif %}
-    {% if time_for_presentation and enable_time_bar %}
-    <script src="{{ base }}plugin/elapsed-time-bar/elapsed-time-bar.js"></script>
+    {{ js(cdn.customcontrols_js) }}
     {% endif %}
 
     <script>
@@ -183,18 +168,10 @@
           RevealMath.MathJax3,
           RevealChart,
           {% if enable_custom_controls %}RevealCustomControls,{% endif %}
-          {% if enable_menu %}RevealMenu,{% endif %}
-          {% if enable_pointer %}RevealPointer,{% endif %}
-          {% if enable_chalkboard %}RevealChalkboard,{% endif %}
-          {% if time_for_presentation and enable_time_bar %}ElapsedTimeBar{% endif %}
         ],
 
-        {% if time_for_presentation %}
-        allottedTime: {{ time_for_presentation }} * 1000,
-        {% endif %}
-
         mathjax3: {
-          mathjax: '{{ base }}plugin/math/mathjax/tex-mml-chtml.js',
+          mathjax: '{{ mathjax_url }}',
         },
         markdown: {
           gfm: true,
@@ -210,17 +187,8 @@
             {% if enable_overview %}
             { id: 'toggle-overview', title: 'Toggle overview (O)', icon: '<i class="fa fa-th"></i>', action: 'Reveal.toggleOverview();' },
             {% endif %}
-            {% if enable_chalkboard %}
-            { icon: '<i class="fa fa-pen-square"></i>', title: 'Toggle chalkboard (B)', action: 'RevealChalkboard.toggleChalkboard();' },
-            { icon: '<i class="fa fa-pen"></i>', title: 'Toggle notes canvas (C)', action: 'RevealChalkboard.toggleNotesCanvas();' },
-            {% endif %}
           ]
         },
-        {% endif %}
-        {% if enable_menu %}
-        menu: {
-          loadIcons: false
-        }
         {% endif %}
       };
 

@@ -23,6 +23,7 @@ from paulblish.slides.build import (
     render_deck,
     scan_decks,
 )
+from paulblish.slides.runtime import CDN, HIGHLIGHT_THEMES, MATHJAX_URL
 from paulblish.templating import PELE_URL
 
 FIXTURES = Path(__file__).parent / "fixtures"
@@ -252,8 +253,9 @@ class TestResolver:
         _, resolver = setup
         runtime = "https://example.com/static/reveal/"
         assert resolver.stylesheet("night", kind="theme") == runtime + "dist/theme/night.css"
-        assert resolver.stylesheet("monokai", kind="highlight") == runtime + "plugin/highlight/monokai.css"
-        assert resolver.stylesheet("css/vs2015.css", kind="highlight") == runtime + "css/vs2015.css"
+        assert resolver.stylesheet("monokai", kind="highlight") == HIGHLIGHT_THEMES["monokai"].url
+        assert resolver.stylesheet("css/vs2015.css", kind="highlight") == HIGHLIGHT_THEMES["vs2015"].url
+        assert resolver.stylesheet("css/layout.css") == runtime + "css/layout.css"
         assert resolver.stylesheet("https://cdn.test/t.css", kind="theme") == "https://cdn.test/t.css"
         assert resolver.stylesheet("slides/deck.css") == "https://example.com/assets/deck.css"
         assert resolver.stylesheet("deck.css") == "https://example.com/assets/deck.css"
@@ -273,18 +275,25 @@ def _render(tmp_path: Path, body: str, site: SiteConfig | None = None) -> tuple[
 
 
 class TestRenderDeck:
-    def test_page_uses_vendored_runtime_and_theme(self, tmp_path):
+    def test_page_loads_pinned_cdn_runtime_and_vendored_theme(self, tmp_path):
         deck, _ = _render(tmp_path, "---\ntheme: white\nhighlightTheme: monokai\n---\n# A\n")
         html = deck.html
         runtime = "https://example.com/static/reveal/"
-        assert f'href="{runtime}dist/reveal.css"' in html
         assert f'href="{runtime}dist/theme/white.css" id="theme"' in html
-        assert f'href="{runtime}plugin/highlight/monokai.css"' in html
         assert f'href="{runtime}css/layout.css"' in html
-        assert f'src="{runtime}plugin/notes/notes.js"' in html
-        assert f'src="{runtime}plugin/highlight/highlight.js"' in html
-        assert f"mathjax: '{runtime}plugin/math/mathjax/tex-mml-chtml.js'" in html
+        for key in ("reveal_css", "reveal_js", "markdown", "highlight", "zoom", "notes", "math", "chartjs", "chart"):
+            file = CDN[key]
+            assert f'"{file.url}" integrity="{file.integrity}" crossorigin="anonymous"' in html
+        monokai = HIGHLIGHT_THEMES["monokai"]
+        assert f'href="{monokai.url}" integrity="{monokai.integrity}"' in html
+        assert f"mathjax: '{MATHJAX_URL}'" in html
         assert "app://obsidian.md" not in html
+
+    def test_cdn_urls_are_pinned(self):
+        for file in [*CDN.values(), *HIGHLIGHT_THEMES.values()]:
+            assert re.match(r"https://cdn\.jsdelivr\.net/npm/(@[\w-]+/)?[\w.-]+@\d+\.\d+\.\d+/", file.url), file.url
+            assert file.integrity.startswith("sha384-")
+        assert "mathjax@3.2.0/" in MATHJAX_URL
 
     def test_reveal_options_from_frontmatter(self, tmp_path):
         deck, _ = _render(tmp_path, "---\ntransition: fade\nslideNumber: true\nwidth: 1280\n---\n# A\n")
@@ -296,16 +305,22 @@ class TestRenderDeck:
         assert options["width"] == 1280
         assert options["height"] == 700
 
-    def test_plugin_toggles(self, tmp_path):
-        off, _ = _render(tmp_path / "a", "# A\n")
-        assert "plugin/menu/menu.js" not in off.html
-        assert "plugin/chalkboard/plugin.js" not in off.html
-        assert "plugin/customcontrols/plugin.js" in off.html  # on by default upstream
-        on, _ = _render(
-            tmp_path / "b", "---\nenableMenu: true\nenableChalkboard: true\nenablePointer: true\n---\n# A\n"
+    def test_custom_controls_and_overview(self, tmp_path):
+        default, _ = _render(tmp_path / "a", "# A\n")
+        assert CDN["customcontrols_js"].url in default.html  # on by default upstream
+        assert "toggle-overview" not in default.html
+        overview, _ = _render(tmp_path / "b", "---\nenableOverview: true\n---\n# A\n")
+        assert "toggle-overview" in overview.html
+        off, _ = _render(tmp_path / "c", "---\nenableCustomControls: false\n---\n# A\n")
+        assert CDN["customcontrols_js"].url not in off.html
+
+    def test_dropped_plugins_are_ignored(self, tmp_path):
+        deck, _ = _render(
+            tmp_path,
+            "---\nenableMenu: true\nenableChalkboard: true\nenablePointer: true\nenableTimeBar: true\n---\n# A\n",
         )
-        for script in ("menu/menu.js", "chalkboard/plugin.js", "reveal-pointer/pointer.js"):
-            assert f"plugin/{script}" in on.html
+        for name in ("RevealMenu", "RevealChalkboard", "RevealPointer", "ElapsedTimeBar", "chalkboard", "menu.js"):
+            assert name not in deck.html
 
     def test_slides_markup(self, tmp_path):
         deck, _ = _render(tmp_path, "# One\n\n---\n\n# Two\n\nnote: notes here\n")
@@ -373,9 +388,9 @@ class TestBuild:
         assert 'data-visibility="hidden"' in deck_html  # skip="true"
         assert (out / "assets" / "pb-logo.svg").is_file()
         assert (out / "assets" / "theme.css").is_file()
-        assert (out / "static" / "reveal" / "dist" / "reveal.js").is_file()
-        assert (out / "static" / "reveal" / "plugin" / "math" / "mathjax" / "tex-mml-chtml.js").is_file()
-        assert not (out / "static" / "reveal" / "plugin" / "mermaid").exists()
+        assert (out / "static" / "reveal" / "dist" / "theme" / "night.css").is_file()
+        assert (out / "static" / "reveal" / "css" / "layout.css").is_file()
+        assert not (out / "static" / "reveal" / "plugin").exists()
 
         index = (out / "slides" / "index.html").read_text()
         assert 'href="https://example.com/slides/demo-deck/">Demo Deck</a>' in index
@@ -458,8 +473,23 @@ class TestBuild:
         assert (out / "slides" / "talk" / "index.html").is_file()
 
 
-def test_runtime_is_vendored():
-    assert (RUNTIME_DIR / "dist" / "reveal.js").read_text().startswith("/*!\n* reveal.js 4.3.1")
-    assert (RUNTIME_DIR / "VENDOR.md").is_file()
-    assert (RUNTIME_DIR / "LICENSE-reveal.js").is_file()
-    assert (RUNTIME_DIR / "LICENSE-advanced-slides").is_file()
+def test_only_advanced_slides_build_output_is_vendored():
+    files = sorted(p.relative_to(RUNTIME_DIR).as_posix() for p in RUNTIME_DIR.rglob("*") if p.is_file())
+    themes = {"beige", "black", "blood", "consult", "league", "moon", "night", "serif", "simple", "sky", "solarized"}
+    assert files == sorted(
+        [
+            "LICENSE-advanced-slides",
+            "VENDOR.md",
+            "css/layout.css",
+            "dist/theme/fonts/league-gothic/league-gothic.css",
+            *(f"dist/theme/{name}.css" for name in themes | {"white"}),
+        ]
+    )
+
+
+def test_themes_load_source_sans_pro_from_pinned_cdn():
+    for name in ("black", "white"):
+        first = (RUNTIME_DIR / "dist" / "theme" / f"{name}.css").read_text().split("\n", 1)[0]
+        assert first == (
+            '@import "https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/fonts/source-sans-pro/source-sans-pro.css";'
+        )

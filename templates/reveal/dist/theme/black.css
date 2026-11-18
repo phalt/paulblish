@@ -1,4 +1,4 @@
-@import "./fonts/source-sans-pro/source-sans-pro.css";
+@import "https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/fonts/source-sans-pro/source-sans-pro.css";
 .reveal .has-light-background,
 .reveal .has-light-background h1,
 .reveal .has-light-background h2,
