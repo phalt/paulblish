@@ -38,3 +38,23 @@ class SiteConfig:
     email: str = ""
     kofi: str = ""
     emoji_favicon: str = ""
+    # Slide decks (Advanced Slides format): source folder, and site-wide stylesheets for every deck
+    slides_directory: str = "slides"
+    slides_css: list[str] = field(default_factory=list)
+    # Set by the build when at least one deck is published: URL path of the slides index
+    slides_url: str = ""
+
+
+@dataclass
+class Deck:
+    """A slide deck: one markdown file in the slides directory, rendered with reveal.js."""
+
+    source_path: Path
+    relative_path: Path
+    title: str
+    slug: str
+    url_path: str
+    date: datetime
+    text: str
+    description: str = ""
+    html: str = ""

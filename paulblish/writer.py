@@ -3,9 +3,17 @@ import shutil
 from pathlib import Path
 
 from paulblish.feed import generate_feed
-from paulblish.models import Article, SiteConfig
+from paulblish.models import Article, Deck, SiteConfig
 from paulblish.sitemap import generate_sitemap
-from paulblish.templating import render_404, render_all_pages, render_article, render_section_listing, render_tag_page
+from paulblish.slides.build import copy_runtime, deck_output_path
+from paulblish.templating import (
+    render_404,
+    render_all_pages,
+    render_article,
+    render_section_listing,
+    render_slides_index,
+    render_tag_page,
+)
 
 DEFAULT_TEMPLATES = Path(__file__).parent.parent / "templates"
 
@@ -67,13 +75,20 @@ def write(
     site: SiteConfig,
     templates_dir: Path | None = None,
     articles_to_write: list[Article] | None = None,
+    decks: list[Deck] | None = None,
+    slides_prefix: str | None = None,
 ) -> list[Path]:
     """Write rendered articles to the output directory. Returns list of written file paths.
 
     If *articles_to_write* is provided (incremental builds), only those articles have
     their individual HTML written.  All articles are still used for shared pages
     (listings, feeds, sitemaps).  Prev/next assignment always uses the full list.
+
+    *decks* are rendered slide decks (``deck.html`` already set). When the vault has a slides
+    directory, *slides_prefix* is its output folder, which is rebuilt from scratch every build.
+    Decks never appear in listings, tags, the feed or prev/next; they are in the sitemap.
     """
+    decks = decks or []
     assign_prev_next(articles)
     latest_articles = sorted(
         [a for a in articles if _in_section(a, "articles")],
@@ -116,7 +131,7 @@ def write(
     written.extend(write_feed(articles, output_dir, site))
 
     # Write sitemap
-    written.extend(write_sitemap(articles, output_dir, site))
+    written.extend(write_sitemap(articles, output_dir, site, decks=decks))
 
     # Write robots.txt
     written.append(write_robots(output_dir, site))
@@ -128,6 +143,41 @@ def write(
     if static_src.is_dir():
         _copy_static_dir(static_src, output_dir / "static", static_files)
 
+    # Slide decks, their index and the reveal.js runtime (after static/, which is recreated above)
+    if slides_prefix is not None:
+        written.extend(
+            write_decks(decks, output_dir, site, slides_prefix, templates_dir=templates_dir, static_files=static_files)
+        )
+
+    return written
+
+
+def write_decks(
+    decks: list[Deck],
+    output_dir: Path,
+    site: SiteConfig,
+    slides_prefix: str,
+    templates_dir: Path | None = None,
+    static_files: dict[str, str] | None = None,
+) -> list[Path]:
+    """Write each deck page, the /<slides>/ index and the vendored runtime. Returns written pages."""
+    slides_out = output_dir / slides_prefix
+    if slides_out.exists():
+        shutil.rmtree(slides_out)  # drop decks that were unpublished or renamed
+    if not decks:
+        return []
+
+    written: list[Path] = []
+    for deck in decks:
+        path = deck_output_path(deck, output_dir)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(deck.html)
+        written.append(path)
+
+    index_path = slides_out / "index.html"
+    index_path.write_text(render_slides_index(decks, site, templates_dir=templates_dir, static_files=static_files))
+    written.append(index_path)
+    copy_runtime(output_dir)
     return written
 
 
@@ -186,11 +236,13 @@ def write_feed(articles: list[Article], output_dir: Path, site: SiteConfig) -> l
     return [feed_path]
 
 
-def write_sitemap(articles: list[Article], output_dir: Path, site: SiteConfig) -> list[Path]:
+def write_sitemap(
+    articles: list[Article], output_dir: Path, site: SiteConfig, decks: list[Deck] | None = None
+) -> list[Path]:
     """Generate and write sitemap.xml to the output root. Returns a list with the written path."""
     path = output_dir / "sitemap.xml"
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(generate_sitemap(articles, site), encoding="utf-8")
+    path.write_text(generate_sitemap(articles, site, decks=decks), encoding="utf-8")
     return [path]
 
 

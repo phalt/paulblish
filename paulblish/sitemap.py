@@ -20,8 +20,8 @@ def _lastmod(articles: list[Article]) -> str | None:
     return max(a.date for a in articles).strftime("%Y-%m-%d")
 
 
-def generate_sitemap(articles: list[Article], site: SiteConfig) -> str:
-    """Return a sitemap.xml string covering articles, tag pages, and /all/."""
+def generate_sitemap(articles: list[Article], site: SiteConfig, decks: list | None = None) -> str:
+    """Return a sitemap.xml string covering articles, tag pages, /all/, and slide decks."""
     ET.register_namespace("", NAMESPACE)
     urlset = ET.Element(f"{{{NAMESPACE}}}urlset")
 
@@ -48,6 +48,12 @@ def generate_sitemap(articles: list[Article], site: SiteConfig) -> str:
 
     for tag, tagged in sorted(tag_map.items()):
         _add(site.base_url + f"/tags/{tag}/", _lastmod(tagged))
+
+    # Slide decks and their index
+    if decks:
+        _add(site.base_url + site.slides_url, _lastmod(decks))
+        for deck in sorted(decks, key=lambda d: d.url_path):
+            _add(site.base_url + deck.url_path, deck.date.strftime("%Y-%m-%d"))
 
     ET.indent(urlset, space="  ")
     tree = ET.ElementTree(urlset)

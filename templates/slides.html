@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} — {{ site.title }}{% endblock %}
+
+{% block content %}
+<div class="listing">
+  <h1>{{ title }}</h1>
+  <ul class="article-list deck-list">
+    {% for deck in decks %}
+    <li>
+      <a href="{{ site.base_url }}{{ deck.url_path }}">{{ deck.title }}</a>
+      <time datetime="{{ deck.date.isoformat() }}">{{ deck.date.strftime('%d %B %Y') }}</time>
+      {% if deck.description %}<p class="deck-description">{{ deck.description }}</p>{% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

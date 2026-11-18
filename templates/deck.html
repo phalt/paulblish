@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    {#- Port of Advanced Slides 1.20.0 template/reveal.html. Differences: asset URLs point at the
+        vendored runtime, the Obsidian iframe/export hooks are gone, and mermaid.js is replaced by
+        Pele (same as article pages). -#}
+    <title>{{ title | e }}</title>
+    {% if deck.description %}
+    <meta name="description" content="{{ deck.description | e }}" />
+    {% endif %}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="{{ site.title | e }}" />
+    <meta property="og:title" content="{{ title | e }}" />
+    <meta property="og:description" content="{{ (deck.description or site.description) | e }}" />
+    <meta property="og:url" content="{{ site.base_url }}{{ deck.url_path }}" />
+    {% if site.emoji_favicon %}
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>{{ site.emoji_favicon }}</text></svg>">
+    {% endif %}
+    <link rel="stylesheet" href="{{ base }}dist/reveal.css" />
+    <link rel="stylesheet" href="{{ theme_url }}" id="theme" />
+    <link rel="stylesheet" href="{{ highlight_theme_url }}" />
+    <link rel="stylesheet" href="{{ base }}css/layout.css" />
+    {% if enable_custom_controls %}
+    <link rel="stylesheet" href="{{ base }}plugin/customcontrols/style.css">
+    {% endif %}
+    {% if enable_chalkboard %}
+    <link rel="stylesheet" href="{{ base }}plugin/chalkboard/style.css">
+    {% endif %}
+    {% if enable_pointer %}
+    <link rel="stylesheet" href="{{ base }}plugin/reveal-pointer/pointer.css" />
+    {% endif %}
+    {% for href in css_urls %}
+    <link rel="stylesheet" href="{{ href }}" />
+    {% endfor %}
+    {% if has_mermaid %}
+    <style>
+      /* Pele draws ```mermaid blocks into div.diagram; follow the reveal.js theme colours. */
+      .reveal .diagram {
+        width: 100%;
+        --pele-bg: transparent;
+        --pele-fg: var(--r-main-color);
+        --pele-muted: var(--r-main-color);
+        --pele-line: var(--r-main-color);
+        --pele-surface: var(--r-background-color);
+        --pele-surface-alt: var(--r-background-color);
+        --pele-border: var(--r-link-color);
+        --pele-accent: var(--r-link-color);
+        --pele-font: var(--r-main-font);
+        --pele-font-mono: var(--r-code-font);
+      }
+    </style>
+    {% endif %}
+
+    <script defer src="{{ base }}dist/fontawesome/all.min.js"></script>
+
+    <script type="text/javascript">
+      function fitElements() {
+        const itemsToFit = document.getElementsByClassName('fitText');
+        for (const item in itemsToFit) {
+          if (Object.hasOwnProperty.call(itemsToFit, item)) {
+            var element = itemsToFit[item];
+            fitElement(element, 1, 1000);
+            element.classList.remove('fitText');
+          }
+        }
+      }
+
+      function fitElement(element, start, end) {
+        let size = (end + start) / 2;
+        element.style.fontSize = `${size}px`;
+
+        if (Math.abs(start - end) < 1) {
+          while (element.scrollHeight > element.offsetHeight) {
+            size--;
+            element.style.fontSize = `${size}px`;
+          }
+          return;
+        }
+
+        if (element.scrollHeight > element.offsetHeight) {
+          fitElement(element, start, size);
+        } else {
+          fitElement(element, size, end);
+        }
+      }
+
+      document.onreadystatechange = () => {
+        fitElements();
+        if (document.readyState === 'complete') {
+          if (window.location.href.indexOf('print-pdf') != -1) {
+            let stateCheck = setInterval(() => {
+              clearInterval(stateCheck);
+              window.print();
+            }, 250);
+          }
+        }
+      };
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">{{ slides }}</div>
+    </div>
+
+    <script src="{{ base }}dist/reveal.js"></script>
+
+    <script src="{{ base }}plugin/markdown/markdown.js"></script>
+    <script src="{{ base }}plugin/highlight/highlight.js"></script>
+    <script src="{{ base }}plugin/zoom/zoom.js"></script>
+    <script src="{{ base }}plugin/notes/notes.js"></script>
+    <script src="{{ base }}plugin/math/math.js"></script>
+    <script src="{{ base }}plugin/chart/chart.min.js"></script>
+    <script src="{{ base }}plugin/chart/plugin.js"></script>
+    {% if enable_menu %}
+    <script src="{{ base }}plugin/menu/menu.js"></script>
+    {% endif %}
+    {% if enable_custom_controls %}
+    <script src="{{ base }}plugin/customcontrols/plugin.js"></script>
+    {% endif %}
+    {% if enable_chalkboard %}
+    <script src="{{ base }}plugin/chalkboard/plugin.js"></script>
+    {% endif %}
+    {% if enable_pointer %}
+    <script src="{{ base }}plugin/reveal-pointer/pointer.js"></script>
+    {% endif %}
+    {% if time_for_presentation and enable_time_bar %}
+    <script src="{{ base }}plugin/elapsed-time-bar/elapsed-time-bar.js"></script>
+    {% endif %}
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      function isLight(color) {
+        let hex = color.replace('#', '');
+
+        // convert #fff => #ffffff
+        if (hex.length == 3) {
+          hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+        }
+
+        const c_r = parseInt(hex.substr(0, 2), 16);
+        const c_g = parseInt(hex.substr(2, 2), 16);
+        const c_b = parseInt(hex.substr(4, 2), 16);
+        const brightness = (c_r * 299 + c_g * 587 + c_b * 114) / 1000;
+        return brightness > 155;
+      }
+
+      var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+      var isLight = isLight(bgColor);
+
+      if (isLight) {
+        document.body.classList.add('has-light-background');
+      } else {
+        document.body.classList.add('has-dark-background');
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+          RevealChart,
+          {% if enable_custom_controls %}RevealCustomControls,{% endif %}
+          {% if enable_menu %}RevealMenu,{% endif %}
+          {% if enable_pointer %}RevealPointer,{% endif %}
+          {% if enable_chalkboard %}RevealChalkboard,{% endif %}
+          {% if time_for_presentation and enable_time_bar %}ElapsedTimeBar{% endif %}
+        ],
+
+        {% if time_for_presentation %}
+        allottedTime: {{ time_for_presentation }} * 1000,
+        {% endif %}
+
+        mathjax3: {
+          mathjax: '{{ base }}plugin/math/mathjax/tex-mml-chtml.js',
+        },
+        markdown: {
+          gfm: true,
+          mangle: true,
+          pedantic: false,
+          smartLists: false,
+          smartypants: false,
+        },
+
+        {% if enable_custom_controls %}
+        customcontrols: {
+          controls: [
+            {% if enable_overview %}
+            { id: 'toggle-overview', title: 'Toggle overview (O)', icon: '<i class="fa fa-th"></i>', action: 'Reveal.toggleOverview();' },
+            {% endif %}
+            {% if enable_chalkboard %}
+            { icon: '<i class="fa fa-pen-square"></i>', title: 'Toggle chalkboard (B)', action: 'RevealChalkboard.toggleChalkboard();' },
+            { icon: '<i class="fa fa-pen"></i>', title: 'Toggle notes canvas (C)', action: 'RevealChalkboard.toggleNotesCanvas();' },
+            {% endif %}
+          ]
+        },
+        {% endif %}
+        {% if enable_menu %}
+        menu: {
+          loadIcons: false
+        }
+        {% endif %}
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {{ reveal_options_json }}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+    {% if has_mermaid %}
+    <script type="module">
+      import { mount } from "{{ pele_url }}";
+      // Advanced Slides turns ```mermaid into <div class="mermaid">; draw each one with Pele once
+      // reveal.js has rendered the markdown. mount() re-lays the diagram out when its slide is shown.
+      function drawDiagrams() {
+        for (const source of document.querySelectorAll(".reveal .mermaid")) {
+          const diagram = document.createElement("div");
+          diagram.className = "diagram";
+          const text = source.textContent;
+          source.replaceWith(diagram);
+          mount(diagram, text);
+        }
+      }
+      if (Reveal.isReady()) drawDiagrams();
+      else Reveal.on("ready", drawDiagrams);
+    </script>
+    {% endif %}
+  </body>
+
+  <!-- created with Advanced Slides, published with Paulblish -->
+</html>

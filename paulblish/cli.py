@@ -12,6 +12,15 @@ from paulblish.linker import build_path_map
 from paulblish.manifest import load_manifest, load_manifest_excerpts, load_manifest_outputs, save_manifest
 from paulblish.renderer import render
 from paulblish.scanner import scan
+from paulblish.slides.build import (
+    AssetRegistry,
+    VaultIndex,
+    add_decks_to_path_map,
+    find_slides_dir,
+    render_deck,
+    scan_decks,
+)
+from paulblish.templating import PELE_URL
 from paulblish.writer import write, write_build_meta, write_cname
 
 VERSION = "0.1.0"
@@ -79,9 +88,14 @@ def build(
     manifest_outputs: dict[str, str] = load_manifest_outputs(output_dir) if incremental else {}
     manifest_excerpts: dict[str, str] = load_manifest_excerpts(output_dir) if incremental else {}
 
-    # Scan
+    # Scan (the slides directory holds decks, not articles)
     console.print("\n[bold cyan]Scanning...[/]\n")
-    articles, skipped = scan(source_dir, include_drafts=drafts)
+    slides_dir = find_slides_dir(source_dir, config.slides_directory)
+    articles, skipped = scan(source_dir, include_drafts=drafts, exclude_dir=slides_dir)
+    decks, deck_skipped = scan_decks(slides_dir, source_dir, include_drafts=drafts) if slides_dir else ([], [])
+    slides_prefix = slides_dir.relative_to(source_dir).as_posix().lower() if slides_dir else None
+    if decks:
+        config.slides_url = f"/{slides_prefix}/"
 
     # Determine stale / fresh sets for incremental mode
     if incremental:
@@ -131,16 +145,26 @@ def build(
             label = f"[cyan]→ {escape(article.url_path)}[/]"
         console.print(f"  {PICKED} [bold]{escape(str(article.relative_path))}[/] {label}")
 
-    for skip in skipped:
+    for deck in decks:
+        console.print(
+            f"  {PICKED} [bold]{escape(str(deck.relative_path))}[/] [cyan]→ {escape(deck.url_path)} (slides)[/]"
+        )
+
+    for skip in [*skipped, *deck_skipped]:
         console.print(f"  {SKIPPED} {escape(str(skip.path))} [dim]({escape(skip.reason)})[/]")
 
     rebuild_count = len(stale_set) if incremental else len(articles)
-    console.print(f"\n[bold]Building [green]{rebuild_count}[/] articles, skipped [red]{len(skipped)}[/] files[/]\n")
+    num_skipped = len(skipped) + len(deck_skipped)
+    deck_str = f", [green]{len(decks)}[/] slide deck{'s' if len(decks) != 1 else ''}" if decks else ""
+    console.print(
+        f"\n[bold]Building [green]{rebuild_count}[/] articles{deck_str}, skipped [red]{num_skipped}[/] files[/]\n"
+    )
 
     build_start = time.perf_counter()
 
-    # Build path map for wikilink resolution (always uses full article list)
+    # Build path map for wikilink resolution (always uses full article list, plus decks)
     path_map = build_path_map(articles)
+    add_decks_to_path_map(path_map, decks)
 
     # Render markdown to HTML — only stale articles in incremental mode
     for article in articles_to_write if articles_to_write is not None else articles:
@@ -148,12 +172,35 @@ def build(
 
     # Collect and copy assets for ALL articles (fresh articles may reference assets)
     asset_refs = collect_assets(articles, source_dir, site=config)
-    asset_warnings = copy_assets(asset_refs, output_dir)
+
+    # Render slide decks; files they reference join the article assets in /assets/
+    registry = AssetRegistry(asset_refs)
+    deck_warnings: list[str] = []
+    if decks:
+        index = VaultIndex(source_dir, exclude=output_dir)
+        for deck in list(decks):
+            try:
+                deck_warnings += render_deck(deck, config, index, registry, path_map, PELE_URL, templates_dir)
+            except Exception as e:  # a malformed deck (e.g. bad chart data) must not stop the build
+                decks.remove(deck)
+                deck_warnings.append(f"{deck.relative_path}: deck not built: {e}")
+        if not decks:
+            config.slides_url = ""
+
+    asset_warnings = copy_assets(asset_refs + registry.new_refs, output_dir) + deck_warnings
     for warning in asset_warnings:
         console.print(f"  {WARNING} [yellow]{escape(warning)}[/]")
 
     # Write templated output
-    written = write(articles, output_dir, site=config, templates_dir=templates_dir, articles_to_write=articles_to_write)
+    written = write(
+        articles,
+        output_dir,
+        site=config,
+        templates_dir=templates_dir,
+        articles_to_write=articles_to_write,
+        decks=decks,
+        slides_prefix=slides_prefix,
+    )
     for path in written:
         console.print(f"  {WRITTEN} [dim]{escape(str(path.relative_to(output_dir.parent)))}[/]")
 
@@ -169,11 +216,12 @@ def build(
     save_manifest(output_dir, articles)
 
     elapsed = time.perf_counter() - build_start
-    num_assets = len([r for r in asset_refs if r.source_path])
+    num_assets = len([r for r in asset_refs + registry.new_refs if r.source_path])
     num_warnings = len(asset_warnings)
     warning_str = f", [yellow]{num_warnings} warning{'s' if num_warnings != 1 else ''}[/]" if num_warnings else ""
+    decks_done = f", [bold]{len(decks)}[/] slide deck{'s' if len(decks) != 1 else ''}" if decks else ""
     console.print(
-        f"\n[bold green]Done.[/] Built [bold]{rebuild_count}[/] articles, [bold]{num_assets}[/] assets"
+        f"\n[bold green]Done.[/] Built [bold]{rebuild_count}[/] articles{decks_done}, [bold]{num_assets}[/] assets"
         f"{warning_str} in [cyan]{elapsed:.2f}s[/]."
     )
 

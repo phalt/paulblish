@@ -926,10 +926,10 @@ jobs:
 3. Load config         (parse site.toml + merge CLI flag overrides)
 4. Scan                (walk source dir, parse frontmatter, filter publishable)
 5. Report scan         (print ✓/✗ for every file found)
-6. Build path map      (note name -> url_path for all published articles)
+6. Build path map      (note name -> url_path for all published articles and slide decks)
 7. Render              (markdown -> HTML for each article, resolving wikilinks via path map)
 8. Collect assets      (find all referenced images/files, including avatar if configured)
-9. Copy assets         (to output/assets/, rewrite paths in HTML)
+9. Copy assets         (render slide decks first, so their files join the article assets; copy to output/assets/)
 10. Template           (wrap rendered HTML in Jinja2 templates, including metadata block)
 11. Generate listings  (all-pages grouped by path, tag pages)
 12. Generate CNAME     (write CNAME file if site.cname is configured)
@@ -1153,6 +1153,7 @@ A collection of high-value improvements and two larger features (light/dark mode
 - [x] **8.10** Render Mermaid diagrams with Pele instead of mermaid.js, themed from the site palette.
 - [x] **8.11** Tool widgets: default styles for form controls and visualisations inside `html embed` blocks, each needing at most one class, plus a small helper script.
 - [x] **8.12** Ko-fi support link: `kofi` config field adds a coffee icon to the social icons and a support button in the footer. Plain links, no widget JavaScript.
+- [x] **8.13** Slide decks: every published file in the slides directory becomes a reveal.js presentation in the Obsidian [Advanced Slides](https://github.com/MSzturc/obsidian-advanced-slides) format, with the plugin's runtime vendored and a `/slides/` index.
 
 **Milestone:** All pages include social sharing meta tags, are discoverable by crawlers, have a working 404, support light/dark theming, large vaults can be rebuilt incrementally in a fraction of the full build time, and the site displays the author's social presence via icons in the nav and footer.
 
@@ -1513,3 +1514,34 @@ All three icons are inline SVGs with `width="20" height="20" viewBox="0 0 24 24"
 **Tests:** Every widget class has a scoped, zero-specificity rule; meter states and vendor pseudo-elements are styled without grouping; the helper is included on embed pages only and loads nothing external; the fixture renders every widget with at most one class per element.
 
 **Documentation:** `CHANGELOG.md`.
+
+#### 8.13 — Slide Decks (Advanced Slides)
+
+**What:** Publish presentations written for the Obsidian [Advanced Slides](https://github.com/MSzturc/obsidian-advanced-slides) plugin (1.20.0) so they look and behave on the site exactly as they do in Obsidian. Advanced Slides rewrites the deck's markdown with ~20 TypeScript processors, splits it into `<section data-markdown>` slides, and serves a page that renders them with reveal.js 4.3.1 in the browser. Paulblish ports the processors and the split to Python and ships the same reveal.js runtime.
+
+**Configuration** (`Home.md` frontmatter, read even when `site.toml` holds the rest of the config; `site.toml` `[site]` also accepts them):
+
+- `slides_directory` — vault folder holding decks. Default `slides`. A single-level name matches case-insensitively (`Slides/`).
+- `slides_css` — stylesheet(s) added to every deck after its own theme and `css`: one path, a comma-separated string or a list. Resolved like deck assets.
+
+**Requirements:**
+
+- Every `.md` file in the slides directory is reported as picked up (`→ /slides/<slug>/ (slides)`) or skipped with a reason. Decks need `publish: true` (or `--drafts`). The slug is `slug` / `permalink`, else the filename slugified; duplicate slugs are skipped. Files in the slides directory are never articles.
+- Output: `/<slides>/<slug>/index.html` per deck, `/<slides>/index.html` listing decks newest first (title, date, description), and a "Slides" nav link when at least one deck is published. The slides output folder is rebuilt from scratch every build (also with `--incremental`), so unpublished decks disappear.
+- Decks appear in `sitemap.xml` (index + each deck). They never appear in the RSS feed, `/all/`, tag pages, section listings or prev/next.
+- `paulblish/slides/` holds the port: `preprocessor.py` (options, frontmatter split like `yaml-front-matter`, processor chain in upstream order), `processors.py` (one class per upstream processor), `properties.py` (attribute transformers, comment parser, `color` package port for `bg` light/dark), `slidify.py` (reveal.js markdown `slidify`), `jsre.py` (JavaScript `replace` `$` expansion and RegExp `lastIndex` semantics that upstream output depends on), `build.py` (scan, vault lookups, render).
+- Supported syntax (all of upstream): `---` / `--` separators, `note:` speaker notes, `<!-- element -->` / `<!-- slide -->` annotations (`class`, `style`, `bg`, `pad`, `border`, `animate`, `frag`, `opacity`, `filter`, `rotate`, `skip`, `data-*`), `<grid drag drop flow align ...>`, `+ ` and `1) ` fragment lists, `::: block`, callouts, `==mark==`, `__bold__`, `%%comments%%`, emoji and `:fas_icon:` shortcodes, `![[image.png|WxH]]`, Excalidraw (exported SVG/PNG), `![[Note]]` / `![[Note#Heading]]` / `![[Note#^block]]` embeds, slide templates (`template="[[tpl]]"`, `<% content %>`, `::: name` variables, `<%? optional %>`), footnotes, `$` / `$$` maths (MathJax 3), ` ```chart ` blocks (Chart.js), `showGrid`, `bg` default background, and every reveal.js option in frontmatter.
+- Mermaid: ` ```mermaid ` becomes `<div class="mermaid">` as upstream, then [Pele](https://pele.run) (the site's pinned `PELE_URL`) draws it once reveal.js is ready, themed from the reveal theme's `--r-*` variables. mermaid.js is not shipped.
+- Wikilinks (`[[Note]]`, `[[Note|Alias]]`) link to the published page when the note is an article or deck; otherwise they render as text (upstream behaviour; `enableLinks: true` keeps upstream `obsidian://` links). Articles can wikilink to decks.
+- Assets follow the article rule: images, Excalidraw exports, `bg` images, custom `theme` / `highlightTheme` / `css` files and `slides_css` are found anywhere in the vault (path from vault root, path from the deck's folder, then by filename) and copied to `/assets/`, sharing names with article assets (a different file with a taken name gets the 8-character hash prefix). Missing files are build warnings.
+- Built-in `theme` names (`black`, `white`, `night`, `mattropolis`, …), `highlightTheme` names (`zenburn`, `monokai`) and runtime paths (`css/vs2015.css`) point at the vendored runtime. URLs are used as given.
+- `templates/reveal/` is the Advanced Slides 1.20.0 release bundle (reveal.js 4.3.1 plus its markdown, highlight, notes, zoom, search, math, chart, chalkboard, customcontrols, menu, pointer and elapsed-time-bar plugins, compiled themes and `layout.css`, Font Awesome), trimmed of source maps, ESM builds, mermaid.js and unused MathJax components. Sources and licences are in `templates/reveal/VENDOR.md`. It is copied to `_site/static/reveal/` only when a deck is published.
+- `templates/deck.html` ports the plugin's `template/reveal.html` (same plugins, defaults, `fitText`, light/dark body class, `?print-pdf`). Removed: the Obsidian iframe/export `postMessage` hooks and the mermaid plugin.
+- Defaults are the plugin's `defaults.json` plus its default settings (`DEFAULT_SETTINGS` in `main.ts`), so a deck with no frontmatter renders as it does in a fresh Obsidian install.
+- A deck that fails to render (e.g. invalid ` ```chart ` data) is reported as a warning and skipped; the rest of the build continues.
+
+**Known differences:** speaker notes are rendered with markdown-it instead of marked; `useThemeColors` in charts uses the default palette (upstream reads Obsidian's CSS at render time); notes and templates are found by path or filename rather than Obsidian's fuzzy path match; files outside the vault (`file://`) are not published.
+
+**Tests:** `tests/test_slides_parity.py` replays all 71 jest snapshots from the plugin's own test suite (inputs, mocked vault lookups and expected output, extracted to `tests/fixtures/advanced_slides_snapshots.json`) and requires identical output. `tests/test_slides_comment.py` ports `comment.unit.test.ts` and checks colour parsing. `tests/test_slidify.py` covers slide splitting and notes. `tests/test_slides_build.py` covers config, scanning, vault lookups, asset naming, rendering, the built fixture vault (`tests/fixtures/slides/demo-deck.md`), sitemap/feed/listing rules, custom slides directories, stale deck removal and broken decks.
+
+**Documentation:** README "Slide Decks" section, `CHANGELOG.md`, `templates/reveal/VENDOR.md`.
