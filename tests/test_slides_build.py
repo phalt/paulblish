@@ -447,6 +447,14 @@ class TestBuild:
         assert (out / "talks" / "talk" / "index.html").is_file()
         assert (out / "talks" / "index.html").is_file()
 
+    def test_capitalised_slides_dir_is_not_also_an_article(self, tmp_path):
+        vault = _vault(tmp_path, slides_dir="Slides")
+        out = tmp_path / "_site"
+        result = _build(vault, out)
+        assert "Slides/Talk.md → /slides/talk/ (slides)" in result.output
+        assert result.output.count("Talk.md →") == 1
+        assert "/slides/talk/" not in (out / "all" / "index.html").read_text()
+
     def test_custom_templates_without_slide_templates(self, tmp_path):
         import shutil
 

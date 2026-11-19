@@ -46,12 +46,24 @@ def find_slides_dir(source_dir: Path, name: str) -> Path | None:
     """Locate the slides directory under *source_dir*; a single-level name matches case-insensitively."""
     candidate = source_dir / name
     if candidate.is_dir():
-        return candidate
+        return _on_disk_spelling(source_dir, candidate)
     if "/" not in name:
         for child in sorted(source_dir.iterdir()):
             if child.is_dir() and child.name.lower() == name.lower():
                 return child
     return None
+
+
+def _on_disk_spelling(source_dir: Path, path: Path) -> Path:
+    # A case-insensitive filesystem (macOS) finds slides/ when the folder is Slides/, but the article
+    # scanner's exclusion compares paths exactly.
+    spelled = source_dir
+    for part in path.relative_to(source_dir).parts:
+        matches = [child for child in spelled.iterdir() if child.name.lower() == part.lower()]
+        if not matches:
+            return path
+        spelled = next((child for child in matches if child.name == part), matches[0])
+    return spelled
 
 
 def _slugify(text: str) -> str:

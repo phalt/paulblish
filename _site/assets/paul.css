@@ -1,0 +1,334 @@
+/* Advanced Slides theme after rundot.dev and paulwrites.software.
+   Frontmatter: theme: css/paul.css, width: 1280, height: 720 */
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap");
+
+:root {
+  --p-bg: #08090b;
+  --p-panel: #121418;
+  --p-line: #22252b;
+  --p-fg: #eceef1;
+  --p-fg-2: #a3a9b3;
+  --p-fg-3: #6b717c;
+  --p-accent: #34d399;
+  --p-accent-2: #6ee7b7;
+  --p-blue: #6ea8ff;
+  --p-amber: #f5c451;
+  --p-sans: Geist, Inter, system-ui, -apple-system, sans-serif;
+  --p-mono: "Geist Mono", "JetBrains Mono", ui-monospace, monospace;
+  --p-serif: "Instrument Serif", Georgia, serif;
+
+  --r-background-color: var(--p-bg);
+  --r-main-font: var(--p-sans);
+  --r-main-font-size: 30px;
+  --r-main-color: var(--p-fg-2);
+  --r-block-margin: 0.55em;
+  --r-heading-margin: 0 0 0.55em 0;
+  --r-heading-font: var(--p-sans);
+  --r-heading-color: var(--p-fg);
+  --r-heading-line-height: 1.02;
+  --r-heading-letter-spacing: -0.045em;
+  --r-heading1-size: 1.85em;
+  --r-heading2-size: 1.4em;
+  --r-heading3-size: 1.1em;
+  --r-heading4-size: 1em;
+  --r-code-font: var(--p-mono);
+  --r-link-color: var(--p-accent);
+  --r-link-color-dark: #10b981;
+  --r-link-color-hover: var(--p-accent-2);
+  --r-selection-background-color: rgba(52, 211, 153, 0.3);
+  --r-selection-color: var(--p-fg);
+}
+
+/* Background: rundot.dev's top glow and masked grid */
+.reveal-viewport {
+  background-color: var(--r-background-color);
+  background-image:
+    radial-gradient(600px 340px at 50% -40px, rgba(52, 211, 153, 0.18), transparent 70%),
+    radial-gradient(900px 500px at 50% 0, rgba(110, 168, 255, 0.08), transparent 70%);
+  background-repeat: no-repeat;
+}
+.reveal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--p-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--p-line) 1px, transparent 1px);
+  background-size: 56px 56px;
+  opacity: 0.25;
+  mask-image: radial-gradient(ellipse 60% 70% at 50% 0, #000 30%, transparent 80%);
+}
+
+.reveal {
+  font-family: var(--r-main-font);
+  font-size: var(--r-main-font-size);
+  font-weight: 400;
+  color: var(--r-main-color);
+  -webkit-font-smoothing: antialiased;
+}
+.reveal ::selection {
+  color: var(--r-selection-color);
+  background: var(--r-selection-background-color);
+}
+
+.reveal .slides {
+  text-align: left;
+}
+.reveal .slides section,
+.reveal .slides section > section {
+  line-height: 1.45;
+  font-weight: inherit;
+}
+.reveal .slides > section.drop {
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 100%;
+}
+/* Advanced Slides wraps every slide in an inline-styled, centred flex div */
+.reveal .slides > section > div[absolute] {
+  align-items: flex-start !important;
+  padding: 0 72px;
+  box-sizing: border-box;
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  margin: var(--r-heading-margin);
+  color: var(--r-heading-color);
+  font-family: var(--r-heading-font);
+  font-weight: 600;
+  line-height: var(--r-heading-line-height);
+  letter-spacing: var(--r-heading-letter-spacing);
+  text-transform: none;
+  text-shadow: none;
+  text-wrap: balance;
+  word-wrap: break-word;
+}
+.reveal h1 { font-size: var(--r-heading1-size); letter-spacing: -0.05em; }
+.reveal h2 { font-size: var(--r-heading2-size); }
+.reveal h3 { font-size: var(--r-heading3-size); letter-spacing: -0.02em; }
+.reveal h4 { font-size: var(--r-heading4-size); letter-spacing: -0.01em; }
+.reveal h1:last-child,
+.reveal h2:last-child,
+.reveal h3:last-child,
+.reveal h4:last-child {
+  margin-bottom: 0;
+}
+.reveal h1 em,
+.reveal h2 em {
+  color: var(--p-accent);
+  font-size: 1.08em;
+}
+
+/* Statement slides: the first and last, and any with just a heading plus one line of text */
+.reveal .slides > section > div:not(:has(> :nth-child(3), > ul, > ol, > blockquote, > pre, > table)) h1 {
+  margin-bottom: 0.3em;
+  font-size: 2.6em;
+  line-height: 0.95;
+  letter-spacing: -0.055em;
+}
+.reveal .slides > section:first-child > div h1,
+.reveal .slides > section:last-child > div h1 {
+  margin-bottom: 0.3em;
+  font-size: 3.4em;
+  line-height: 0.95;
+  letter-spacing: -0.055em;
+}
+.reveal .slides > section > div:not(:has(> :nth-child(3), > ul, > ol, > blockquote, > pre, > table)) p,
+.reveal .slides > section:first-child > div p {
+  margin: 0.2em 0;
+  font-size: 1.25em;
+}
+
+.reveal p {
+  margin: var(--r-block-margin) 0;
+  line-height: 1.45;
+}
+.reveal strong,
+.reveal b {
+  color: var(--p-fg);
+  font-weight: 600;
+}
+.reveal em {
+  font-family: var(--p-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.12em;
+  letter-spacing: 0;
+}
+
+.reveal ul,
+.reveal ol {
+  display: block;
+  margin: var(--r-block-margin) 0 var(--r-block-margin) 1.2em;
+  padding: 0;
+}
+.reveal ul { list-style-type: disc; }
+.reveal ol { list-style-type: decimal; }
+.reveal li {
+  margin: 0.3em 0;
+  padding-left: 0.25em;
+}
+.reveal li::marker {
+  color: var(--p-accent);
+}
+.reveal ol > li::marker {
+  font-family: var(--p-mono);
+  font-size: 0.8em;
+}
+.reveal ul ul,
+.reveal ul ol,
+.reveal ol ol,
+.reveal ol ul {
+  margin: 0.2em 0 0.2em 1.2em;
+}
+
+/* paulwrites.software: square, left-ruled quote panel */
+.reveal blockquote {
+  display: block;
+  position: relative;
+  width: auto;
+  margin: var(--r-block-margin) 0;
+  padding: 0.45em 0.9em;
+  border-left: 3px solid var(--p-accent);
+  background: var(--p-panel);
+  box-shadow: none;
+  font-family: var(--p-serif);
+  font-style: normal;
+  font-size: 1.3em;
+  line-height: 1.2;
+  color: var(--p-fg);
+}
+.reveal blockquote p {
+  margin: 0;
+  display: block;
+}
+.reveal blockquote em {
+  font-size: inherit;
+}
+
+.reveal code {
+  font-family: var(--r-code-font);
+  font-size: 0.85em;
+  text-transform: none;
+  tab-size: 2;
+}
+.reveal :not(pre) > code {
+  padding: 0.1em 0.35em;
+  color: var(--p-fg);
+  background: var(--p-panel);
+  border: 1px solid var(--p-line);
+  border-radius: 6px;
+}
+.reveal pre {
+  display: block;
+  position: relative;
+  width: 100%;
+  margin: 1em 0;
+  font-size: 0.6em;
+  line-height: 1.5;
+  text-align: left;
+  box-shadow: none;
+}
+.reveal pre code {
+  display: block;
+  padding: 0.9em 1.1em;
+  overflow-x: auto;
+  max-height: 480px;
+  word-wrap: normal;
+  color: var(--p-fg);
+  background: var(--p-panel);
+  border: 1px solid var(--p-line);
+  border-radius: 6px;
+}
+/* reveal.css's .hljs min-height: 100% pads short blocks inside the flex wrapper */
+.reveal pre code.hljs { min-height: 0; padding: 0.9em 1.1em; }
+.reveal .code-wrapper { white-space: normal; }
+.reveal .code-wrapper code { white-space: pre; }
+
+/* Beats whatever highlightTheme is set, so code matches the site palette */
+.reveal .hljs-keyword,
+.reveal .hljs-built_in,
+.reveal .hljs-selector-tag,
+.reveal .hljs-type { color: var(--p-accent); }
+.reveal .hljs-string,
+.reveal .hljs-attr,
+.reveal .hljs-template-variable { color: var(--p-amber); }
+.reveal .hljs-number,
+.reveal .hljs-literal,
+.reveal .hljs-symbol { color: var(--p-blue); }
+.reveal .hljs-comment,
+.reveal .hljs-quote { color: var(--p-fg-3); font-style: italic; }
+.reveal .hljs-title,
+.reveal .hljs-function,
+.reveal .hljs-params { color: var(--p-fg); }
+
+.reveal table {
+  margin: var(--r-block-margin) 0;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 0.85em;
+}
+.reveal table th {
+  color: var(--p-fg);
+  font-weight: 600;
+}
+.reveal table th,
+.reveal table td {
+  text-align: left;
+  padding: 0.35em 1em 0.35em 0;
+  border-bottom: 1px solid var(--p-line);
+}
+
+.reveal a {
+  color: var(--r-link-color);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+.reveal a:hover {
+  color: var(--r-link-color-hover);
+}
+
+.reveal img,
+.reveal video,
+.reveal iframe {
+  max-width: 100%;
+  max-height: 100%;
+}
+.reveal img {
+  margin: var(--r-block-margin) 0;
+}
+.reveal sup,
+.reveal sub,
+.reveal small {
+  font-size: 0.6em;
+}
+
+.reveal .controls {
+  color: var(--p-accent) !important;
+}
+.reveal .progress {
+  height: 2px;
+  background: var(--p-line);
+  color: var(--p-accent);
+}
+.reveal .slide-number {
+  right: 16px;
+  bottom: 12px;
+  padding: 0;
+  background: transparent;
+  color: var(--p-fg-3);
+  font-family: var(--p-mono);
+  font-size: 13px;
+}
+
+@media print {
+  .backgrounds {
+    background-color: var(--r-background-color);
+  }
+}
