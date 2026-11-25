@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" /><title>Slide features</title>
+    
+    <meta name="description" content="Every slide feature paulblish supports, each one shown on its own slide." />
+    
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Paul Writes Software" />
+    <meta property="og:title" content="Slide features" />
+    <meta property="og:description" content="Every slide feature paulblish supports, each one shown on its own slide." />
+    <meta property="og:url" content="https://paulwrites.software/slides/slide-features/" />
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👨🏻‍💻</text></svg>">
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css" integrity="sha384-Pb6n6pZwvDREexWRwIahWnEEyJtu7lDuwH2tFEWAsDqluOZa107O/JLlORF2W1Ea" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://paulwrites.software/assets/paul.css" id="theme" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/highlight/zenburn.css" integrity="sha384-sPluGLWICYjbTkVBtJgk093E9FHND5UZpILiTUAXmkMDlguY79gKORAb37jVtirn" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://paulwrites.software/static/reveal/css/layout.css" />
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-plugins@4.1.5/customcontrols/style.css" integrity="sha384-CB4kBt8ubXv+S/fFBjzrVgPlucDvQcaaOfm61aBjUsFWv81Rvq5wk0iP1F5U/2Xo" crossorigin="anonymous" />
+    
+    
+    
+    <style>
+      /* Pele draws ```mermaid blocks into div.diagram; follow the reveal.js theme colours. */
+      .reveal .diagram {
+        width: 100%;
+        --pele-bg: transparent;
+        --pele-fg: var(--r-main-color);
+        --pele-muted: var(--r-main-color);
+        --pele-line: var(--r-main-color);
+        --pele-surface: var(--r-background-color);
+        --pele-surface-alt: var(--r-background-color);
+        --pele-border: var(--r-link-color);
+        --pele-accent: var(--r-link-color);
+        --pele-font: var(--r-main-font);
+        --pele-font-mono: var(--r-code-font);
+      }
+    </style>
+    
+
+    <script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/js/all.min.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+      function fitElements() {
+        const itemsToFit = document.getElementsByClassName('fitText');
+        for (const item in itemsToFit) {
+          if (Object.hasOwnProperty.call(itemsToFit, item)) {
+            var element = itemsToFit[item];
+            fitElement(element, 1, 1000);
+            element.classList.remove('fitText');
+          }
+        }
+      }
+
+      function fitElement(element, start, end) {
+        let size = (end + start) / 2;
+        element.style.fontSize = `${size}px`;
+
+        if (Math.abs(start - end) < 1) {
+          while (element.scrollHeight > element.offsetHeight) {
+            size--;
+            element.style.fontSize = `${size}px`;
+          }
+          return;
+        }
+
+        if (element.scrollHeight > element.offsetHeight) {
+          fitElement(element, start, size);
+        } else {
+          fitElement(element, size, end);
+        }
+      }
+
+      document.onreadystatechange = () => {
+        fitElements();
+        if (document.readyState === 'complete') {
+          if (window.location.href.indexOf('print-pdf') != -1) {
+            let stateCheck = setInterval(() => {
+              clearInterval(stateCheck);
+              window.print();
+            }, 250);
+          }
+        }
+      };
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Everything my slides can do
+
+_A tour of every slide feature, made with those features_
+
+✨
+</div>
+
+<aside class="notes"><ul>
+<li>Each slide shows one feature, and the markdown that makes it</li>
+<li>The source is one markdown file plus a template note</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## How it works
+
+I write decks as markdown in Obsidian, in the [Advanced Slides](https://github.com/MSzturc/obsidian-advanced-slides) format.
+
+[paulblish](https://github.com/phalt/paulblish) publishes them as [reveal.js](https://revealjs.com) presentations at `/slides/<slug>/`.
+
+Every slide from here on shows **one feature**, and the markdown that makes it.
+</div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## New slides and vertical slides
+
+A line with three dashes starts a new slide.
+
+A line with two dashes starts a slide **underneath** this one. Press ⬇
+
+<pre><code class="language-markdown">## First slide
+&#45;--
+## Next slide
+&#45;-
+## Slide underneath</code></pre>
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## A vertical slide
+
+Vertical slides sit under their parent. Use them for detail you might skip.
+
+Press ➡ to carry on, or 🔼 to go back.
+</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Speaker notes
+
+Everything after <code>note&#58;</code> is hidden from the audience.
+
+Press **S** for the speaker view: your notes, the next slide and a timer.
+
+On my website the notes are in the page source, so keep secrets out of them.
+</div>
+
+<aside class="notes"><ul>
+<li>These are the speaker notes for this slide</li>
+<li>They support <strong>markdown</strong>, like this list</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Settings live in the frontmatter
+
+Any [reveal.js option](https://revealjs.com/config/) works. This deck uses:
+
+```yaml
+theme: Writing/Slides/paul.css
+width: 1280
+height: 720
+slideNumber: true
+transition: fade
+enableOverview: true
+```
+
+paulblish also reads `publish`, `slug` and `description`.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Themes
+
+Built in: `black` `white` `league` `beige` `sky` `night` `serif` `simple` `solarized` `blood` `moon` `consult`
+
+Or point `theme` at your own CSS file. This deck uses mine, `paul.css`.
+
+`highlightTheme` sets the code colours and `css` adds more stylesheets. `slides_css` in `Home.md` adds a stylesheet to every deck.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Text formatting
+
+**Bold**, **also bold**, _italic_, <mark>highlighted</mark>, ~~struck through~~ and `inline code`.
+
+There's a hidden comment at the end of this sentence.
+
+<code>&#95;&#95;also bold&#95;&#95;</code> · <code>&#61;=highlighted&#61;=</code> · <code>&#126;&#126;struck&#126;&#126;</code> · <code>&#37;%hidden&#37;%</code>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Emoji
+
+Emoji shortcodes: 🎉 🚀 🌱 ☕
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Callouts
+
+<div class="callout callout-color2">
+<div class="callout-title">
+<div class="callout-icon">
+
+<i class="fas fa-fire-alt" ></i>
+
+
+</div>
+<div class="callout-title-inner">
+
+Tip
+
+</div>
+</div>
+<div class="callout-content">
+
+Obsidian callouts work, with their icons and colours.
+
+</div>
+</div>
+
+<div class="callout callout-color5">
+<div class="callout-title">
+<div class="callout-icon">
+
+<i class="fas fa-exclamation-triangle" ></i>
+
+
+</div>
+<div class="callout-title-inner">
+
+Careful
+
+</div>
+</div>
+<div class="callout-content">
+
+Every callout type is supported, from `info` to `bug`.
+
+</div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Blocks
+
+<div class="block">
+
+<!-- .element: style="background: #121418; border-left: 3px solid #6ea8ff; padding: 0.6em 1em" -->
+A block wraps several lines in one element, so one annotation styles them all.
+
+Like this panel. ![](fas fa-cube)
+</div>
+
+
+
+<code>&#58;:: block &lt;!-- element style="..." --&gt;</code> … <code>&#58;::</code>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Fragments
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Lines starting with a plus
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->appear one at a time
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->as you press :ri
+
+1. &shy;<!-- .element: class="fragment" data-fragment-index="4" -->Numbered lists use a bracket
+1. &shy;<!-- .element: class="fragment" data-fragment-index="5" -->and do the same
+
+<code>&#43; Item</code> · <code>1&#41; Item</code>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Annotate any element
+
+A comment after an element sets its classes, styles and attributes.
+
+This line fades up. <!-- .element: class="fragment fade-up" -->
+
+This one grows. <!-- .element: class="fragment grow" -->
+
+And this one turns green. <!-- .element: class="fragment highlight-green" -->
+
+<code>&lt;!-- element class="fragment grow" --&gt;</code>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#0f3d2e" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Slide backgrounds
+
+<code>&lt;!-- slide bg="#0f3d2e" --&gt;</code> gives this slide its own colour.
+
+Slide comments also take `class`, `style` and any `data-` attribute.
+
+Put `bg` in the frontmatter to set a background for every slide.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-opacity="0.25" data-background-image="https://paulwrites.software/assets/gb-eng.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Background images
+
+`bg` takes an image too: <code>bg="Writing/assets/gb-eng.png"</code>
+
+Add any reveal.js background option, like <code>data-background-opacity="0.25"</code>.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Images
+
+<img src="https://paulwrites.software/assets/site-logo.jpeg" alt="" style="border-radius: 50%; width: 180px; object-fit: fill">
+
+
+Embed images from the vault at a set width: <code>!&#91;[site-logo.jpeg|180]]</code>
+
+Normal markdown images work too, and so do exported Excalidraw drawings.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<div class="" style="padding: 0 72px; box-sizing: border-box; position: absolute; left: 0%; top: 0%; height: 22%; width: 100%; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-evenly" align="left">
+
+## Grid layout
+</div>
+
+<div class="has-dark-background" style="background-color: #121418; padding: 0.8em; box-sizing: border-box; border: 1px solid #34d399; position: absolute; left: 6%; top: 26%; height: 34%; width: 42%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+**drag** is the box's width and height, as a % of the slide
+</div>
+
+<div class="has-dark-background" style="background-color: #121418; padding: 0.8em; box-sizing: border-box; border: 1px solid #6ea8ff; position: absolute; left: 52%; top: 26%; height: 34%; width: 42%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+**drop** is where its top-left corner goes: `x y`, or a name like `topright`
+</div>
+
+<div class="" style="padding: 0 72px; box-sizing: border-box; position: absolute; left: 0%; top: 66%; height: 30%; width: 100%; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-evenly" align="left">
+
+<code>&lt;grid drag="42 34" drop="6 26" bg="#121418" pad="0.8em"&gt;</code>
+
+Grids also take `align`, `flow`, `border`, `style` and `class`. Set `showGrid: true` to see a 10% guide grid.
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<div class="" style="padding: 0 72px; box-sizing: border-box; position: absolute; left: 0%; top: 0%; height: 22%; width: 100%; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-evenly" align="left">
+
+## Grids can animate, turn and fade
+</div>
+
+<div class="fadeIn slower" style="border: 2px solid #34d399; box-sizing: border-box; position: absolute; left: 6%; top: 30%; height: 30%; width: 20%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+**fadeIn**
+</div>
+
+<div class="" style="border: 2px solid #34d399; box-sizing: border-box; transform: rotate(-6deg); position: absolute; left: 29%; top: 30%; height: 30%; width: 20%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+**rotate**
+</div>
+
+<div class="" style="opacity: 0.4; border: 2px solid #34d399; box-sizing: border-box; position: absolute; left: 52%; top: 30%; height: 30%; width: 20%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+**opacity**
+</div>
+
+<div class="" style="border: 2px solid #34d399; box-sizing: border-box; filter: blur(2px); position: absolute; left: 75%; top: 30%; height: 30%; width: 20%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+
+**blur**
+</div>
+
+<div class="" style="padding: 0 72px; box-sizing: border-box; position: absolute; left: 0%; top: 66%; height: 10%; width: 100%; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-evenly" align="left">
+
+<code>animate="fadeIn slower" · rotate="-6" · opacity="0.4" · filter="blur(2px)"</code>
+</div>
+
+<div class="fragment" style="padding: 0 72px; box-sizing: border-box; position: absolute; left: 0%; top: 78%; height: 12%; width: 100%; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-evenly" align="left" data-fragment-index="1">
+
+<code>frag="1"</code> makes a grid a fragment, so this line waited for you to press ![](fas fa-arrow-right)
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Code
+
+```python [1|2-4|6]
+def slugify(title):
+    words = title.lower().split()
+    words = [w.strip(".,!?") for w in words]
+    return "-".join(words)
+
+print(slugify("Everything my slides can do!"))
+```
+
+Line numbers in brackets step through highlights: <code>&#96;&#96;&#96;python [1|2-4|6]</code>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Maths
+
+Inline, like `$e^{i\pi} + 1 = 0$`, or as a block:
+
+$
+\sum_{n=1}^{\infty} \frac{1}{n^2} = \frac{\pi^2}{6}
+$
+
+LaTeX between <code>&#36;</code> or <code>&#36;&#36;</code>, drawn by MathJax.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Footnotes
+
+Add a reference in the text<sup id="fnref:1" role="doc-noteref">1</sup>and define it anywhere on the slide.
+
+They collect at the bottom of the slide<sup id="fnref:2" role="doc-noteref">2</sup>.
+
+<code>text&#91;^1]</code> · <code>&#91;^1]: The definition</code>
+
+
+
+
+<div class="footnotes" role="doc-endnotes">
+<ol>
+<li id="fn:1" role="doc-endnote" class="footnote"><p>
+
+This is the first one.
+
+</p></li><li id="fn:2" role="doc-endnote" class="footnote"><p>
+
+And this is the second.
+
+</p></li></ol>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Diagrams
+
+
+<div class="mermaid">
+flowchart LR
+  A[Markdown in Obsidian] --> B[Advanced Slides preview]
+  A --> C[paulblish build]
+  C --> D[reveal.js on my website]
+
+</div>
+
+
+Mermaid code blocks. On my website, [Pele](https://pele.run) draws them in the deck's colours.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<div class="" style="padding: 0 72px; box-sizing: border-box; position: absolute; left: 0%; top: 0%; height: 22%; width: 100%; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-evenly" align="left">
+
+## Charts
+</div>
+
+<div class="" style="position: absolute; left: 18%; top: 22%; height: 56%; width: 64%; display: flex; flex-direction: column; align-items: center; justify-content: center" >
+<canvas style="max-height:720px" data-chart="bar" >
+<!--
+{"data":{"datasets":[{"data":[3,2,2,3,1],"label":"Coffee","backgroundColor":"#4285f4"},{"data":[1,2,3,2,4],"label":"Tea","backgroundColor":"#ea4335"}],"labels":["Mon","Tue","Wed","Thu","Fri"]},"options":{"elements":{"bar":{}},"scales":{"y":{"beginAtZero":true}},"plugins":{"legend":{"position":"bottom"}}}}-->
+</canvas>
+</div>
+
+<div class="" style="padding: 0 72px; box-sizing: border-box; position: absolute; left: 0%; top: 80%; height: 20%; width: 100%; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-evenly" align="left">
+
+A <code>chart</code> code block, drawn by [Chart.js](https://www.chartjs.org): bar, line, pie, radar and more. _Made-up data._
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Wikilinks
+
+Links to notes I've published go to the live page:
+
+- [Markdown features supported by Paulblish](https://paulwrites.software/articles/paulblish-features/), an article
+- [My talk on the future of programming](https://paulwrites.software/slides/future-2026/), another deck
+
+Notes I haven't published show as plain text: A note I never published.
+
+<code>&#91;[Note]]</code> · <code>&#91;[Note|Link text]]</code>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Embeds
+
+This slide pulls in a section of my home page:
+
+## Nintendo 3DS & Pokémon
+
+I absolutely adore the Nintendo DS/3DS era of handheld consoles. I think it is probably the best handheld console of all time. That's a sentiment shared by a lot of people.
+
+I'm also a big fan of the Pokémon series. So much so that I [built an API for it that got popular](https://pokeapi.co).
+
+I currently own 5 different consoles from that era. They are all different models, different software, and even some modded ones. I'll document them on here sometime.
+
+
+
+<code>!&#91;[Note]]</code> · <code>!&#91;[Note#Heading]]</code> · <code>!&#91;[Note#^block-id]]</code>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Templates
+
+This slide's layout comes from a template note. The footer and the badge come from slots on this slide.
+
+<pre><code class="language-markdown">&lt;!-- slide template="&#91;[Slide features template]]" --&gt;
+
+&#58;:: footer
+Made with the template
+&#58;::</code></pre>
+
+
+
+
+
+
+<div class="" style="font-size: 0.6em; color: #6b717c; border-top: 1px solid #22252b; padding: 0 72px; box-sizing: border-box; position: absolute; left: 0%; top: 90%; height: 10%; width: 100%; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-evenly" align="left">
+
+<div class="block">
+
+Made with the _Slide features template_ note
+</div>
+
+
+</div>
+
+<div class="" style="font-size: 0.6em; color: #34d399; padding: 0 72px; box-sizing: border-box; position: absolute; left: 70%; top: 0%; height: 12%; width: 30%; display: flex; flex-direction: column; align-items: flex-end; justify-content: space-evenly" align="right">
+
+<div class="block">
+
+Filled-in badge slot ![](fas fa-star)
+</div>
+
+
+
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Optional slots
+
+Same template, but this slide leaves the badge out.
+
+In the template, <code>&lt;% content %&gt;</code> is the slide itself, <code>&lt;% footer %&gt;</code> is a slot and <code>&lt;%? badge %&gt;</code> is an optional slot.
+
+Set `defaultTemplate` in the frontmatter to use a template on every slide.
+
+
+
+
+<div class="" style="font-size: 0.6em; color: #6b717c; border-top: 1px solid #22252b; padding: 0 72px; box-sizing: border-box; position: absolute; left: 0%; top: 90%; height: 10%; width: 100%; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-evenly" align="left">
+
+<div class="block">
+
+Same template, no badge
+</div>
+
+
+</div>
+
+<div class="" style="font-size: 0.6em; color: #34d399; padding: 0 72px; box-sizing: border-box; position: absolute; left: 70%; top: 0%; height: 12%; width: 30%; display: flex; flex-direction: column; align-items: flex-end; justify-content: space-evenly" align="right">
+
+
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Hidden slides
+
+The next slide has <code>&lt;!-- slide skip="true" --&gt;</code>, so it never shows.
+
+Keep drafts and spare slides in the deck without presenting them.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-visibility="hidden" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-auto-animate="true" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<div class="" style="padding: 0 72px; box-sizing: border-box; position: absolute; left: 0%; top: 0%; height: 22%; width: 100%; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-evenly" align="left">
+
+## Auto-animate
+</div>
+
+<div class="has-light-background" style="background-color: #34d399; position: absolute; left: 10%; top: 40%; height: 24%; width: 16%; display: flex; flex-direction: column; align-items: center; justify-content: center" data-id="box">
+
+</div>
+
+<div class="" style="padding: 0 72px; box-sizing: border-box; position: absolute; left: 0%; top: 82%; height: 18%; width: 100%; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-evenly" align="left">
+
+Two slides in a row with <code>data-auto-animate</code>. Press ➡
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-auto-animate="true" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<div class="" style="padding: 0 72px; box-sizing: border-box; position: absolute; left: 0%; top: 0%; height: 22%; width: 100%; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-evenly" align="left">
+
+## Auto-animate
+</div>
+
+<div class="has-light-background" style="background-color: #6ea8ff; transform: rotate(12deg); position: absolute; left: 54%; top: 30%; height: 40%; width: 34%; display: flex; flex-direction: column; align-items: center; justify-content: center" data-id="box">
+
+</div>
+
+<div class="" style="padding: 0 72px; box-sizing: border-box; position: absolute; left: 0%; top: 82%; height: 18%; width: 100%; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-evenly" align="left">
+
+Elements with the same <code>data-id</code> move between the two slides.
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-transition="zoom" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Transitions
+
+This deck fades between slides with `transition: fade`. This slide zoomed in with <code>data-transition="zoom"</code>.
+
+Choose from `none` `fade` `slide` `convex` `concave` `zoom`.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Presenting
+
+| Key | What it does |
+| --- | --- |
+| <kbd>S</kbd> | Speaker view with notes and a timer |
+| <kbd>O</kbd> or <kbd>Esc</kbd> | Overview of every slide |
+| <kbd>F</kbd> | Full screen |
+| <kbd>B</kbd> | Black out the screen |
+| <kbd>Alt</kbd> + click | Zoom in on anything |
+
+Tables are normal markdown. Add `?print-pdf` to the URL to print the deck as a PDF.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Obsidian only
+
+A few Advanced Slides extras work in Obsidian but not on my website:
+
+- the chalkboard, menu, laser pointer and timer bar plugins
+- the `mattropolis` theme
+
+Decks on my website load reveal.js from jsDelivr, so they need a network connection.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 720px; width: 1280px; min-height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Write markdown, get slides
+
+Every slide here is plain markdown, published by [paulblish](https://github.com/phalt/paulblish).
+
+✨
+</div>
+
+<aside class="notes"><ul>
+<li>All of this is one markdown file and one template note</li>
+<li>Questions</li>
+</ul>
+</aside></script></section></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js" integrity="sha384-luD+whv1jI/24ssgrd895PNlDCDdHAs/+LgxvV3PRsv5WHXagPEXwyoQl9PW6+cE" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/markdown/markdown.js" integrity="sha384-3jCJAHxvHkuDLLXVyAlBmWLk9uFOCQThqCI77I6Bfc1UW1MIzpR8gCkVqqgpRXtZ" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/highlight/highlight.js" integrity="sha384-AwxnBhLf3YFVM+ub8qUbNxy9nOgbQIm2+ZKfpcyZYgiv20YdB7d0dXaJ4R2kZ8+m" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/zoom/zoom.js" integrity="sha384-dNK6r+Pw2VqRj89FBbw8RWb9njeCCF2xbWDBQfut4r1fDpVMy8qmu3OWVvads+Vd" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/notes/notes.js" integrity="sha384-spW0Hq0iG2d6egl6SJqhiA9SUlXdRTvZo3fQe36GWnw4w1c+Xz5IXjyXpFd1IfVI" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/math/math.js" integrity="sha384-ti1anDVQBFpzxuyrLCUHbO929g/q/AzlUfE/n+fwLn39aZCfcVFOCnjZ3seFTGJs" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js" integrity="sha384-7NrRHqlWUj2hJl3a/dZj/a1GxuQc56mJ3aYsEnydBYrY1jR+RSt6SBvK3sHfj+mJ" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@4.1.5/chart/plugin.js" integrity="sha384-uPShWZL/xzPg2ZT4kaLmA2xl8aUqq278hUk5BtBMGbfy4e8gx+8dub03NL/t53Om" crossorigin="anonymous"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@4.1.5/customcontrols/plugin.js" integrity="sha384-/BHXMNEnWcV6WbnkM+1vJwk6P95Qpm6NmzSbHW9uOB1LjA7nlFZ8KqWq4N8d8VH+" crossorigin="anonymous"></script>
+    
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      function isLight(color) {
+        let hex = color.replace('#', '');
+
+        // convert #fff => #ffffff
+        if (hex.length == 3) {
+          hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+        }
+
+        const c_r = parseInt(hex.substr(0, 2), 16);
+        const c_g = parseInt(hex.substr(2, 2), 16);
+        const c_b = parseInt(hex.substr(4, 2), 16);
+        const brightness = (c_r * 299 + c_g * 587 + c_b * 114) / 1000;
+        return brightness > 155;
+      }
+
+      var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+      var isLight = isLight(bgColor);
+
+      if (isLight) {
+        document.body.classList.add('has-light-background');
+      } else {
+        document.body.classList.add('has-dark-background');
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+          RevealChart,
+          RevealCustomControls,
+        ],
+
+        mathjax3: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js',
+        },
+        markdown: {
+          gfm: true,
+          mangle: true,
+          pedantic: false,
+          smartLists: false,
+          smartypants: false,
+        },
+
+        
+        customcontrols: {
+          controls: [
+            
+            { id: 'toggle-overview', title: 'Toggle overview (O)', icon: '<i class="fa fa-th"></i>', action: 'Reveal.toggleOverview();' },
+            
+          ]
+        },
+        
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width": 1280, "height": 720, "margin": 0.04, "controls": true, "progress": true, "slideNumber": true, "transition": "fade", "transitionSpeed": "default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+    
+    <script type="module">
+      import { mount } from "https://cdn.jsdelivr.net/npm/pele@1.7.0/dist/pele.js";
+      // Advanced Slides turns ```mermaid into <div class="mermaid">; draw each one with Pele once
+      // reveal.js has rendered the markdown. mount() re-lays the diagram out when its slide is shown.
+      function drawDiagrams() {
+        for (const source of document.querySelectorAll(".reveal .mermaid")) {
+          const diagram = document.createElement("div");
+          diagram.className = "diagram";
+          const text = source.textContent;
+          source.replaceWith(diagram);
+          mount(diagram, text);
+        }
+      }
+      if (Reveal.isReady()) drawDiagrams();
+      else Reveal.on("ready", drawDiagrams);
+    </script>
+    
+  </body>
+
+  <!-- created with Advanced Slides, published with Paulblish -->
+</html>
