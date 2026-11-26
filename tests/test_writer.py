@@ -1,3 +1,4 @@
+import re
 import shutil
 from datetime import datetime
 from pathlib import Path
@@ -235,6 +236,22 @@ class TestStaticAssets:
         second = next((out2 / "static").glob("style.*.css")).name
 
         assert first != second
+
+    def test_style_css_fonts_exist_in_output(self, tmp_path):
+        write([_make_article("post")], tmp_path, site=SITE)
+        static = tmp_path / "static"
+        css = next(static.glob("style.*.css")).read_text()
+        urls = re.findall(r"url\(([^)]+)\)", css)
+        assert {"fonts/inter-latin-400-normal.woff2", "fonts/jetbrains-mono-latin-700-normal.woff2"} <= set(urls)
+        for url in urls:
+            assert (static / url).is_file(), url
+        assert '"Inter", "Inter Ext"' in css
+
+    def test_ascii_banner_avoids_latin_only_webfont(self):
+        css = (Path(__file__).parent.parent / "templates" / "static" / "style.css").read_text()
+        rule = re.search(r"\.ascii-banner \{(.*?)\}", css, re.S).group(1)
+        font_family = re.search(r"font-family:([^;]+);", rule).group(1)
+        assert "JetBrains Mono" not in font_family and "--font-heading" not in font_family
 
 
 class TestCname:

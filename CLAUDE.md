@@ -63,6 +63,9 @@ Key modules:
 - `templating.py` — Jinja2 environment setup + render
 - `writer.py` — output directory creation + file writing
 - `manifest.py` — incremental build manifest (load/save `.pb-manifest.json`)
+- `cv/` — CV pages (see spec 8.14): `layout: cv` files split into intro, main column and sidebar (`build.py`), written
+  as a web page (`templates/cv_page.html`) and a one-page A4 PDF via WeasyPrint (`templates/cv.html`). Both share
+  `templates/_cv.html` and `templates/static/cv.css`. The web page never gets the phone number.
 - `slides/` — slide decks in the Obsidian Advanced Slides format (see spec 8.13): a line-for-line port of the plugin's
   markdown processors (`preprocessor.py`, `processors.py`, `properties.py`, `jsre.py`), reveal.js `slidify`
   (`slidify.py`), the deck build (`build.py`) and CDN pins (`runtime.py`). `templates/deck.html` + `templates/reveal/`.

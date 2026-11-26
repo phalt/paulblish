@@ -33,6 +33,8 @@ cd paulblish
 make install
 ```
 
+[CV pages](#cv-pages) are rendered to PDF with [WeasyPrint](https://weasyprint.org), which needs the pango library: `brew install pango` on macOS, `apt install libpango-1.0-0 libpangoft2-1.0-0` on Debian or Ubuntu. Sites without a CV build without it.
+
 ## Usage
 
 ### `pb build`
@@ -77,6 +79,19 @@ uv run pb serve --output ./_site --port 9000
 | --- | --- | --- |
 | `--output`, `-o` | `./_site` | Path to the built site directory to serve. |
 | `--port`, `-p` | `8000` | Port to listen on. |
+
+### `pb pdf`
+
+Render one [CV](#cv-pages) to PDF, whether or not it has `publish: true`. Nothing is written to `_site/` and no `site.toml` is needed.
+
+```sh
+uv run pb pdf ~/obsidian/blog/cv/cv-anthropic.md --output ~/Desktop
+```
+
+| Flag | Default | Description |
+| --- | --- | --- |
+| `--output`, `-o` | `.` (cwd) | Directory to write the PDF to. The filename is the CV's `pdf_name`. |
+| `--templates` | _(bundled defaults)_ | Path to a custom Jinja2 templates directory. |
 
 ## Site Configuration
 
@@ -274,6 +289,61 @@ vault/
 - Decks are in `sitemap.xml`, but not in the RSS feed or article listings.
 
 reveal.js and its plugins load from jsDelivr, pinned to the versions in the plugin's 1.20.0 release and integrity-checked. The plugin's own themes and layout CSS are vendored in `templates/reveal/` (see `VENDOR.md` there) and copied to `_site/static/reveal/` when you have decks. The chalkboard, menu, pointer and timer plugins and the `mattropolis` theme are not included.
+
+## CV Pages
+
+A markdown file with `layout: cv` is a CV. `pb build` writes it as a web page in the site chrome, styled as a white A4 sheet with a **Download PDF** link, and as a one-page A4 PDF next to it: `/cv/index.html` and `/cv/Paul-Hallett-CV.pdf` for the example below.
+
+```markdown
+---
+publish: true
+slug: cv
+layout: cv
+title: Paul Hallett
+tagline: Engineering leader who builds and runs high-trust production platforms.
+location: Norwich, UK
+email: case@hey.com
+phone: "+44 7745 804293"
+github: github.com/phalt
+sidebar: [Education, Skills, Technologies, Awards, Languages, Values, Hobbies]
+---
+
+I lead the team behind Kraken Phone, a real-time telephony and voice AI platform.
+
+## Experience
+
+### Kraken Tech — *Lead Software Engineer, Kraken Phone*
+London UK · Energy retail operating platform · Jan 2024 – Present
+
+- **Promoted** to Lead in Oct 2025.
+
+## Technologies
+
+`Python` `Django` `FastAPI`
+```
+
+The full example is [`tests/fixtures/cv/cv.md`](tests/fixtures/cv/cv.md).
+
+| Field | Description |
+| --- | --- |
+| `layout` | `cv`. Required. |
+| `publish`, `slug` | The usual rules: `pb build` skips a CV without `publish: true`. Leave it off bespoke CVs and render them with [`pb pdf`](#pb-pdf). |
+| `title` | Your name, shown in the header. |
+| `tagline` | One line under your name. Also the page's description. |
+| `location`, `email`, `github`, `website` | Contact lines, top right. Empty fields are left out. `github` and `website` link to `https://` + the value. |
+| `phone` | **PDF only.** It is never written into HTML. Delete it to drop it everywhere. |
+| `sidebar` | Names of the sections that go in the right-hand column. |
+| `pdf_name` | The PDF filename. Default: the title with dashes for spaces, plus `-CV.pdf`. |
+
+- Text before the first `##` is the intro.
+- Each `##` starts a section. Sections named in `sidebar` (case-insensitive) go in the right-hand column, the rest in the main column, both in source order. A `sidebar` name that matches no section is a build warning.
+- `### Company — *Role*` followed by a one-line paragraph is a role heading with a meta line under it.
+- Inline code in the sidebar (`` `Python` ``) shows as square amber tags.
+- The body is rendered like an article, so wikilinks, callouts and footnotes work. `pb pdf` has no site to link to, so its wikilinks are plain text.
+- CVs are in `sitemap.xml`, but not in the RSS feed, article listings, tags or prev/next links.
+- With `--incremental`, a CV's page and PDF are only regenerated when its source file changes. Unpublishing or deleting a CV removes its PDF too.
+
+The layout and fonts are `templates/cv.html` (the PDF), `templates/cv_page.html` (the web page), the shared `templates/_cv.html`, and `templates/static/cv.css` with Inter and JetBrains Mono in `templates/static/fonts/` (SIL Open Font License). A custom `--templates` directory without these files uses the bundled ones.
 
 ## Incremental Builds
 

@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.5.0] - Unreleased
+
+### Added
+
+- CV pages. A markdown file with `layout: cv` becomes `/<slug>/index.html`, a white A4 sheet in the site chrome, plus a one-page A4 PDF next to it, rendered with [WeasyPrint](https://weasyprint.org). Sections named in the `sidebar` frontmatter go in the right-hand column. `phone` is only ever in the PDF. CVs are in the sitemap but not the feed or listings, and `--incremental` only regenerates a PDF when its source changes.
+- `pb pdf FILE` renders one CV to PDF, ignoring `publish`, for bespoke CVs that are never published. It needs no `site.toml` and writes nothing to `_site/`.
+- Inter and JetBrains Mono are vendored in `templates/static/fonts/` (from Fontsource, SIL Open Font License). The CV and the site theme (`style.css`) both load them, so the site no longer falls back to system fonts when they aren't installed.
+- `weasyprint` is a core dependency. It needs pango: `brew install pango` on macOS, `libpango-1.0-0 libpangoft2-1.0-0` on Debian or Ubuntu.
+
 ## [Unreleased]
 
 ### Added

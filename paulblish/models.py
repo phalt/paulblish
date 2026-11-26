@@ -19,6 +19,7 @@ class Article:
     description: str = ""
     body_html: str = ""
     is_home: bool = False
+    layout: str = ""
     reading_time_minutes: int = 0
     assets: list[Path] = field(default_factory=list)
     prev_article: Article | None = field(default=None)
@@ -58,3 +59,27 @@ class Deck:
     text: str
     description: str = ""
     html: str = ""
+
+
+@dataclass
+class CV:
+    """A CV: a markdown file with ``layout: cv``, written as a web page and a one-page A4 PDF."""
+
+    source_path: Path
+    relative_path: Path
+    title: str
+    slug: str
+    url_path: str
+    date: datetime
+    body_markdown: str
+    tagline: str = ""
+    location: str = ""
+    email: str = ""
+    phone: str = ""  # PDF only: the web page is rendered from a copy without it
+    github: str = ""
+    website: str = ""
+    pdf_name: str = ""
+    sidebar: list[str] = field(default_factory=list)
+    intro_html: str = ""
+    main_html: str = ""
+    side_html: str = ""

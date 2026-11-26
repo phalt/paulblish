@@ -1,0 +1,87 @@
+/* Paulblish CV — light print variant of the Cyberpunk Brutalist theme */
+@font-face { font-family:"Inter"; font-weight:400; src:url(fonts/inter-latin-400-normal.woff2); }
+@font-face { font-family:"Inter Ext"; font-weight:400; src:url(fonts/inter-latin-ext-400-normal.woff2); }
+@font-face { font-family:"Inter"; font-weight:400; font-style:italic; src:url(fonts/inter-latin-400-italic.woff2); }
+@font-face { font-family:"Inter"; font-weight:500; src:url(fonts/inter-latin-500-normal.woff2); }
+@font-face { font-family:"Inter"; font-weight:600; src:url(fonts/inter-latin-600-normal.woff2); }
+@font-face { font-family:"Inter Ext"; font-weight:600; src:url(fonts/inter-latin-ext-600-normal.woff2); }
+@font-face { font-family:"Inter"; font-weight:700; src:url(fonts/inter-latin-700-normal.woff2); }
+@font-face { font-family:"JetBrains Mono"; font-weight:400; src:url(fonts/jetbrains-mono-latin-400-normal.woff2); }
+@font-face { font-family:"JetBrains Mono"; font-weight:600; src:url(fonts/jetbrains-mono-latin-600-normal.woff2); }
+@font-face { font-family:"JetBrains Mono"; font-weight:700; src:url(fonts/jetbrains-mono-latin-700-normal.woff2); }
+
+/* .cv is the document root: <html> in the PDF, the paper sheet on the web page.
+   Scoping to it keeps these rules and variables from restyling the site around the sheet. */
+.cv {
+  /* Site palette, re-balanced for white paper: the site's teal/amber are too light for text on white,
+     so text uses darker shades and the originals stay for rules and markers. */
+  --bg:#ffffff; --surface:#f5f6f7; --border:#e3e5e8; --border-strong:#c9cdd3;
+  --text:#2a2e35; --text-bright:#0a0b0e; --text-dim:#6b717c;
+  --accent-teal:#5fb39a; --teal-ink:#2c7a64; --accent-amber:#cfa94e; --amber-ink:#8a6a14;
+  --font-heading:"JetBrains Mono","Courier New",monospace; --font-body:"Inter","Inter Ext",sans-serif;
+}
+@page { size:A4; margin:13mm 14mm 13mm 14mm;
+  @bottom-right { content:"built from markdown with paulblish"; font-family:var(--font-heading); font-size:6.5pt; color:var(--text-dim); } }
+.cv { font-family:var(--font-body); font-size:8.6pt; line-height:1.45; color:var(--text); }
+.cv body { margin:0; }
+.cv a { color:var(--teal-ink); text-decoration:none; }
+
+/* Header: name like the nav title, rule like the site's borders */
+.cv-header { display:flex; justify-content:space-between; align-items:flex-end; padding-bottom:7pt; border-bottom:1pt solid var(--text-bright); margin-bottom:9pt; }
+.cv-header h1 { font-family:var(--font-heading); font-weight:700; font-size:24pt; letter-spacing:-0.02em; color:var(--text-bright); margin:0; line-height:1; }
+.cv-header h1::after { content:"_"; color:var(--accent-teal); }
+.cv-header .tagline { margin:5pt 0 0; font-size:9.5pt; font-weight:500; color:var(--text); }
+.cv-contact { text-align:right; font-family:var(--font-heading); font-size:7.6pt; line-height:1.6; color:var(--text); }
+
+/* Section headers = the site's callout/code-header strip */
+.cv h2 { font-family:var(--font-heading); font-size:7.4pt; font-weight:700; text-transform:uppercase; letter-spacing:0.06em;
+     color:var(--teal-ink); background:var(--surface); border:0.6pt solid var(--border); border-left:2pt solid var(--accent-teal);
+     padding:2pt 6pt; margin:11pt 0 5pt; break-after:avoid; }
+.cv-side h2:first-child { margin-top:0; }
+
+/* Roles: mono heading, meta line styled like article-meta <time> */
+.cv h3 { font-family:var(--font-heading); font-size:9pt; font-weight:600; color:var(--text-bright); margin:8pt 0 1pt; break-after:avoid; }
+.cv h3 em { font-style:normal; font-weight:400; color:var(--text); }
+.cv h3 a { color:var(--text-bright); border-bottom:0.6pt solid var(--accent-teal); }
+.cv h3 + p { font-family:var(--font-heading); font-size:7pt; color:var(--text-dim); margin:0 0 3pt; }
+.cv h3 + p:has(strong) { font-family:var(--font-body); font-size:8.2pt; line-height:1.65; color:var(--text); }
+.cv h3 + p strong { font-weight:600; color:var(--text-bright); }
+
+.cv p { margin:3pt 0; }
+.cv strong { font-weight:600; color:var(--text-bright); }
+.intro p { font-size:9pt; margin-top:0; }
+.cv ul { margin:3pt 0 0; padding-left:10pt; list-style:none; }
+.cv li { margin:0 0 2.6pt; position:relative; }
+.cv li::before { content:""; position:absolute; left:-9pt; top:4.2pt; width:3.2pt; height:3.2pt; background:var(--accent-teal); }
+
+/* Sidebar; inline `code` becomes the site's square amber tags */
+.cv-side { float:right; width:51mm; margin-left:13pt; }
+.cv-main { margin-right:calc(51mm + 13pt); }
+.cv-side p { font-size:8pt; }
+.cv-side code { display:inline-block; font-family:var(--font-heading); font-size:6.8pt; color:var(--amber-ink);
+                border:0.6pt solid var(--accent-amber); padding:0.6pt 3.5pt; margin:0 1.5pt 3pt 0; line-height:1.3; }
+
+/* Web page only: the PDF is rendered with print media, so nothing below reaches it */
+@media screen {
+  /* style.css caps <main> at 720px, narrower than A4 */
+  main:has(> .cv-page) { max-width:calc(210mm + 3rem); }
+  .cv-download { text-align:right; margin-bottom:0.75rem; font-family:var(--font-heading); font-size:0.8rem; }
+  .cv-download a { display:inline-block; padding:0.3rem 0.9rem; border:1px solid var(--accent-teal); border-radius:var(--radius-sm); color:var(--accent-teal); }
+  .cv-download a:hover { background:var(--accent-teal); color:var(--bg); text-decoration:none; }
+  .cv-sheet { width:210mm; max-width:100%; min-height:297mm; margin:0 auto; padding:13mm 14mm; background:var(--bg); box-shadow:0 4px 24px rgb(0 0 0 / 0.6); }
+  /* Undo style.css rules the scoped rules above don't override */
+  .cv h2, .cv h3 { line-height:inherit; }
+  .cv code { background:none; border-radius:0; }
+  .cv-body { display:flow-root; }
+}
+
+/* Narrow screens: one column, sidebar after the main column (it comes first in the markup for the float) */
+@media screen and (max-width: 640px) {
+  .cv-sheet { min-height:0; padding:6mm 5mm; }
+  .cv-header { flex-direction:column; align-items:flex-start; gap:5pt; }
+  .cv-contact { text-align:left; }
+  .cv-body { display:flex; flex-direction:column; }
+  .cv-side { order:1; float:none; width:auto; margin-left:0; }
+  .cv-main { margin-right:0; }
+  .cv-side h2:first-child { margin-top:11pt; }
+}

@@ -99,8 +99,14 @@
     "output": "articles/paulias/index.html",
     "excerpt": "I can't stop building tools. Ever since I realised that I can use LLM coding agents to build lots of little bits of personal software I've been on a roll creating a tonne of tools just for my own\u2026"
   },
+  "CV.md": {
+    "mtime": 1795698571.4200363,
+    "output": "cv/index.html",
+    "excerpt": "",
+    "pdf": "cv/Paul-Hallett-CV.pdf"
+  },
   "Home.md": {
-    "mtime": 1795081171.9386191,
+    "mtime": 1795699277.1908376,
     "output": "index.html",
     "excerpt": "Paul Hallett is a software engineer with 15+ years experience working in tech. He builds tools with Python and HTTP. He loves file-over-app, local-first, and smallweb software. He blogs way too much."
   },

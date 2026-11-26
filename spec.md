@@ -1154,6 +1154,7 @@ A collection of high-value improvements and two larger features (light/dark mode
 - [x] **8.11** Tool widgets: default styles for form controls and visualisations inside `html embed` blocks, each needing at most one class, plus a small helper script.
 - [x] **8.12** Ko-fi support link: `kofi` config field adds a coffee icon to the social icons and a support button in the footer. Plain links, no widget JavaScript.
 - [x] **8.13** Slide decks: every published file in the slides directory becomes a reveal.js presentation in the Obsidian [Advanced Slides](https://github.com/MSzturc/obsidian-advanced-slides) format, with the plugin's runtime loaded from pinned CDN URLs (its own themes and layout CSS vendored) and a `/slides/` index.
+- [x] **8.14** CV pages: a `layout: cv` file becomes a web page in the site chrome and a one-page A4 PDF (WeasyPrint), with sidebar sections, a PDF-only phone number, and `pb pdf` for bespoke CVs.
 
 **Milestone:** All pages include social sharing meta tags, are discoverable by crawlers, have a working 404, support light/dark theming, large vaults can be rebuilt incrementally in a fraction of the full build time, and the site displays the author's social presence via icons in the nav and footer.
 
@@ -1547,3 +1548,28 @@ All three icons are inline SVGs with `width="20" height="20" viewBox="0 0 24 24"
 **Tests:** `tests/test_slides_parity.py` replays all 71 jest snapshots from the plugin's own test suite (inputs, mocked vault lookups and expected output, extracted to `tests/fixtures/advanced_slides_snapshots.json`) and requires identical output. `tests/test_slides_comment.py` ports `comment.unit.test.ts` and checks colour parsing. `tests/test_slidify.py` covers slide splitting and notes. `tests/test_slides_build.py` covers config, scanning, vault lookups, asset naming, rendering, the built fixture vault (`tests/fixtures/slides/demo-deck.md`), sitemap/feed/listing rules, custom slides directories, stale deck removal and broken decks.
 
 **Documentation:** README "Slide Decks" section, `CHANGELOG.md`, `templates/reveal/VENDOR.md`.
+
+#### 8.14 — CV Pages
+
+**What:** A markdown file with `layout: cv` is a CV. `pb build` writes it as `/<slug>/index.html`, a white A4 sheet inside the normal site chrome, and as `/<slug>/<pdf_name>`, a one-page A4 PDF rendered with [WeasyPrint](https://weasyprint.org). `pb pdf FILE` renders a single CV to PDF only, for bespoke CVs that are never published.
+
+**Frontmatter:** `layout: cv` (required), `publish` / `slug` (the usual rules), `title` (the name in the header), `tagline`, `location`, `email`, `phone`, `github`, `website` (optional contact lines; empty fields render no line), `sidebar` (section names for the right-hand column), `pdf_name` (default: the title with whitespace runs replaced by `-`, plus `-CV.pdf`; only the filename part is used).
+
+**Requirements:**
+
+- `Article.layout` holds the frontmatter `layout`, lowercased. CVs are scanned as articles, so an unpublished CV is skipped with the usual reason, and they stay in the article list through the incremental stale/fresh check, the wikilink path map and the manifest. They are then taken out before rendering and writing: they never appear in the RSS feed, `/all/`, tag pages, section listings or prev/next, but they are in `sitemap.xml`.
+- The scan line is `✓ cv.md → /cv/ (cv)`. Every page and PDF written is printed with the usual `→` line, and CVs are counted in the "Building" and "Done." summaries.
+- The body is split on top-level `##` headings from the markdown-it token stream (a `## ` inside a code fence does not split). Text before the first one is the intro. Sections named in `sidebar` (case-insensitive) go to the sidebar, the rest to the main column, both in source order. A `sidebar` name matching no section is a build warning. Everything is rendered with the article markdown-it chain (wikilinks, callouts, footnotes, …).
+- `phone` is only ever in the PDF: the web page is rendered from a copy of the CV with `phone` blanked, so no template can output it.
+- The web page (`templates/cv_page.html`) extends `base.html` and links the content-hashed `static/cv.css`; it shows a **Download PDF** link. Web-only rules in `@media screen` give the centred A4 sheet, neutralise `style.css` rules that reach into it, and on narrow screens make the sheet full width with the sidebar stacked below the main column.
+- The PDF (`templates/cv.html`) inlines `cv.css`, resolved with fonts relative to the static directory. The `@page` footer reads "built from markdown with paulblish". The sample CV fits on one A4 page.
+- `templates/static/cv.css` scopes every element selector under `.cv`, the `<html>` element in the PDF and the sheet on the web page, so it cannot restyle the rest of the site.
+- Fonts: Inter (400, 400 italic, 500, 600, 700, latin-ext 400/600) and JetBrains Mono (400, 600, 700) from Fontsource in `templates/static/fonts/`, with their OFL licences. Inter latin-ext is a separate family, `"Inter Ext"`, listed as a fallback: declaring it as a second `@font-face` of `"Inter"` with `unicode-range` made WeasyPrint render "Māori" as "M5ori".
+- A custom `--templates` directory without the CV templates or `static/cv.css` falls back to the bundled ones, and the bundled `cv.css` and fonts are copied to the output.
+- Incremental builds regenerate a CV's page and PDF only when its source changed. The manifest records the PDF path, so a deleted or unpublished CV's PDF (which has the phone number) is removed with its page.
+- `pb pdf FILE [--output DIR] [--templates DIR]` ignores `publish`, needs no `site.toml`, writes only `DIR/<pdf_name>` (default the current directory) and renders wikilinks as plain text. A file without `layout: cv` is an error (exit code 1).
+- WeasyPrint is a core dependency and needs pango (`brew install pango`; `libpango-1.0-0 libpangoft2-1.0-0` on Debian/Ubuntu, installed in CI). It is only imported when a PDF is written. On macOS the build adds Homebrew's library directories to `DYLD_FALLBACK_LIBRARY_PATH` before importing it, because SIP strips `DYLD_*` variables from processes started through `/usr/bin` (such as `make`).
+
+**Tests:** `tests/test_cv.py` covers layout detection, frontmatter and `pdf_name`, section splitting (including a code fence), sidebar routing (case-insensitive, unknown-name warning), wikilinks with and without a path map, the phone only in the print HTML, the PDF being one A4 page, the build output and CLI lines, sitemap/feed/listing rules, incremental skip, regeneration and removal, custom templates without CV files, an unpublished CV never reaching `_site/`, and `pb pdf` (ignores `publish`, writes only the PDF, rejects non-CV files). Fixtures: `tests/fixtures/cv/cv.md` and the unpublished `tests/fixtures/cv/cv-bespoke.md`.
+
+**Documentation:** README "CV Pages" section and `pb pdf` usage, `CHANGELOG.md`.

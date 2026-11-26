@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}{{ cv.title }} — CV — {{ site.title }}{% endblock %}
+
+{% block content %}
+{# In the body so a custom base.html without a head block still gets it #}
+<link rel="stylesheet" href="{{ site.base_url }}/static/{{ static_url('cv.css') }}">
+<div class="cv-page">
+  <p class="cv-download"><a href="{{ site.base_url }}{{ cv.url_path }}{{ cv.pdf_name }}">Download PDF</a></p>
+  <article class="cv cv-sheet">
+    {% include "_cv.html" %}
+  </article>
+</div>
+{% endblock %}

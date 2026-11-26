@@ -1,0 +1,18 @@
+{% macro web_link(value) %}<a href="{{ value if '://' in value else 'https://' ~ value }}">{{ value.split('://')[-1] }}</a>{% endmacro %}
+<header class="cv-header">
+  <div>
+    <h1>{{ cv.title }}</h1>
+    {% if cv.tagline %}<p class="tagline">{{ cv.tagline }}</p>{% endif %}
+  </div>
+  <div class="cv-contact">
+    {% if cv.location %}<div>{{ cv.location }}</div>{% endif %}
+    {% if cv.phone %}<div>{{ cv.phone }}</div>{% endif %}
+    {% if cv.email %}<div><a href="mailto:{{ cv.email }}">{{ cv.email }}</a></div>{% endif %}
+    {% if cv.github %}<div>{{ web_link(cv.github) }}</div>{% endif %}
+    {% if cv.website %}<div>{{ web_link(cv.website) }}</div>{% endif %}
+  </div>
+</header>
+<div class="cv-body">
+  <aside class="cv-side">{{ cv.side_html | safe }}</aside>
+  <div class="cv-main"><div class="intro">{{ cv.intro_html | safe }}</div>{{ cv.main_html | safe }}</div>
+</div>

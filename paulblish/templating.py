@@ -14,17 +14,18 @@ PELE_URL = f"https://cdn.jsdelivr.net/npm/pele@{PELE_VERSION}/dist/pele.js"
 
 
 def _create_env(
-    templates_dir: Path | None = None,
+    templates_dir: Path | list[Path] | None = None,
     static_files: dict[str, str] | None = None,
 ) -> Environment:
     """Create a Jinja2 environment with the given (or default) templates directory.
 
+    A list of directories is searched in order.
     *static_files* maps an original static filename (e.g. ``style.css``) to its
     cache-busted output name (e.g. ``style.a3f9c2.css``). Templates resolve the
     mapping via the ``static_url`` global.
     """
     path = templates_dir if templates_dir else DEFAULT_TEMPLATES
-    env = Environment(loader=FileSystemLoader(str(path)), autoescape=False)
+    env = Environment(loader=FileSystemLoader(path), autoescape=False)
     env.filters["basename"] = lambda p: Path(p).name
     sf = static_files or {}
     env.globals["static_url"] = lambda name: sf.get(name, name)

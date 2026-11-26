@@ -1,5 +1,18 @@
 /* Paulblish — Cyberpunk Brutalist Theme */
 
+/* === Fonts === */
+/* latin-ext is a separate family: same-family + unicode-range broke "Māori" in WeasyPrint (see cv.css) */
+@font-face { font-family: "Inter"; font-weight: 400; font-display: swap; src: url(fonts/inter-latin-400-normal.woff2) format("woff2"); }
+@font-face { font-family: "Inter Ext"; font-weight: 400; font-display: swap; src: url(fonts/inter-latin-ext-400-normal.woff2) format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 400; font-style: italic; font-display: swap; src: url(fonts/inter-latin-400-italic.woff2) format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 500; font-display: swap; src: url(fonts/inter-latin-500-normal.woff2) format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 600; font-display: swap; src: url(fonts/inter-latin-600-normal.woff2) format("woff2"); }
+@font-face { font-family: "Inter Ext"; font-weight: 600; font-display: swap; src: url(fonts/inter-latin-ext-600-normal.woff2) format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 700; font-display: swap; src: url(fonts/inter-latin-700-normal.woff2) format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-weight: 400; font-display: swap; src: url(fonts/jetbrains-mono-latin-400-normal.woff2) format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-weight: 600; font-display: swap; src: url(fonts/jetbrains-mono-latin-600-normal.woff2) format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-weight: 700; font-display: swap; src: url(fonts/jetbrains-mono-latin-700-normal.woff2) format("woff2"); }
+
 /* === Palette === */
 :root {
     /* Neutrals: cool near-blacks and greys */
@@ -21,7 +34,7 @@
     --radius: 6px;
     --radius-sm: 4px;
     --font-heading: "JetBrains Mono", "Fira Code", "Courier New", monospace;
-    --font-body: "Inter", "system-ui", sans-serif;
+    --font-body: "Inter", "Inter Ext", "system-ui", sans-serif;
 }
 
 /* === Reset === */
@@ -482,7 +495,9 @@ pre code {
 
 /* === Home page === */
 .ascii-banner {
-    font-family: var(--font-heading);
+    /* Not --font-heading: the vendored JetBrains Mono is latin-only, so its block glyphs (U+2580–259F) would
+       come from a fallback with other metrics and overflow the pre */
+    font-family: "Courier New", Menlo, Consolas, "DejaVu Sans Mono", monospace;
     color: var(--accent-teal);
     font-size: 1rem;
     line-height: 1.2;

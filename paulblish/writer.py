@@ -2,8 +2,9 @@ import hashlib
 import shutil
 from pathlib import Path
 
+from paulblish.cv.build import cv_output_path, pdf_output_path, render_cv_page, write_pdf
 from paulblish.feed import generate_feed
-from paulblish.models import Article, Deck, SiteConfig
+from paulblish.models import CV, Article, Deck, SiteConfig
 from paulblish.sitemap import generate_sitemap
 from paulblish.slides.build import copy_runtime, deck_output_path
 from paulblish.templating import (
@@ -20,6 +21,11 @@ DEFAULT_TEMPLATES = Path(__file__).parent.parent / "templates"
 HASHED_STATIC_EXTENSIONS = {".css"}
 
 
+def _hashed_name(path: Path) -> str:
+    digest = hashlib.sha256(path.read_bytes()).hexdigest()[:8]
+    return f"{path.stem}.{digest}{path.suffix}"
+
+
 def _hashed_static_files(static_src: Path) -> dict[str, str]:
     """Map static filenames to their content-hashed versions for cache busting."""
     mapping: dict[str, str] = {}
@@ -27,8 +33,7 @@ def _hashed_static_files(static_src: Path) -> dict[str, str]:
         return mapping
     for path in static_src.iterdir():
         if path.is_file() and path.suffix in HASHED_STATIC_EXTENSIONS:
-            digest = hashlib.sha256(path.read_bytes()).hexdigest()[:8]
-            mapping[path.name] = f"{path.stem}.{digest}{path.suffix}"
+            mapping[path.name] = _hashed_name(path)
     return mapping
 
 
@@ -77,6 +82,8 @@ def write(
     articles_to_write: list[Article] | None = None,
     decks: list[Deck] | None = None,
     slides_prefix: str | None = None,
+    cvs: list[CV] | None = None,
+    cvs_to_write: list[CV] | None = None,
 ) -> list[Path]:
     """Write rendered articles to the output directory. Returns list of written file paths.
 
@@ -87,8 +94,12 @@ def write(
     *decks* are rendered slide decks (``deck.html`` already set). When the vault has a slides
     directory, *slides_prefix* is its output folder, which is rebuilt from scratch every build.
     Decks never appear in listings, tags, the feed or prev/next; they are in the sitemap.
+
+    *cvs* are every CV in the site and, like decks, only reach the sitemap. *cvs_to_write* (rendered,
+    default all of *cvs*) get their page and PDF written.
     """
     decks = decks or []
+    cvs = cvs or []
     assign_prev_next(articles)
     latest_articles = sorted(
         [a for a in articles if _in_section(a, "articles")],
@@ -131,7 +142,7 @@ def write(
     written.extend(write_feed(articles, output_dir, site))
 
     # Write sitemap
-    written.extend(write_sitemap(articles, output_dir, site, decks=decks))
+    written.extend(write_sitemap(articles, output_dir, site, decks=decks, cvs=cvs))
 
     # Write robots.txt
     written.append(write_robots(output_dir, site))
@@ -142,6 +153,10 @@ def write(
     # Copy static assets from templates, renaming hashed files to their cache-busted names
     if static_src.is_dir():
         _copy_static_dir(static_src, output_dir / "static", static_files)
+
+    if cvs:
+        to_write = cvs if cvs_to_write is None else cvs_to_write
+        written.extend(write_cvs(to_write, output_dir, site, templates_dir=templates_dir, static_files=static_files))
 
     # Slide decks, their index and the reveal.js runtime (after static/, which is recreated above)
     if slides_prefix is not None:
@@ -178,6 +193,42 @@ def write_decks(
     index_path.write_text(render_slides_index(decks, site, templates_dir=templates_dir, static_files=static_files))
     written.append(index_path)
     copy_runtime(output_dir)
+    return written
+
+
+def _copy_cv_static(output_dir: Path, static_files: dict[str, str]) -> dict[str, str]:
+    """Copy the default cv.css and fonts when the static dir in use has no cv.css (custom templates made
+    before CV pages existed). Returns *static_files* with cv.css mapped to its output name."""
+    if "cv.css" in static_files:
+        return static_files
+    default_static = DEFAULT_TEMPLATES / "static"
+    static_dst = output_dir / "static"
+    fonts_dst = static_dst / "fonts"
+    fonts_dst.mkdir(parents=True, exist_ok=True)
+    css_name = _hashed_name(default_static / "cv.css")
+    shutil.copy2(default_static / "cv.css", static_dst / css_name)
+    for font in (default_static / "fonts").iterdir():
+        if not (fonts_dst / font.name).exists():
+            shutil.copy2(font, fonts_dst / font.name)
+    return {**static_files, "cv.css": css_name}
+
+
+def write_cvs(
+    cvs: list[CV],
+    output_dir: Path,
+    site: SiteConfig,
+    templates_dir: Path | None = None,
+    static_files: dict[str, str] | None = None,
+) -> list[Path]:
+    """Write each rendered CV's page and PDF. Runs after static/ is recreated, which it adds cv.css to."""
+    static_files = _copy_cv_static(output_dir, static_files or {})
+    written: list[Path] = []
+    for cv in cvs:
+        page = cv_output_path(cv, output_dir)
+        page.parent.mkdir(parents=True, exist_ok=True)
+        page.write_text(render_cv_page(cv, site, templates_dir=templates_dir, static_files=static_files))
+        written.append(page)
+        written.append(write_pdf(cv, pdf_output_path(cv, output_dir), templates_dir=templates_dir))
     return written
 
 
@@ -237,12 +288,16 @@ def write_feed(articles: list[Article], output_dir: Path, site: SiteConfig) -> l
 
 
 def write_sitemap(
-    articles: list[Article], output_dir: Path, site: SiteConfig, decks: list[Deck] | None = None
+    articles: list[Article],
+    output_dir: Path,
+    site: SiteConfig,
+    decks: list[Deck] | None = None,
+    cvs: list[CV] | None = None,
 ) -> list[Path]:
     """Generate and write sitemap.xml to the output root. Returns a list with the written path."""
     path = output_dir / "sitemap.xml"
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(generate_sitemap(articles, site, decks=decks), encoding="utf-8")
+    path.write_text(generate_sitemap(articles, site, decks=decks, cvs=cvs), encoding="utf-8")
     return [path]
 
 

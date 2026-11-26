@@ -50,6 +50,12 @@ def load_manifest_outputs(output_dir: Path) -> dict[str, str]:
     return {k: v["output"] for k, v in raw.items() if isinstance(v, dict) and v.get("output")}
 
 
+def load_manifest_pdfs(output_dir: Path) -> dict[str, str]:
+    """Return {relative_source_path: relative_pdf_path} for CVs, so a removed CV's PDF is deleted too."""
+    raw = _read_raw(output_dir)
+    return {k: v["pdf"] for k, v in raw.items() if isinstance(v, dict) and v.get("pdf")}
+
+
 def load_manifest_excerpts(output_dir: Path) -> dict[str, str]:
     """Return {relative_source_path: feed_excerpt} from the manifest.
 
@@ -82,9 +88,10 @@ def _resolve_excerpt(article: Article) -> str:
     return truncated + "…"
 
 
-def save_manifest(output_dir: Path, articles: list[Article]) -> None:
+def save_manifest(output_dir: Path, articles: list[Article], pdfs: dict[str, Path] | None = None) -> None:
     """Write .pb-manifest.json mapping each article's relative source path to its
     current mtime, computed output path, and resolved feed excerpt.
+    *pdfs* maps a CV's relative source path to its PDF, recorded as ``"pdf"``.
 
     Called at the end of every full or incremental build so the next incremental
     build can determine which articles are fresh and restore their feed descriptions.
@@ -98,6 +105,8 @@ def save_manifest(output_dir: Path, articles: list[Article]) -> None:
         out_path = compute_output_path(article, output_dir)
         out_rel = str(out_path.relative_to(output_dir))
         data[rel_key] = {"mtime": mtime, "output": out_rel, "excerpt": _resolve_excerpt(article)}
+        if pdfs and rel_key in pdfs:
+            data[rel_key]["pdf"] = str(pdfs[rel_key].relative_to(output_dir))
 
     output_dir.mkdir(parents=True, exist_ok=True)
     _manifest_path(output_dir).write_text(json.dumps(data, indent=2))

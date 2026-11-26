@@ -50,6 +50,10 @@ def _resolve_date(metadata: dict, file_path: Path) -> datetime:
     return datetime.fromtimestamp(mtime)
 
 
+def _resolve_layout(metadata: dict) -> str:
+    return str(metadata.get("layout") or "").strip().lower()
+
+
 def _is_home(file_path: Path, source_dir: Path) -> bool:
     """Check if file is Home.md (case-insensitive) at source root."""
     return file_path.parent == source_dir and file_path.stem.lower() == "home"
@@ -122,6 +126,7 @@ def scan(
             tags=metadata.get("tags") or [],
             description=str(metadata.get("description", "")),
             is_home=is_home,
+            layout=_resolve_layout(metadata),
             reading_time_minutes=reading_time,
         )
         articles.append(article)

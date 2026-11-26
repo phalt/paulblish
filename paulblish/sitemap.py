@@ -20,8 +20,10 @@ def _lastmod(articles: list[Article]) -> str | None:
     return max(a.date for a in articles).strftime("%Y-%m-%d")
 
 
-def generate_sitemap(articles: list[Article], site: SiteConfig, decks: list | None = None) -> str:
-    """Return a sitemap.xml string covering articles, tag pages, /all/, and slide decks."""
+def generate_sitemap(
+    articles: list[Article], site: SiteConfig, decks: list | None = None, cvs: list | None = None
+) -> str:
+    """Return a sitemap.xml string covering articles, CVs, tag pages, /all/, and slide decks."""
     ET.register_namespace("", NAMESPACE)
     urlset = ET.Element(f"{{{NAMESPACE}}}urlset")
 
@@ -31,10 +33,9 @@ def generate_sitemap(articles: list[Article], site: SiteConfig, decks: list | No
         if lastmod:
             ET.SubElement(url_el, f"{{{NAMESPACE}}}lastmod").text = lastmod
 
-    # Article and home pages
-    for article in articles:
-        loc = site.base_url + article.url_path
-        _add(loc, article.date.strftime("%Y-%m-%d"))
+    # Article, home and CV pages
+    for page in [*articles, *(cvs or [])]:
+        _add(site.base_url + page.url_path, page.date.strftime("%Y-%m-%d"))
 
     # /all/ listing
     non_home = [a for a in articles if not a.is_home]

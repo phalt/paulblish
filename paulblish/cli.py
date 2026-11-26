@@ -8,8 +8,15 @@ from rich.markup import escape
 
 from paulblish.assets import collect_assets, copy_assets
 from paulblish.config import load_config
+from paulblish.cv.build import CV_LAYOUT, NotACVError, cv_from_article, load_cv, pdf_output_path, render_cv, write_pdf
 from paulblish.linker import build_path_map
-from paulblish.manifest import load_manifest, load_manifest_excerpts, load_manifest_outputs, save_manifest
+from paulblish.manifest import (
+    load_manifest,
+    load_manifest_excerpts,
+    load_manifest_outputs,
+    load_manifest_pdfs,
+    save_manifest,
+)
 from paulblish.renderer import render
 from paulblish.scanner import scan
 from paulblish.slides.build import (
@@ -86,6 +93,7 @@ def build(
     # Load manifest for incremental builds (empty dicts if doing a full build)
     manifest: dict[str, float] = load_manifest(output_dir) if incremental else {}
     manifest_outputs: dict[str, str] = load_manifest_outputs(output_dir) if incremental else {}
+    manifest_pdfs: dict[str, str] = load_manifest_pdfs(output_dir) if incremental else {}
     manifest_excerpts: dict[str, str] = load_manifest_excerpts(output_dir) if incremental else {}
 
     # Scan (the slides directory holds decks, not articles)
@@ -108,16 +116,17 @@ def build(
             else:
                 fresh_set.add(id(article))
 
-        # Delete HTML (and empty parent dirs) for articles absent from the vault
+        # Delete HTML, a CV's PDF (it has the phone number) and empty parent dirs for files absent from the vault
         current_keys = {str(a.relative_path) for a in articles}
         for absent_key, out_rel in manifest_outputs.items():
             if absent_key not in current_keys:
-                out_file = output_dir / out_rel
-                if out_file.exists():
-                    out_file.unlink()
-                    parent = out_file.parent
-                    if parent != output_dir and not any(parent.iterdir()):
-                        parent.rmdir()
+                for rel in filter(None, (out_rel, manifest_pdfs.get(absent_key))):
+                    out_file = output_dir / rel
+                    if out_file.exists():
+                        out_file.unlink()
+                        parent = out_file.parent
+                        if parent != output_dir and not any(parent.iterdir()):
+                            parent.rmdir()
                 console.print(f"  {SKIPPED} {escape(absent_key)} [dim](removed from output)[/]")
 
         # Restore feed excerpts for fresh articles (body_html is "" because they weren't rendered)
@@ -139,6 +148,8 @@ def build(
             label = "[dim](unchanged)[/]"
         elif incremental:
             label = "[yellow]→ rebuilt[/]"
+        elif article.layout == CV_LAYOUT:
+            label = f"[cyan]→ {escape(article.url_path)} (cv)[/]"
         elif article.is_home:
             label = "[cyan]→ / (index)[/]"
         else:
@@ -153,11 +164,21 @@ def build(
     for skip in [*skipped, *deck_skipped]:
         console.print(f"  {SKIPPED} {escape(str(skip.path))} [dim]({escape(skip.reason)})[/]")
 
-    rebuild_count = len(stale_set) if incremental else len(articles)
+    # CVs stay in `articles` above so freshness, wikilinks and the manifest treat them like any page
+    pages = [a for a in articles if a.layout != CV_LAYOUT]
+    cv_pairs = [(a, cv_from_article(a)) for a in articles if a.layout == CV_LAYOUT]
+    cvs = [cv for _, cv in cv_pairs]
+    cvs_to_write = [cv for a, cv in cv_pairs if id(a) in stale_set]
+    if articles_to_write is not None:
+        articles_to_write = [a for a in articles_to_write if a.layout != CV_LAYOUT]
+
+    rebuild_count = sum(id(a) in stale_set for a in pages)
     num_skipped = len(skipped) + len(deck_skipped)
     deck_str = f", [green]{len(decks)}[/] slide deck{'s' if len(decks) != 1 else ''}" if decks else ""
+    cv_str = f", [green]{len(cvs_to_write)}[/] CV{'s' if len(cvs_to_write) != 1 else ''}" if cvs else ""
     console.print(
-        f"\n[bold]Building [green]{rebuild_count}[/] articles{deck_str}, skipped [red]{num_skipped}[/] files[/]\n"
+        f"\n[bold]Building [green]{rebuild_count}[/] articles{deck_str}{cv_str}, "
+        f"skipped [red]{num_skipped}[/] files[/]\n"
     )
 
     build_start = time.perf_counter()
@@ -167,10 +188,13 @@ def build(
     add_decks_to_path_map(path_map, decks)
 
     # Render markdown to HTML — only stale articles in incremental mode
-    for article in articles_to_write if articles_to_write is not None else articles:
+    for article in articles_to_write if articles_to_write is not None else pages:
         render(article, path_map=path_map, base_url=config.base_url)
+    cv_warnings: list[str] = []
+    for cv in cvs_to_write:
+        cv_warnings += render_cv(cv, path_map=path_map, base_url=config.base_url)
 
-    # Collect and copy assets for ALL articles (fresh articles may reference assets)
+    # Collect and copy assets for ALL articles and CVs (fresh articles may reference assets)
     asset_refs = collect_assets(articles, source_dir, site=config)
 
     # Render slide decks; files they reference join the article assets in /assets/
@@ -187,19 +211,21 @@ def build(
         if not decks:
             config.slides_url = ""
 
-    asset_warnings = copy_assets(asset_refs + registry.new_refs, output_dir) + deck_warnings
+    asset_warnings = copy_assets(asset_refs + registry.new_refs, output_dir) + deck_warnings + cv_warnings
     for warning in asset_warnings:
         console.print(f"  {WARNING} [yellow]{escape(warning)}[/]")
 
     # Write templated output
     written = write(
-        articles,
+        pages,
         output_dir,
         site=config,
         templates_dir=templates_dir,
         articles_to_write=articles_to_write,
         decks=decks,
         slides_prefix=slides_prefix,
+        cvs=cvs,
+        cvs_to_write=cvs_to_write,
     )
     for path in written:
         console.print(f"  {WRITTEN} [dim]{escape(str(path.relative_to(output_dir.parent)))}[/]")
@@ -213,17 +239,40 @@ def build(
     write_build_meta(output_dir, config.base_url)
 
     # Save manifest after every build (full or incremental)
-    save_manifest(output_dir, articles)
+    pdfs = {str(a.relative_path): pdf_output_path(cv, output_dir) for a, cv in cv_pairs}
+    save_manifest(output_dir, articles, pdfs=pdfs)
 
     elapsed = time.perf_counter() - build_start
     num_assets = len([r for r in asset_refs + registry.new_refs if r.source_path])
     num_warnings = len(asset_warnings)
     warning_str = f", [yellow]{num_warnings} warning{'s' if num_warnings != 1 else ''}[/]" if num_warnings else ""
     decks_done = f", [bold]{len(decks)}[/] slide deck{'s' if len(decks) != 1 else ''}" if decks else ""
+    cvs_done = f", [bold]{len(cvs_to_write)}[/] CV{'s' if len(cvs_to_write) != 1 else ''}" if cvs else ""
     console.print(
-        f"\n[bold green]Done.[/] Built [bold]{rebuild_count}[/] articles{decks_done}, [bold]{num_assets}[/] assets"
-        f"{warning_str} in [cyan]{elapsed:.2f}s[/]."
+        f"\n[bold green]Done.[/] Built [bold]{rebuild_count}[/] articles{decks_done}{cvs_done}, "
+        f"[bold]{num_assets}[/] assets{warning_str} in [cyan]{elapsed:.2f}s[/]."
     )
+
+
+@main.command()
+@click.argument("file", type=click.Path(exists=True, dir_okay=False, path_type=Path))
+@click.option("--output", "-o", default=".", help="Directory to write the PDF to.")
+@click.option("--templates", default=None, help="Path to custom Jinja2 templates directory.")
+def pdf(file: Path, output: str, templates: str | None) -> None:
+    """Render one CV (layout: cv) to PDF, whether or not it is published. Needs no site.toml."""
+    console = _console()
+    try:
+        cv = load_cv(file.resolve())
+    except NotACVError as e:
+        _error(console, str(e))
+        raise SystemExit(1) from None
+
+    # No site to link to, so wikilinks render as plain text
+    for warning in render_cv(cv):
+        console.print(f"  {WARNING} [yellow]{escape(warning)}[/]")
+    templates_dir = Path(templates).resolve() if templates else None
+    path = write_pdf(cv, Path(output).resolve() / cv.pdf_name, templates_dir=templates_dir)
+    console.print(f"  {WRITTEN} [dim]{escape(str(path))}[/]")
 
 
 @main.command()
